@@ -1,410 +1,655 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DiscoverVisually — Visual Gift Books for Children</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <title>DiscoverVisually — Visual Books for Curious Minds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C5A028;
-      --gold-light: #E8C84A;
-      --gold-dark: #8B6E0E;
-      --cream: #FAF7F0;
-      --cream-dark: #F0EBE0;
-      --ink: #1A1410;
-      --ink-soft: #3D3020;
+      --black: #080808;
+      --glass: rgba(8,8,8,0.72);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-hover: rgba(255,255,255,0.04);
+      --text: #F0EFE8;
+      --muted: rgba(240,239,232,0.5);
+      --accent: #E8C84A;
+      --accent-dim: rgba(232,200,74,0.12);
+      --amazon: #FF9900;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--cream);
-      color: var(--ink);
-      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
       overflow-x: hidden;
     }
 
-    /* Grain texture overlay */
-    body::before {
-      content: '';
+    /* ── PARALLAX BACKGROUND ── */
+    .parallax-bg {
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
+      z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1800&q=80');
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      filter: brightness(0.35) saturate(1.2);
     }
 
-    /* ─── HERO ─── */
+    /* Dark gradient overlay so text is always readable */
+    .parallax-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,8,0.3) 0%,
+        rgba(8,8,8,0.1) 30%,
+        rgba(8,8,8,0.1) 70%,
+        rgba(8,8,8,0.6) 100%
+      );
+    }
+
+    /* All content sits above the fixed bg */
+    .content-layer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--glass-border); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--text);
+      cursor: pointer; text-decoration: none;
+    }
+    .nav-logo em { font-style: italic; color: var(--accent); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 8rem 4rem 6rem;
       position: relative;
-      background: radial-gradient(ellipse at 50% 0%, rgba(197,160,40,0.12) 0%, transparent 70%);
     }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 1px; height: 80px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 1rem;
+      font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
     }
-
-    .ornament {
-      font-size: 1.4rem;
-      color: var(--gold);
-      letter-spacing: 0.5em;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.2s;
+    .hero-label::before, .hero-label::after {
+      content: ''; display: block; width: 40px; height: 1px; background: var(--accent);
     }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.4s;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      font-weight: 900; line-height: 0.88;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 1s ease forwards 0.5s;
     }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero-divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 2.5rem auto;
-      width: fit-content;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.6s;
-    }
-
-    .hero-divider::before,
-    .hero-divider::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .hero-divider span {
-      color: var(--gold);
-      font-size: 1.1rem;
-    }
+    .hero-title .italic { font-style: italic; font-weight: 400; color: var(--accent); }
 
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      font-weight: 400;
-      color: var(--ink-soft);
-      letter-spacing: 0.05em;
-      max-width: 520px;
-      line-height: 1.8;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.8s;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.9; color: var(--muted);
+      max-width: 480px; margin: 0 auto 3.5rem;
+      opacity: 0; animation: fadeUp 1s ease forwards 0.7s;
     }
 
-    .hero-cta {
-      margin-top: 3rem;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1s;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.9rem 2.5rem;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s ease;
+    .hero-btn {
+      display: inline-block; padding: 1rem 3rem;
       background: transparent;
-      cursor: pointer;
+      border: 1px solid rgba(232,200,74,0.6);
+      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      opacity: 0; animation: fadeUp 1s ease forwards 0.9s;
+    }
+    .hero-btn:hover {
+      background: var(--accent); color: var(--black);
+      border-color: var(--accent); transform: translateY(-2px);
     }
 
-    .btn:hover {
-      background: var(--gold);
-      color: var(--cream);
+    .hero-scroll-hint {
+      position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      opacity: 0; animation: fadeUp 1s ease forwards 1.2s;
+    }
+    .scroll-text { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+    .scroll-bar {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
     }
 
-    /* ─── BOOKS SECTION ─── */
-    .section {
-      padding: 7rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300;
-      text-align: center;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .section-title em { font-style: italic; color: var(--gold); }
-
-    .section-line {
-      width: 60px;
-      height: 1px;
-      background: var(--gold);
-      margin: 0 auto 4rem;
-    }
-
-    /* Book card */
-    .books-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3rem;
-    }
-
-    .book-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      border: 1px solid rgba(197,160,40,0.25);
-      background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(240,235,224,0.4));
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .book-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(197,160,40,0.12);
-    }
-
-    .book-cover-placeholder {
-      width: 160px;
-      height: 220px;
-      background: linear-gradient(145deg, var(--cream-dark), var(--cream));
-      border: 1px solid rgba(197,160,40,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 2rem;
-      position: relative;
+    /* ── MARQUEE ── */
+    .marquee {
+      padding: 1.8rem 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
       overflow: hidden;
     }
+    .marquee-track {
+      display: flex; gap: 3rem; white-space: nowrap;
+      animation: marqueeScroll 25s linear infinite;
+    }
+    @keyframes marqueeScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .marquee-item {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic; color: var(--muted); flex-shrink: 0;
+    }
+    .marquee-sep { color: var(--accent); font-style: normal; margin: 0 0.5rem; }
 
-    .book-cover-placeholder::before {
-      content: '✝';
-      font-size: 3rem;
-      color: rgba(197,160,40,0.3);
+    /* ── GLASS PANEL (books section) ── */
+    .glass-section {
+      background: var(--glass);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
     }
 
-    .book-cover-placeholder .coming-soon {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: var(--gold);
-      color: var(--cream);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.4rem;
-      font-family: 'Cormorant Garamond', serif;
+    .books-wrapper { padding: 7rem 4rem; max-width: 1400px; margin: 0 auto; }
+
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 4rem; padding-bottom: 2rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .section-cat {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700; line-height: 1;
+    }
+    .section-count {
+      font-size: 0.7rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted);
+      padding-bottom: 0.5rem;
     }
 
-    .book-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 0.5rem;
+    /* ── BOOK GRID ── */
+    .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; }
+
+    .book-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--glass-border);
+      overflow: hidden; cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+    .book-card:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-6px);
+      border-color: rgba(232,200,74,0.2);
+    }
+    .book-card:hover .cover-overlay { opacity: 1; }
+    .book-card:hover .cover-img { transform: scale(1.04); }
+
+    .cover-wrap {
+      aspect-ratio: 3/4; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      position: relative;
+    }
+    .cover-img { width: 100%; height: 100%; transition: transform 0.5s ease; }
+    .cover-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+    .cover-icon {
+      width: 56px; height: 56px;
+      border: 1px solid var(--glass-border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: var(--muted);
+    }
+    .cover-placeholder span {
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .cover-overlay {
+      position: absolute; inset: 0;
+      background: rgba(232,200,74,0.06);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+    .overlay-pill {
+      padding: 0.65rem 1.8rem;
+      border: 1px solid rgba(232,200,74,0.5);
+      color: var(--accent);
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      background: rgba(8,8,8,0.7);
     }
 
-    .book-subtitle {
-      font-size: 0.9rem;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-      font-style: italic;
-      margin-bottom: 1rem;
+    .card-body { padding: 1.5rem; }
+    .card-tag {
+      font-size: 0.62rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      line-height: 1.3; margin-bottom: 0.3rem;
+    }
+    .card-author { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .card-btns { display: flex; gap: 0.6rem; }
+
+    .btn-amz {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.65rem 1rem; background: var(--amazon); color: #000;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.05em;
+      text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-amz:hover { background: #FFB347; }
+    .btn-amz .amz-a { font-weight: 900; font-size: 1rem; }
+
+    .btn-dtl {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--glass-border); color: var(--muted);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      background: transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-dtl:hover { border-color: var(--text); color: var(--text); }
+
+    .book-card.soon { opacity: 0.45; cursor: default; pointer-events: none; }
+    .soon-badge {
+      position: absolute; top: 1.2rem; left: 1.2rem;
+      padding: 0.25rem 0.7rem; background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+      border: 1px solid var(--glass-border);
     }
 
-    .book-desc {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--ink-soft);
-      margin-bottom: 1.5rem;
+    /* ── FOOTER ── */
+    .footer-glass {
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      border-top: 1px solid var(--glass-border);
+      padding: 3rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+    }
+    .footer-logo em { font-style: italic; color: var(--accent); }
+    .footer-txt { font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); }
+
+    /* ══════════ DETAIL PAGE ══════════ */
+    .detail-hero-wrap {
+      min-height: 65vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
     }
 
-    .book-badge {
-      display: inline-block;
-      padding: 0.3rem 0.9rem;
-      border: 1px solid var(--gold);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      font-family: 'Cormorant Garamond', serif;
-      text-transform: uppercase;
+    .detail-img {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 500px;
+    }
+    .detail-img-placeholder {
+      font-size: 8rem; color: rgba(255,255,255,0.05);
     }
 
-    /* ─── ABOUT ─── */
-    .about-section {
-      padding: 7rem 2rem;
-      background: linear-gradient(to bottom, var(--cream), var(--cream-dark));
-      text-align: center;
+    .detail-info-wrap {
+      padding: 5rem 4rem;
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      display: flex; flex-direction: column; justify-content: center;
     }
 
-    .about-inner {
-      max-width: 680px;
-      margin: 0 auto;
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; background: none; border: none;
+      margin-bottom: 2rem; transition: color 0.2s; padding: 0;
     }
+    .back-link:hover { color: var(--text); }
 
-    .about-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--ink);
+    .detail-tag-sm { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    .detail-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.1; margin-bottom: 0.4rem;
+    }
+    .detail-author-sm { font-size: 1rem; color: var(--muted); font-style: italic; margin-bottom: 2rem; }
+
+    .meta-row {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
       margin-bottom: 2rem;
     }
+    .meta-cell { display: flex; flex-direction: column; gap: 0.2rem; }
+    .meta-lbl { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .meta-val { font-size: 0.88rem; }
 
-    .about-quote em { color: var(--gold); font-style: normal; }
-
-    .about-text {
-      font-size: 1.05rem;
-      line-height: 1.9;
-      color: var(--ink-soft);
+    .btn-amz-lg {
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      padding: 1rem 2rem; background: var(--amazon); color: #000;
+      font-size: 0.85rem; font-weight: 500; text-decoration: none;
+      border: none; cursor: pointer; transition: background 0.2s; width: 100%;
     }
+    .btn-amz-lg:hover { background: #FFB347; }
 
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 3rem 2rem;
-      text-align: center;
-      border-top: 1px solid rgba(197,160,40,0.2);
+    .detail-body {
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      border-top: 1px solid var(--glass-border);
+      padding: 6rem 4rem;
     }
+    .detail-body-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 6rem; }
 
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--gold);
+    .desc-block h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem;
+    }
+    .desc-block p { font-size: 0.98rem; line-height: 1.95; color: var(--muted); margin-bottom: 1.2rem; }
+    .desc-block ul { list-style: none; margin: 1.5rem 0; }
+    .desc-block ul li {
+      padding: 0.65rem 0; border-bottom: 1px solid var(--glass-border);
+      font-size: 0.92rem; color: var(--muted);
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .desc-block ul li::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 0.05rem; }
+
+    .dl-sidebar h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .dl-eyebrow { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .dl-intro { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+
+    .dl-card {
+      border: 1px solid var(--glass-border); padding: 1.4rem;
       margin-bottom: 1rem;
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.2s;
     }
-
-    .footer-text {
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      letter-spacing: 0.05em;
+    .dl-card:hover { border-color: rgba(232,200,74,0.3); }
+    .dl-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .dl-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .dl-desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+    .btn-dl {
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.6rem 1rem; background: var(--accent-dim);
+      border: 1px solid rgba(232,200,74,0.4); color: var(--accent);
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; text-decoration: none; width: 100%;
     }
+    .btn-dl:hover { background: var(--accent); color: var(--black); }
+    .btn-dl.disabled { opacity: 0.35; pointer-events: none; }
 
-    /* ─── ANIMATIONS ─── */
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 600px) {
-      .hero { padding: 5rem 1.5rem; }
-      .section { padding: 5rem 1.5rem; }
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.5rem 4rem; }
+      .books-wrapper { padding: 4rem 1.5rem; }
+      .detail-hero-wrap { grid-template-columns: 1fr; }
+      .detail-info-wrap { padding: 3rem 1.5rem; }
+      .detail-body { padding: 4rem 1.5rem; }
+      .detail-body-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-glass { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
+<!-- Fixed parallax background -->
+<div class="parallax-bg"></div>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div class="page active content-layer" id="page-home">
+
+  <nav id="mainNav">
+    <a class="nav-logo" onclick="showPage('home')">Discover<em>Visually</em></a>
+    <ul class="nav-links">
+      <li><a onclick="scrollToBooks()">Books</a></li>
+      <li><a href="mailto:hello@discovervisually.com">Contact</a></li>
+    </ul>
+  </nav>
+
   <!-- HERO -->
   <section class="hero">
-    <div class="ornament">✦ &nbsp; D I S C O V E R V I S U A L L Y &nbsp; ✦</div>
-    <h1 class="hero-title">Visual Gift Books<br>for <em>Young Minds</em></h1>
-    <div class="hero-divider"><span>✦</span></div>
-    <p class="hero-sub">Beautifully illustrated infographic books that make faith, learning, and wonder accessible to every child.</p>
-    <div class="hero-cta">
-      <a href="#books" class="btn">Explore Our Books</a>
+    <div class="hero-label">Visual Publishing House</div>
+    <h1 class="hero-title">
+      Books that<br><span class="italic">make you see</span>
+    </h1>
+    <p class="hero-sub">Premium illustrated books that transform complex ideas into stunning visual experiences — for curious minds of all ages.</p>
+    <a class="hero-btn" onclick="scrollToBooks()">Explore Our Books</a>
+    <div class="hero-scroll-hint">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-bar"></div>
     </div>
   </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">Visual Storytelling<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Premium Illustration<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Infographic Design<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Gift Books<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Early Readers<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Visual Storytelling<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Premium Illustration<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Infographic Design<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Gift Books<span class="marquee-sep">✦</span></span>
+      <span class="marquee-item">Early Readers<span class="marquee-sep">✦</span></span>
+    </div>
+  </div>
 
   <!-- BOOKS -->
-  <section class="section" id="books">
-    <p class="section-label">Our Collection</p>
-    <h2 class="section-title">Books That <em>Inspire</em></h2>
-    <div class="section-line"></div>
+  <section class="glass-section" id="books">
+    <div class="books-wrapper">
+      <div class="section-head">
+        <h2 class="section-cat">Spiritual</h2>
+        <span class="section-count">2 titles</span>
+      </div>
+      <div class="books-grid">
 
-    <div class="books-grid">
-
-      <!-- Book 1 -->
-      <div class="book-card">
-        <div class="book-cover-placeholder">
-          <span class="coming-soon">Available Soon</span>
+        <!-- Book 1 -->
+        <div class="book-card" onclick="showPage('detail')">
+          <div class="cover-wrap">
+            <div class="cover-img">
+              <div class="cover-placeholder">
+                <div class="cover-icon">✝</div>
+                <span>Add Cover Image</span>
+              </div>
+            </div>
+            <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Gift Book · Ages 6–9</div>
+            <div class="card-title">My First Holy Communion through Infographics</div>
+            <div class="card-author">B. B. Sterling</div>
+            <div class="card-btns">
+              <a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()">
+                <span class="amz-a">a</span> Buy on Amazon
+              </a>
+              <button class="btn-dtl" onclick="event.stopPropagation();showPage('detail')">Details</button>
+            </div>
+          </div>
         </div>
-        <div class="book-title">My First Holy Communion<br>through Infographics</div>
-        <div class="book-subtitle">A Gift Book — B. B. Sterling</div>
-        <p class="book-desc">A visual journey through faith — stunning infographics, sacred symbols, and the story of Jesus for early readers aged 6–9.</p>
-        <span class="book-badge">Early Reader Edition · Ages 6–9</span>
-      </div>
 
-      <!-- Placeholder 2 -->
-      <div class="book-card">
-        <div class="book-cover-placeholder"></div>
-        <div class="book-title">Coming Soon</div>
-        <div class="book-subtitle">New title in 2025</div>
-        <p class="book-desc">Another beautiful visual gift book is on its way. Stay tuned for our next illustrated journey.</p>
-        <span class="book-badge">Coming Soon</span>
-      </div>
+        <!-- Coming Soon -->
+        <div class="book-card soon">
+          <div class="cover-wrap">
+            <div class="cover-img">
+              <div class="cover-placeholder">
+                <div class="cover-icon" style="font-size:1rem">◎</div>
+              </div>
+            </div>
+            <span class="soon-badge">Coming Soon</span>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Coming 2026</div>
+            <div class="card-title">New Title</div>
+            <div class="card-author">DiscoverVisually</div>
+            <div class="card-btns">
+              <button class="btn-amz" style="opacity:0.4;cursor:default;" disabled>
+                <span class="amz-a">a</span> Coming Soon
+              </button>
+            </div>
+          </div>
+        </div>
 
-      <!-- Placeholder 3 -->
-      <div class="book-card">
-        <div class="book-cover-placeholder"></div>
-        <div class="book-title">Coming Soon</div>
-        <div class="book-subtitle">New title in 2025</div>
-        <p class="book-desc">We are working on something extraordinary. Every page will be worth the wait.</p>
-        <span class="book-badge">Coming Soon</span>
       </div>
-
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about-section">
-    <div class="about-inner">
-      <p class="section-label">Our Philosophy</p>
-      <blockquote class="about-quote">
-        "Every child deserves to <em>see</em> what they believe —<br>not just read about it."
-      </blockquote>
-      <div class="section-line"></div>
-      <p class="about-text">
-        DiscoverVisually creates premium illustrated gift books that combine early reader text with rich, detailed infographics. Our books are designed to be read together, treasured for years, and returned to again and again — because the best books grow with the reader.
-      </p>
+  <div class="footer-glass">
+    <div class="footer-logo">Discover<em>Visually</em></div>
+    <div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div>
+  </div>
+
+</div>
+
+<!-- ══════════ DETAIL PAGE ══════════ -->
+<div class="page content-layer" id="page-detail">
+
+  <nav>
+    <a class="nav-logo" onclick="showPage('home')">Discover<em>Visually</em></a>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')">← All Books</a></li>
+    </ul>
+  </nav>
+
+  <div class="detail-hero-wrap">
+    <div class="detail-img">
+      <div class="detail-img-placeholder">✝</div>
     </div>
-  </section>
+    <div class="detail-info-wrap">
+      <button class="back-link" onclick="showPage('home')">← Back to Books</button>
+      <div class="detail-tag-sm">Gift Book · Ages 6–9</div>
+      <h1 class="detail-h1">My First Holy Communion<br><em style="font-weight:400;">through Infographics</em></h1>
+      <div class="detail-author-sm">by B. B. Sterling</div>
+      <div class="meta-row">
+        <div class="meta-cell"><span class="meta-lbl">Pages</span><span class="meta-val">48</span></div>
+        <div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div>
+        <div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">6–9 years</span></div>
+        <div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div>
+      </div>
+      <a class="btn-amz-lg" href="https://www.amazon.com" target="_blank">
+        <span style="font-size:1.3rem;font-weight:900;">a</span>
+        Buy on Amazon — $21.99
+      </a>
+    </div>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">DiscoverVisually</div>
-    <p class="footer-text">Visual Gift Books for Children &nbsp;·&nbsp; © 2025 DiscoverVisually</p>
-  </footer>
+  <div class="detail-body">
+    <div class="detail-body-inner">
+      <div class="desc-block">
+        <h2>About This Book</h2>
+        <p>The perfect First Communion gift — a stunning visual keepsake your child will treasure for a lifetime.</p>
+        <p>Most children arrive at the altar dressed beautifully — but confused. They memorize prayers without knowing what they mean. They receive Jesus for the first time without understanding the miracle taking place in their hands.</p>
+        <p><em style="color:var(--text);font-style:normal;">This book changes that.</em></p>
+        <p>My First Holy Communion through Infographics combines early reader text with 20+ detailed infographics — making the faith come alive for children ages 6–9 in a way no ordinary book can.</p>
+        <h2 style="margin-top:3rem;">What's Inside</h2>
+        <ul>
+          <li>The story of Jesus — His life, the Last Supper, the Resurrection — beautifully illustrated</li>
+          <li>Step-by-step guide to Confession — so your child arrives prepared and confident</li>
+          <li>Exactly what happens at Mass — a complete visual walkthrough of every moment</li>
+          <li>How to receive Holy Communion — both options explained clearly with illustrations</li>
+          <li>Sacred symbols explained — the chalice, the host, the candle, the rosary, the white garment</li>
+          <li>The Our Father — every line visualized in stunning Renaissance-inspired illustration</li>
+          <li>2,000 years of the Eucharist — a historical journey from the Last Supper to today</li>
+          <li>How to Pray the Rosary — complete step-by-step guide</li>
+          <li>Interactive memory pages — for the child to fill in and treasure forever</li>
+        </ul>
+      </div>
 
+      <div class="dl-sidebar">
+        <div class="dl-eyebrow">Free Bonus Pack</div>
+        <h3>Included Downloads</h3>
+        <p class="dl-intro">Scan the QR code inside the book — or download your free printables directly here.</p>
+
+        <div class="dl-card">
+          <div class="dl-icon">🏆</div>
+          <div class="dl-title">First Communion Certificate</div>
+          <div class="dl-desc">A beautifully designed printable certificate. Space for your child's name, date, church and priest. Ready to print and frame.</div>
+          <a class="btn-dl disabled" href="#">↓ Coming Soon</a>
+        </div>
+
+        <div class="dl-card">
+          <div class="dl-icon">✝</div>
+          <div class="dl-title">The Our Father — Illustrated Poster</div>
+          <div class="dl-desc">Every line of the Lord's Prayer brought to life through illustration. A stunning A4 print for your child's room.</div>
+          <a class="btn-dl disabled" href="#">↓ Coming Soon</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-glass">
+    <div class="footer-logo">Discover<em>Visually</em></div>
+    <div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div>
+  </div>
+
+</div>
+
+<script>
+  // Page switching
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function scrollToBooks() {
+    showPage('home');
+    setTimeout(() => document.getElementById('books').scrollIntoView({ behavior: 'smooth' }), 80);
+  }
+
+  // Nav border on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 60);
+  });
+</script>
 </body>
 </html>
