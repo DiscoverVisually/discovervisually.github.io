@@ -309,7 +309,7 @@
     <a class="nav-logo" onclick="showPage('home')">Discover<em>Visually</em></a>
     <ul class="nav-links">
       <li><a onclick="scrollToBooks()">Books</a></li>
-      <li><a href="mailto:hello@discovervisually.com">Contact</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#5e363b3232311e3a372d3d31283b2c28372d2b3f323227703d3133">Contact</a></li>
     </ul>
   </nav>
 
@@ -458,13 +458,13 @@
           <div class="dl-icon">🏆</div>
           <div class="dl-title">First Communion Certificate</div>
           <div class="dl-desc">A beautifully designed printable certificate. Space for your child's name, date, church and priest. Ready to print and frame.</div>
-          <a class="btn-dl disabled" href="#">↓ Coming Soon</a>
+          <a class="btn-dl" href="first-communion-certificate.pdf" download="First-Communion-Certificate-DiscoverVisually.pdf">↓ Free Download</a>
         </div>
         <div class="dl-card">
           <div class="dl-icon">✝</div>
           <div class="dl-title">The Our Father — Illustrated Poster</div>
           <div class="dl-desc">Every line of the Lord's Prayer brought to life through illustration. A stunning A4 print for your child's room.</div>
-          <a class="btn-dl disabled" href="#">↓ Coming Soon</a>
+          <a class="btn-dl" href="our-father-poster.pdf" download="Our-Father-Illustrated-Poster-DiscoverVisually.pdf">↓ Free Download</a>
         </div>
       </div>
     </div>
@@ -542,7 +542,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
@@ -553,9 +553,4 @@
     showPage('home');
     setTimeout(() => document.getElementById('books').scrollIntoView({ behavior: 'smooth' }), 80);
   }
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 60);
-  });
-</script>
-</body>
-</html>
+  window.a
