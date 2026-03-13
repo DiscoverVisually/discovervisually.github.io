@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fix The Chain — Chain of Worlds Math Game</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --world-bg: #0a0a0f;
+    --world-accent: #f5a623;
+    --world-glow: #ff6b00;
+    --world-secondary: #4a90d9;
+    --hp-color: #ff4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #game-container {
+    width: 480px;
+    height: 700px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 0 60px rgba(245,166,35,0.3), 0 0 120px rgba(245,166,35,0.1);
+    border: 2px solid rgba(245,166,35,0.4);
+  }
+
+  /* BACKGROUND CANVAS */
+  #bg-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  /* SCREENS */
+  .screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s;
+  }
+  .screen.hidden { display: none; }
+
+  /* START SCREEN */
+  #start-screen {
+    background: linear-gradient(180deg, #0d0d1a 0%, #1a0a00 100%);
+  }
+
+  .title-chain {
+    font-family: 'Bangers', cursive;
+    font-size: 48px;
+    color: #f5a623;
+    text-shadow: 0 0 20px rgba(245,166,35,0.8), 3px 3px 0 #7a3500;
+    letter-spacing: 3px;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .title-sub {
+    font-family: 'Bangers', cursive;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+
+  .klik-bubble {
+    background: rgba(255,255,255,0.95);
+    border: 3px solid #f5a623;
+    border-radius: 16px;
+    padding: 14px 20px;
+    max-width: 320px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a0a00;
+    margin-bottom: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .klik-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: #f5a623;
+  }
+  .klik-name {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .world-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    max-width: 340px;
+    margin-bottom: 28px;
+  }
+  .world-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+  }
+
+  .btn-start {
+    background: linear-gradient(135deg, #f5a623, #ff6b00);
+    border: none;
+    border-radius: 12px;
+    padding: 16px 48px;
+    font-family: 'Bangers', cursive;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.5), 0 2px 0 #7a3500;
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245,166,35,0.7), 0 2px 0 #7a3500; }
+  .btn-start:active { transform: translateY(1px); }
+
+  /* HUD */
+  #hud {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+  }
+
+  #world-name {
+    font-family: 'Bangers', cursive;
+    font-size: 15px;
+    color: var(--world-accent);
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px var(--world-glow);
+  }
+
+  #lives-display {
+    display: flex;
+    gap: 4px;
+  }
+  .heart {
+    font-size: 20px;
+    filter: drop-shadow(0 0 4px #ff4444);
+    transition: transform 0.3s;
+  }
+  .heart.lost {
+    filter: grayscale(1) opacity(0.3);
+    transform: scale(0.8);
+  }
+
+  #score-display {
+    font-family: 'Bangers', cursive;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+
+  /* WORLD PROGRESS BAR */
+  #progress-bar-container {
+    position: absolute;
+    top: 44px;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    z-index: 20;
+    overflow: hidden;
+  }
+  #progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--world-accent), var(--world-glow));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px var(--world-glow);
+  }
+
+  /* CHAIN LINKS DISPLAY */
+  #chain-display {
+    position: absolute;
+    top: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 20;
+  }
+  .chain-link {
+    width: 20px;
+    height: 12px;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  .chain-link.fixed {
+    border-color: var(--world-accent);
+    background: rgba(245,166,35,0.3);
+    box-shadow: 0 0 6px var(--world-glow);
+  }
+
+  /* GAME AREA */
+  #game-area {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 5;
+  }
+
+  /* FALLING PROBLEM */
+  .falling-problem {
+    position: absolute;
+    background: rgba(10,10,20,0.9);
+    border: 2px solid var(--world-accent);
+    border-radius: 10px;
+    padding: 10px 16px;
+    text-align: center;
+    box-shadow: 0 0 16px rgba(245,166,35,0.3), inset 0 0 20px rgba(0,0,0,0.5);
+    min-width: 120px;
+    z-index: 15;
+  }
+  .problem-text {
+    font-family: 'Bangers', cursive;
+    font-size: 26px;
+    color: #fff;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(245,166,35,0.5);
+  }
+  .problem-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  /* ANSWER OPTIONS */
+  #answers-panel {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    padding: 0 16px;
+    z-index: 20;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .answer-btn {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 14px 0;
+    font-family: 'Bangers', cursive;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    max-width: 100px;
+  }
+  .answer-btn:hover {
+    background: linear-gradient(135deg, rgba(245,166,35,0.3), rgba(255,107,0,0.2));
+    border-color: var(--world-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(245,166,35,0.3);
+  }
+  .answer-btn.correct {
+    background: linear-gradient(135deg, rgba(0,200,80,0.4), rgba(0,150,50,0.3));
+    border-color: #00e055;
+    box-shadow: 0 0 20px rgba(0,200,80,0.5);
+    animation: correctPop 0.4s ease;
+  }
+  .answer-btn.wrong {
+    background: linear-gradient(135deg, rgba(255,50,50,0.4), rgba(200,0,0,0.3));
+    border-color: #ff3333;
+    box-shadow: 0 0 20px rgba(255,50,50,0.5);
+    animation: wrongShake 0.4s ease;
+  }
+  @keyframes correctPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  @keyframes wrongShake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* ACE CHARACTER */
+  #ace {
+    position: absolute;
+    bottom: 78px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 18;
+    font-size: 48px;
+    animation: aceFloat 2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+    transition: left 0.3s ease;
+    user-select: none;
+  }
+  @keyframes aceFloat {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+  }
+
+  /* GROUND */
+  #ground {
+    position: absolute;
+    bottom: 72px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--world-accent), transparent);
+    opacity: 0.4;
+    z-index: 16;
+  }
+
+  /* FEEDBACK FLASH */
+  #feedback-flash {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 25;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+  #feedback-flash.correct-flash {
+    background: radial-gradient(circle, rgba(0,200,80,0.2) 0%, transparent 70%);
+    opacity: 1;
+    animation: flashFade 0.5s forwards;
+  }
+  #feedback-flash.wrong-flash {
+    background: radial-gradient(circle, rgba(255,50,50,0.3) 0%, transparent 70%);
+    opacity: 1;
+    animation: flashFade 0.5s forwards;
+  }
+  @keyframes flashFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* WORLD TRANSITION */
+  #world-transition {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+  }
+  #world-transition.show {
+    animation: transitionAnim 1.8s forwards;
+  }
+  @keyframes transitionAnim {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  .transition-text {
+    font-family: 'Bangers', cursive;
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 0 0 20px var(--world-glow), 2px 2px 0 rgba(0,0,0,0.5);
+    letter-spacing: 3px;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .transition-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* FLOATING SCORE */
+  .float-score {
+    position: absolute;
+    font-family: 'Bangers', cursive;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 25;
+    animation: floatUp 1s forwards ease-out;
+  }
+  .float-score.plus { color: #00e055; text-shadow: 0 0 10px rgba(0,200,80,0.8); }
+  .float-score.minus { color: #ff3333; text-shadow: 0 0 10px rgba(255,50,50,0.8); }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-60px); }
+  }
+
+  /* GAME OVER / WIN SCREENS */
+  #gameover-screen, #win-screen {
+    background: linear-gradient(180deg, #0d0d1a 0%, #1a0800 100%);
+  }
+
+  .result-icon { font-size: 72px; margin-bottom: 12px; }
+  .result-title {
+    font-family: 'Bangers', cursive;
+    font-size: 52px;
+    color: var(--world-accent);
+    text-shadow: 0 0 20px rgba(245,166,35,0.6), 3px 3px 0 #7a3500;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .result-klik {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 12px 20px;
+    max-width: 300px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+    margin: 16px 0 24px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .btn-retry {
+    background: linear-gradient(135deg, #f5a623, #ff6b00);
+    border: none;
+    border-radius: 12px;
+    padding: 14px 40px;
+    font-family: 'Bangers', cursive;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.4);
+    transition: transform 0.1s;
+    margin-bottom: 10px;
+  }
+  .btn-retry:hover { transform: translateY(-2px); }
+
+  /* CHAIN ANIM on win */
+  .chain-fixed-display {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .chain-fixed-display span {
+    font-size: 22px;
+    animation: chainPop 0.3s ease both;
+  }
+
+  /* COMBO */
+  #combo-display {
+    position: absolute;
+    top: 80px;
+    right: 16px;
+    z-index: 20;
+    text-align: right;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  #combo-display.show { opacity: 1; }
+  .combo-text {
+    font-family: 'Bangers', cursive;
+    font-size: 20px;
+    color: #ffdd00;
+    text-shadow: 0 0 10px rgba(255,220,0,0.8);
+    letter-spacing: 1px;
+  }
+  .combo-sub { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 700; }
+
+  /* TIMER BAR */
+  #timer-bar-container {
+    position: absolute;
+    bottom: 68px;
+    left: 16px;
+    right: 16px;
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    z-index: 20;
+  }
+  #timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00e055, #f5a623, #ff3333);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+</style>
+</head>
+<body>
+
+<div id="game-container">
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- START SCREEN -->
+  <div class="screen" id="start-screen">
+    <div class="title-chain">FIX THE<br>CHAIN</div>
+    <div class="title-sub">⛓ A CHAIN OF WORLDS GAME</div>
+
+    <div class="klik-bubble">
+      "The Chain is breaking. Ace needs your math skills.<br>
+      Answer correctly. Or don't. See what happens."
+      <div class="klik-name">— KLIK, Mechanical Beetle</div>
+    </div>
+
+    <div class="world-pills">
+      <div class="world-pill">⚙️ Gears</div>
+      <div class="world-pill">🌲 Forest</div>
+      <div class="world-pill">🌊 Deep</div>
+      <div class="world-pill">🙃 Upside</div>
+      <div class="world-pill">⏰ Frozen</div>
+      <div class="world-pill">🌑 Night</div>
+      <div class="world-pill">🌋 Lava</div>
+      <div class="world-pill">✨ Center</div>
+    </div>
+
+    <button class="btn-start" onclick="startGame()">SAVE THE WORLDS</button>
+    <div style="margin-top:12px; font-size:12px; color:rgba(255,255,255,0.3); font-weight:700;">TAP THE CORRECT ANSWER — 3 LIVES — 8 WORLDS</div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" style="display:none;">
+    <div id="world-name">⚙️ GEARS WORLD</div>
+    <div id="lives-display">
+      <span class="heart" id="h1">❤️</span>
+      <span class="heart" id="h2">❤️</span>
+      <span class="heart" id="h3">❤️</span>
+    </div>
+    <div id="score-display">0 pts</div>
+  </div>
+
+  <div id="progress-bar-container" style="display:none;">
+    <div id="progress-bar" style="width:0%"></div>
+  </div>
+
+  <div id="chain-display" style="display:none;"></div>
+
+  <!-- COMBO -->
+  <div id="combo-display">
+    <div class="combo-text" id="combo-text">🔥 x3</div>
+    <div class="combo-sub">COMBO BONUS</div>
+  </div>
+
+  <!-- GAME AREA -->
+  <div id="game-area" style="display:none;"></div>
+
+  <!-- ACE -->
+  <div id="ace" style="display:none;">🧭</div>
+  <div id="ground" style="display:none;"></div>
+
+  <!-- TIMER BAR -->
+  <div id="timer-bar-container" style="display:none;">
+    <div id="timer-bar" style="width:100%"></div>
+  </div>
+
+  <!-- ANSWER PANEL -->
+  <div id="answers-panel" style="display:none;"></div>
+
+  <!-- FEEDBACK -->
+  <div id="feedback-flash"></div>
+
+  <!-- WORLD TRANSITION -->
+  <div id="world-transition">
+    <div class="transition-text" id="transition-text">WORLD FIXED!</div>
+    <div class="transition-sub" id="transition-sub">⚙️ Gears World → 🌲 Forest</div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div class="screen hidden" id="gameover-screen">
+    <div class="result-icon">💀</div>
+    <div class="result-title">CHAIN<br>BROKEN</div>
+    <div class="result-score" id="go-score">Score: 0 pts</div>
+    <div class="result-score" id="go-world">Reached: World 1 of 8</div>
+    <div class="result-klik" id="go-klik">"I told you so."<br>— KLIK</div>
+    <button class="btn-retry" onclick="restartGame()">TRY AGAIN</button>
+    <button class="btn-retry" style="background:rgba(255,255,255,0.1);font-size:16px;padding:10px 30px;" onclick="showStart()">MAIN MENU</button>
+  </div>
+
+  <!-- WIN SCREEN -->
+  <div class="screen hidden" id="win-screen">
+    <div class="result-icon">⛓✨</div>
+    <div class="result-title">CHAIN<br>FIXED!</div>
+    <div class="chain-fixed-display">
+      <span>⚙️</span><span>🌲</span><span>🌊</span><span>🙃</span>
+      <span>⏰</span><span>🌑</span><span>🌋</span><span>✨</span>
+    </div>
+    <div class="result-score" id="win-score">Final Score: 0 pts</div>
+    <div class="result-klik">"All 8 worlds. You actually did it.<br>Don't make it a big deal."<br>— KLIK</div>
+    <button class="btn-retry" onclick="restartGame()">PLAY AGAIN</button>
+    <button class="btn-retry" style="background:rgba(255,255,255,0.1);font-size:16px;padding:10px 30px;" onclick="showStart()">MAIN MENU</button>
+  </div>
+</div>
+
+<script>
+// =====================
+// WORLD DATA
+// =====================
+const WORLDS = [
+  {
+    id: 0, name: "⚙️ GEARS WORLD", emoji: "⚙️",
+    bg1: "#1a0e00", bg2: "#2d1800", accent: "#cd7f32", glow: "#ff9900",
+    topic: "Place Value",
+    aceEmoji: "🧭",
+    particles: ["⚙","🔩","⚡"],
+    questions: [
+      { q: "3 hundreds\n4 tens 2 ones = ?", a: 342, wrong: [234, 432, 324] },
+      { q: "What is\n500 + 60 + 7?", a: 567, wrong: [576, 657, 765] },
+      { q: "Which is\nbiggest?\n472 or 427?", a: "472", wrong: ["427", "equal", "274"] },
+      { q: "700 + 30 + 5\n= ?", a: 735, wrong: [753, 537, 375] },
+      { q: "2 hundreds\n8 tens = ?", a: 280, wrong: [208, 820, 802] },
+    ]
+  },
+  {
+    id: 1, name: "🌲 ANCIENT FOREST", emoji: "🌲",
+    bg1: "#001a00", bg2: "#0a2d00", accent: "#4CAF50", glow: "#00ff44",
+    topic: "Addition to 1000",
+    aceEmoji: "🧭",
+    particles: ["🍃","✨","🌿"],
+    questions: [
+      { q: "300 + 256\n= ?", a: 556, wrong: [546, 566, 256] },
+      { q: "425 + 130\n= ?", a: 555, wrong: [545, 565, 455] },
+      { q: "614 + 215\n= ?", a: 829, wrong: [819, 839, 728] },
+      { q: "500 + 342\n= ?", a: 842, wrong: [832, 852, 742] },
+      { q: "111 + 888\n= ?", a: 999, wrong: [998, 1000, 989] },
+    ]
+  },
+  {
+    id: 2, name: "🌊 UNDER THE SEA", emoji: "🌊",
+    bg1: "#00101a", bg2: "#00152d", accent: "#0099cc", glow: "#00ccff",
+    topic: "Subtraction to 1000",
+    aceEmoji: "🧭",
+    particles: ["🐟","💧","🫧"],
+    questions: [
+      { q: "456 − 231\n= ?", a: 225, wrong: [235, 215, 325] },
+      { q: "789 − 345\n= ?", a: 444, wrong: [434, 454, 443] },
+      { q: "600 − 200\n= ?", a: 400, wrong: [300, 500, 410] },
+      { q: "543 − 210\n= ?", a: 333, wrong: [323, 343, 433] },
+      { q: "870 − 430\n= ?", a: 440, wrong: [430, 450, 340] },
+    ]
+  },
+  {
+    id: 3, name: "🙃 UPSIDE DOWN", emoji: "🙃",
+    bg1: "#0d0d1a", bg2: "#1a1a2d", accent: "#9b59b6", glow: "#cc44ff",
+    topic: "Addition with Carry",
+    aceEmoji: "🧭",
+    particles: ["🌀","⬆️","🔄"],
+    questions: [
+      { q: "47 + 38\n= ?", a: 85, wrong: [75, 95, 83] },
+      { q: "56 + 27\n= ?", a: 83, wrong: [73, 93, 84] },
+      { q: "65 + 18\n= ?", a: 83, wrong: [73, 93, 82] },
+      { q: "49 + 34\n= ?", a: 83, wrong: [74, 93, 82] },
+      { q: "76 + 15\n= ?", a: 91, wrong: [81, 90, 89] },
+    ]
+  },
+  {
+    id: 4, name: "⏰ FROZEN TIME", emoji: "⏰",
+    bg1: "#001020", bg2: "#001530", accent: "#87ceeb", glow: "#aaddff",
+    topic: "Telling Time",
+    aceEmoji: "🧭",
+    particles: ["❄️","⏰","💎"],
+    questions: [
+      { q: "Hour hand→3\nMinute→12\nTime = ?", a: "3:00", wrong: ["3:30", "12:03", "3:15"] },
+      { q: "Hour hand→7\nMinute→6\nTime = ?", a: "7:30", wrong: ["7:06", "6:35", "7:25"] },
+      { q: "Hour hand→9\nMinute→3\nTime = ?", a: "9:15", wrong: ["3:09", "9:03", "9:30"] },
+      { q: "Half past\n5 = ?", a: "5:30", wrong: ["5:00", "6:00", "5:15"] },
+      { q: "Quarter\npast 4 = ?", a: "4:15", wrong: ["4:45", "4:30", "15:04"] },
+    ]
+  },
+  {
+    id: 5, name: "🌑 ETERNAL NIGHT", emoji: "🌑",
+    bg1: "#05000f", bg2: "#0a0020", accent: "#ffd700", glow: "#ffaa00",
+    topic: "Inches & Feet",
+    aceEmoji: "🧭",
+    particles: ["⭐","💫","🌟"],
+    questions: [
+      { q: "1 foot\n= ? inches", a: 12, wrong: [10, 6, 24] },
+      { q: "Crystal is\n8 inches.\nRuler at 0→?\nends at:", a: 8, wrong: [6, 10, 12] },
+      { q: "24 inches\n= ? feet", a: 2, wrong: [3, 4, 1] },
+      { q: "Longer:\n9 inches or\n1 foot?", a: "1 foot", wrong: ["9 inches", "equal", "2 feet"] },
+      { q: "36 inches\n= ? feet", a: 3, wrong: [2, 4, 6] },
+    ]
+  },
+  {
+    id: 6, name: "🌋 LIVING EARTH", emoji: "🌋",
+    bg1: "#1a0400", bg2: "#2d0800", accent: "#ff6b00", glow: "#ff3300",
+    topic: "Subtraction Borrow",
+    aceEmoji: "🧭",
+    particles: ["🌋","🔥","💥"],
+    questions: [
+      { q: "52 − 37\n= ?", a: 15, wrong: [25, 5, 17] },
+      { q: "64 − 38\n= ?", a: 26, wrong: [36, 16, 28] },
+      { q: "83 − 47\n= ?", a: 36, wrong: [46, 26, 34] },
+      { q: "72 − 48\n= ?", a: 24, wrong: [34, 14, 26] },
+      { q: "91 − 56\n= ?", a: 35, wrong: [45, 25, 37] },
+    ]
+  },
+  {
+    id: 7, name: "✨ WORLD OF CENTER", emoji: "✨",
+    bg1: "#0a000f", bg2: "#150020", accent: "#ffffff", glow: "#cc88ff",
+    topic: "Mixed Review ★",
+    aceEmoji: "🧭",
+    particles: ["⛓","✨","🌈"],
+    questions: [
+      { q: "456 − 231\n= ?", a: 225, wrong: [235, 215, 325] },
+      { q: "47 + 38\n= ?", a: 85, wrong: [75, 95, 83] },
+      { q: "1 foot\n= ? inches", a: 12, wrong: [10, 6, 24] },
+      { q: "300 + 542\n= ?", a: 842, wrong: [832, 852, 742] },
+      { q: "83 − 47\n= ?", a: 36, wrong: [46, 26, 34] },
+      { q: "Half past\n11 = ?", a: "11:30", wrong: ["11:00", "12:30", "11:15"] },
+    ]
+  }
+];
+
+// =====================
+// GAME STATE
+// =====================
+let state = {
+  screen: 'start',
+  worldIdx: 0,
+  lives: 3,
+  score: 0,
+  combo: 0,
+  questionIdx: 0,
+  questionsInWorld: 0,
+  totalQPerWorld: 5,
+  answered: false,
+  timerInterval: null,
+  timerVal: 100,
+  fallingEl: null,
+  fallingInterval: null,
+  particles: [],
+  animFrame: null,
+  bgColors: { bg1: "#0a0a0f", bg2: "#1a0a00", accent: "#f5a623" },
+};
+
+// =====================
+// CANVAS BACKGROUND
+// =====================
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 480;
+canvas.height = 700;
+
+let bgParticles = [];
+
+function initParticles() {
+  bgParticles = [];
+  const world = WORLDS[state.worldIdx];
+  for (let i = 0; i < 18; i++) {
+    bgParticles.push({
+      x: Math.random() * 480,
+      y: Math.random() * 700,
+      emoji: world.particles[Math.floor(Math.random() * world.particles.length)],
+      speed: 0.3 + Math.random() * 0.5,
+      size: 12 + Math.random() * 14,
+      opacity: 0.1 + Math.random() * 0.25,
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: 0.01 + Math.random() * 0.02,
+    });
+  }
+}
+
+function drawBg() {
+  const w = WORLDS[state.worldIdx] || WORLDS[0];
+  // Gradient bg
+  const grad = ctx.createLinearGradient(0, 0, 0, 700);
+  grad.addColorStop(0, w.bg1);
+  grad.addColorStop(1, w.bg2);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 480, 700);
+
+  // Ambient glow at bottom
+  const glow = ctx.createRadialGradient(240, 650, 0, 240, 650, 300);
+  glow.addColorStop(0, w.glow + '33');
+  glow.addColorStop(1, 'transparent');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, 480, 700);
+
+  // Particles
+  bgParticles.forEach(p => {
+    p.y -= p.speed;
+    p.wobble += p.wobbleSpeed;
+    p.x += Math.sin(p.wobble) * 0.5;
+    if (p.y < -30) { p.y = 730; p.x = Math.random() * 480; }
+
+    ctx.globalAlpha = p.opacity;
+    ctx.font = `${p.size}px serif`;
+    ctx.fillText(p.emoji, p.x, p.y);
+    ctx.globalAlpha = 1;
+  });
+}
+
+function bgLoop() {
+  if (state.screen === 'game' || state.screen === 'transition') {
+    drawBg();
+  }
+  state.animFrame = requestAnimationFrame(bgLoop);
+}
+
+// =====================
+// APPLY WORLD THEME
+// =====================
+function applyWorldTheme(idx) {
+  const w = WORLDS[idx];
+  document.documentElement.style.setProperty('--world-accent', w.accent);
+  document.documentElement.style.setProperty('--world-glow', w.glow);
+  document.getElementById('world-name').textContent = w.name;
+  document.getElementById('ace').textContent = w.aceEmoji;
+  initParticles();
+  updateChainDisplay();
+}
+
+function updateChainDisplay() {
+  const cd = document.getElementById('chain-display');
+  cd.innerHTML = '';
+  for (let i = 0; i < 8; i++) {
+    const link = document.createElement('div');
+    link.className = 'chain-link' + (i < state.worldIdx ? ' fixed' : '');
+    cd.appendChild(link);
+  }
+}
+
+// =====================
+// START GAME
+// =====================
+function startGame() {
+  document.getElementById('start-screen').classList.add('hidden');
+  state.screen = 'game';
+  state.worldIdx = 0;
+  state.lives = 3;
+  state.score = 0;
+  state.combo = 0;
+  state.questionIdx = 0;
+  state.questionsInWorld = 0;
+
+  showGameUI();
+  applyWorldTheme(0);
+  bgLoop();
+  nextQuestion();
+}
+
+function showGameUI() {
+  document.getElementById('hud').style.display = 'flex';
+  document.getElementById('progress-bar-container').style.display = 'block';
+  document.getElementById('chain-display').style.display = 'flex';
+  document.getElementById('game-area').style.display = 'block';
+  document.getElementById('ace').style.display = 'block';
+  document.getElementById('ground').style.display = 'block';
+  document.getElementById('answers-panel').style.display = 'flex';
+  document.getElementById('timer-bar-container').style.display = 'block';
+  updateScoreDisplay();
+  updateLivesDisplay();
+}
+
+// =====================
+// QUESTION LOGIC
+// =====================
+function getQuestion() {
+  const world = WORLDS[state.worldIdx];
+  const pool = world.questions;
+  return pool[state.questionsInWorld % pool.length];
+}
+
+function nextQuestion() {
+  state.answered = false;
+  clearTimer();
+  removeCurrentProblem();
+
+  const world = WORLDS[state.worldIdx];
+  const q = getQuestion();
+
+  // Update progress
+  const prog = (state.questionsInWorld / state.totalQPerWorld) * 100;
+  document.getElementById('progress-bar').style.width = prog + '%';
+
+  // Create falling problem
+  const el = document.createElement('div');
+  el.className = 'falling-problem';
+  el.innerHTML = `<div class="problem-text">${q.q.replace(/\n/g, '<br>')}</div>
+                  <div class="problem-label">${world.topic}</div>`;
+  el.style.left = (80 + Math.random() * 200) + 'px';
+  el.style.top = '-100px';
+  el.style.borderColor = world.accent;
+  el.style.boxShadow = `0 0 16px ${world.glow}44, inset 0 0 20px rgba(0,0,0,0.5)`;
+  document.getElementById('game-area').appendChild(el);
+  state.fallingEl = el;
+
+  // Animate falling
+  let posY = -100;
+  const targetY = 160;
+  const fallSpeed = 2.5;
+  function fall() {
+    if (posY < targetY) {
+      posY += fallSpeed;
+      el.style.top = posY + 'px';
+      state.fallingInterval = requestAnimationFrame(fall);
+    } else {
+      el.style.top = targetY + 'px';
+      startTimer();
+    }
+  }
+  fall();
+
+  // Shuffle answers
+  const allAnswers = [q.a, ...q.wrong].sort(() => Math.random() - 0.5);
+  const panel = document.getElementById('answers-panel');
+  panel.innerHTML = '';
+  allAnswers.forEach(ans => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.textContent = ans;
+    btn.onclick = () => checkAnswer(ans, q.a, btn);
+    panel.appendChild(btn);
+  });
+
+  // Move Ace toward problem
+  const aceEl = document.getElementById('ace');
+  const elLeft = parseInt(el.style.left);
+  aceEl.style.left = Math.min(Math.max(elLeft + 30, 60), 420) + 'px';
+  aceEl.style.transform = 'translateX(0)';
+}
+
+function removeCurrentProblem() {
+  if (state.fallingEl) {
+    state.fallingEl.remove();
+    state.fallingEl = null;
+  }
+  if (state.fallingInterval) {
+    cancelAnimationFrame(state.fallingInterval);
+    state.fallingInterval = null;
+  }
+}
+
+// =====================
+// TIMER
+// =====================
+function startTimer() {
+  state.timerVal = 100;
+  const bar = document.getElementById('timer-bar');
+  bar.style.width = '100%';
+  const speed = state.worldIdx >= 6 ? 0.55 : 0.4; // harder worlds faster
+
+  state.timerInterval = setInterval(() => {
+    state.timerVal -= speed;
+    bar.style.width = Math.max(0, state.timerVal) + '%';
+    if (state.timerVal <= 0) {
+      clearTimer();
+      timeOut();
+    }
+  }, 50);
+}
+
+function clearTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+function timeOut() {
+  if (state.answered) return;
+  state.answered = true;
+  state.combo = 0;
+  updateCombo();
+  flash('wrong');
+  loseLife();
+  shakeAce();
+  setTimeout(() => {
+    if (state.lives > 0) nextQuestion();
+  }, 700);
+}
+
+// =====================
+// CHECK ANSWER
+// =====================
+function checkAnswer(selected, correct, btn) {
+  if (state.answered) return;
+  state.answered = true;
+  clearTimer();
+
+  if (String(selected) === String(correct)) {
+    // CORRECT
+    btn.classList.add('correct');
+    state.combo++;
+    const bonus = state.combo >= 3 ? state.combo * 2 : 1;
+    const pts = 10 * bonus;
+    state.score += pts;
+    updateScoreDisplay();
+    updateCombo();
+    flash('correct');
+    showFloatingScore('+' + pts, true, btn);
+
+    state.questionsInWorld++;
+    if (state.questionsInWorld >= state.totalQPerWorld) {
+      setTimeout(() => worldComplete(), 500);
+    } else {
+      setTimeout(() => nextQuestion(), 600);
+    }
+  } else {
+    // WRONG
+    btn.classList.add('wrong');
+    // Highlight correct
+    document.querySelectorAll('.answer-btn').forEach(b => {
+      if (String(b.textContent) === String(correct)) b.classList.add('correct');
+    });
+    state.combo = 0;
+    updateCombo();
+    flash('wrong');
+    loseLife();
+    shakeAce();
+    if (state.lives > 0) setTimeout(() => nextQuestion(), 800);
+  }
+}
+
+function loseLife() {
+  state.lives--;
+  updateLivesDisplay();
+  showFloatingScore('-1 ❤️', false, document.getElementById('hud'));
+  if (state.lives <= 0) {
+    setTimeout(() => gameOver(), 700);
+  }
+}
+
+function shakeAce() {
+  const ace = document.getElementById('ace');
+  ace.style.animation = 'none';
+  ace.style.filter = 'drop-shadow(0 0 16px red)';
+  setTimeout(() => {
+    ace.style.animation = 'aceFloat 2s ease-in-out infinite';
+    ace.style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.6))';
+  }, 500);
+}
+
+// =====================
+// WORLD COMPLETE
+// =====================
+function worldComplete() {
+  const world = WORLDS[state.worldIdx];
+  const next = WORLDS[state.worldIdx + 1];
+
+  clearTimer();
+  removeCurrentProblem();
+  document.getElementById('answers-panel').innerHTML = '';
+
+  const tt = document.getElementById('world-transition');
+  document.getElementById('transition-text').textContent = world.emoji + ' WORLD FIXED!';
+  document.getElementById('transition-sub').textContent =
+    next ? `${world.emoji} ${world.name.split(' ').slice(1).join(' ')} → ${next.emoji} ${next.name.split(' ').slice(1).join(' ')}` : '⛓ ALL CHAINS RESTORED!';
+  tt.classList.add('show');
+  state.screen = 'transition';
+
+  setTimeout(() => {
+    tt.classList.remove('show');
+    state.worldIdx++;
+    if (state.worldIdx >= WORLDS.length) {
+      gameWin();
+    } else {
+      state.questionsInWorld = 0;
+      state.screen = 'game';
+      applyWorldTheme(state.worldIdx);
+      nextQuestion();
+    }
+  }, 1900);
+}
+
+// =====================
+// GAME OVER / WIN
+// =====================
+function gameOver() {
+  clearTimer();
+  removeCurrentProblem();
+  state.screen = 'gameover';
+  document.getElementById('hud').style.display = 'none';
+  document.getElementById('progress-bar-container').style.display = 'none';
+  document.getElementById('chain-display').style.display = 'none';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('ace').style.display = 'none';
+  document.getElementById('ground').style.display = 'none';
+  document.getElementById('answers-panel').style.display = 'none';
+  document.getElementById('timer-bar-container').style.display = 'none';
+  document.getElementById('combo-display').classList.remove('show');
+
+  const klikLines = [
+    '"I told you so." — KLIK',
+    '"That was... a performance. Of failure." — KLIK',
+    '"You had three lives. Three. How." — KLIK',
+    '"Technically you tried. Technically." — KLIK',
+  ];
+  document.getElementById('go-score').textContent = 'Score: ' + state.score + ' pts';
+  document.getElementById('go-world').textContent = 'Reached: World ' + (state.worldIdx + 1) + ' of 8';
+  document.getElementById('go-klik').textContent = klikLines[Math.floor(Math.random() * klikLines.length)];
+  document.getElementById('gameover-screen').classList.remove('hidden');
+}
+
+function gameWin() {
+  clearTimer();
+  state.screen = 'win';
+  document.getElementById('hud').style.display = 'none';
+  document.getElementById('progress-bar-container').style.display = 'none';
+  document.getElementById('chain-display').style.display = 'none';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('ace').style.display = 'none';
+  document.getElementById('ground').style.display = 'none';
+  document.getElementById('answers-panel').style.display = 'none';
+  document.getElementById('timer-bar-container').style.display = 'none';
+  document.getElementById('combo-display').classList.remove('show');
+
+  document.getElementById('win-score').textContent = 'Final Score: ' + state.score + ' pts';
+  document.getElementById('win-screen').classList.remove('hidden');
+}
+
+function restartGame() {
+  document.getElementById('gameover-screen').classList.add('hidden');
+  document.getElementById('win-screen').classList.add('hidden');
+  if (state.animFrame) cancelAnimationFrame(state.animFrame);
+  startGame();
+}
+
+function showStart() {
+  document.getElementById('gameover-screen').classList.add('hidden');
+  document.getElementById('win-screen').classList.add('hidden');
+  document.getElementById('hud').style.display = 'none';
+  document.getElementById('progress-bar-container').style.display = 'none';
+  document.getElementById('chain-display').style.display = 'none';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('ace').style.display = 'none';
+  document.getElementById('ground').style.display = 'none';
+  document.getElementById('answers-panel').style.display = 'none';
+  document.getElementById('timer-bar-container').style.display = 'none';
+  document.getElementById('start-screen').classList.remove('hidden');
+  state.screen = 'start';
+  if (state.animFrame) cancelAnimationFrame(state.animFrame);
+}
+
+// =====================
+// UI HELPERS
+// =====================
+function updateScoreDisplay() {
+  document.getElementById('score-display').textContent = state.score + ' pts';
+}
+
+function updateLivesDisplay() {
+  for (let i = 1; i <= 3; i++) {
+    const h = document.getElementById('h' + i);
+    if (i <= state.lives) h.classList.remove('lost');
+    else h.classList.add('lost');
+  }
+}
+
+function updateCombo() {
+  const cd = document.getElementById('combo-display');
+  if (state.combo >= 2) {
+    document.getElementById('combo-text').textContent = '🔥 x' + state.combo;
+    cd.classList.add('show');
+  } else {
+    cd.classList.remove('show');
+  }
+}
+
+function flash(type) {
+  const el = document.getElementById('feedback-flash');
+  el.className = '';
+  void el.offsetWidth;
+  el.className = type + '-flash';
+}
+
+function showFloatingScore(text, isPos, refEl) {
+  const el = document.createElement('div');
+  el.className = 'float-score ' + (isPos ? 'plus' : 'minus');
+  el.textContent = text;
+  el.style.left = (200 + (Math.random() * 60 - 30)) + 'px';
+  el.style.top = (300 + (Math.random() * 40 - 20)) + 'px';
+  document.getElementById('game-container').appendChild(el);
+  setTimeout(() => el.remove(), 1000);
+}
+</script>
+</body>
+</html>
