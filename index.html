@@ -23,8 +23,6 @@
     window.addEventListener('scroll', function(){
       document.querySelectorAll('nav').forEach(function(n){ n.classList.toggle('scrolled', window.scrollY>60); });
     });
-
-    /* ── CERTIFICATE PRINT ── */
     function printCert() {
       var nameVal = document.getElementById('cert-name-input').value.trim();
       var display = nameVal || '________________________________';
@@ -34,42 +32,46 @@
       document.getElementById('cert-print-date').textContent = dateStr;
       document.getElementById('cert-print-overlay').style.display = 'flex';
     }
-    function closeCertPreview() {
-      document.getElementById('cert-print-overlay').style.display = 'none';
-    }
-    function doPrint() {
-      window.print();
-    }
+    function closeCertPreview() { document.getElementById('cert-print-overlay').style.display = 'none'; }
+    function doPrint() { window.print(); }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=MedievalSharp&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#080808;--glass:rgba(8,8,8,0.72);--glass-border:rgba(255,255,255,0.08);
       --text:#F0EFE8;--muted:rgba(240,239,232,0.5);--accent:#E8C84A;
       --accent-dim:rgba(232,200,74,0.12);--amazon:#FF9900;
+      --violet:#7C3AED;--violet-bright:#A855F7;--violet-glow:rgba(168,85,247,0.35);
     }
     html{scroll-behavior:smooth;}
     body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
-    .parallax-bg{
-      position:fixed;inset:0;z-index:0;pointer-events:none;
-      background-image:url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1800&q=80');
-      background-size:cover;background-position:center top;background-attachment:fixed;
-      filter:brightness(0.32) saturate(1.2);
-    }
+    .parallax-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1800&q=80');background-size:cover;background-position:center top;background-attachment:fixed;filter:brightness(0.32) saturate(1.2);}
     .parallax-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,0.3) 0%,rgba(8,8,8,0.1) 40%,rgba(8,8,8,0.5) 100%);}
     .content-layer{position:relative;z-index:1;}
     .page{display:none;min-height:100vh;}
     .page.active{display:block;}
 
-    /* NAV */
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:200;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:1.2rem 4rem;
-      background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);
-      backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color 0.3s;
+    /* FLOATING MILESTONE TAB */
+    .milestone-float{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;}
+    .milestone-float-inner{
+      writing-mode:vertical-rl;text-orientation:mixed;
+      background:linear-gradient(180deg,var(--violet) 0%,var(--violet-bright) 100%);
+      color:#fff;padding:1.4rem 0.75rem;cursor:pointer;
+      font-size:0.68rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
+      border-radius:8px 0 0 8px;
+      box-shadow:-4px 0 24px var(--violet-glow),0 0 40px var(--violet-glow);
+      border:1px solid rgba(168,85,247,0.5);border-right:none;
+      transition:all 0.3s ease;text-decoration:none;
+      display:flex;align-items:center;gap:0.6rem;
+      animation:milestoneGlow 3s ease-in-out infinite;
     }
+    .milestone-float-inner:hover{background:linear-gradient(180deg,#6D28D9 0%,var(--violet-bright) 100%);padding-left:1.1rem;box-shadow:-6px 0 36px var(--violet-glow),0 0 60px var(--violet-glow);}
+    .milestone-float-new{writing-mode:horizontal-tb;background:#FCD34D;color:#3b0764;font-size:0.52rem;font-weight:700;letter-spacing:0.12em;padding:0.15rem 0.35rem;border-radius:3px;white-space:nowrap;}
+    @keyframes milestoneGlow{0%,100%{box-shadow:-4px 0 24px var(--violet-glow),0 0 40px var(--violet-glow);}50%{box-shadow:-4px 0 36px rgba(168,85,247,0.6),0 0 60px rgba(168,85,247,0.5);}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color 0.3s;}
     nav.scrolled{border-bottom-color:var(--glass-border);}
     .nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:var(--text);cursor:pointer;text-decoration:none;}
     .nav-logo em{font-style:italic;color:var(--accent);}
@@ -77,6 +79,8 @@
     .nav-links{display:flex;gap:1.5rem;list-style:none;}
     .nav-links a{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;cursor:pointer;}
     .nav-links a:hover{color:var(--text);}
+    .nav-links a.nav-milestone{color:var(--violet-bright);border:1px solid rgba(168,85,247,0.4);padding:0.25rem 0.7rem;border-radius:3px;background:rgba(124,58,237,0.1);transition:all 0.2s;}
+    .nav-links a.nav-milestone:hover{background:rgba(124,58,237,0.25);color:#fff;}
     .breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
     .breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer;transition:color 0.2s;}
     .breadcrumb a:hover{color:var(--accent);}
@@ -90,8 +94,11 @@
     .hero-title{font-family:'Playfair Display',serif;font-size:clamp(4.5rem,12vw,11rem);font-weight:900;line-height:0.88;letter-spacing:-0.02em;margin-bottom:2.5rem;opacity:0;animation:fadeUp 1s ease forwards 0.5s;}
     .hero-title .italic{font-style:italic;font-weight:400;color:var(--accent);}
     .hero-sub{font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.9;color:var(--muted);max-width:480px;margin:0 auto 3.5rem;opacity:0;animation:fadeUp 1s ease forwards 0.7s;}
-    .hero-btn{display:inline-block;padding:1rem 3rem;background:transparent;border:1px solid rgba(232,200,74,0.6);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.3s ease;backdrop-filter:blur(8px);opacity:0;animation:fadeUp 1s ease forwards 0.9s;}
+    .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s ease forwards 0.9s;}
+    .hero-btn{display:inline-block;padding:1rem 3rem;background:transparent;border:1px solid rgba(232,200,74,0.6);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.3s ease;backdrop-filter:blur(8px);}
     .hero-btn:hover{background:var(--accent);color:var(--black);border-color:var(--accent);transform:translateY(-2px);}
+    .hero-btn-milestone{display:inline-flex;align-items:center;gap:0.6rem;padding:1rem 2.2rem;background:linear-gradient(135deg,var(--violet),var(--violet-bright));border:1px solid rgba(168,85,247,0.6);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 24px var(--violet-glow);}
+    .hero-btn-milestone:hover{background:linear-gradient(135deg,#6D28D9,var(--violet-bright));transform:translateY(-2px);box-shadow:0 8px 36px var(--violet-glow);}
     .hero-scroll-hint{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.6rem;opacity:0;animation:fadeUp 1s ease forwards 1.2s;}
     .scroll-text{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);}
     .scroll-bar{width:1px;height:50px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollDrop 2s ease-in-out infinite;}
@@ -99,10 +106,11 @@
 
     /* MARQUEE */
     .marquee{padding:1.8rem 0;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);overflow:hidden;}
-    .marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marqueeScroll 25s linear infinite;}
+    .marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marqueeScroll 28s linear infinite;}
     @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .marquee-item{font-family:'Playfair Display',serif;font-size:0.9rem;font-style:italic;color:var(--muted);flex-shrink:0;}
     .marquee-sep{color:var(--accent);font-style:normal;margin:0 0.5rem;}
+    .marquee-item.m-violet{color:var(--violet-bright);}
 
     /* BOOKS SECTION */
     .glass-section{background:var(--glass);backdrop-filter:blur(24px) saturate(1.4);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);}
@@ -116,8 +124,6 @@
     .section-count{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);}
     .section-arrow{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);}
     .books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;}
-
-    /* BOOK CARD */
     .book-card{background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);overflow:hidden;cursor:pointer;transition:background 0.3s ease,transform 0.3s ease;position:relative;}
     .book-card:hover{background:rgba(255,255,255,0.05);transform:translateY(-6px);border-color:rgba(232,200,74,0.2);}
     .book-card:hover .cover-overlay{opacity:1;}
@@ -148,7 +154,7 @@
     .footer-logo em{font-style:italic;color:var(--accent);}
     .footer-txt{font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
 
-    /* CATEGORY HERO */
+    /* CAT HERO */
     .cat-hero{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 4rem 5rem;position:relative;overflow:hidden;}
     .cat-hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 60%,rgba(232,200,74,0.07) 0%,transparent 70%);}
     .cat-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
@@ -160,7 +166,7 @@
     .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;margin-bottom:2rem;transition:color 0.2s;padding:0;text-decoration:none;}
     .back-link:hover{color:var(--accent);}
 
-    /* DETAIL PAGE */
+    /* DETAIL */
     .detail-hero-wrap{min-height:60vh;display:grid;grid-template-columns:1fr 1fr;padding-top:5rem;}
     .detail-img{background:rgba(255,255,255,0.02);backdrop-filter:blur(20px);border-right:1px solid var(--glass-border);overflow:hidden;min-height:480px;}
     .detail-img img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -192,108 +198,44 @@
     .dl-desc{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;line-height:1.5;}
     .btn-dl{display:flex;align-items:center;justify-content:center;gap:0.4rem;padding:0.6rem 1rem;background:var(--accent-dim);border:1px solid rgba(232,200,74,0.4);color:var(--accent);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;text-decoration:none;width:100%;}
     .btn-dl:hover{background:var(--accent);color:var(--black);}
-    .btn-dl.disabled{opacity:0.35;pointer-events:none;}
 
-    /* ── GAME SECTION ── */
-    .game-section{
-      border:1px solid rgba(232,200,74,0.25);
-      background:linear-gradient(135deg,rgba(232,200,74,0.04),rgba(255,255,255,0.02));
-      padding:2.5rem;margin-bottom:2rem;position:relative;overflow:hidden;
-    }
-    .game-section::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:linear-gradient(90deg,transparent,var(--accent),transparent);
-    }
+    /* GAME SECTION */
+    .game-section{border:1px solid rgba(232,200,74,0.25);background:linear-gradient(135deg,rgba(232,200,74,0.04),rgba(255,255,255,0.02));padding:2.5rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+    .game-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
     .game-eyebrow{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
     .game-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.6rem;}
     .game-desc{font-size:0.88rem;line-height:1.7;color:var(--muted);margin-bottom:1.5rem;}
-    .btn-play{
-      display:inline-flex;align-items:center;gap:0.7rem;
-      padding:0.9rem 2.2rem;
-      background:var(--accent);color:var(--black);
-      font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
-      text-decoration:none;border:none;cursor:pointer;transition:all 0.25s;
-    }
+    .btn-play{display:inline-flex;align-items:center;gap:0.7rem;padding:0.9rem 2.2rem;background:var(--accent);color:var(--black);font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.25s;}
     .btn-play:hover{background:#fff;transform:translateY(-2px);}
-    .btn-play .play-icon{font-size:1rem;}
 
-    /* ── CERTIFICATE SECTION ── */
-    .cert-section{
-      border:1px solid rgba(232,200,74,0.2);
-      background:rgba(255,255,255,0.02);
-      padding:2.5rem;
-    }
+    /* CERT SECTION */
+    .cert-section{border:1px solid rgba(232,200,74,0.2);background:rgba(255,255,255,0.02);padding:2.5rem;}
     .cert-eyebrow{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
     .cert-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.6rem;}
     .cert-desc{font-size:0.88rem;line-height:1.7;color:var(--muted);margin-bottom:1.5rem;}
     .cert-input-row{display:flex;gap:0.8rem;flex-wrap:wrap;}
-    .cert-input{
-      flex:1;min-width:200px;padding:0.75rem 1rem;
-      background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
-      color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;
-      outline:none;transition:border-color 0.2s;
-    }
+    .cert-input{flex:1;min-width:200px;padding:0.75rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
     .cert-input::placeholder{color:var(--muted);}
     .cert-input:focus{border-color:rgba(232,200,74,0.5);}
-    .btn-cert{
-      display:inline-flex;align-items:center;gap:0.5rem;
-      padding:0.75rem 1.8rem;
-      background:transparent;border:1px solid rgba(232,200,74,0.6);
-      color:var(--accent);font-size:0.75rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;
-      cursor:pointer;transition:all 0.25s;white-space:nowrap;
-    }
+    .btn-cert{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.8rem;background:transparent;border:1px solid rgba(232,200,74,0.6);color:var(--accent);font-size:0.75rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;white-space:nowrap;}
     .btn-cert:hover{background:var(--accent);color:var(--black);}
 
-    /* ── CERTIFICATE OVERLAY PREVIEW ── */
-    #cert-print-overlay{
-      display:none;position:fixed;inset:0;z-index:999;
-      background:rgba(0,0,0,0.88);backdrop-filter:blur(12px);
-      align-items:center;justify-content:center;padding:2rem;
-    }
-    .cert-preview-shell{
-      position:relative;max-width:780px;width:100%;
-      background:#F5F0DC;border:3px solid #B8960C;
-      box-shadow:0 0 0 8px rgba(184,150,12,0.15), 0 40px 80px rgba(0,0,0,0.7);
-    }
-    .cert-preview-close{
-      position:absolute;top:-1.5rem;right:-1.5rem;
-      width:3rem;height:3rem;border-radius:50%;
-      background:#1a1a1a;border:1px solid var(--glass-border);
-      color:var(--muted);font-size:1.2rem;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;z-index:10;
-    }
+    /* CERT OVERLAY */
+    #cert-print-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:2rem;}
+    .cert-preview-shell{position:relative;max-width:780px;width:100%;background:#F5F0DC;border:3px solid #B8960C;box-shadow:0 0 0 8px rgba(184,150,12,0.15),0 40px 80px rgba(0,0,0,0.7);}
+    .cert-preview-close{position:absolute;top:-1.5rem;right:-1.5rem;width:3rem;height:3rem;border-radius:50%;background:#1a1a1a;border:1px solid var(--glass-border);color:var(--muted);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
     .cert-preview-close:hover{background:var(--accent);color:var(--black);}
     .cert-inner{padding:2.5rem 3rem;text-align:center;position:relative;}
-    /* decorative corners */
-    .cert-inner::before,.cert-inner::after{
-      content:'✦';position:absolute;font-size:1.4rem;color:#B8960C;
-    }
+    .cert-inner::before,.cert-inner::after{content:'✦';position:absolute;font-size:1.4rem;color:#B8960C;}
     .cert-inner::before{top:1rem;left:1.2rem;}
     .cert-inner::after{bottom:1rem;right:1.2rem;}
     .cert-corner-br{position:absolute;bottom:1rem;left:1.2rem;font-size:1.4rem;color:#B8960C;}
     .cert-corner-tr{position:absolute;top:1rem;right:1.2rem;font-size:1.4rem;color:#B8960C;}
-    .cert-top-banner{
-      background:#0a0a0a;color:#E8C84A;
-      font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;
-      letter-spacing:0.1em;padding:0.7rem 1rem;margin-bottom:1.5rem;
-      border-left:4px solid #E8C84A;border-right:4px solid #E8C84A;
-    }
-    .cert-subtitle{
-      font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;
-      color:#8B6914;margin-bottom:0.5rem;
-    }
+    .cert-top-banner{background:#0a0a0a;color:#E8C84A;font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;letter-spacing:0.1em;padding:0.7rem 1rem;margin-bottom:1.5rem;border-left:4px solid #E8C84A;border-right:4px solid #E8C84A;}
+    .cert-subtitle{font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:#8B6914;margin-bottom:0.5rem;}
     .cert-body-text{font-size:0.9rem;color:#3a2e0a;margin-bottom:0.3rem;font-family:'DM Sans',sans-serif;}
-    .cert-name-line{
-      border-bottom:2px solid #8B6914;
-      display:inline-block;min-width:280px;
-      font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
-      color:#0a0a0a;padding:0.2rem 0.5rem;margin:0.6rem 0 0.3rem;
-    }
-    .cert-big-worlds{
-      font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;
-      color:#0a0a0a;letter-spacing:0.05em;margin:0.4rem 0;
-    }
+    .cert-name-line{border-bottom:2px solid #8B6914;display:inline-block;min-width:280px;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#0a0a0a;padding:0.2rem 0.5rem;margin:0.6rem 0 0.3rem;}
+    .cert-big-worlds{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:#0a0a0a;letter-spacing:0.05em;margin:0.4rem 0;}
     .cert-description{font-size:0.8rem;color:#5a4a1a;line-height:1.6;max-width:440px;margin:0 auto 1.5rem;}
     .cert-divider{border:none;border-top:1px solid #B8960C;margin:1.2rem 0;}
     .cert-sigs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
@@ -305,65 +247,71 @@
     .cert-date-worlds{display:flex;justify-content:space-between;font-size:0.78rem;color:#3a2e0a;margin-top:0.5rem;}
     .cert-date-worlds span{border-top:1px solid #8B6914;padding-top:0.3rem;display:inline-block;}
     .cert-tagline{font-size:0.65rem;letter-spacing:0.2em;color:#8B6914;margin-top:1rem;}
-    .cert-bottom-banner{
-      background:#0a0a0a;color:var(--muted);
-      font-size:0.65rem;letter-spacing:0.15em;padding:0.5rem;
-      display:flex;justify-content:center;gap:2rem;
-    }
-    .cert-actions{
-      display:flex;gap:1rem;justify-content:center;
-      padding:1rem 2rem;background:#e8e0c0;border-top:1px solid #B8960C;
-    }
-    .cert-btn-print{
-      padding:0.7rem 2rem;background:#0a0a0a;color:#E8C84A;
-      font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;
-      border:none;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;
-    }
+    .cert-bottom-banner{background:#0a0a0a;color:var(--muted);font-size:0.65rem;letter-spacing:0.15em;padding:0.5rem;display:flex;justify-content:center;gap:2rem;}
+    .cert-actions{display:flex;gap:1rem;justify-content:center;padding:1rem 2rem;background:#e8e0c0;border-top:1px solid #B8960C;}
+    .cert-btn-print{padding:0.7rem 2rem;background:#0a0a0a;color:#E8C84A;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
     .cert-btn-print:hover{background:#E8C84A;color:#0a0a0a;}
-    .cert-btn-cancel{
-      padding:0.7rem 2rem;background:transparent;color:#5a4a1a;
-      font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;
-      border:1px solid #B8960C;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;
-    }
+    .cert-btn-cancel{padding:0.7rem 2rem;background:transparent;color:#5a4a1a;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid #B8960C;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
     .cert-btn-cancel:hover{background:#B8960C;color:#fff;}
 
-    /* ── PRINT MEDIA ── */
-    @media print {
-      body > * { display: none !important; }
-      #cert-print-overlay { display: flex !important; position: static !important; background: none !important; backdrop-filter: none !important; padding: 0 !important; }
-      .cert-preview-close { display: none !important; }
-      .cert-actions { display: none !important; }
-      .cert-preview-shell { box-shadow: none !important; max-width: 100% !important; border: 2px solid #B8960C !important; }
-    }
+    /* MILESTONE PAGE */
+    .milestone-hero{min-height:58vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 4rem 5rem;position:relative;overflow:hidden;}
+    .milestone-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,rgba(168,85,247,0.12) 0%,transparent 65%);}
+    .milestone-hero-tag{display:inline-flex;align-items:center;gap:0.8rem;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:1.5rem;}
+    .milestone-hero-tag::before,.milestone-hero-tag::after{content:'';display:block;width:30px;height:1px;background:var(--violet-bright);}
+    .milestone-hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:0.92;letter-spacing:-0.02em;margin-bottom:1.5rem;}
+    .milestone-hero-title em{font-style:italic;font-weight:400;color:var(--violet-bright);}
+    .milestone-hero-desc{font-size:1.05rem;line-height:1.9;color:var(--muted);max-width:520px;margin:0 auto;}
+    .milestone-body{background:var(--glass);backdrop-filter:blur(24px);border-top:1px solid var(--glass-border);padding:5rem 4rem;}
+    .milestone-body-inner{max-width:1100px;margin:0 auto;}
+    .milestone-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;margin-bottom:4rem;}
+    .milestone-info-card{border:1px solid var(--glass-border);padding:2rem;background:rgba(255,255,255,0.02);}
+    .milestone-info-card-icon{font-size:2rem;margin-bottom:0.8rem;}
+    .milestone-info-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;}
+    .milestone-info-card-desc{font-size:0.82rem;line-height:1.6;color:var(--muted);}
+    .flyer-wrap{border:1px solid rgba(168,85,247,0.2);overflow:hidden;margin-bottom:4rem;background:rgba(255,255,255,0.02);position:relative;}
+    .flyer-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--violet-bright),transparent);z-index:1;}
+    .flyer-wrap img{width:100%;display:block;}
+    .flyer-caption{padding:1rem 1.5rem;font-size:0.72rem;letter-spacing:0.12em;color:var(--muted);text-align:center;border-top:1px solid var(--glass-border);}
+    .generator-cta{text-align:center;padding:4rem 3rem;background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(168,85,247,0.06));border:1px solid rgba(168,85,247,0.25);position:relative;overflow:hidden;}
+    .generator-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet-bright),transparent);}
+    .generator-cta-eyebrow{font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:1.2rem;}
+    .generator-cta-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:1rem;}
+    .generator-cta-desc{font-size:0.95rem;line-height:1.8;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;}
+    .btn-generator{display:inline-flex;align-items:center;gap:0.9rem;padding:1.2rem 3.5rem;background:linear-gradient(135deg,var(--violet),var(--violet-bright));color:#fff;font-size:0.88rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 32px var(--violet-glow);transition:all 0.3s ease;}
+    .btn-generator:hover{background:linear-gradient(135deg,#6D28D9,var(--violet-bright));transform:translateY(-3px);box-shadow:0 8px 48px rgba(168,85,247,0.5);}
+    .btn-generator-icon{font-size:1.3rem;}
+    .generator-note{margin-top:1.2rem;font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
 
+    @media print{body>*{display:none!important;}#cert-print-overlay{display:flex!important;position:static!important;background:none!important;backdrop-filter:none!important;padding:0!important;}.cert-preview-close{display:none!important;}.cert-actions{display:none!important;}.cert-preview-shell{box-shadow:none!important;max-width:100%!important;border:2px solid #B8960C!important;}}
     @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-
     @media(max-width:768px){
-      nav{padding:1.2rem 1.5rem;}
-      .nav-links{display:none;}
-      .hero{padding:6rem 1.5rem 4rem;}
-      .books-wrapper{padding:4rem 1.5rem;}
-      .detail-hero-wrap{grid-template-columns:1fr;}
-      .detail-info-wrap{padding:3rem 1.5rem;}
-      .detail-body{padding:3rem 1.5rem;}
-      .detail-body-inner{grid-template-columns:1fr;gap:3rem;}
-      .footer-glass{flex-direction:column;gap:1rem;padding:2rem 1.5rem;text-align:center;}
-      .cat-hero{padding:7rem 1.5rem 4rem;}
-      .cert-sigs{grid-template-columns:1fr;}
-      .cert-inner{padding:1.5rem;}
+      nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}.hero{padding:6rem 1.5rem 4rem;}.books-wrapper{padding:4rem 1.5rem;}
+      .detail-hero-wrap{grid-template-columns:1fr;}.detail-info-wrap{padding:3rem 1.5rem;}.detail-body{padding:3rem 1.5rem;}.detail-body-inner{grid-template-columns:1fr;gap:3rem;}
+      .footer-glass{flex-direction:column;gap:1rem;padding:2rem 1.5rem;text-align:center;}.cat-hero{padding:7rem 1.5rem 4rem;}.cert-sigs{grid-template-columns:1fr;}.cert-inner{padding:1.5rem;}
+      .milestone-float{top:auto;bottom:1.5rem;transform:none;}.milestone-float-inner{writing-mode:horizontal-tb;border-radius:999px;border:1px solid rgba(168,85,247,0.5);padding:0.7rem 1.2rem;flex-direction:row;gap:0.4rem;}
+      .milestone-body{padding:3rem 1.5rem;}.generator-cta{padding:3rem 1.5rem;}
     }
   </style>
 </head>
 <body>
 <div class="parallax-bg"></div>
 
-<!-- ████ CERTIFICATE OVERLAY ████ -->
+<!-- FLOATING MILESTONE TAB -->
+<a class="milestone-float" href="#milestonecards" onclick="go('#milestonecards');return false;">
+  <div class="milestone-float-inner">
+    <span style="writing-mode:horizontal-tb;font-size:0.9rem;">✦</span>
+    Milestone Cards
+    <span class="milestone-float-new">NEW</span>
+  </div>
+</a>
+
+<!-- CERT OVERLAY -->
 <div id="cert-print-overlay">
   <div class="cert-preview-shell">
     <button class="cert-preview-close" onclick="closeCertPreview()">✕</button>
     <div class="cert-inner">
-      <span class="cert-corner-br">✦</span>
-      <span class="cert-corner-tr">✦</span>
+      <span class="cert-corner-br">✦</span><span class="cert-corner-tr">✦</span>
       <div class="cert-top-banner">✦ YOU DID IT ✦</div>
       <div class="cert-subtitle">✦ The Chain of Worlds ✦</div>
       <hr class="cert-divider"/>
@@ -375,38 +323,14 @@
       <p class="cert-description">restored every broken chain link, solved every puzzle, survived every boss battle,<br>and found the third option when none seemed to exist.<br>This Connector is hereby recognized as an official guardian of the Chain of Worlds.</p>
       <hr class="cert-divider"/>
       <div class="cert-sigs">
-        <div class="cert-sig">
-          <div class="cert-sig-lbl">Left Signature</div>
-          <div class="cert-sig-name" style="font-size:1.4rem;">Ace</div>
-          <div class="cert-sig-line"></div>
-          <div class="cert-sig-role">Ace — Connector</div>
-        </div>
-        <div class="cert-sig">
-          <div class="cert-sig-lbl">Center Signature</div>
-          <div class="cert-sig-name">· · ·</div>
-          <div class="cert-sig-line"></div>
-          <div class="cert-sig-role">KLIK — Companion<br><em style="font-size:0.6rem;">(that IS his signature)</em></div>
-        </div>
-        <div class="cert-sig">
-          <div class="cert-sig-lbl">Right Signature</div>
-          <div class="cert-sig-name">Sera</div>
-          <div class="cert-sig-line"></div>
-          <div class="cert-sig-role">Sera — from the future</div>
-        </div>
+        <div class="cert-sig"><div class="cert-sig-lbl">Left Signature</div><div class="cert-sig-name" style="font-size:1.4rem;">Ace</div><div class="cert-sig-line"></div><div class="cert-sig-role">Ace — Connector</div></div>
+        <div class="cert-sig"><div class="cert-sig-lbl">Center Signature</div><div class="cert-sig-name">· · ·</div><div class="cert-sig-line"></div><div class="cert-sig-role">KLIK — Companion<br><em style="font-size:0.6rem;">(that IS his signature)</em></div></div>
+        <div class="cert-sig"><div class="cert-sig-lbl">Right Signature</div><div class="cert-sig-name">Sera</div><div class="cert-sig-line"></div><div class="cert-sig-role">Sera — from the future</div></div>
       </div>
-      <div class="cert-date-worlds">
-        <span>Date completed: <strong id="cert-print-date">__________</strong></span>
-        <span>Worlds saved: _____ / 8</span>
-      </div>
+      <div class="cert-date-worlds"><span>Date completed: <strong id="cert-print-date">__________</strong></span><span>Worlds saved: _____ / 8</span></div>
       <p class="cert-tagline">★ Keep this certificate. You earned it. ★</p>
     </div>
-    <div class="cert-bottom-banner">
-      <span>The Chain of Worlds — Book One</span>
-      <span>✦</span>
-      <span>Complete</span>
-      <span>✦</span>
-      <span>The Chain Holds</span>
-    </div>
+    <div class="cert-bottom-banner"><span>The Chain of Worlds — Book One</span><span>✦</span><span>Complete</span><span>✦</span><span>The Chain Holds</span></div>
     <div class="cert-actions">
       <button class="cert-btn-print" onclick="doPrint()">🖨 Print / Save as PDF</button>
       <button class="cert-btn-cancel" onclick="closeCertPreview()">Cancel</button>
@@ -414,7 +338,7 @@
   </div>
 </div>
 
-<!-- ████ HOME ████ -->
+<!-- HOME -->
 <div class="page content-layer" id="page-home">
   <nav>
     <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
@@ -425,336 +349,156 @@
         <li><a onclick="go('#cat-spiritual')">Spiritual</a></li>
         <li><a onclick="go('#cat-slovak')">Slovenčina</a></li>
         <li><a onclick="go('#cat-polish')">Polski</a></li>
+        <li><a class="nav-milestone" onclick="go('#milestonecards')">✦ Milestone Cards</a></li>
       </ul>
     </div>
   </nav>
-
   <section class="hero">
     <div class="hero-label">Visual Publishing House</div>
     <h1 class="hero-title">Books that<br><span class="italic">make you see</span></h1>
     <p class="hero-sub">Premium illustrated books that transform complex ideas into stunning visual experiences — for curious minds of all ages.</p>
-    <a class="hero-btn" onclick="scrollToBooks()">Explore Our Books</a>
+    <div class="hero-btns">
+      <a class="hero-btn" onclick="scrollToBooks()">Explore Our Books</a>
+      <a class="hero-btn-milestone" onclick="go('#milestonecards')"><span>✦</span> Milestone Cards</a>
+    </div>
     <div class="hero-scroll-hint"><span class="scroll-text">Scroll</span><div class="scroll-bar"></div></div>
   </section>
-
   <div class="marquee"><div class="marquee-track">
     <span class="marquee-item">Visual Storytelling<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Premium Illustration<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Infographic Design<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Gift Books<span class="marquee-sep">✦</span></span>
+    <span class="marquee-item m-violet">Milestone Cards<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Early Readers<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Visual Storytelling<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Premium Illustration<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Infographic Design<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Gift Books<span class="marquee-sep">✦</span></span>
+    <span class="marquee-item m-violet">Milestone Cards<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Early Readers<span class="marquee-sep">✦</span></span>
   </div></div>
-
   <section class="glass-section" id="books">
     <div class="books-wrapper">
-
       <!-- EDUCATIONAL -->
       <div class="category-block">
-        <div class="section-head" onclick="go('#cat-educational')">
-          <h2 class="section-cat">Educational</h2>
-          <div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div>
-        </div>
+        <div class="section-head" onclick="go('#cat-educational')"><h2 class="section-cat">Educational</h2><div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div></div>
         <div class="books-grid">
           <div class="book-card" onclick="go('#math2')">
-            <div class="cover-wrap">
-              <img class="cover-img-el" src="math2.png" alt="Grade 2 Math Workbook"/>
-              <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Math Workbook · Grade 2</div>
-              <div class="card-title">Grade 2 Math Workbook — In An RPG Math Adventure</div>
-              <div class="card-author">B. B. Sterling</div>
-              <div class="card-btns">
-                <a class="btn-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-                <button class="btn-dtl" onclick="event.stopPropagation();go('#math2')">Details</button>
-              </div>
+            <div class="cover-wrap"><img class="cover-img-el" src="math2.png" alt="Grade 2 Math Workbook"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
+            <div class="card-body"><div class="card-tag">Math Workbook · Grade 2</div><div class="card-title">Grade 2 Math Workbook — In An RPG Math Adventure</div><div class="card-author">B. B. Sterling</div>
+              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#math2')">Details</button></div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- FOR CHILDREN -->
       <div class="category-block">
-        <div class="section-head" onclick="go('#cat-forchildren')">
-          <h2 class="section-cat">For Children</h2>
-          <div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div>
-        </div>
+        <div class="section-head" onclick="go('#cat-forchildren')"><h2 class="section-cat">For Children</h2><div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div></div>
         <div class="books-grid">
           <div class="book-card" onclick="go('#hedgehog-en')">
-            <div class="cover-wrap">
-              <div class="cover-img-el"><div class="hedgehog.jpg">🦔</div><span>Cover coming soon</span></div>
-              <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Children's Story · Ages 4–8</div>
-              <div class="card-title">Hedgehog Pippin — A Story with Real Hedgehog Facts for Curious Kids</div>
-              <div class="card-author">B. B. Sterling</div>
-              <div class="card-btns">
-                <a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-                <button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button>
-              </div>
+            <div class="cover-wrap"><img class="cover-img-el" src="hedgehog.jpg" alt="Hedgehog Pippin"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
+            <div class="card-body"><div class="card-tag">Children's Story · Ages 4–8</div><div class="card-title">Hedgehog Pippin — A Story with Real Hedgehog Facts for Curious Kids</div><div class="card-author">B. B. Sterling</div>
+              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button></div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- SPIRITUAL -->
       <div class="category-block">
-        <div class="section-head" onclick="go('#cat-spiritual')">
-          <h2 class="section-cat">Spiritual</h2>
-          <div class="section-meta"><span class="section-count">2 titles</span><span class="section-arrow">View all →</span></div>
-        </div>
+        <div class="section-head" onclick="go('#cat-spiritual')"><h2 class="section-cat">Spiritual</h2><div class="section-meta"><span class="section-count">2 titles</span><span class="section-arrow">View all →</span></div></div>
         <div class="books-grid">
           <div class="book-card" onclick="go('#communion')">
-            <div class="cover-wrap">
-              <img class="cover-img-el" src="cover-communion.jpg" alt="My First Holy Communion"/>
-              <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Gift Book · Ages 6–9</div>
-              <div class="card-title">My First Holy Communion through Infographics</div>
-              <div class="card-author">B. B. Sterling</div>
-              <div class="card-btns">
-                <a class="btn-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q?utm_source=discovervisually&utm_medium=home&utm_campaign=communion" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-                <button class="btn-dtl" onclick="event.stopPropagation();go('#communion')">Details</button>
-              </div>
+            <div class="cover-wrap"><img class="cover-img-el" src="cover-communion.jpg" alt="My First Holy Communion"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
+            <div class="card-body"><div class="card-tag">Gift Book · Ages 6–9</div><div class="card-title">My First Holy Communion through Infographics</div><div class="card-author">B. B. Sterling</div>
+              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#communion')">Details</button></div>
             </div>
           </div>
           <div class="book-card" onclick="go('#bible')">
-            <div class="cover-wrap">
-              <img class="cover-img-el" src="cover-bible.jpg" alt="The Visual Bible"/>
-              <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Illustrated Sacred Infographic · All Ages</div>
-              <div class="card-title">The Visual Bible: An Illustrated Sacred Infographic</div>
-              <div class="card-author">B. B. Sterling</div>
-              <div class="card-btns">
-                <a class="btn-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7?utm_source=discovervisually&utm_medium=home&utm_campaign=bible" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-                <button class="btn-dtl" onclick="event.stopPropagation();go('#bible')">Details</button>
-              </div>
+            <div class="cover-wrap"><img class="cover-img-el" src="cover-bible.jpg" alt="The Visual Bible"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
+            <div class="card-body"><div class="card-tag">Illustrated Sacred Infographic · All Ages</div><div class="card-title">The Visual Bible: An Illustrated Sacred Infographic</div><div class="card-author">B. B. Sterling</div>
+              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#bible')">Details</button></div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- KNIHY V SLOVENČINE -->
+      <!-- SLOVENČINA -->
       <div class="category-block">
-        <div class="section-head" onclick="go('#cat-slovak')">
-          <h2 class="section-cat">Knihy v Slovenčine</h2>
-          <div class="section-meta"><span class="section-count">1 titul</span><span class="section-arrow">Zobraziť →</span></div>
-        </div>
+        <div class="section-head" onclick="go('#cat-slovak')"><h2 class="section-cat">Knihy v Slovenčine</h2><div class="section-meta"><span class="section-count">1 titul</span><span class="section-arrow">Zobraziť →</span></div></div>
         <div class="books-grid">
           <div class="book-card" onclick="go('#hedgehog-sk')">
-            <div class="cover-wrap">
-              <div class="cover-img-el"><div class="jezko.jpg">🦔</div><span>Obal čoskoro</span></div>
-              <div class="cover-overlay"><span class="overlay-pill">Zobraziť detail</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Príbeh pre deti · 4–8 rokov</div>
-              <div class="card-title">Ježko Pippin — Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</div>
-              <div class="card-author">B. B. Sterling</div>
-              <div class="card-btns">
-                <a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Kúpiť na Amazone</a>
-                <button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button>
-              </div>
+            <div class="cover-wrap"><img class="cover-img-el" src="jezko.jpg" alt="Ježko Pippin"/><div class="cover-overlay"><span class="overlay-pill">Zobraziť detail</span></div></div>
+            <div class="card-body"><div class="card-tag">Príbeh pre deti · 4–8 rokov</div><div class="card-title">Ježko Pippin — Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</div><div class="card-author">B. B. Sterling</div>
+              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Kúpiť na Amazone</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button></div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- POLISH -->
       <div class="category-block">
-        <div class="section-head" onclick="go('#cat-polish')">
-          <h2 class="section-cat">Książki po polsku</h2>
-          <div class="section-meta"><span class="section-count">Wkrótce</span><span class="section-arrow">Zobacz →</span></div>
-        </div>
+        <div class="section-head" onclick="go('#cat-polish')"><h2 class="section-cat">Książki po polsku</h2><div class="section-meta"><span class="section-count">Wkrótce</span><span class="section-arrow">Zobacz →</span></div></div>
         <div class="books-grid">
-          <div class="book-card soon">
-            <div class="cover-wrap">
-              <div class="cover-placeholder"><div class="cover-icon">◎</div><span>Wkrótce</span></div>
-              <span class="soon-badge">Wkrótce</span>
-            </div>
-            <div class="card-body">
-              <div class="card-tag">Nadchodzi 2026</div>
-              <div class="card-title">Nowa pozycja</div>
-              <div class="card-author">DiscoverVisually</div>
-            </div>
-          </div>
+          <div class="book-card soon"><div class="cover-wrap"><div class="cover-placeholder"><div class="cover-icon">◎</div><span>Wkrótce</span></div><span class="soon-badge">Wkrótce</span></div><div class="card-body"><div class="card-tag">Nadchodzi 2026</div><div class="card-title">Nowa pozycja</div><div class="card-author">DiscoverVisually</div></div></div>
         </div>
       </div>
-
     </div>
   </section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ CAT: EDUCATIONAL ████ -->
+<!-- CAT: EDUCATIONAL -->
 <div class="page content-layer" id="page-cat-educational">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Educational</span></div></div>
-  </nav>
-  <div class="cat-hero">
-    <div class="cat-hero-glow"></div>
-    <div class="cat-eyebrow">Collection</div>
-    <h1 class="cat-title">Educational</h1>
-    <p class="cat-desc">Learning made visual. Our educational books turn complex subjects into engaging adventures — built for how young minds actually learn.</p>
-  </div>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Educational</span></div></div></nav>
+  <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">Educational</h1><p class="cat-desc">Learning made visual. Our educational books turn complex subjects into engaging adventures — built for how young minds actually learn.</p></div>
   <section class="glass-section"><div class="books-wrapper"><div class="books-grid">
-    <div class="book-card" onclick="go('#math2')">
-      <div class="cover-wrap"><img class="cover-img-el" src="math2.png" alt="Grade 2 Math"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-      <div class="card-body">
-        <div class="card-tag">Math Workbook · Grade 2</div>
-        <div class="card-title">Grade 2 Math Workbook — In An RPG Math Adventure</div>
-        <div class="card-author">B. B. Sterling</div>
-        <div class="card-btns">
-          <a class="btn-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-          <button class="btn-dtl" onclick="event.stopPropagation();go('#math2')">Details</button>
-        </div>
-      </div>
-    </div>
+    <div class="book-card" onclick="go('#math2')"><div class="cover-wrap"><img class="cover-img-el" src="math2.png" alt="Grade 2 Math"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div><div class="card-body"><div class="card-tag">Math Workbook · Grade 2</div><div class="card-title">Grade 2 Math Workbook — In An RPG Math Adventure</div><div class="card-author">B. B. Sterling</div><div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#math2')">Details</button></div></div></div>
   </div></div></section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ CAT: FOR CHILDREN ████ -->
+<!-- CAT: FOR CHILDREN -->
 <div class="page content-layer" id="page-cat-forchildren">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">For Children</span></div></div>
-  </nav>
-  <div class="cat-hero">
-    <div class="cat-hero-glow"></div>
-    <div class="cat-eyebrow">Collection</div>
-    <h1 class="cat-title">For Children</h1>
-    <p class="cat-desc">Stories that spark curiosity. Picture books woven with real facts — because kids deserve both imagination and truth on every page.</p>
-  </div>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">For Children</span></div></div></nav>
+  <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">For Children</h1><p class="cat-desc">Stories that spark curiosity. Picture books woven with real facts — because kids deserve both imagination and truth on every page.</p></div>
   <section class="glass-section"><div class="books-wrapper"><div class="books-grid">
-    <div class="book-card" onclick="go('#hedgehog-en')">
-      <div class="cover-wrap">
-        <div class="cover-img-el"><div class="hedgehog.jpg">🦔</div><span>Cover coming soon</span></div>
-        <div class="cover-overlay"><span class="overlay-pill">View Details</span></div>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">Children's Story · Ages 4–8</div>
-        <div class="card-title">Hedgehog Pippin — A Story with Real Hedgehog Facts for Curious Kids</div>
-        <div class="card-author">B. B. Sterling</div>
-        <div class="card-btns">
-          <a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-          <button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button>
-        </div>
-      </div>
-    </div>
+    <div class="book-card" onclick="go('#hedgehog-en')"><div class="cover-wrap"><img class="cover-img-el" src="hedgehog.jpg" alt="Hedgehog Pippin"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div><div class="card-body"><div class="card-tag">Children's Story · Ages 4–8</div><div class="card-title">Hedgehog Pippin — A Story with Real Hedgehog Facts for Curious Kids</div><div class="card-author">B. B. Sterling</div><div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button></div></div></div>
   </div></div></section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ CAT: SPIRITUAL ████ -->
+<!-- CAT: SPIRITUAL -->
 <div class="page content-layer" id="page-cat-spiritual">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Spiritual</span></div></div>
-  </nav>
-  <div class="cat-hero">
-    <div class="cat-hero-glow"></div>
-    <div class="cat-eyebrow">Collection</div>
-    <h1 class="cat-title">Spiritual</h1>
-    <p class="cat-desc">Faith made visible. Books that illuminate sacred stories, prayers, and traditions through stunning illustration and infographic design.</p>
-  </div>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Spiritual</span></div></div></nav>
+  <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">Spiritual</h1><p class="cat-desc">Faith made visible. Books that illuminate sacred stories, prayers, and traditions through stunning illustration and infographic design.</p></div>
   <section class="glass-section"><div class="books-wrapper"><div class="books-grid">
-    <div class="book-card" onclick="go('#communion')">
-      <div class="cover-wrap"><img class="cover-img-el" src="cover-communion.jpg" alt="My First Holy Communion"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-      <div class="card-body">
-        <div class="card-tag">Gift Book · Ages 6–9</div>
-        <div class="card-title">My First Holy Communion through Infographics</div>
-        <div class="card-author">B. B. Sterling</div>
-        <div class="card-btns">
-          <a class="btn-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q?utm_source=discovervisually&utm_medium=cat&utm_campaign=communion" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-          <button class="btn-dtl" onclick="event.stopPropagation();go('#communion')">Details</button>
-        </div>
-      </div>
-    </div>
-    <div class="book-card" onclick="go('#bible')">
-      <div class="cover-wrap"><img class="cover-img-el" src="cover-bible.jpg" alt="The Visual Bible"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-      <div class="card-body">
-        <div class="card-tag">Illustrated Sacred Infographic · All Ages</div>
-        <div class="card-title">The Visual Bible: An Illustrated Sacred Infographic</div>
-        <div class="card-author">B. B. Sterling</div>
-        <div class="card-btns">
-          <a class="btn-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7?utm_source=discovervisually&utm_medium=cat&utm_campaign=bible" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a>
-          <button class="btn-dtl" onclick="event.stopPropagation();go('#bible')">Details</button>
-        </div>
-      </div>
-    </div>
+    <div class="book-card" onclick="go('#communion')"><div class="cover-wrap"><img class="cover-img-el" src="cover-communion.jpg" alt="My First Holy Communion"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div><div class="card-body"><div class="card-tag">Gift Book · Ages 6–9</div><div class="card-title">My First Holy Communion through Infographics</div><div class="card-author">B. B. Sterling</div><div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#communion')">Details</button></div></div></div>
+    <div class="book-card" onclick="go('#bible')"><div class="cover-wrap"><img class="cover-img-el" src="cover-bible.jpg" alt="The Visual Bible"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div><div class="card-body"><div class="card-tag">Illustrated Sacred Infographic · All Ages</div><div class="card-title">The Visual Bible: An Illustrated Sacred Infographic</div><div class="card-author">B. B. Sterling</div><div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#bible')">Details</button></div></div></div>
   </div></div></section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ CAT: SLOVENČINA ████ -->
+<!-- CAT: SLOVENČINA -->
 <div class="page content-layer" id="page-cat-slovak">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Knihy v Slovenčine</span></div></div>
-  </nav>
-  <div class="cat-hero">
-    <div class="cat-hero-glow"></div>
-    <div class="cat-eyebrow">Kolekcia</div>
-    <h1 class="cat-title">Knihy<br><em style="font-weight:400;color:var(--accent);">v Slovenčine</em></h1>
-    <p class="cat-desc">Krásne ilustrované knihy pre zvedavé mysle — po slovensky, pre slovenské rodiny po celom svete.</p>
-  </div>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Knihy v Slovenčine</span></div></div></nav>
+  <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Kolekcia</div><h1 class="cat-title">Knihy<br><em style="font-weight:400;color:var(--accent);">v Slovenčine</em></h1><p class="cat-desc">Krásne ilustrované knihy pre zvedavé mysle — po slovensky, pre slovenské rodiny po celom svete.</p></div>
   <section class="glass-section"><div class="books-wrapper"><div class="books-grid">
-    <div class="book-card" onclick="go('#hedgehog-sk')">
-      <div class="cover-wrap">
-        <div class="cover-img-el"><div class="jezko.jpg">🦔</div><span>Obal čoskoro</span></div>
-        <div class="cover-overlay"><span class="overlay-pill">Zobraziť detail</span></div>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">Príbeh pre deti · 4–8 rokov</div>
-        <div class="card-title">Ježko Pippin — Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</div>
-        <div class="card-author">B. B. Sterling</div>
-        <div class="card-btns">
-          <a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Kúpiť na Amazone</a>
-          <button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button>
-        </div>
-      </div>
-    </div>
+    <div class="book-card" onclick="go('#hedgehog-sk')"><div class="cover-wrap"><img class="cover-img-el" src="jezko.jpg" alt="Ježko Pippin"/><div class="cover-overlay"><span class="overlay-pill">Zobraziť detail</span></div></div><div class="card-body"><div class="card-tag">Príbeh pre deti · 4–8 rokov</div><div class="card-title">Ježko Pippin — Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</div><div class="card-author">B. B. Sterling</div><div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Kúpiť na Amazone</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button></div></div></div>
   </div></div></section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ CAT: POLISH ████ -->
+<!-- CAT: POLISH -->
 <div class="page content-layer" id="page-cat-polish">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Książki po polsku</span></div></div>
-  </nav>
-  <div class="cat-hero">
-    <div class="cat-hero-glow"></div>
-    <div class="cat-eyebrow">Kolekcja</div>
-    <h1 class="cat-title">Książki<br><em style="font-weight:400;color:var(--accent);">po polsku</em></h1>
-    <p class="cat-desc">Pięknie ilustrowane książki dla ciekawskich umysłów — po polsku, dla polskich rodzin na całym świecie.</p>
-  </div>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Książki po polsku</span></div></div></nav>
+  <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Kolekcja</div><h1 class="cat-title">Książki<br><em style="font-weight:400;color:var(--accent);">po polsku</em></h1><p class="cat-desc">Pięknie ilustrowane książki dla ciekawskich umysłów — po polsku, dla polskich rodzin na całym świecie.</p></div>
   <section class="glass-section"><div class="books-wrapper"><div class="books-grid">
-    <div class="book-card soon">
-      <div class="cover-wrap"><div class="cover-placeholder"><div class="cover-icon">◎</div><span>Wkrótce</span></div><span class="soon-badge">Wkrótce</span></div>
-      <div class="card-body"><div class="card-tag">Nadchodzi 2026</div><div class="card-title">Nowa pozycja</div><div class="card-author">DiscoverVisually</div></div>
-    </div>
+    <div class="book-card soon"><div class="cover-wrap"><div class="cover-placeholder"><div class="cover-icon">◎</div><span>Wkrótce</span></div><span class="soon-badge">Wkrótce</span></div><div class="card-body"><div class="card-tag">Nadchodzi 2026</div><div class="card-title">Nowa pozycja</div><div class="card-author">DiscoverVisually</div></div></div>
   </div></div></section>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ BOOK: MATH2 ████ -->
+<!-- BOOK: MATH2 -->
 <div class="page content-layer" id="page-math2">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-educational')">Educational</a><span class="sep">›</span><span class="current">Grade 2 Math</span></div></div>
-  </nav>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-educational')">Educational</a><span class="sep">›</span><span class="current">Grade 2 Math</span></div></div></nav>
   <div class="detail-hero-wrap">
     <div class="detail-img"><img src="math2.png" alt="Grade 2 Math Workbook"/></div>
     <div class="detail-info-wrap">
@@ -762,11 +506,7 @@
       <div class="detail-tag-sm">Math Workbook · Grade 2</div>
       <h1 class="detail-h1">Grade 2 Math Workbook<br><em style="font-weight:400;">In An RPG Math Adventure</em></h1>
       <div class="detail-author-sm">by B. B. Sterling</div>
-      <div class="meta-row">
-        <div class="meta-cell"><span class="meta-lbl">Grade</span><span class="meta-val">2nd Grade</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div>
-      </div>
+      <div class="meta-row"><div class="meta-cell"><span class="meta-lbl">Grade</span><span class="meta-val">2nd Grade</span></div><div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div><div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div></div>
       <a class="btn-amz-lg" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon</a>
     </div>
   </div>
@@ -782,17 +522,13 @@
         <li>Progress tracker — level up as you complete chapters</li>
         <li>Designed for Grade 2 curriculum standards</li>
       </ul>
-
-      <!-- GAME SECTION -->
       <h2 class="mt">Play the Game</h2>
       <div class="game-section">
         <div class="game-eyebrow">⚔️ Bonus Digital Content</div>
         <div class="game-title">Fix the Chain — The RPG Math Game</div>
         <p class="game-desc">Your child's adventure doesn't stop at the last page. Play the companion web game — repair broken chain links by solving math puzzles, battle through 8 worlds, and earn your Certificate of the Chain.</p>
-        <a class="btn-play" href="fix-the-chain-game.html" target="_blank"><span class="play-icon">▶</span> Play Now — Free</a>
+        <a class="btn-play" href="fix-the-chain-game.html" target="_blank"><span>▶</span> Play Now — Free</a>
       </div>
-
-      <!-- CERTIFICATE SECTION -->
       <h2 class="mt">Certificate of the Chain</h2>
       <div class="cert-section">
         <div class="cert-eyebrow">🏆 Printable Award</div>
@@ -805,8 +541,7 @@
       </div>
     </div>
     <div class="dl-sidebar">
-      <div class="dl-eyebrow">About This Title</div>
-      <h3>Perfect For</h3>
+      <div class="dl-eyebrow">About This Title</div><h3>Perfect For</h3>
       <p class="dl-intro">Second graders who need math practice but resist traditional worksheets. Turn homework into an adventure.</p>
       <div class="dl-card"><div class="dl-icon">⚔️</div><div class="dl-title">RPG Adventure Format</div><div class="dl-desc">Every math problem is a challenge in an epic quest — keeping kids engaged from first page to last.</div></div>
       <div class="dl-card"><div class="dl-icon">📊</div><div class="dl-title">Visual Learning</div><div class="dl-desc">Infographics and visual explainers make abstract math concepts concrete and memorable.</div></div>
@@ -816,27 +551,17 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ BOOK: HEDGEHOG EN ████ -->
+<!-- BOOK: HEDGEHOG EN -->
 <div class="page content-layer" id="page-hedgehog-en">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-forchildren')">For Children</a><span class="sep">›</span><span class="current">Hedgehog Pippin</span></div></div>
-  </nav>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-forchildren')">For Children</a><span class="sep">›</span><span class="current">Hedgehog Pippin</span></div></div></nav>
   <div class="detail-hero-wrap">
-    <div class="detail-img" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;min-height:480px;">
-      <div style="width:120px;height:120px;border:1px solid var(--glass-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🦔</div>
-      <span style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);">Cover coming soon</span>
-    </div>
+    <div class="detail-img"><img src="hedgehog.jpg" alt="Hedgehog Pippin"/></div>
     <div class="detail-info-wrap">
       <a class="back-link" onclick="go('#cat-forchildren')">← For Children</a>
       <div class="detail-tag-sm">Children's Story · Ages 4–8</div>
       <h1 class="detail-h1">Hedgehog Pippin<br><em style="font-weight:400;">A Story with Real Hedgehog Facts for Curious Kids</em></h1>
       <div class="detail-author-sm">by B. B. Sterling</div>
-      <div class="meta-row">
-        <div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">4–8 years</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div>
-      </div>
+      <div class="meta-row"><div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">4–8 years</span></div><div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div><div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div></div>
       <a class="btn-amz-lg" href="https://www.amazon.com" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon</a>
     </div>
   </div>
@@ -855,8 +580,7 @@
       </ul>
     </div>
     <div class="dl-sidebar">
-      <div class="dl-eyebrow">About This Title</div>
-      <h3>Perfect For</h3>
+      <div class="dl-eyebrow">About This Title</div><h3>Perfect For</h3>
       <p class="dl-intro">Curious kids aged 4–8, parents who love bedtime reading, and anyone who wants to sneak a little nature education into story time.</p>
       <div class="dl-card"><div class="dl-icon">📖</div><div class="dl-title">Story + Facts Combined</div><div class="dl-desc">Real hedgehog biology and behaviour woven into a gentle, engaging narrative — no dry fact lists.</div></div>
       <div class="dl-card"><div class="dl-icon">🎁</div><div class="dl-title">Wonderful Gift</div><div class="dl-desc">A beautiful full-color gift book for birthdays, Christmas, or any occasion for a young nature lover.</div></div>
@@ -865,12 +589,9 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ BOOK: COMMUNION ████ -->
+<!-- BOOK: COMMUNION -->
 <div class="page content-layer" id="page-communion">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">First Communion</span></div></div>
-  </nav>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">First Communion</span></div></div></nav>
   <div class="detail-hero-wrap">
     <div class="detail-img"><img src="cover-communion.jpg" alt="My First Holy Communion"/></div>
     <div class="detail-info-wrap">
@@ -878,13 +599,8 @@
       <div class="detail-tag-sm">Gift Book · Ages 6–9</div>
       <h1 class="detail-h1">My First Holy Communion<br><em style="font-weight:400;">through Infographics</em></h1>
       <div class="detail-author-sm">by B. B. Sterling</div>
-      <div class="meta-row">
-        <div class="meta-cell"><span class="meta-lbl">Pages</span><span class="meta-val">48</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">6–9 years</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div>
-      </div>
-      <a class="btn-amz-lg" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q?utm_source=discovervisually&utm_medium=detail&utm_campaign=communion" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon — $21.99</a>
+      <div class="meta-row"><div class="meta-cell"><span class="meta-lbl">Pages</span><span class="meta-val">48</span></div><div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div><div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">6–9 years</span></div><div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div></div>
+      <a class="btn-amz-lg" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon — $21.99</a>
     </div>
   </div>
   <div class="detail-body"><div class="detail-body-inner">
@@ -908,22 +624,18 @@
       </ul>
     </div>
     <div class="dl-sidebar">
-      <div class="dl-eyebrow">Free Bonus Pack</div>
-      <h3>Included Downloads</h3>
+      <div class="dl-eyebrow">Free Bonus Pack</div><h3>Included Downloads</h3>
       <p class="dl-intro">Scan the QR code inside the book — or download your free printables directly here.</p>
-      <div class="dl-card"><div class="dl-icon">🏆</div><div class="dl-title">First Communion Certificate</div><div class="dl-desc">A beautifully designed printable certificate. Space for your child's name, date, church and priest. Ready to print and frame.</div><a class="btn-dl" href="first-communion-certificate.pdf" download="First-Communion-Certificate-DiscoverVisually.pdf">↓ Free Download</a></div>
-      <div class="dl-card"><div class="dl-icon">✝</div><div class="dl-title">The Our Father — Illustrated Poster</div><div class="dl-desc">Every line of the Lord's Prayer brought to life through illustration. A stunning A4 print for your child's room.</div><a class="btn-dl" href="our-father-poster.pdf" download="Our-Father-Illustrated-Poster-DiscoverVisually.pdf">↓ Free Download</a></div>
+      <div class="dl-card"><div class="dl-icon">🏆</div><div class="dl-title">First Communion Certificate</div><div class="dl-desc">A beautifully designed printable certificate. Space for your child's name, date, church and priest. Ready to print and frame.</div><a class="btn-dl" href="first-communion-certificate.pdf" download>↓ Free Download</a></div>
+      <div class="dl-card"><div class="dl-icon">✝</div><div class="dl-title">The Our Father — Illustrated Poster</div><div class="dl-desc">Every line of the Lord's Prayer brought to life through illustration. A stunning A4 print for your child's room.</div><a class="btn-dl" href="our-father-poster.pdf" download>↓ Free Download</a></div>
     </div>
   </div></div>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ BOOK: VISUAL BIBLE ████ -->
+<!-- BOOK: VISUAL BIBLE -->
 <div class="page content-layer" id="page-bible">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">The Visual Bible</span></div></div>
-  </nav>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">The Visual Bible</span></div></div></nav>
   <div class="detail-hero-wrap">
     <div class="detail-img"><img src="cover-bible.jpg" alt="The Visual Bible"/></div>
     <div class="detail-info-wrap">
@@ -931,12 +643,8 @@
       <div class="detail-tag-sm">Illustrated Sacred Infographic · All Ages</div>
       <h1 class="detail-h1">The Visual Bible:<br><em style="font-weight:400;">An Illustrated Sacred Infographic</em></h1>
       <div class="detail-author-sm">by B. B. Sterling</div>
-      <div class="meta-row">
-        <div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">8–99 years</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div>
-      </div>
-      <a class="btn-amz-lg" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7?utm_source=discovervisually&utm_medium=detail&utm_campaign=bible" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon — $19.59</a>
+      <div class="meta-row"><div class="meta-cell"><span class="meta-lbl">Format</span><span class="meta-val">Full Color</span></div><div class="meta-cell"><span class="meta-lbl">Age</span><span class="meta-val">8–99 years</span></div><div class="meta-cell"><span class="meta-lbl">Publisher</span><span class="meta-val">DiscoverVisually</span></div></div>
+      <a class="btn-amz-lg" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Buy on Amazon — $19.59</a>
     </div>
   </div>
   <div class="detail-body"><div class="detail-body-inner">
@@ -956,8 +664,7 @@
       </ul>
     </div>
     <div class="dl-sidebar">
-      <div class="dl-eyebrow">About This Title</div>
-      <h3>Perfect For</h3>
+      <div class="dl-eyebrow">About This Title</div><h3>Perfect For</h3>
       <p class="dl-intro">An unforgettable Christmas gift, a meaningful baptism present, or an engaging homeschool Bible curriculum.</p>
       <div class="dl-card"><div class="dl-icon">📖</div><div class="dl-title">For All Generations</div><div class="dl-desc">Ages 8 to 99. Visual learners, homeschooling families, and lifelong believers.</div></div>
       <div class="dl-card"><div class="dl-icon">🎁</div><div class="dl-title">Premium Gift Quality</div><div class="dl-desc">Luxury indigo and gold design. A stunning piece of Christian home decor or a high-end coffee table book.</div></div>
@@ -966,27 +673,17 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- ████ BOOK: JEŽKO PIPPIN SK ████ -->
+<!-- BOOK: JEŽKO PIPPIN SK -->
 <div class="page content-layer" id="page-hedgehog-sk">
-  <nav>
-    <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
-    <div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-slovak')">Slovenčina</a><span class="sep">›</span><span class="current">Ježko Pippin</span></div></div>
-  </nav>
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-slovak')">Slovenčina</a><span class="sep">›</span><span class="current">Ježko Pippin</span></div></div></nav>
   <div class="detail-hero-wrap">
-    <div class="detail-img" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;min-height:480px;">
-      <div style="width:120px;height:120px;border:1px solid var(--glass-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🦔</div>
-      <span style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);">Obal čoskoro</span>
-    </div>
+    <div class="detail-img"><img src="jezko.jpg" alt="Ježko Pippin"/></div>
     <div class="detail-info-wrap">
       <a class="back-link" onclick="go('#cat-slovak')">← Slovenčina</a>
       <div class="detail-tag-sm">Príbeh pre deti · 4–8 rokov</div>
       <h1 class="detail-h1">Ježko Pippin<br><em style="font-weight:400;">Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</em></h1>
       <div class="detail-author-sm">od B. B. Sterling</div>
-      <div class="meta-row">
-        <div class="meta-cell"><span class="meta-lbl">Vek</span><span class="meta-val">4–8 rokov</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Formát</span><span class="meta-val">Farebná tlač</span></div>
-        <div class="meta-cell"><span class="meta-lbl">Vydavateľ</span><span class="meta-val">DiscoverVisually</span></div>
-      </div>
+      <div class="meta-row"><div class="meta-cell"><span class="meta-lbl">Vek</span><span class="meta-val">4–8 rokov</span></div><div class="meta-cell"><span class="meta-lbl">Formát</span><span class="meta-val">Farebná tlač</span></div><div class="meta-cell"><span class="meta-lbl">Vydavateľ</span><span class="meta-val">DiscoverVisually</span></div></div>
       <a class="btn-amz-lg" href="https://www.amazon.com" target="_blank"><span style="font-size:1.3rem;font-weight:900;">a</span> Kúpiť na Amazone</a>
     </div>
   </div>
@@ -1005,13 +702,51 @@
       </ul>
     </div>
     <div class="dl-sidebar">
-      <div class="dl-eyebrow">O tejto knihe</div>
-      <h3>Ideálne pre</h3>
+      <div class="dl-eyebrow">O tejto knihe</div><h3>Ideálne pre</h3>
       <p class="dl-intro">Zvedavé deti vo veku 4–8 rokov, rodičov, ktorí milujú večerné čítanie, a každého, kto chce do rozprávky vniesť kúsok prírodovedy.</p>
       <div class="dl-card"><div class="dl-icon">📖</div><div class="dl-title">Príbeh + fakty spolu</div><div class="dl-desc">Skutočná biológia a správanie ježkov vpletené do jemného, pútavého príbehu — žiadne suché zoznamy faktov.</div></div>
       <div class="dl-card"><div class="dl-icon">🎁</div><div class="dl-title">Krásny darček</div><div class="dl-desc">Nádherná farebná darčeková kniha na narodeniny, Vianoce alebo akúkoľvek príležitosť pre mladého milovníka prírody.</div></div>
     </div>
   </div></div>
+  <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
+</div>
+
+<!-- MILESTONE CARDS PAGE -->
+<div class="page content-layer" id="page-milestonecards">
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current" style="color:var(--violet-bright);">Milestone Cards</span></div></div></nav>
+
+  <div class="milestone-hero">
+    <div class="milestone-hero-tag">Digital Download · Baby Milestone Cards</div>
+    <h1 class="milestone-hero-title">Don't ship paper<br>when you can <em>print it.</em></h1>
+    <p class="milestone-hero-desc">40 fully personalized cards with your baby's name &amp; dates — designed, generated, and ready to print in minutes. Up to 92% cheaper than ordering personalized cards.</p>
+  </div>
+
+  <div class="milestone-body">
+    <div class="milestone-body-inner">
+      <div class="milestone-cards-grid">
+        <div class="milestone-info-card"><div class="milestone-info-card-icon">✦</div><div class="milestone-info-card-title">40 Unique Cards</div><div class="milestone-info-card-desc">Every milestone from Week 1 through Month 12 — with your baby's name and custom dates on every single card.</div></div>
+        <div class="milestone-info-card"><div class="milestone-info-card-icon">💜</div><div class="milestone-info-card-title">Fully Personalized</div><div class="milestone-info-card-desc">Enter your baby's name once — it appears on every card. No generic templates. No waiting weeks for delivery.</div></div>
+        <div class="milestone-info-card"><div class="milestone-info-card-icon">🖨</div><div class="milestone-info-card-title">Print at Home or Pro Shop</div><div class="milestone-info-card-desc">~$7 total printed at home. ~$24 at FedEx or Staples. Still up to 73% cheaper than ordering personalized cards on Etsy.</div></div>
+        <div class="milestone-info-card"><div class="milestone-info-card-icon">⚡</div><div class="milestone-info-card-title">Instant Download</div><div class="milestone-info-card-desc">Generate your personalized PDF, download immediately, and print the same day. No shipping. No wait.</div></div>
+      </div>
+
+      <div class="flyer-wrap">
+        <img src="milestone-cards-savings-flyer.jpg" alt="Milestone Cards — Price Comparison Flyer"/>
+        <div class="flyer-caption">Baby Milestone Cards · Digital Download · Why print beats ship</div>
+      </div>
+
+      <div class="generator-cta">
+        <div class="generator-cta-eyebrow">✦ Free Personalized Generator ✦</div>
+        <h2 class="generator-cta-title">Enter the Milestone<br>Card Generator</h2>
+        <p class="generator-cta-desc">Type your baby's name, pick your dates, and get 40 beautifully personalized milestone cards — ready to download and print instantly.</p>
+        <a class="btn-generator" href="milestone-generator.html">
+          <span class="btn-generator-icon">✦</span>
+          Create My Cards — Free
+        </a>
+        <p class="generator-note">Instant download · No account required · Print at home or at your local print shop</p>
+      </div>
+    </div>
+  </div>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
