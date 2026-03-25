@@ -83,46 +83,6 @@ body::before {
   min-height: 100vh;
 }
 
-/* ─── TOP NAV ────────────────────────────────── */
-.top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 1rem;
-  margin-bottom: -0.25rem;
-}
-.nav-home {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 5px;
-  transition: color 0.2s;
-  font-weight: 400;
-}
-.nav-home:hover { color: var(--sage-dark); }
-.nav-arrow { font-size: 11px; transition: transform 0.2s; }
-.nav-home:hover .nav-arrow { transform: translateX(-3px); }
-.nav-explore {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 5px 11px;
-  border: 1px solid rgba(200,185,138,0.35);
-  border-radius: 20px;
-  transition: all 0.2s;
-  background: var(--gold-pale);
-}
-.nav-explore:hover {
-  background: rgba(200,185,138,0.22);
-  border-color: var(--gold);
-  color: #8a6a2a;
-}
-
 /* ─── LOGO ───────────────────────────────────── */
 .logo {
   padding-bottom: 1.25rem;
@@ -507,19 +467,112 @@ body::before {
 </head>
 <body>
 
+<!-- ═══ TOKEN PROTECTION ═══ -->
+<style>
+  #access-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: #FAF7F2;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Jost', sans-serif;
+  }
+  #access-overlay .access-box {
+    text-align: center; max-width: 360px; padding: 2rem;
+  }
+  #access-overlay .access-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-style: italic;
+    color: #2C3E2D; margin-bottom: 0.75rem;
+  }
+  #access-overlay .access-msg {
+    font-size: 13px; color: #7a8a72; line-height: 1.6;
+  }
+  #access-overlay .access-msg a {
+    color: #C8B98A; text-decoration: none;
+    border-bottom: 1px solid #C8B98A;
+  }
+  #access-overlay .access-spinner {
+    width: 28px; height: 28px;
+    border: 2px solid rgba(200,185,138,0.25);
+    border-top-color: #C8B98A;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<div id="access-overlay">
+  <div class="access-box">
+    <div class="access-spinner" id="access-spinner"></div>
+    <div class="access-title" id="access-title">Verifying access…</div>
+    <div class="access-msg" id="access-msg"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1E34IxoGLfZF4E_7vLcLwgLIejrA-63y7fqQzfoqQN9U/pub?output=csv';
+
+  function showError(msg) {
+    document.getElementById('access-spinner').style.display = 'none';
+    document.getElementById('access-title').textContent = 'Access Denied';
+    document.getElementById('access-msg').innerHTML = msg;
+  }
+
+  function grantAccess() {
+    document.getElementById('access-overlay').style.display = 'none';
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  if (!token) {
+    showError('No access token found.<br>Please use the link you received after purchase.');
+    return;
+  }
+
+  fetch(SHEET_CSV)
+    .then(r => {
+      if (!r.ok) throw new Error('Sheet not reachable');
+      return r.text();
+    })
+    .then(csv => {
+      const rows = csv.trim().split('\n').slice(1); // skip header row
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      let found = false;
+      for (const row of rows) {
+        const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+        const [rowToken, validFrom, validTo] = cols;
+        if (!rowToken || rowToken !== token) continue;
+        found = true;
+        const from = new Date(validFrom);
+        const to   = new Date(validTo);
+        to.setHours(23, 59, 59, 999);
+        if (today >= from && today <= to) {
+          grantAccess();
+        } else {
+          showError('Your access link has expired.<br>Please purchase a new licence to continue.');
+        }
+        return;
+      }
+
+      if (!found) {
+        showError('Invalid access token.<br>Please use the link you received after purchase.');
+      }
+    })
+    .catch(() => {
+      showError('Could not verify access.<br>Please check your connection and <a href="">try again</a>.');
+    });
+})();
+</script>
+<!-- ═══ END TOKEN PROTECTION ═══ -->
+
 <div id="app">
 
 <!-- ═══ FORM PANEL ════════════════════════════════════════ -->
 <aside id="form-panel">
-
-  <nav class="top-nav">
-    <a href="https://discovervisually.github.io/" class="nav-home" target="_blank">
-      <span class="nav-arrow">←</span> discovervisually
-    </a>
-    <a href="https://discovervisually.github.io/#milestonecards" class="nav-explore" target="_blank">
-      Explore more ✦
-    </a>
-  </nav>
 
   <div class="logo">
     <div class="logo-title">Baby Milestone Cards</div>
