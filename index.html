@@ -43,6 +43,7 @@
       --text:#F0EFE8;--muted:rgba(240,239,232,0.5);--accent:#E8C84A;
       --accent-dim:rgba(232,200,74,0.12);--amazon:#FF9900;
       --violet:#7C3AED;--violet-bright:#A855F7;--violet-glow:rgba(168,85,247,0.35);
+      --violet-dim:rgba(168,85,247,0.08);
     }
     html{scroll-behavior:smooth;}
     body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
@@ -52,7 +53,7 @@
     .page{display:none;min-height:100vh;}
     .page.active{display:block;}
 
-    /* FLOATING MILESTONE TAB */
+    /* ── FLOATING MILESTONE TAB ── */
     .milestone-float{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;}
     .milestone-float-inner{
       writing-mode:vertical-rl;text-orientation:mixed;
@@ -70,7 +71,7 @@
     .milestone-float-new{writing-mode:horizontal-tb;background:#FCD34D;color:#3b0764;font-size:0.52rem;font-weight:700;letter-spacing:0.12em;padding:0.15rem 0.35rem;border-radius:3px;white-space:nowrap;}
     @keyframes milestoneGlow{0%,100%{box-shadow:-4px 0 24px var(--violet-glow),0 0 40px var(--violet-glow);}50%{box-shadow:-4px 0 36px rgba(168,85,247,0.6),0 0 60px rgba(168,85,247,0.5);}}
 
-    /* NAV */
+    /* ── NAV ── */
     nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color 0.3s;}
     nav.scrolled{border-bottom-color:var(--glass-border);}
     .nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:var(--text);cursor:pointer;text-decoration:none;}
@@ -87,7 +88,7 @@
     .breadcrumb .sep{color:rgba(255,255,255,0.2);}
     .breadcrumb .current{color:var(--accent);}
 
-    /* HERO */
+    /* ── HERO ── */
     .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 4rem 6rem;position:relative;}
     .hero-label{display:inline-flex;align-items:center;gap:1rem;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem;opacity:0;animation:fadeUp 1s ease forwards 0.3s;}
     .hero-label::before,.hero-label::after{content:'';display:block;width:40px;height:1px;background:var(--accent);}
@@ -104,7 +105,7 @@
     .scroll-bar{width:1px;height:50px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollDrop 2s ease-in-out infinite;}
     @keyframes scrollDrop{0%{transform:scaleY(0);transform-origin:top;opacity:1;}50%{transform:scaleY(1);transform-origin:top;opacity:1;}100%{transform:scaleY(1);transform-origin:bottom;opacity:0;}}
 
-    /* MARQUEE */
+    /* ── MARQUEE ── */
     .marquee{padding:1.8rem 0;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);overflow:hidden;}
     .marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marqueeScroll 28s linear infinite;}
     @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
@@ -112,7 +113,143 @@
     .marquee-sep{color:var(--accent);font-style:normal;margin:0 0.5rem;}
     .marquee-item.m-violet{color:var(--violet-bright);}
 
-    /* BOOKS SECTION */
+    /* ── HOME TWO-COLUMN LAYOUT ── */
+    .home-catalog{
+      background:var(--glass);backdrop-filter:blur(24px) saturate(1.4);
+      border-top:1px solid var(--glass-border);
+    }
+    .home-catalog-inner{
+      display:flex;align-items:stretch;
+      max-width:100%;
+    }
+
+    /* LEFT: BOOKS COLUMN (60%) */
+    .col-books{
+      width:60%;flex-shrink:0;
+      border-right:1px solid var(--glass-border);
+      padding:3rem 0;
+    }
+    .col-header{
+      display:flex;align-items:center;gap:1rem;
+      padding:0 3rem 1.5rem;
+      border-bottom:1px solid var(--glass-border);
+      margin-bottom:0;
+    }
+    .col-header-label{
+      font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--accent);
+    }
+    .col-header-label.violet{color:var(--violet-bright);}
+    .col-header-line{flex:1;height:1px;background:var(--glass-border);}
+
+    /* Category rows inside books column */
+    .cat-row{padding:2rem 3rem;border-bottom:1px solid var(--glass-border);}
+    .cat-row:last-child{border-bottom:none;}
+    .cat-row-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      margin-bottom:1.4rem;cursor:pointer;
+    }
+    .cat-row-head:hover .cat-row-name{color:var(--accent);}
+    .cat-row-name{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;transition:color 0.2s;}
+    .cat-row-meta{display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;}
+    .cat-row-count{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
+    .cat-row-arrow{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);}
+
+    /* Horizontal card scroller */
+    .cards-scroll{
+      display:flex;gap:12px;overflow-x:auto;padding-bottom:0.5rem;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;
+    }
+    .cards-scroll::-webkit-scrollbar{height:3px;}
+    .cards-scroll::-webkit-scrollbar-track{background:transparent;}
+    .cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+    .cards-scroll:hover::-webkit-scrollbar-thumb{background:rgba(232,200,74,0.3);}
+
+    /* Individual book card in scroller */
+    .book-card-h{
+      flex-shrink:0;width:170px;
+      background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);
+      overflow:hidden;cursor:pointer;
+      transition:background 0.3s ease,transform 0.3s ease;position:relative;
+    }
+    .book-card-h:hover{background:rgba(255,255,255,0.06);transform:translateY(-4px);border-color:rgba(232,200,74,0.25);}
+    .book-card-h:hover .bh-overlay{opacity:1;}
+    .book-card-h:hover .bh-img{transform:scale(1.05);}
+    .bh-cover{aspect-ratio:3/4;overflow:hidden;background:rgba(255,255,255,0.03);position:relative;}
+    .bh-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;}
+    .bh-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));}
+    .bh-placeholder-icon{width:40px;height:40px;border:1px solid var(--glass-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--muted);}
+    .bh-placeholder span{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-align:center;}
+    .bh-overlay{position:absolute;inset:0;background:rgba(232,200,74,0.06);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
+    .bh-overlay-text{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,200,74,0.4);padding:0.4rem 0.8rem;background:rgba(8,8,8,0.7);}
+    .bh-soon-badge{position:absolute;top:0.6rem;left:0.6rem;padding:0.15rem 0.5rem;background:rgba(255,255,255,0.06);backdrop-filter:blur(8px);font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border:1px solid var(--glass-border);}
+    .bh-body{padding:0.8rem;}
+    .bh-tag{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;}
+    .bh-title{font-family:'Playfair Display',serif;font-size:0.82rem;font-weight:700;line-height:1.25;margin-bottom:0.2rem;}
+    .bh-author{font-size:0.7rem;color:var(--muted);margin-bottom:0.9rem;}
+    .bh-btns{display:flex;gap:0.4rem;}
+    .bh-amz{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.3rem;padding:0.45rem 0.5rem;background:var(--amazon);color:#000;font-size:0.6rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:background 0.2s;}
+    .bh-amz:hover{background:#FFB347;}
+    .bh-amz .amz-a{font-weight:900;font-size:0.8rem;}
+    .bh-dtl{padding:0.45rem 0.5rem;border:1px solid var(--glass-border);color:var(--muted);font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+    .bh-dtl:hover{border-color:var(--text);color:var(--text);}
+
+    /* RIGHT: MILESTONE COLUMN (40%) */
+    .col-milestone{
+      width:40%;flex-shrink:0;
+      padding:3rem 0;
+      background:linear-gradient(180deg,rgba(124,58,237,0.04) 0%,transparent 40%);
+    }
+    .col-header-milestone{
+      display:flex;align-items:center;gap:1rem;
+      padding:0 2.5rem 1.5rem;
+      border-bottom:1px solid rgba(168,85,247,0.15);
+    }
+    .milestone-cat-block{padding:2rem 2.5rem;}
+    .milestone-cat-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      margin-bottom:1.4rem;cursor:pointer;
+    }
+    .milestone-cat-head:hover .milestone-cat-name{color:var(--violet-bright);}
+    .milestone-cat-name{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2vw,1.6rem);font-weight:700;transition:color 0.2s;}
+    .milestone-cat-meta{display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;}
+    .milestone-cat-count{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
+    .milestone-cat-arrow{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--violet-bright);}
+
+    /* Milestone card grid (2-col) */
+    .milestone-cards-home{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    /* Individual milestone card */
+    .ms-card{
+      background:rgba(255,255,255,0.02);border:1px solid rgba(168,85,247,0.12);
+      overflow:hidden;cursor:pointer;
+      transition:background 0.3s ease,transform 0.3s ease,border-color 0.3s;position:relative;
+    }
+    .ms-card:hover{background:rgba(168,85,247,0.06);transform:translateY(-4px);border-color:rgba(168,85,247,0.35);}
+    .ms-card:hover .ms-overlay{opacity:1;}
+    .ms-card:hover .ms-img{transform:scale(1.05);}
+    .ms-card.soon{opacity:0.4;cursor:default;pointer-events:none;}
+    .ms-cover{aspect-ratio:3/4;overflow:hidden;background:rgba(255,255,255,0.02);position:relative;}
+    .ms-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;}
+    .ms-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(168,85,247,0.03));}
+    .ms-placeholder-icon{width:38px;height:38px;border:1px solid rgba(168,85,247,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--violet-bright);}
+    .ms-placeholder span{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-align:center;}
+    .ms-overlay{position:absolute;inset:0;background:rgba(168,85,247,0.06);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
+    .ms-overlay-text{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--violet-bright);border:1px solid rgba(168,85,247,0.4);padding:0.4rem 0.8rem;background:rgba(8,8,8,0.75);}
+    .ms-soon-badge{position:absolute;top:0.6rem;left:0.6rem;padding:0.15rem 0.5rem;background:rgba(124,58,237,0.15);backdrop-filter:blur(8px);font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--violet-bright);border:1px solid rgba(168,85,247,0.2);}
+    .ms-new-badge{position:absolute;top:0.6rem;right:0.6rem;padding:0.2rem 0.5rem;background:#FCD34D;font-size:0.5rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3b0764;border-radius:2px;}
+    .ms-body{padding:0.75rem;}
+    .ms-tag{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:0.25rem;}
+    .ms-title{font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;line-height:1.25;margin-bottom:0.15rem;}
+    .ms-sub{font-size:0.65rem;color:var(--muted);}
+
+    /* ── FOOTER ── */
+    .footer-glass{background:var(--glass);backdrop-filter:blur(24px);border-top:1px solid var(--glass-border);padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;}
+    .footer-logo em{font-style:italic;color:var(--accent);}
+    .footer-txt{font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
+
+    /* ── CAT PAGES ── */
     .glass-section{background:var(--glass);backdrop-filter:blur(24px) saturate(1.4);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);}
     .books-wrapper{padding:6rem 4rem;max-width:1400px;margin:0 auto;}
     .category-block{margin-bottom:6rem;}
@@ -147,12 +284,6 @@
     .btn-amz .amz-a{font-weight:900;font-size:1rem;}
     .btn-dtl{padding:0.65rem 1rem;border:1px solid var(--glass-border);color:var(--muted);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
     .btn-dtl:hover{border-color:var(--text);color:var(--text);}
-
-    /* FOOTER */
-    .footer-glass{background:var(--glass);backdrop-filter:blur(24px);border-top:1px solid var(--glass-border);padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;}
-    .footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;}
-    .footer-logo em{font-style:italic;color:var(--accent);}
-    .footer-txt{font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
 
     /* CAT HERO */
     .cat-hero{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 4rem 5rem;position:relative;overflow:hidden;}
@@ -199,7 +330,7 @@
     .btn-dl{display:flex;align-items:center;justify-content:center;gap:0.4rem;padding:0.6rem 1rem;background:var(--accent-dim);border:1px solid rgba(232,200,74,0.4);color:var(--accent);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;text-decoration:none;width:100%;}
     .btn-dl:hover{background:var(--accent);color:var(--black);}
 
-    /* GAME SECTION */
+    /* GAME + CERT */
     .game-section{border:1px solid rgba(232,200,74,0.25);background:linear-gradient(135deg,rgba(232,200,74,0.04),rgba(255,255,255,0.02));padding:2.5rem;margin-bottom:2rem;position:relative;overflow:hidden;}
     .game-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
     .game-eyebrow{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
@@ -207,8 +338,6 @@
     .game-desc{font-size:0.88rem;line-height:1.7;color:var(--muted);margin-bottom:1.5rem;}
     .btn-play{display:inline-flex;align-items:center;gap:0.7rem;padding:0.9rem 2.2rem;background:var(--accent);color:var(--black);font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.25s;}
     .btn-play:hover{background:#fff;transform:translateY(-2px);}
-
-    /* CERT SECTION */
     .cert-section{border:1px solid rgba(232,200,74,0.2);background:rgba(255,255,255,0.02);padding:2.5rem;}
     .cert-eyebrow{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
     .cert-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.6rem;}
@@ -254,43 +383,64 @@
     .cert-btn-cancel{padding:0.7rem 2rem;background:transparent;color:#5a4a1a;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid #B8960C;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
     .cert-btn-cancel:hover{background:#B8960C;color:#fff;}
 
-    /* MILESTONE PAGE */
-    .milestone-hero{min-height:58vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 4rem 5rem;position:relative;overflow:hidden;}
+    /* ── MILESTONE PAGE ── */
+    .milestone-hero{min-height:58vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 4rem 4rem;position:relative;overflow:hidden;}
     .milestone-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,rgba(168,85,247,0.12) 0%,transparent 65%);}
     .milestone-hero-tag{display:inline-flex;align-items:center;gap:0.8rem;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:1.5rem;}
     .milestone-hero-tag::before,.milestone-hero-tag::after{content:'';display:block;width:30px;height:1px;background:var(--violet-bright);}
     .milestone-hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:0.92;letter-spacing:-0.02em;margin-bottom:1.5rem;}
     .milestone-hero-title em{font-style:italic;font-weight:400;color:var(--violet-bright);}
-    .milestone-hero-desc{font-size:1.05rem;line-height:1.9;color:var(--muted);max-width:520px;margin:0 auto;}
+    .milestone-hero-desc{font-size:1.05rem;line-height:1.9;color:var(--muted);max-width:520px;margin:0 auto 3rem;}
+
+    /* BIG CTA BUTTON — between hero text and info cards */
+    .milestone-hero-cta{
+      display:inline-flex;align-items:center;gap:1rem;
+      padding:1.3rem 4rem;
+      background:linear-gradient(135deg,var(--violet),var(--violet-bright));
+      color:#fff;
+      font-size:0.95rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+      text-decoration:none;border:none;cursor:pointer;
+      box-shadow:0 6px 40px var(--violet-glow);
+      transition:all 0.3s ease;
+      position:relative;z-index:1;
+    }
+    .milestone-hero-cta:hover{background:linear-gradient(135deg,#6D28D9,var(--violet-bright));transform:translateY(-3px);box-shadow:0 12px 56px rgba(168,85,247,0.55);}
+    .milestone-hero-cta-icon{font-size:1.4rem;}
+
     .milestone-body{background:var(--glass);backdrop-filter:blur(24px);border-top:1px solid var(--glass-border);padding:5rem 4rem;}
     .milestone-body-inner{max-width:1100px;margin:0 auto;}
-    .milestone-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;margin-bottom:4rem;}
+    .milestone-info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;margin-bottom:4rem;}
     .milestone-info-card{border:1px solid var(--glass-border);padding:2rem;background:rgba(255,255,255,0.02);}
     .milestone-info-card-icon{font-size:2rem;margin-bottom:0.8rem;}
     .milestone-info-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;}
     .milestone-info-card-desc{font-size:0.82rem;line-height:1.6;color:var(--muted);}
-    .flyer-wrap{border:1px solid rgba(168,85,247,0.2);overflow:hidden;margin-bottom:4rem;background:rgba(255,255,255,0.02);position:relative;}
+    .flyer-wrap{border:1px solid rgba(168,85,247,0.2);overflow:hidden;background:rgba(255,255,255,0.02);position:relative;}
     .flyer-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--violet-bright),transparent);z-index:1;}
     .flyer-wrap img{width:100%;display:block;}
     .flyer-caption{padding:1rem 1.5rem;font-size:0.72rem;letter-spacing:0.12em;color:var(--muted);text-align:center;border-top:1px solid var(--glass-border);}
-    .generator-cta{text-align:center;padding:4rem 3rem;background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(168,85,247,0.06));border:1px solid rgba(168,85,247,0.25);position:relative;overflow:hidden;}
-    .generator-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet-bright),transparent);}
-    .generator-cta-eyebrow{font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:1.2rem;}
-    .generator-cta-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:1rem;}
-    .generator-cta-desc{font-size:0.95rem;line-height:1.8;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;}
-    .btn-generator{display:inline-flex;align-items:center;gap:0.9rem;padding:1.2rem 3.5rem;background:linear-gradient(135deg,var(--violet),var(--violet-bright));color:#fff;font-size:0.88rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 32px var(--violet-glow);transition:all 0.3s ease;}
-    .btn-generator:hover{background:linear-gradient(135deg,#6D28D9,var(--violet-bright));transform:translateY(-3px);box-shadow:0 8px 48px rgba(168,85,247,0.5);}
-    .btn-generator-icon{font-size:1.3rem;}
-    .generator-note{margin-top:1.2rem;font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
 
     @media print{body>*{display:none!important;}#cert-print-overlay{display:flex!important;position:static!important;background:none!important;backdrop-filter:none!important;padding:0!important;}.cert-preview-close{display:none!important;}.cert-actions{display:none!important;}.cert-preview-shell{box-shadow:none!important;max-width:100%!important;border:2px solid #B8960C!important;}}
     @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+    @media(max-width:1024px){
+      .home-catalog-inner{flex-direction:column;}
+      .col-books{width:100%;border-right:none;border-bottom:1px solid var(--glass-border);}
+      .col-milestone{width:100%;}
+      .milestone-cards-home{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+    }
     @media(max-width:768px){
-      nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}.hero{padding:6rem 1.5rem 4rem;}.books-wrapper{padding:4rem 1.5rem;}
+      nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}
+      .hero{padding:6rem 1.5rem 4rem;}
+      .col-books{padding:2rem 0;}.cat-row{padding:1.5rem;}.col-header{padding:0 1.5rem 1.2rem;}
+      .col-milestone{padding:2rem 0;}.milestone-cat-block{padding:1.5rem;}.col-header-milestone{padding:0 1.5rem 1.2rem;}
       .detail-hero-wrap{grid-template-columns:1fr;}.detail-info-wrap{padding:3rem 1.5rem;}.detail-body{padding:3rem 1.5rem;}.detail-body-inner{grid-template-columns:1fr;gap:3rem;}
-      .footer-glass{flex-direction:column;gap:1rem;padding:2rem 1.5rem;text-align:center;}.cat-hero{padding:7rem 1.5rem 4rem;}.cert-sigs{grid-template-columns:1fr;}.cert-inner{padding:1.5rem;}
+      .footer-glass{flex-direction:column;gap:1rem;padding:2rem 1.5rem;text-align:center;}
+      .cat-hero{padding:7rem 1.5rem 4rem;}.books-wrapper{padding:4rem 1.5rem;}
+      .cert-sigs{grid-template-columns:1fr;}.cert-inner{padding:1.5rem;}
       .milestone-float{top:auto;bottom:1.5rem;transform:none;}.milestone-float-inner{writing-mode:horizontal-tb;border-radius:999px;border:1px solid rgba(168,85,247,0.5);padding:0.7rem 1.2rem;flex-direction:row;gap:0.4rem;}
-      .milestone-body{padding:3rem 1.5rem;}.generator-cta{padding:3rem 1.5rem;}
+      .milestone-body{padding:3rem 1.5rem;}
+      .milestone-hero{padding:7rem 1.5rem 3rem;}
+      .milestone-hero-cta{padding:1.1rem 2.5rem;font-size:0.82rem;}
     }
   </style>
 </head>
@@ -338,7 +488,7 @@
   </div>
 </div>
 
-<!-- HOME -->
+<!-- ████ HOME ████ -->
 <div class="page content-layer" id="page-home">
   <nav>
     <a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a>
@@ -353,6 +503,7 @@
       </ul>
     </div>
   </nav>
+
   <section class="hero">
     <div class="hero-label">Visual Publishing House</div>
     <h1 class="hero-title">Books that<br><span class="italic">make you see</span></h1>
@@ -363,6 +514,7 @@
     </div>
     <div class="hero-scroll-hint"><span class="scroll-text">Scroll</span><div class="scroll-bar"></div></div>
   </section>
+
   <div class="marquee"><div class="marquee-track">
     <span class="marquee-item">Visual Storytelling<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Premium Illustration<span class="marquee-sep">✦</span></span>
@@ -377,75 +529,197 @@
     <span class="marquee-item m-violet">Milestone Cards<span class="marquee-sep">✦</span></span>
     <span class="marquee-item">Early Readers<span class="marquee-sep">✦</span></span>
   </div></div>
-  <section class="glass-section" id="books">
-    <div class="books-wrapper">
-      <!-- EDUCATIONAL -->
-      <div class="category-block">
-        <div class="section-head" onclick="go('#cat-educational')"><h2 class="section-cat">Educational</h2><div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div></div>
-        <div class="books-grid">
-          <div class="book-card" onclick="go('#math2')">
-            <div class="cover-wrap"><img class="cover-img-el" src="math2.png" alt="Grade 2 Math Workbook"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-            <div class="card-body"><div class="card-tag">Math Workbook · Grade 2</div><div class="card-title">Grade 2 Math Workbook — In An RPG Math Adventure</div><div class="card-author">B. B. Sterling</div>
-              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#math2')">Details</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- FOR CHILDREN -->
-      <div class="category-block">
-        <div class="section-head" onclick="go('#cat-forchildren')"><h2 class="section-cat">For Children</h2><div class="section-meta"><span class="section-count">1 title</span><span class="section-arrow">View all →</span></div></div>
-        <div class="books-grid">
-          <div class="book-card" onclick="go('#hedgehog-en')">
-            <div class="cover-wrap"><img class="cover-img-el" src="hedgehog.jpg" alt="Hedgehog Pippin"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-            <div class="card-body"><div class="card-tag">Children's Story · Ages 4–8</div><div class="card-title">Hedgehog Pippin — A Story with Real Hedgehog Facts for Curious Kids</div><div class="card-author">B. B. Sterling</div>
-              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- SPIRITUAL -->
-      <div class="category-block">
-        <div class="section-head" onclick="go('#cat-spiritual')"><h2 class="section-cat">Spiritual</h2><div class="section-meta"><span class="section-count">2 titles</span><span class="section-arrow">View all →</span></div></div>
-        <div class="books-grid">
-          <div class="book-card" onclick="go('#communion')">
-            <div class="cover-wrap"><img class="cover-img-el" src="cover-communion.jpg" alt="My First Holy Communion"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-            <div class="card-body"><div class="card-tag">Gift Book · Ages 6–9</div><div class="card-title">My First Holy Communion through Infographics</div><div class="card-author">B. B. Sterling</div>
-              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#communion')">Details</button></div>
-            </div>
-          </div>
-          <div class="book-card" onclick="go('#bible')">
-            <div class="cover-wrap"><img class="cover-img-el" src="cover-bible.jpg" alt="The Visual Bible"/><div class="cover-overlay"><span class="overlay-pill">View Details</span></div></div>
-            <div class="card-body"><div class="card-tag">Illustrated Sacred Infographic · All Ages</div><div class="card-title">The Visual Bible: An Illustrated Sacred Infographic</div><div class="card-author">B. B. Sterling</div>
-              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Buy on Amazon</a><button class="btn-dtl" onclick="event.stopPropagation();go('#bible')">Details</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- SLOVENČINA -->
-      <div class="category-block">
-        <div class="section-head" onclick="go('#cat-slovak')"><h2 class="section-cat">Knihy v Slovenčine</h2><div class="section-meta"><span class="section-count">1 titul</span><span class="section-arrow">Zobraziť →</span></div></div>
-        <div class="books-grid">
-          <div class="book-card" onclick="go('#hedgehog-sk')">
-            <div class="cover-wrap"><img class="cover-img-el" src="jezko.jpg" alt="Ježko Pippin"/><div class="cover-overlay"><span class="overlay-pill">Zobraziť detail</span></div></div>
-            <div class="card-body"><div class="card-tag">Príbeh pre deti · 4–8 rokov</div><div class="card-title">Ježko Pippin — Príbeh so skutočnými faktami o ježkoch pre zvedavé deti</div><div class="card-author">B. B. Sterling</div>
-              <div class="card-btns"><a class="btn-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span> Kúpiť na Amazone</a><button class="btn-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- POLISH -->
-      <div class="category-block">
-        <div class="section-head" onclick="go('#cat-polish')"><h2 class="section-cat">Książki po polsku</h2><div class="section-meta"><span class="section-count">Wkrótce</span><span class="section-arrow">Zobacz →</span></div></div>
-        <div class="books-grid">
-          <div class="book-card soon"><div class="cover-wrap"><div class="cover-placeholder"><div class="cover-icon">◎</div><span>Wkrótce</span></div><span class="soon-badge">Wkrótce</span></div><div class="card-body"><div class="card-tag">Nadchodzi 2026</div><div class="card-title">Nowa pozycja</div><div class="card-author">DiscoverVisually</div></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
-</div>
 
-<!-- CAT: EDUCATIONAL -->
+  <!-- TWO-COLUMN CATALOG -->
+  <div class="home-catalog" id="books">
+    <div class="home-catalog-inner">
+
+      <!-- LEFT: BOOKS (60%) -->
+      <div class="col-books">
+        <div class="col-header">
+          <span class="col-header-label">Books</span>
+          <div class="col-header-line"></div>
+        </div>
+
+        <!-- Educational -->
+        <div class="cat-row">
+          <div class="cat-row-head" onclick="go('#cat-educational')">
+            <span class="cat-row-name">Educational</span>
+            <div class="cat-row-meta"><span class="cat-row-count">1 title</span><span class="cat-row-arrow">View all →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h" onclick="go('#math2')">
+              <div class="bh-cover"><img class="bh-img" src="math2.png" alt="Grade 2 Math"/><div class="bh-overlay"><span class="bh-overlay-text">Details</span></div></div>
+              <div class="bh-body">
+                <div class="bh-tag">Math · Grade 2</div>
+                <div class="bh-title">Grade 2 Math Workbook — RPG Adventure</div>
+                <div class="bh-author">B. B. Sterling</div>
+                <div class="bh-btns"><a class="bh-amz" href="https://www.amazon.com/dp/B0GTL8TGZX" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span></a><button class="bh-dtl" onclick="event.stopPropagation();go('#math2')">Details</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- For Children -->
+        <div class="cat-row">
+          <div class="cat-row-head" onclick="go('#cat-forchildren')">
+            <span class="cat-row-name">For Children</span>
+            <div class="cat-row-meta"><span class="cat-row-count">1 title</span><span class="cat-row-arrow">View all →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h" onclick="go('#hedgehog-en')">
+              <div class="bh-cover"><img class="bh-img" src="hedgehog.jpg" alt="Hedgehog Pippin"/><div class="bh-overlay"><span class="bh-overlay-text">Details</span></div></div>
+              <div class="bh-body">
+                <div class="bh-tag">Children's Story · 4–8</div>
+                <div class="bh-title">Hedgehog Pippin</div>
+                <div class="bh-author">B. B. Sterling</div>
+                <div class="bh-btns"><a class="bh-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span></a><button class="bh-dtl" onclick="event.stopPropagation();go('#hedgehog-en')">Details</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spiritual -->
+        <div class="cat-row">
+          <div class="cat-row-head" onclick="go('#cat-spiritual')">
+            <span class="cat-row-name">Spiritual</span>
+            <div class="cat-row-meta"><span class="cat-row-count">2 titles</span><span class="cat-row-arrow">View all →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h" onclick="go('#communion')">
+              <div class="bh-cover"><img class="bh-img" src="cover-communion.jpg" alt="First Holy Communion"/><div class="bh-overlay"><span class="bh-overlay-text">Details</span></div></div>
+              <div class="bh-body">
+                <div class="bh-tag">Gift Book · 6–9</div>
+                <div class="bh-title">My First Holy Communion</div>
+                <div class="bh-author">B. B. Sterling</div>
+                <div class="bh-btns"><a class="bh-amz" href="https://www.amazon.com/First-Holy-Communion-Visualized-Infographics/dp/B0GRG81V1Q" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span></a><button class="bh-dtl" onclick="event.stopPropagation();go('#communion')">Details</button></div>
+              </div>
+            </div>
+            <div class="book-card-h" onclick="go('#bible')">
+              <div class="bh-cover"><img class="bh-img" src="cover-bible.jpg" alt="The Visual Bible"/><div class="bh-overlay"><span class="bh-overlay-text">Details</span></div></div>
+              <div class="bh-body">
+                <div class="bh-tag">Infographic · All Ages</div>
+                <div class="bh-title">The Visual Bible</div>
+                <div class="bh-author">B. B. Sterling</div>
+                <div class="bh-btns"><a class="bh-amz" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span></a><button class="bh-dtl" onclick="event.stopPropagation();go('#bible')">Details</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Knihy v Slovenčine -->
+        <div class="cat-row">
+          <div class="cat-row-head" onclick="go('#cat-slovak')">
+            <span class="cat-row-name">Knihy v Slovenčine</span>
+            <div class="cat-row-meta"><span class="cat-row-count">1 titul</span><span class="cat-row-arrow">Zobraziť →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h" onclick="go('#hedgehog-sk')">
+              <div class="bh-cover"><img class="bh-img" src="jezko.jpg" alt="Ježko Pippin"/><div class="bh-overlay"><span class="bh-overlay-text">Detail</span></div></div>
+              <div class="bh-body">
+                <div class="bh-tag">Príbeh · 4–8 rokov</div>
+                <div class="bh-title">Ježko Pippin</div>
+                <div class="bh-author">B. B. Sterling</div>
+                <div class="bh-btns"><a class="bh-amz" href="https://www.amazon.com" target="_blank" onclick="event.stopPropagation()"><span class="amz-a">a</span></a><button class="bh-dtl" onclick="event.stopPropagation();go('#hedgehog-sk')">Detail</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Książki po polsku -->
+        <div class="cat-row">
+          <div class="cat-row-head" onclick="go('#cat-polish')">
+            <span class="cat-row-name">Książki po polsku</span>
+            <div class="cat-row-meta"><span class="cat-row-count">Wkrótce</span><span class="cat-row-arrow">Zobacz →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h soon">
+              <div class="bh-cover"><div class="bh-placeholder"><div class="bh-placeholder-icon">◎</div><span>Wkrótce</span></div><span class="bh-soon-badge">Wkrótce</span></div>
+              <div class="bh-body"><div class="bh-tag">Nadchodzi 2026</div><div class="bh-title">Nowa pozycja</div><div class="bh-author">DiscoverVisually</div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /col-books -->
+
+      <!-- RIGHT: MILESTONE CARDS (40%) -->
+      <div class="col-milestone">
+        <div class="col-header-milestone">
+          <span class="col-header-label violet">✦ Editable Milestone Cards</span>
+          <div class="col-header-line" style="background:rgba(168,85,247,0.2);"></div>
+        </div>
+
+        <div class="milestone-cat-block">
+          <div class="milestone-cat-head" onclick="go('#milestonecards')">
+            <span class="milestone-cat-name">Baby Milestone Cards</span>
+            <div class="milestone-cat-meta"><span class="milestone-cat-count">1 of 4 live</span><span class="milestone-cat-arrow">View all →</span></div>
+          </div>
+
+          <div class="milestone-cards-home">
+
+            <!-- Cute Animals — real cover -->
+            <div class="ms-card" onclick="go('#milestonecards')">
+              <div class="ms-cover">
+                <img class="ms-img" src="cute-animals-milestone.jpg" alt="Cute Animals Milestone Cards"/>
+                <div class="ms-overlay"><span class="ms-overlay-text">View</span></div>
+                <span class="ms-new-badge">NEW</span>
+              </div>
+              <div class="ms-body">
+                <div class="ms-tag">Milestone Cards</div>
+                <div class="ms-title">Cute Animals</div>
+                <div class="ms-sub">40 personalized cards</div>
+              </div>
+            </div>
+
+            <!-- TBD 1 -->
+            <div class="ms-card soon">
+              <div class="ms-cover">
+                <div class="ms-placeholder"><div class="ms-placeholder-icon">◎</div><span>Coming<br>Soon</span></div>
+                <span class="ms-soon-badge">TBD</span>
+              </div>
+              <div class="ms-body">
+                <div class="ms-tag">Milestone Cards</div>
+                <div class="ms-title">New Design</div>
+                <div class="ms-sub">Coming soon</div>
+              </div>
+            </div>
+
+            <!-- TBD 2 -->
+            <div class="ms-card soon">
+              <div class="ms-cover">
+                <div class="ms-placeholder"><div class="ms-placeholder-icon">◎</div><span>Coming<br>Soon</span></div>
+                <span class="ms-soon-badge">TBD</span>
+              </div>
+              <div class="ms-body">
+                <div class="ms-tag">Milestone Cards</div>
+                <div class="ms-title">New Design</div>
+                <div class="ms-sub">Coming soon</div>
+              </div>
+            </div>
+
+            <!-- TBD 3 -->
+            <div class="ms-card soon">
+              <div class="ms-cover">
+                <div class="ms-placeholder"><div class="ms-placeholder-icon">◎</div><span>Coming<br>Soon</span></div>
+                <span class="ms-soon-badge">TBD</span>
+              </div>
+              <div class="ms-body">
+                <div class="ms-tag">Milestone Cards</div>
+                <div class="ms-title">New Design</div>
+                <div class="ms-sub">Coming soon</div>
+              </div>
+            </div>
+
+          </div><!-- /milestone-cards-home -->
+        </div>
+      </div><!-- /col-milestone -->
+
+    </div><!-- /home-catalog-inner -->
+  </div><!-- /home-catalog -->
+
+  <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
+</div><!-- /page-home -->
+
+<!-- ████ CAT: EDUCATIONAL ████ -->
 <div class="page content-layer" id="page-cat-educational">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Educational</span></div></div></nav>
   <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">Educational</h1><p class="cat-desc">Learning made visual. Our educational books turn complex subjects into engaging adventures — built for how young minds actually learn.</p></div>
@@ -455,7 +729,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- CAT: FOR CHILDREN -->
+<!-- ████ CAT: FOR CHILDREN ████ -->
 <div class="page content-layer" id="page-cat-forchildren">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">For Children</span></div></div></nav>
   <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">For Children</h1><p class="cat-desc">Stories that spark curiosity. Picture books woven with real facts — because kids deserve both imagination and truth on every page.</p></div>
@@ -465,7 +739,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- CAT: SPIRITUAL -->
+<!-- ████ CAT: SPIRITUAL ████ -->
 <div class="page content-layer" id="page-cat-spiritual">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Spiritual</span></div></div></nav>
   <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Collection</div><h1 class="cat-title">Spiritual</h1><p class="cat-desc">Faith made visible. Books that illuminate sacred stories, prayers, and traditions through stunning illustration and infographic design.</p></div>
@@ -476,7 +750,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- CAT: SLOVENČINA -->
+<!-- ████ CAT: SLOVENČINA ████ -->
 <div class="page content-layer" id="page-cat-slovak">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Knihy v Slovenčine</span></div></div></nav>
   <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Kolekcia</div><h1 class="cat-title">Knihy<br><em style="font-weight:400;color:var(--accent);">v Slovenčine</em></h1><p class="cat-desc">Krásne ilustrované knihy pre zvedavé mysle — po slovensky, pre slovenské rodiny po celom svete.</p></div>
@@ -486,7 +760,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- CAT: POLISH -->
+<!-- ████ CAT: POLISH ████ -->
 <div class="page content-layer" id="page-cat-polish">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Książki po polsku</span></div></div></nav>
   <div class="cat-hero"><div class="cat-hero-glow"></div><div class="cat-eyebrow">Kolekcja</div><h1 class="cat-title">Książki<br><em style="font-weight:400;color:var(--accent);">po polsku</em></h1><p class="cat-desc">Pięknie ilustrowane książki dla ciekawskich umysłów — po polsku, dla polskich rodzin na całym świecie.</p></div>
@@ -496,7 +770,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- BOOK: MATH2 -->
+<!-- ████ BOOK: MATH2 ████ -->
 <div class="page content-layer" id="page-math2">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-educational')">Educational</a><span class="sep">›</span><span class="current">Grade 2 Math</span></div></div></nav>
   <div class="detail-hero-wrap">
@@ -527,7 +801,7 @@
         <div class="game-eyebrow">⚔️ Bonus Digital Content</div>
         <div class="game-title">Fix the Chain — The RPG Math Game</div>
         <p class="game-desc">Your child's adventure doesn't stop at the last page. Play the companion web game — repair broken chain links by solving math puzzles, battle through 8 worlds, and earn your Certificate of the Chain.</p>
-        <a class="btn-play" href="fix-the-chain-game.html" target="_blank"><span>▶</span> Play Now — Free</a>
+        <a class="btn-play" href="fix-the-chain-game.html" target="_blank"><span>▶</span> Play Now</a>
       </div>
       <h2 class="mt">Certificate of the Chain</h2>
       <div class="cert-section">
@@ -545,13 +819,13 @@
       <p class="dl-intro">Second graders who need math practice but resist traditional worksheets. Turn homework into an adventure.</p>
       <div class="dl-card"><div class="dl-icon">⚔️</div><div class="dl-title">RPG Adventure Format</div><div class="dl-desc">Every math problem is a challenge in an epic quest — keeping kids engaged from first page to last.</div></div>
       <div class="dl-card"><div class="dl-icon">📊</div><div class="dl-title">Visual Learning</div><div class="dl-desc">Infographics and visual explainers make abstract math concepts concrete and memorable.</div></div>
-      <div class="dl-card"><div class="dl-icon">🎮</div><div class="dl-title">Web Game Included</div><div class="dl-desc">A free companion browser game extends the adventure beyond the book — no app download needed.</div></div>
+      <div class="dl-card"><div class="dl-icon">🎮</div><div class="dl-title">Web Game Included</div><div class="dl-desc">A companion browser game extends the adventure beyond the book — no app download needed.</div></div>
     </div>
   </div></div>
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- BOOK: HEDGEHOG EN -->
+<!-- ████ BOOK: HEDGEHOG EN ████ -->
 <div class="page content-layer" id="page-hedgehog-en">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-forchildren')">For Children</a><span class="sep">›</span><span class="current">Hedgehog Pippin</span></div></div></nav>
   <div class="detail-hero-wrap">
@@ -589,7 +863,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- BOOK: COMMUNION -->
+<!-- ████ BOOK: COMMUNION ████ -->
 <div class="page content-layer" id="page-communion">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">First Communion</span></div></div></nav>
   <div class="detail-hero-wrap">
@@ -633,7 +907,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- BOOK: VISUAL BIBLE -->
+<!-- ████ BOOK: VISUAL BIBLE ████ -->
 <div class="page content-layer" id="page-bible">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-spiritual')">Spiritual</a><span class="sep">›</span><span class="current">The Visual Bible</span></div></div></nav>
   <div class="detail-hero-wrap">
@@ -673,7 +947,7 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- BOOK: JEŽKO PIPPIN SK -->
+<!-- ████ BOOK: JEŽKO PIPPIN SK ████ -->
 <div class="page content-layer" id="page-hedgehog-sk">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><a onclick="go('#cat-slovak')">Slovenčina</a><span class="sep">›</span><span class="current">Ježko Pippin</span></div></div></nav>
   <div class="detail-hero-wrap">
@@ -711,42 +985,39 @@
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
-<!-- MILESTONE CARDS PAGE -->
+<!-- ████ MILESTONE CARDS PAGE ████ -->
 <div class="page content-layer" id="page-milestonecards">
   <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current" style="color:var(--violet-bright);">Milestone Cards</span></div></div></nav>
 
+  <!-- HERO — title + desc + BIG CTA BUTTON -->
   <div class="milestone-hero">
     <div class="milestone-hero-tag">Digital Download · Baby Milestone Cards</div>
     <h1 class="milestone-hero-title">Don't ship paper<br>when you can <em>print it.</em></h1>
     <p class="milestone-hero-desc">40 fully personalized cards with your baby's name &amp; dates — designed, generated, and ready to print in minutes. Up to 92% cheaper than ordering personalized cards.</p>
+
+    <!-- BIG CTA — right here, between text and info section -->
+    <a class="milestone-hero-cta" href="milestone-generator.html">
+      <span class="milestone-hero-cta-icon">✦</span>
+      Open the Generator
+    </a>
   </div>
 
+  <!-- INFO + FLYER -->
   <div class="milestone-body">
     <div class="milestone-body-inner">
-      <div class="milestone-cards-grid">
+      <div class="milestone-info-grid">
         <div class="milestone-info-card"><div class="milestone-info-card-icon">✦</div><div class="milestone-info-card-title">40 Unique Cards</div><div class="milestone-info-card-desc">Every milestone from Week 1 through Month 12 — with your baby's name and custom dates on every single card.</div></div>
         <div class="milestone-info-card"><div class="milestone-info-card-icon">💜</div><div class="milestone-info-card-title">Fully Personalized</div><div class="milestone-info-card-desc">Enter your baby's name once — it appears on every card. No generic templates. No waiting weeks for delivery.</div></div>
         <div class="milestone-info-card"><div class="milestone-info-card-icon">🖨</div><div class="milestone-info-card-title">Print at Home or Pro Shop</div><div class="milestone-info-card-desc">~$7 total printed at home. ~$24 at FedEx or Staples. Still up to 73% cheaper than ordering personalized cards on Etsy.</div></div>
         <div class="milestone-info-card"><div class="milestone-info-card-icon">⚡</div><div class="milestone-info-card-title">Instant Download</div><div class="milestone-info-card-desc">Generate your personalized PDF, download immediately, and print the same day. No shipping. No wait.</div></div>
       </div>
-
       <div class="flyer-wrap">
         <img src="milestone-cards-savings-flyer.jpg" alt="Milestone Cards — Price Comparison Flyer"/>
         <div class="flyer-caption">Baby Milestone Cards · Digital Download · Why print beats ship</div>
       </div>
-
-      <div class="generator-cta">
-        <div class="generator-cta-eyebrow">✦ Free Personalized Generator ✦</div>
-        <h2 class="generator-cta-title">Enter the Milestone<br>Card Generator</h2>
-        <p class="generator-cta-desc">Type your baby's name, pick your dates, and get 40 beautifully personalized milestone cards — ready to download and print instantly.</p>
-        <a class="btn-generator" href="milestone-generator.html">
-          <span class="btn-generator-icon">✦</span>
-          Create My Cards — Free
-        </a>
-        <p class="generator-note">Instant download · No account required · Print at home or at your local print shop</p>
-      </div>
     </div>
   </div>
+
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div>
 
