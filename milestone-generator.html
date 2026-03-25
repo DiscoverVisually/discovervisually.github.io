@@ -527,15 +527,9 @@ body::before {
 
   <!-- COLORS -->
   <div class="section" id="color-section">
-    <div class="section-label">Text colors</div>
-    <div>
-      <div class="color-sub-label">Baby's name</div>
-      <div class="color-row" id="name-colors"></div>
-    </div>
-    <div id="date-color-wrap" class="hidden">
-      <div class="color-sub-label mt-1">Date</div>
-      <div class="color-row" id="date-colors"></div>
-    </div>
+    <div class="section-label">Text color</div>
+    <div class="color-sub-label">Applies to name, date &amp; back text</div>
+    <div class="color-row" id="text-colors"></div>
   </div>
 
   <div class="section-divider"></div>
@@ -645,7 +639,7 @@ const CARDS = [
   {id:11, name:'10 Months',            cat:'monthly', sheet:'sheet_06', side:'left'},
   {id:12, name:'11 Months',            cat:'monthly', sheet:'sheet_06', side:'right'},
   {id:13, name:'12 Months',            cat:'monthly', sheet:'sheet_07', side:'left'},
-  {id:14, name:'1 Year',               cat:'monthly', sheet:'sheet_07', side:'right'},
+  {id:14, name:'First Explosion in the Diapers', cat:'firsts', sheet:'sheet_07', side:'right'},
   {id:15, name:'First Smile',          cat:'firsts',  sheet:'sheet_08', side:'left'},
   {id:16, name:'First Laugh',          cat:'firsts',  sheet:'sheet_08', side:'right'},
   {id:17, name:'First Roll',           cat:'firsts',  sheet:'sheet_09', side:'left'},
@@ -674,7 +668,7 @@ const CARDS = [
   {id:40, name:'Our Little Miracle',   cat:'special', sheet:'sheet_20', side:'right'},
 ];
 
-const DATE_OFFSETS = {1:7,2:30,3:60,4:90,5:120,6:150,7:180,8:210,9:240,10:270,11:300,12:330,13:365,14:365};
+const DATE_OFFSETS = {1:7,2:30,3:60,4:90,5:120,6:150,7:180,8:210,9:240,10:270,11:300,12:330,13:365};
 
 const FONT_PAIRS = [
   {script:'Great Vibes',    body:'Cormorant Garamond', tag:'Romantic Luxury'},
@@ -688,14 +682,14 @@ const FONT_PAIRS = [
 ];
 
 const COLORS = [
-  {name:'White',      v:'#FFFFFF'},
-  {name:'Cream',      v:'#F5F0E8'},
-  {name:'Sage',       v:'#7a9a7a'},
-  {name:'Gold',       v:'#C8B98A'},
-  {name:'Dark Brown', v:'#4a3728'},
-  {name:'Coral',      v:'#c0956a'},
-  {name:'Dusty Rose', v:'#c08080'},
-  {name:'Slate',      v:'#7a8a9a'},
+  {name:'Charcoal',    v:'#3D3530'},
+  {name:'Sage Green',  v:'#5C7A5C'},
+  {name:'Warm Gold',   v:'#B8973A'},
+  {name:'Dusty Mauve', v:'#9A7070'},
+  {name:'Slate Blue',  v:'#627585'},
+  {name:'Terracotta',  v:'#A0624A'},
+  {name:'Deep Sage',   v:'#3D5C3D'},
+  {name:'Warm Brown',  v:'#7A5C3A'},
 ];
 
 const BACKS = [
@@ -720,8 +714,7 @@ const S = {
   showDate: false,
   birthDate: '',
   fontPair: 0,
-  nameColor: '#F5F0E8',
-  dateColor: '#C8B98A',
+  textColor: '#3D3530',
   showBack: false,
   backId: null,
   backQuote: '',
@@ -740,11 +733,9 @@ window.addEventListener('load', () => {
   setupCanvases();
   renderCardGrid();
   renderFontGrid();
-  renderColorSwatches('name-colors', 'nameColor');
-  renderColorSwatches('date-colors', 'dateColor');
+  renderColorSwatches('text-colors', 'textColor');
   renderBackGrid();
   updatePreview();
-  // Hide date for non-monthly on init
   checkDateVisibility();
 });
 
@@ -826,14 +817,12 @@ function renderColorSwatches(containerId, stateKey) {
     const s = document.createElement('div');
     s.className = 'color-swatch' + (S[stateKey] === color.v ? ' selected' : '');
     s.style.background = color.v;
-    if(color.v === '#FFFFFF' || color.v === '#F5F0E8') {
-      s.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.12)';
-    }
     s.title = color.name;
     s.onclick = () => {
       S[stateKey] = color.v;
       renderColorSwatches(containerId, stateKey);
       scheduleRender();
+      scheduleBackRender();
     };
     el.appendChild(s);
   });
@@ -871,19 +860,9 @@ function updateState() {
   S.babyName  = document.getElementById('baby-name').value.trim();
   S.birthDate = document.getElementById('birth-date').value;
 
-  // Toggle name input
   document.getElementById('baby-name').classList.toggle('hidden', !S.showName);
-
-  // Date
   checkDateVisibility();
-
-  // Back section
   document.getElementById('back-section').classList.toggle('hidden', !S.showBack);
-
-  // Update color section visibility
-  document.getElementById('date-color-wrap').classList.toggle(
-    'hidden', !(S.showDate && isMonthlyCard(S.cardId))
-  );
 
   scheduleRender();
   if(S.showBack) scheduleBackRender();
@@ -894,24 +873,20 @@ function checkDateVisibility() {
   const row = document.getElementById('date-toggle-row');
   const input = document.getElementById('birth-date');
   const hint = document.getElementById('date-hint');
-  const colorWrap = document.getElementById('date-color-wrap');
 
   row.classList.toggle('hidden', !isMonthly);
   if(!isMonthly) {
     input.classList.add('hidden');
     hint.classList.add('hidden');
-    colorWrap.classList.add('hidden');
     return;
   }
   input.classList.toggle('hidden', !S.showDate);
-  // Show computed date hint
   if(S.showDate && S.birthDate) {
     hint.textContent = 'Milestone date: ' + getMilestoneDate(S.cardId, S.birthDate);
     hint.classList.remove('hidden');
   } else {
     hint.classList.add('hidden');
   }
-  colorWrap.classList.toggle('hidden', !S.showDate);
 }
 
 function isMonthlyCard(id) {
@@ -973,7 +948,6 @@ async function renderCardToCanvas(canvas, cardId, withWatermark) {
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
 
-  // Background fallback
   ctx.fillStyle = '#FAF7F2';
   ctx.fillRect(0, 0, W, H);
 
@@ -983,7 +957,6 @@ async function renderCardToCanvas(canvas, cardId, withWatermark) {
     const sx = card.side === 'left' ? 0 : img.width / 2;
     ctx.drawImage(img, sx, 0, img.width/2, img.height, 0, 0, W, H);
   } catch(e) {
-    // Draw placeholder text
     ctx.font = `500 ${W*0.06}px 'Jost', sans-serif`;
     ctx.fillStyle = '#2C3E2D';
     ctx.textAlign = 'center';
@@ -995,27 +968,32 @@ async function renderCardToCanvas(canvas, cardId, withWatermark) {
 
   const fp = FONT_PAIRS[S.fontPair];
 
-  // Name overlay — top zone
+  // Name overlay — auto-scale for long names
   if(S.showName && S.babyName) {
-    const fs = Math.round(W * 0.105);
+    const maxW = W * 0.82;
+    let fs = Math.round(W * 0.126); // ~20% bigger than before
     ctx.font = `${fs}px '${fp.script}', cursive`;
+    // Auto-scale down if name is too wide
+    while(ctx.measureText(S.babyName).width > maxW && fs > W * 0.055) {
+      fs -= 2;
+      ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
     ctx.textAlign = 'center';
-    ctx.fillStyle = S.nameColor;
-    // Subtle text shadow for readability
+    ctx.fillStyle = S.textColor;
     ctx.shadowColor = 'rgba(0,0,0,0.08)';
     ctx.shadowBlur = 4;
     ctx.fillText(S.babyName, W/2, Math.round(H * 0.152));
     ctx.shadowBlur = 0;
   }
 
-  // Date overlay — bottom zone
+  // Date overlay — ~30% bigger, same color as name
   if(S.showDate && isMonthlyCard(cardId) && S.birthDate) {
     const dateStr = getMilestoneDate(cardId, S.birthDate);
     if(dateStr) {
-      const fs = Math.round(W * 0.04);
+      const fs = Math.round(W * 0.052); // ~30% bigger than 0.04
       ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillStyle = S.dateColor;
+      ctx.fillStyle = S.textColor;
       ctx.shadowColor = 'rgba(0,0,0,0.06)';
       ctx.shadowBlur = 3;
       ctx.fillText(dateStr, W/2, Math.round(H * 0.892));
@@ -1072,14 +1050,14 @@ async function renderBackCanvas() {
 
 function drawBackTextOverlay(ctx, cx, cy, W, H) {
   const fp = FONT_PAIRS[S.fontPair];
-  const hasName = S.backShowName && S.babyName;
+  const hasName  = S.backShowName && S.babyName;
   const hasQuote = S.backQuote.length > 0;
 
-  // Soft white vignette behind text
-  const rx = W * 0.38, ry = H * 0.2;
+  // Soft white vignette — sized to content
+  const rx = W * 0.42, ry = H * (hasName && hasQuote ? 0.22 : 0.16);
   const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
-  grad.addColorStop(0,   'rgba(255,255,255,0.85)');
-  grad.addColorStop(0.6, 'rgba(255,255,255,0.5)');
+  grad.addColorStop(0,   'rgba(255,255,255,0.88)');
+  grad.addColorStop(0.55,'rgba(255,255,255,0.55)');
   grad.addColorStop(1,   'rgba(255,255,255,0)');
   ctx.save();
   ctx.beginPath();
@@ -1088,13 +1066,17 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
   ctx.fill();
   ctx.restore();
 
-  const nameY = cy - (hasQuote ? H * 0.045 : 0);
-  const quoteY = cy + (hasName ? H * 0.07 : H * 0.015);
+  const nameY  = cy - (hasQuote ? H * 0.05 : 0);
+  const quoteY = cy + (hasName  ? H * 0.075 : H * 0.015);
 
   if(hasName) {
-    const fs = Math.round(W * 0.1);
+    let fs = Math.round(W * 0.1);
     ctx.font = `${fs}px '${fp.script}', cursive`;
-    ctx.fillStyle = '#2C3E2D';
+    while(ctx.measureText(S.babyName).width > W * 0.78 && fs > W * 0.05) {
+      fs -= 2;
+      ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    ctx.fillStyle = S.textColor;
     ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0,0,0,0.06)';
     ctx.shadowBlur = 4;
@@ -1103,10 +1085,24 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
   }
   if(hasQuote) {
     const fs = Math.round(W * 0.037);
-    ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
-    ctx.fillStyle = '#4a6a4a';
+    ctx.font = `300 italic ${fs}px '${fp.body}', sans-serif`;
+    ctx.fillStyle = S.textColor;
     ctx.textAlign = 'center';
-    ctx.fillText(S.backQuote, cx, quoteY);
+    ctx.shadowColor = 'rgba(0,0,0,0.05)';
+    ctx.shadowBlur = 3;
+    // Word wrap at ~38 chars
+    const words = S.backQuote.split(' ');
+    let line = '', lines = [];
+    for(const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if(ctx.measureText(test).width > W * 0.72 && line) {
+        lines.push(line); line = w;
+      } else { line = test; }
+    }
+    if(line) lines.push(line);
+    const lineH = fs * 1.45;
+    lines.forEach((l, i) => ctx.fillText(l, cx, quoteY + i * lineH));
+    ctx.shadowBlur = 0;
   }
 }
 
@@ -1125,15 +1121,13 @@ function flipCard() {
 // ═══════════════════════════════════════════════
 function surpriseMe() {
   const card = CARDS[Math.floor(Math.random() * CARDS.length)];
-  S.cardId    = card.id;
-  S.fontPair  = Math.floor(Math.random() * FONT_PAIRS.length);
-  S.nameColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
-  S.dateColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
+  S.cardId   = card.id;
+  S.fontPair = Math.floor(Math.random() * FONT_PAIRS.length);
+  S.textColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
 
   setTab(card.cat);
   renderFontGrid();
-  renderColorSwatches('name-colors', 'nameColor');
-  renderColorSwatches('date-colors', 'dateColor');
+  renderColorSwatches('text-colors', 'textColor');
   document.getElementById('preview-title').textContent = card.name;
   document.getElementById('preview-category').textContent =
     card.cat === 'monthly' ? 'Monthly' : card.cat === 'firsts' ? "Baby's Firsts" : 'Special';
@@ -1258,10 +1252,15 @@ function drawTextOnCardRegion(ctx, card, xOff, yOff, W, H) {
   const fp = FONT_PAIRS[S.fontPair];
 
   if(S.showName && S.babyName) {
-    const fs = Math.round(W * 0.105);
+    const maxW = W * 0.82;
+    let fs = Math.round(W * 0.126);
     ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > maxW && fs > W * 0.055) {
+      fs -= 2;
+      ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
     ctx.textAlign = 'center';
-    ctx.fillStyle = S.nameColor;
+    ctx.fillStyle = S.textColor;
     ctx.shadowColor = 'rgba(0,0,0,0.07)';
     ctx.shadowBlur = 5;
     ctx.fillText(S.babyName, xOff + W/2, yOff + Math.round(H * 0.152));
@@ -1271,10 +1270,10 @@ function drawTextOnCardRegion(ctx, card, xOff, yOff, W, H) {
   if(S.showDate && isMonthlyCard(card.id) && S.birthDate) {
     const dateStr = getMilestoneDate(card.id, S.birthDate);
     if(dateStr) {
-      const fs = Math.round(W * 0.04);
+      const fs = Math.round(W * 0.052);
       ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillStyle = S.dateColor;
+      ctx.fillStyle = S.textColor;
       ctx.shadowColor = 'rgba(0,0,0,0.05)';
       ctx.shadowBlur = 3;
       ctx.fillText(dateStr, xOff + W/2, yOff + Math.round(H * 0.892));
