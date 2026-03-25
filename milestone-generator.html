@@ -83,6 +83,46 @@ body::before {
   min-height: 100vh;
 }
 
+/* ─── TOP NAV ────────────────────────────────── */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: -0.25rem;
+}
+.nav-home {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 5px;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-home:hover { color: var(--sage-dark); }
+.nav-arrow { font-size: 11px; transition: transform 0.2s; }
+.nav-home:hover .nav-arrow { transform: translateX(-3px); }
+.nav-explore {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 11px;
+  border: 1px solid rgba(200,185,138,0.35);
+  border-radius: 20px;
+  transition: all 0.2s;
+  background: var(--gold-pale);
+}
+.nav-explore:hover {
+  background: rgba(200,185,138,0.22);
+  border-color: var(--gold);
+  color: #8a6a2a;
+}
+
 /* ─── LOGO ───────────────────────────────────── */
 .logo {
   padding-bottom: 1.25rem;
@@ -471,6 +511,15 @@ body::before {
 
 <!-- ═══ FORM PANEL ════════════════════════════════════════ -->
 <aside id="form-panel">
+
+  <nav class="top-nav">
+    <a href="https://discovervisually.github.io/" class="nav-home" target="_blank">
+      <span class="nav-arrow">←</span> discovervisually
+    </a>
+    <a href="https://discovervisually.github.io/#milestonecards" class="nav-explore" target="_blank">
+      Explore more ✦
+    </a>
+  </nav>
 
   <div class="logo">
     <div class="logo-title">Baby Milestone Cards</div>
