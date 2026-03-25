@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Milestone Cards — Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@600&family=Lato:wght@300;400&family=Pacifico&family=Nunito:wght@300;400&family=Pinyon+Script&family=Raleway:wght@300;400&family=Sacramento&family=Josefin+Sans:wght@300;400&family=Satisfy&family=Quicksand:wght@300;400&family=Allura&family=Montserrat:wght@300;400&family=Lobster+Two:ital@0;1&family=Open+Sans:wght@300;400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --cream-dark: #F0EBE0;
+  --sage-dark: #2C3E2D;
+  --sage: #4a6a4a;
+  --sage-light: #8a9a7a;
+  --sage-mist: rgba(44,62,45,0.06);
+  --gold: #C8B98A;
+  --gold-light: #E8D9AA;
+  --gold-pale: rgba(200,185,138,0.12);
+  --text: #2C3E2D;
+  --text-muted: #7a8a72;
+  --border: rgba(44,62,45,0.11);
+  --border-hover: rgba(200,185,138,0.6);
+  --glass: rgba(250,247,242,0.88);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(44,62,45,0.07);
+  --shadow-lg: 0 8px 40px rgba(44,62,45,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 10%, rgba(200,185,138,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 90%, rgba(138,154,122,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ─── LAYOUT ─────────────────────────────────── */
+#app {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  min-height: 100vh;
+  position: relative; z-index: 1;
+}
+
+/* ─── FORM PANEL ─────────────────────────────── */
+#form-panel {
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  overflow-y: auto;
+  position: sticky; top: 0;
+  padding: 1.75rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#form-panel::-webkit-scrollbar { width: 3px; }
+#form-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* ─── PREVIEW PANEL ──────────────────────────── */
+#preview-panel {
+  padding: 2rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 100vh;
+}
+
+/* ─── LOGO ───────────────────────────────────── */
+.logo {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.logo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px;
+  font-style: italic;
+  color: var(--sage-dark);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ─── SECTION ────────────────────────────────── */
+.section { display: flex; flex-direction: column; gap: 0.65rem; }
+.section-label {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  font-weight: 600;
+}
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.25rem 0;
+}
+
+/* ─── TABS ───────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--sage-mist);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+.tab {
+  flex: 1; padding: 7px 6px;
+  border: none; background: transparent;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.tab.active {
+  background: white;
+  color: var(--sage-dark);
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(44,62,45,0.1);
+}
+
+/* ─── CARD GRID ──────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  max-height: 272px;
+  overflow-y: auto;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.card-grid::-webkit-scrollbar { width: 3px; }
+.card-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.card-thumb {
+  aspect-ratio: 4.25/5.5;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.18s;
+  overflow: hidden;
+  position: relative;
+  background: var(--cream-dark);
+}
+.card-thumb:hover { border-color: var(--gold); transform: translateY(-1px); box-shadow: 0 3px 10px rgba(200,185,138,0.25); }
+.card-thumb.selected { border-color: var(--gold); box-shadow: 0 0 0 1.5px var(--gold), 0 3px 12px rgba(200,185,138,0.3); }
+.card-thumb-bg {
+  position: absolute; inset: 0;
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  transition: transform 0.2s;
+}
+.card-thumb:hover .card-thumb-bg { transform: scale(1.03); }
+.card-thumb-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(250,247,242,0.95));
+  padding: 10px 3px 3px;
+}
+.card-thumb-name {
+  font-size: 7px;
+  color: var(--sage-dark);
+  text-align: center;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.card-thumb-num {
+  position: absolute; top: 3px; left: 3px;
+  font-size: 7px; font-weight: 600;
+  color: var(--sage-dark);
+  background: rgba(250,247,242,0.88);
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+/* ─── TOGGLE ─────────────────────────────────── */
+.toggle-row {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 0.75rem;
+}
+.toggle-label { font-size: 13px; color: var(--text); }
+.toggle { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: rgba(44,62,45,0.14);
+  border-radius: 21px; transition: 0.25s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 15px; width: 15px;
+  left: 3px; bottom: 3px;
+  background: white; border-radius: 50%; transition: 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle input:checked + .toggle-slider { background: var(--sage-dark); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(17px); }
+
+/* ─── INPUTS ─────────────────────────────────── */
+.input-field {
+  width: 100%; padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.7);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px; color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+.input-field:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,185,138,0.15);
+}
+.input-field::placeholder { color: var(--text-muted); }
+.input-hint {
+  font-size: 10px; color: var(--text-muted);
+  font-style: italic; padding-left: 2px;
+}
+
+/* ─── FONT GRID ──────────────────────────────── */
+.font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.font-option {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  cursor: pointer;
+  transition: all 0.18s;
+  background: rgba(255,255,255,0.5);
+}
+.font-option:hover { border-color: var(--border-hover); background: var(--gold-pale); }
+.font-option.selected { border-color: var(--gold); background: var(--gold-pale); }
+.font-option-script { font-size: 17px; line-height: 1.2; color: var(--sage-dark); }
+.font-option-body { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+.font-option-tag { font-size: 8px; color: var(--gold); letter-spacing: 0.3px; margin-top: 3px; font-style: italic; }
+
+/* ─── COLOR SWATCHES ─────────────────────────── */
+.color-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.color-sub-label { font-size: 10px; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.3px; }
+.color-swatch {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+.color-swatch:hover { transform: scale(1.18); }
+.color-swatch.selected {
+  border-color: var(--sage-dark);
+  box-shadow: 0 0 0 1px var(--sage-dark), inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* ─── BACK GRID ──────────────────────────────── */
+.back-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.back-thumb {
+  aspect-ratio: 4.25/5.5;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.18s;
+  overflow: hidden;
+  position: relative;
+  background: var(--cream-dark);
+}
+.back-thumb:hover { border-color: var(--gold); transform: translateY(-1px); }
+.back-thumb.selected { border-color: var(--gold); box-shadow: 0 0 0 1.5px var(--gold); }
+.back-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.back-thumb-name {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  font-size: 7px; text-align: center;
+  background: rgba(250,247,242,0.92);
+  padding: 3px 2px; color: var(--sage-dark); font-weight: 500;
+}
+
+/* ─── BUTTONS ────────────────────────────────── */
+.surprise-btn {
+  width: 100%; padding: 13px;
+  background: var(--sage-dark);
+  color: var(--cream);
+  border: none; border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.surprise-btn:hover { background: #3a5240; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,62,45,0.22); }
+.surprise-btn:active { transform: translateY(0); }
+
+.export-btn {
+  width: 100%; padding: 15px;
+  background: var(--gold);
+  color: var(--sage-dark);
+  border: none; border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+}
+.export-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,185,138,0.45); }
+.export-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ─── PREVIEW PANEL ──────────────────────────── */
+.preview-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  width: 100%; max-width: 380px;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.preview-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic;
+  color: var(--sage-dark); letter-spacing: 0.3px;
+}
+.preview-category {
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
+  margin-top: 2px; font-weight: 500;
+}
+
+.flip-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; color: var(--text-muted);
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.flip-btn:hover { border-color: var(--gold); color: var(--sage-dark); background: var(--gold-pale); }
+.flip-side-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); margin-top: 4px; text-align: right;
+  transition: all 0.3s;
+}
+
+/* ─── 3D FLIP ────────────────────────────────── */
+.preview-scene {
+  perspective: 1200px;
+  width: 100%; max-width: 380px;
+}
+.preview-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative; width: 100%;
+  aspect-ratio: 4.25/5.5;
+}
+.preview-card-3d.flipped { transform: rotateY(180deg); }
+.preview-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.preview-face.back-face { transform: rotateY(180deg); }
+#preview-canvas, #back-canvas { width: 100%; height: 100%; display: block; }
+
+.preview-footer {
+  width: 100%; max-width: 380px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.preview-watermark {
+  font-size: 10px; color: var(--text-muted);
+  opacity: 0.6; font-style: italic;
+}
+.preview-hint {
+  font-size: 10px; color: var(--text-muted);
+  opacity: 0.7; text-align: right;
+}
+
+/* ─── PROGRESS ───────────────────────────────── */
+#progress-overlay {
+  position: fixed; inset: 0;
+  background: rgba(250,247,242,0.94);
+  backdrop-filter: blur(12px);
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  z-index: 200; gap: 1.5rem;
+}
+.progress-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-style: italic;
+  color: var(--sage-dark);
+}
+.progress-bar-wrap {
+  width: 300px; height: 2px;
+  background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--gold);
+  border-radius: 2px; transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-text { font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+/* ─── UTILS ──────────────────────────────────── */
+.hidden { display: none !important; }
+.mt-1 { margin-top: 0.5rem; }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section { animation: fadeIn 0.3s ease both; }
+
+/* ─── MOBILE ─────────────────────────────────── */
+@media (max-width: 900px) {
+  #app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  #preview-panel {
+    order: -1;
+    padding: 1.25rem 1rem 1rem;
+    min-height: auto;
+    position: sticky; top: 0;
+    background: rgba(250,247,242,0.96);
+    backdrop-filter: blur(12px);
+    z-index: 50;
+    box-shadow: 0 2px 16px rgba(44,62,45,0.07);
+  }
+  #form-panel {
+    height: auto; position: static;
+    overflow-y: visible; border-right: none;
+    border-top: 1px solid var(--border);
+  }
+  .preview-scene { max-width: 220px; }
+  .preview-top { max-width: 100%; }
+  .preview-footer { max-width: 100%; }
+  .card-grid { grid-template-columns: repeat(5, 1fr); max-height: 200px; }
+  .back-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- ═══ FORM PANEL ════════════════════════════════════════ -->
+<aside id="form-panel">
+
+  <div class="logo">
+    <div class="logo-title">Baby Milestone Cards</div>
+    <div class="logo-sub">Discover Visually · Personalization Studio</div>
+  </div>
+
+  <!-- CARD SELECTION -->
+  <div class="section">
+    <div class="section-label">Choose a card</div>
+    <div class="tabs">
+      <button class="tab active" onclick="setTab('monthly')">Monthly</button>
+      <button class="tab" onclick="setTab('firsts')">Baby's Firsts</button>
+      <button class="tab" onclick="setTab('special')">Special</button>
+    </div>
+    <div class="card-grid" id="card-grid"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- PERSONALIZATION -->
+  <div class="section">
+    <div class="section-label">Personalization</div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Add baby's name</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-name" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <input type="text" class="input-field hidden" id="baby-name"
+      placeholder="e.g. Emma" oninput="updateState()" maxlength="20">
+
+    <div id="date-toggle-row" class="toggle-row">
+      <span class="toggle-label">Add milestone date</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-date" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <input type="date" class="input-field hidden" id="birth-date" onchange="updateState()">
+    <span class="input-hint hidden" id="date-hint"></span>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- FONT STYLE -->
+  <div class="section">
+    <div class="section-label">Font style</div>
+    <div class="font-grid" id="font-grid"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- COLORS -->
+  <div class="section" id="color-section">
+    <div class="section-label">Text colors</div>
+    <div>
+      <div class="color-sub-label">Baby's name</div>
+      <div class="color-row" id="name-colors"></div>
+    </div>
+    <div id="date-color-wrap" class="hidden">
+      <div class="color-sub-label mt-1">Date</div>
+      <div class="color-row" id="date-colors"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- BACK DESIGN -->
+  <div class="section">
+    <div class="section-label">Back design</div>
+    <div class="toggle-row">
+      <span class="toggle-label">Add back design</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-back" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div id="back-section" class="hidden">
+      <div class="back-grid" id="back-grid"></div>
+      <div id="back-text-section" class="hidden" style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+        <input type="text" class="input-field" id="back-quote"
+          placeholder="Add a quote (optional)" oninput="scheduleBackRender()" maxlength="50">
+        <div class="toggle-row">
+          <span class="toggle-label" style="font-size:12px;">Baby's name on back</span>
+          <label class="toggle">
+            <input type="checkbox" id="back-name-toggle" onchange="scheduleBackRender()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SURPRISE ME -->
+  <button class="surprise-btn" onclick="surpriseMe()">
+    <span style="font-size:14px;">✦</span> Surprise Me
+  </button>
+
+  <!-- EXPORT -->
+  <button class="export-btn" id="export-btn" onclick="exportPDF()">
+    Download PDF — All 40 Cards
+  </button>
+
+</aside>
+
+<!-- ═══ PREVIEW PANEL ════════════════════════════════════ -->
+<main id="preview-panel">
+
+  <div class="preview-top">
+    <div>
+      <div class="preview-card-name" id="preview-title">1 Week</div>
+      <div class="preview-category" id="preview-category">Monthly</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+      <button class="flip-btn" onclick="flipCard()" id="flip-btn">↻ &nbsp;Flip card</button>
+      <div class="flip-side-label" id="flip-side-label">Showing front</div>
+    </div>
+  </div>
+
+  <div class="preview-scene">
+    <div class="preview-card-3d" id="card-3d">
+      <div class="preview-face front-face">
+        <canvas id="preview-canvas"></canvas>
+      </div>
+      <div class="preview-face back-face">
+        <canvas id="back-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-footer">
+    <div class="preview-watermark">© Discover Visually · etsy.com/shop/DiscoverVisually</div>
+    <div class="preview-hint">Preview only · watermark not in PDF</div>
+  </div>
+
+</main>
+
+</div>
+
+<!-- ═══ PROGRESS OVERLAY ══════════════════════════════════ -->
+<div id="progress-overlay">
+  <div class="progress-title">Generating your PDF...</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-text" id="progress-text">Preparing cards...</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════
+const BASE = 'https://discovervisually.github.io/cards/';
+const SERIES = 'cuteanimals_green';
+
+const CARDS = [
+  {id:1,  name:'1 Week',               cat:'monthly', sheet:'sheet_01', side:'left'},
+  {id:2,  name:'1 Month',              cat:'monthly', sheet:'sheet_01', side:'right'},
+  {id:3,  name:'2 Months',             cat:'monthly', sheet:'sheet_02', side:'left'},
+  {id:4,  name:'3 Months',             cat:'monthly', sheet:'sheet_02', side:'right'},
+  {id:5,  name:'4 Months',             cat:'monthly', sheet:'sheet_03', side:'left'},
+  {id:6,  name:'5 Months',             cat:'monthly', sheet:'sheet_03', side:'right'},
+  {id:7,  name:'6 Months',             cat:'monthly', sheet:'sheet_04', side:'left'},
+  {id:8,  name:'7 Months',             cat:'monthly', sheet:'sheet_04', side:'right'},
+  {id:9,  name:'8 Months',             cat:'monthly', sheet:'sheet_05', side:'left'},
+  {id:10, name:'9 Months',             cat:'monthly', sheet:'sheet_05', side:'right'},
+  {id:11, name:'10 Months',            cat:'monthly', sheet:'sheet_06', side:'left'},
+  {id:12, name:'11 Months',            cat:'monthly', sheet:'sheet_06', side:'right'},
+  {id:13, name:'12 Months',            cat:'monthly', sheet:'sheet_07', side:'left'},
+  {id:14, name:'1 Year',               cat:'monthly', sheet:'sheet_07', side:'right'},
+  {id:15, name:'First Smile',          cat:'firsts',  sheet:'sheet_08', side:'left'},
+  {id:16, name:'First Laugh',          cat:'firsts',  sheet:'sheet_08', side:'right'},
+  {id:17, name:'First Roll',           cat:'firsts',  sheet:'sheet_09', side:'left'},
+  {id:18, name:'First Tooth',          cat:'firsts',  sheet:'sheet_09', side:'right'},
+  {id:19, name:'First Solid Food',     cat:'firsts',  sheet:'sheet_10', side:'left'},
+  {id:20, name:'First Crawl',          cat:'firsts',  sheet:'sheet_10', side:'right'},
+  {id:21, name:'My Best Friend',       cat:'firsts',  sheet:'sheet_11', side:'left'},
+  {id:22, name:'No Sleep Tonight!',    cat:'firsts',  sheet:'sheet_11', side:'right'},
+  {id:23, name:'First Word',           cat:'firsts',  sheet:'sheet_12', side:'left'},
+  {id:24, name:'First Step',           cat:'firsts',  sheet:'sheet_12', side:'right'},
+  {id:25, name:'First Bath',           cat:'firsts',  sheet:'sheet_13', side:'left'},
+  {id:26, name:'First Swim',           cat:'firsts',  sheet:'sheet_13', side:'right'},
+  {id:27, name:'First Haircut',        cat:'firsts',  sheet:'sheet_14', side:'left'},
+  {id:28, name:'First Trip',           cat:'firsts',  sheet:'sheet_14', side:'right'},
+  {id:29, name:'First Christmas',      cat:'firsts',  sheet:'sheet_15', side:'left'},
+  {id:30, name:'First Halloween',      cat:'firsts',  sheet:'sheet_15', side:'right'},
+  {id:31, name:'First Easter',         cat:'firsts',  sheet:'sheet_16', side:'left'},
+  {id:32, name:'First Birthday',       cat:'firsts',  sheet:'sheet_16', side:'right'},
+  {id:33, name:'First Book',           cat:'firsts',  sheet:'sheet_17', side:'left'},
+  {id:34, name:'First Hug',            cat:'firsts',  sheet:'sheet_17', side:'right'},
+  {id:35, name:'Welcome to the World', cat:'special', sheet:'sheet_18', side:'left'},
+  {id:36, name:'Coming Home',          cat:'special', sheet:'sheet_18', side:'right'},
+  {id:37, name:'Baby Shower',          cat:'special', sheet:'sheet_19', side:'left'},
+  {id:38, name:'Baptism',              cat:'special', sheet:'sheet_19', side:'right'},
+  {id:39, name:'You Are Loved',        cat:'special', sheet:'sheet_20', side:'left'},
+  {id:40, name:'Our Little Miracle',   cat:'special', sheet:'sheet_20', side:'right'},
+];
+
+const DATE_OFFSETS = {1:7,2:30,3:60,4:90,5:120,6:150,7:180,8:210,9:240,10:270,11:300,12:330,13:365,14:365};
+
+const FONT_PAIRS = [
+  {script:'Great Vibes',    body:'Cormorant Garamond', tag:'Romantic Luxury'},
+  {script:'Dancing Script', body:'Lato',               tag:'Playful Classic'},
+  {script:'Pacifico',       body:'Nunito',             tag:'Fun & Friendly'},
+  {script:'Pinyon Script',  body:'Raleway',            tag:'Vintage Elegance'},
+  {script:'Sacramento',     body:'Josefin Sans',       tag:'Modern Romance'},
+  {script:'Satisfy',        body:'Quicksand',          tag:'Sweet & Soft'},
+  {script:'Allura',         body:'Montserrat',         tag:'Contemporary Chic'},
+  {script:'Lobster Two',    body:'Open Sans',          tag:'Bold & Playful'},
+];
+
+const COLORS = [
+  {name:'White',      v:'#FFFFFF'},
+  {name:'Cream',      v:'#F5F0E8'},
+  {name:'Sage',       v:'#7a9a7a'},
+  {name:'Gold',       v:'#C8B98A'},
+  {name:'Dark Brown', v:'#4a3728'},
+  {name:'Coral',      v:'#c0956a'},
+  {name:'Dusty Rose', v:'#c08080'},
+  {name:'Slate',      v:'#7a8a9a'},
+];
+
+const BACKS = [
+  {id:'back_01_botanical',   name:'Botanical',   hasText:false},
+  {id:'back_02_stars',       name:'Stars',       hasText:false},
+  {id:'back_03_confetti',    name:'Confetti',    hasText:false},
+  {id:'back_04_pawprints',   name:'Pawprints',   hasText:false},
+  {id:'back_05_repeat_quote',name:'Daily Quote', hasText:true},
+  {id:'back_06_big_quote',   name:'Big Quote',   hasText:true},
+  {id:'back_07_silhouettes', name:'Silhouettes', hasText:true},
+  {id:'back_08_personalized',name:'Personalized',hasText:true},
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const S = {
+  tab: 'monthly',
+  cardId: 1,
+  showName: false,
+  babyName: '',
+  showDate: false,
+  birthDate: '',
+  fontPair: 0,
+  nameColor: '#F5F0E8',
+  dateColor: '#C8B98A',
+  showBack: false,
+  backId: null,
+  backQuote: '',
+  backShowName: false,
+  showingFront: true,
+};
+
+const imgCache = {};
+let renderTimer = null;
+let backTimer = null;
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+window.addEventListener('load', () => {
+  setupCanvases();
+  renderCardGrid();
+  renderFontGrid();
+  renderColorSwatches('name-colors', 'nameColor');
+  renderColorSwatches('date-colors', 'dateColor');
+  renderBackGrid();
+  updatePreview();
+  // Hide date for non-monthly on init
+  checkDateVisibility();
+});
+
+function setupCanvases() {
+  ['preview-canvas','back-canvas'].forEach(id => {
+    const c = document.getElementById(id);
+    c.width = 400; c.height = Math.round(400 * 5.5/4.25);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CARD GRID
+// ═══════════════════════════════════════════════
+function renderCardGrid() {
+  const grid = document.getElementById('card-grid');
+  grid.innerHTML = '';
+  CARDS.filter(c => c.cat === S.tab).forEach(card => {
+    const d = document.createElement('div');
+    d.className = 'card-thumb' + (card.id === S.cardId ? ' selected' : '');
+    d.onclick = () => selectCard(card.id);
+    const posX = card.side === 'left' ? '0%' : '100%';
+    const imgUrl = `${BASE}${SERIES}/${card.sheet}.jpg`;
+    d.innerHTML = `
+      <div class="card-thumb-bg" style="background-image:url('${imgUrl}');background-position:${posX} top;"></div>
+      <div class="card-thumb-num">${card.id}</div>
+      <div class="card-thumb-overlay"><div class="card-thumb-name">${card.name}</div></div>
+    `;
+    grid.appendChild(d);
+  });
+}
+
+function setTab(tab) {
+  S.tab = tab;
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['monthly','firsts','special'][i] === tab);
+  });
+  renderCardGrid();
+}
+
+function selectCard(id) {
+  S.cardId = id;
+  // Switch tab if needed
+  const card = CARDS.find(c => c.id === id);
+  if(card.cat !== S.tab) setTab(card.cat);
+  renderCardGrid();
+  document.getElementById('preview-title').textContent = card.name;
+  document.getElementById('preview-category').textContent =
+    card.cat === 'monthly' ? 'Monthly' : card.cat === 'firsts' ? "Baby's Firsts" : 'Special';
+  checkDateVisibility();
+  scheduleRender();
+}
+
+// ═══════════════════════════════════════════════
+// FONT GRID
+// ═══════════════════════════════════════════════
+function renderFontGrid() {
+  const grid = document.getElementById('font-grid');
+  grid.innerHTML = '';
+  FONT_PAIRS.forEach((fp, i) => {
+    const d = document.createElement('div');
+    d.className = 'font-option' + (i === S.fontPair ? ' selected' : '');
+    d.onclick = () => { S.fontPair = i; renderFontGrid(); scheduleRender(); scheduleBackRender(); };
+    d.innerHTML = `
+      <div class="font-option-script" style="font-family:'${fp.script}'">${fp.script.split(' ').slice(0,2).join(' ')}</div>
+      <div class="font-option-body" style="font-family:'${fp.body}'">${fp.body}</div>
+      <div class="font-option-tag">${fp.tag}</div>
+    `;
+    grid.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// COLOR SWATCHES
+// ═══════════════════════════════════════════════
+function renderColorSwatches(containerId, stateKey) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  COLORS.forEach(color => {
+    const s = document.createElement('div');
+    s.className = 'color-swatch' + (S[stateKey] === color.v ? ' selected' : '');
+    s.style.background = color.v;
+    if(color.v === '#FFFFFF' || color.v === '#F5F0E8') {
+      s.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.12)';
+    }
+    s.title = color.name;
+    s.onclick = () => {
+      S[stateKey] = color.v;
+      renderColorSwatches(containerId, stateKey);
+      scheduleRender();
+    };
+    el.appendChild(s);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// BACK GRID
+// ═══════════════════════════════════════════════
+function renderBackGrid() {
+  const grid = document.getElementById('back-grid');
+  grid.innerHTML = '';
+  BACKS.forEach(b => {
+    const d = document.createElement('div');
+    d.className = 'back-thumb' + (S.backId === b.id ? ' selected' : '');
+    d.onclick = () => {
+      S.backId = b.id;
+      renderBackGrid();
+      const bk = BACKS.find(x => x.id === b.id);
+      const ts = document.getElementById('back-text-section');
+      bk.hasText ? ts.classList.remove('hidden') : ts.classList.add('hidden');
+      scheduleBackRender();
+    };
+    d.innerHTML = `<img src="${BASE}backs/${b.id}.jpg" alt="${b.name}" loading="lazy"><div class="back-thumb-name">${b.name}</div>`;
+    grid.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// STATE UPDATE
+// ═══════════════════════════════════════════════
+function updateState() {
+  S.showName  = document.getElementById('toggle-name').checked;
+  S.showDate  = document.getElementById('toggle-date').checked;
+  S.showBack  = document.getElementById('toggle-back').checked;
+  S.babyName  = document.getElementById('baby-name').value.trim();
+  S.birthDate = document.getElementById('birth-date').value;
+
+  // Toggle name input
+  document.getElementById('baby-name').classList.toggle('hidden', !S.showName);
+
+  // Date
+  checkDateVisibility();
+
+  // Back section
+  document.getElementById('back-section').classList.toggle('hidden', !S.showBack);
+
+  // Update color section visibility
+  document.getElementById('date-color-wrap').classList.toggle(
+    'hidden', !(S.showDate && isMonthlyCard(S.cardId))
+  );
+
+  scheduleRender();
+  if(S.showBack) scheduleBackRender();
+}
+
+function checkDateVisibility() {
+  const isMonthly = isMonthlyCard(S.cardId);
+  const row = document.getElementById('date-toggle-row');
+  const input = document.getElementById('birth-date');
+  const hint = document.getElementById('date-hint');
+  const colorWrap = document.getElementById('date-color-wrap');
+
+  row.classList.toggle('hidden', !isMonthly);
+  if(!isMonthly) {
+    input.classList.add('hidden');
+    hint.classList.add('hidden');
+    colorWrap.classList.add('hidden');
+    return;
+  }
+  input.classList.toggle('hidden', !S.showDate);
+  // Show computed date hint
+  if(S.showDate && S.birthDate) {
+    hint.textContent = 'Milestone date: ' + getMilestoneDate(S.cardId, S.birthDate);
+    hint.classList.remove('hidden');
+  } else {
+    hint.classList.add('hidden');
+  }
+  colorWrap.classList.toggle('hidden', !S.showDate);
+}
+
+function isMonthlyCard(id) {
+  const c = CARDS.find(x => x.id === id);
+  return c && c.cat === 'monthly';
+}
+
+// ═══════════════════════════════════════════════
+// DATE CALCULATION
+// ═══════════════════════════════════════════════
+function getMilestoneDate(cardId, dateStr) {
+  if(!dateStr) return '';
+  const offset = DATE_OFFSETS[cardId];
+  if(!offset) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+}
+
+// ═══════════════════════════════════════════════
+// IMAGE LOADING
+// ═══════════════════════════════════════════════
+function loadImg(url) {
+  return new Promise((res, rej) => {
+    if(imgCache[url]) { res(imgCache[url]); return; }
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => { imgCache[url] = img; res(img); };
+    img.onerror = () => rej(new Error('Failed: ' + url));
+    img.src = url;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CANVAS RENDERING
+// ═══════════════════════════════════════════════
+function scheduleRender() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(updatePreview, 80);
+}
+
+function scheduleBackRender() {
+  S.backQuote    = (document.getElementById('back-quote')?.value || '').trim();
+  S.backShowName = document.getElementById('back-name-toggle')?.checked || false;
+  clearTimeout(backTimer);
+  backTimer = setTimeout(renderBackCanvas, 80);
+}
+
+async function updatePreview() {
+  const canvas = document.getElementById('preview-canvas');
+  await renderCardToCanvas(canvas, S.cardId, true);
+  await renderBackCanvas();
+}
+
+async function renderCardToCanvas(canvas, cardId, withWatermark) {
+  const card = CARDS.find(c => c.id === cardId);
+  if(!card) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  // Background fallback
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillRect(0, 0, W, H);
+
+  try {
+    const url = `${BASE}${SERIES}/${card.sheet}.jpg`;
+    const img = await loadImg(url);
+    const sx = card.side === 'left' ? 0 : img.width / 2;
+    ctx.drawImage(img, sx, 0, img.width/2, img.height, 0, 0, W, H);
+  } catch(e) {
+    // Draw placeholder text
+    ctx.font = `500 ${W*0.06}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#2C3E2D';
+    ctx.textAlign = 'center';
+    ctx.fillText(card.name, W/2, H/2 - 20);
+    ctx.font = `300 ${W*0.04}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#7a8a72';
+    ctx.fillText('Image loading...', W/2, H/2 + 20);
+  }
+
+  const fp = FONT_PAIRS[S.fontPair];
+
+  // Name overlay — top zone
+  if(S.showName && S.babyName) {
+    const fs = Math.round(W * 0.105);
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = S.nameColor;
+    // Subtle text shadow for readability
+    ctx.shadowColor = 'rgba(0,0,0,0.08)';
+    ctx.shadowBlur = 4;
+    ctx.fillText(S.babyName, W/2, Math.round(H * 0.152));
+    ctx.shadowBlur = 0;
+  }
+
+  // Date overlay — bottom zone
+  if(S.showDate && isMonthlyCard(cardId) && S.birthDate) {
+    const dateStr = getMilestoneDate(cardId, S.birthDate);
+    if(dateStr) {
+      const fs = Math.round(W * 0.04);
+      ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = S.dateColor;
+      ctx.shadowColor = 'rgba(0,0,0,0.06)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(dateStr, W/2, Math.round(H * 0.892));
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // Watermark (preview only)
+  if(withWatermark) {
+    ctx.save();
+    ctx.globalAlpha = 0.3;
+    ctx.font = `300 ${Math.round(W*0.03)}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#2C3E2D';
+    ctx.textAlign = 'center';
+    ctx.fillText('© Discover Visually · etsy.com/shop/DiscoverVisually', W/2, H - Math.round(W*0.025));
+    ctx.restore();
+  }
+}
+
+async function renderBackCanvas() {
+  const canvas = document.getElementById('back-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillRect(0, 0, W, H);
+
+  if(!S.showBack || !S.backId) {
+    ctx.font = `300 ${W*0.045}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#b0a898';
+    ctx.textAlign = 'center';
+    ctx.fillText('Select a back design above', W/2, H/2 - 10);
+    ctx.font = `300 ${W*0.035}px 'Jost', sans-serif`;
+    ctx.fillText('to preview the back of the card', W/2, H/2 + 20);
+    return;
+  }
+
+  try {
+    const url = `${BASE}backs/${S.backId}.jpg`;
+    const img = await loadImg(url);
+    // Back shows left half of the back pattern image
+    ctx.drawImage(img, 0, 0, img.width/2, img.height, 0, 0, W, H);
+  } catch(e) {
+    ctx.fillStyle = '#F0EBE0';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Text overlay on back
+  const hasText = (S.backShowName && S.babyName) || S.backQuote;
+  if(hasText) {
+    drawBackTextOverlay(ctx, W/2, H/2, W, H);
+  }
+}
+
+function drawBackTextOverlay(ctx, cx, cy, W, H) {
+  const fp = FONT_PAIRS[S.fontPair];
+  const hasName = S.backShowName && S.babyName;
+  const hasQuote = S.backQuote.length > 0;
+
+  // Soft white vignette behind text
+  const rx = W * 0.38, ry = H * 0.2;
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+  grad.addColorStop(0,   'rgba(255,255,255,0.85)');
+  grad.addColorStop(0.6, 'rgba(255,255,255,0.5)');
+  grad.addColorStop(1,   'rgba(255,255,255,0)');
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.restore();
+
+  const nameY = cy - (hasQuote ? H * 0.045 : 0);
+  const quoteY = cy + (hasName ? H * 0.07 : H * 0.015);
+
+  if(hasName) {
+    const fs = Math.round(W * 0.1);
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    ctx.fillStyle = '#2C3E2D';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0,0,0,0.06)';
+    ctx.shadowBlur = 4;
+    ctx.fillText(S.babyName, cx, nameY);
+    ctx.shadowBlur = 0;
+  }
+  if(hasQuote) {
+    const fs = Math.round(W * 0.037);
+    ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
+    ctx.fillStyle = '#4a6a4a';
+    ctx.textAlign = 'center';
+    ctx.fillText(S.backQuote, cx, quoteY);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// FLIP
+// ═══════════════════════════════════════════════
+function flipCard() {
+  S.showingFront = !S.showingFront;
+  document.getElementById('card-3d').classList.toggle('flipped', !S.showingFront);
+  document.getElementById('flip-side-label').textContent =
+    S.showingFront ? 'Showing front' : 'Showing back';
+}
+
+// ═══════════════════════════════════════════════
+// SURPRISE ME
+// ═══════════════════════════════════════════════
+function surpriseMe() {
+  const card = CARDS[Math.floor(Math.random() * CARDS.length)];
+  S.cardId    = card.id;
+  S.fontPair  = Math.floor(Math.random() * FONT_PAIRS.length);
+  S.nameColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
+  S.dateColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
+
+  setTab(card.cat);
+  renderFontGrid();
+  renderColorSwatches('name-colors', 'nameColor');
+  renderColorSwatches('date-colors', 'dateColor');
+  document.getElementById('preview-title').textContent = card.name;
+  document.getElementById('preview-category').textContent =
+    card.cat === 'monthly' ? 'Monthly' : card.cat === 'firsts' ? "Baby's Firsts" : 'Special';
+  checkDateVisibility();
+
+  // Bounce animation
+  const c3d = document.getElementById('card-3d');
+  c3d.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+  c3d.style.transform = 'scale(0.93) rotate(-1.5deg)';
+  setTimeout(() => { c3d.style.transform = ''; }, 50);
+  setTimeout(() => { c3d.style.transition = ''; }, 500);
+
+  scheduleRender();
+}
+
+// ═══════════════════════════════════════════════
+// PDF EXPORT
+// ═══════════════════════════════════════════════
+async function exportPDF() {
+  const btn = document.getElementById('export-btn');
+  const overlay = document.getElementById('progress-overlay');
+  btn.disabled = true;
+  overlay.style.display = 'flex';
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+    const pageW = 215.9, pageH = 279.4;
+    const pairW = pageW;
+    const pairH = Math.round(pairW * 11 / 17 * 10) / 10;
+    const yOff = (pageH - pairH) / 2;
+
+    // Offscreen canvas for PDF rendering (higher resolution)
+    const pdfC = document.createElement('canvas');
+    const PW = 2000, PH = Math.round(PW * 11/17);
+    const CW = PW / 2;
+    pdfC.width = PW; pdfC.height = PH;
+
+    // Group sheets
+    const sheets = [];
+    for(let i = 1; i <= 20; i++) {
+      sheets.push('sheet_' + String(i).padStart(2,'0'));
+    }
+
+    for(let i = 0; i < 20; i++) {
+      const sheetName = sheets[i];
+      const leftCard  = CARDS.find(c => c.sheet === sheetName && c.side === 'left');
+      const rightCard = CARDS.find(c => c.sheet === sheetName && c.side === 'right');
+
+      if(i > 0) doc.addPage();
+      setProgress(Math.round((i / 20) * 80), `Rendering page ${i+1} of 20...`);
+
+      const ctx = pdfC.getContext('2d');
+      ctx.clearRect(0, 0, PW, PH);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fillRect(0, 0, PW, PH);
+
+      // Draw sheet image
+      try {
+        const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
+        ctx.drawImage(img, 0, 0, PW, PH);
+      } catch(e) { /* use cream bg */ }
+
+      // Text overlays on both cards
+      if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  0,  CW, PH);
+      if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, 0,  CW, PH);
+
+      const imgData = pdfC.toDataURL('image/jpeg', 0.93);
+      doc.addImage(imgData, 'JPEG', 0, yOff, pageW, pairH);
+
+      // Back page
+      if(S.showBack && S.backId) {
+        doc.addPage();
+        setProgress(Math.round((i / 20) * 80) + 2, `Adding back ${i+1}...`);
+
+        ctx.clearRect(0, 0, PW, PH);
+        ctx.fillStyle = '#FAF7F2';
+        ctx.fillRect(0, 0, PW, PH);
+
+        try {
+          const backImg = await loadImg(`${BASE}backs/${S.backId}.jpg`);
+          // Left card back
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0, 0, CW, PH);
+          // Right card back
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, 0, CW, PH);
+        } catch(e) { /* cream */ }
+
+        // Text overlay on both back cards
+        const hasText = (S.backShowName && S.babyName) || S.backQuote;
+        if(hasText) {
+          drawBackTextOverlay(ctx, CW/2,    PH/2, CW, PH);
+          drawBackTextOverlay(ctx, CW+CW/2, PH/2, CW, PH);
+        }
+
+        const backData = pdfC.toDataURL('image/jpeg', 0.93);
+        doc.addImage(backData, 'JPEG', 0, yOff, pageW, pairH);
+      }
+
+      // Small async yield to keep UI responsive
+      await new Promise(r => setTimeout(r, 10));
+    }
+
+    setProgress(95, 'Finalizing...');
+    await new Promise(r => setTimeout(r, 100));
+    doc.save('milestone-generator.pdf');
+    setProgress(100, 'Done! Your PDF is ready.');
+
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      btn.disabled = false;
+    }, 1200);
+
+  } catch(err) {
+    console.error(err);
+    overlay.style.display = 'none';
+    btn.disabled = false;
+    alert('Something went wrong generating the PDF. Please try again.');
+  }
+}
+
+function drawTextOnCardRegion(ctx, card, xOff, yOff, W, H) {
+  const fp = FONT_PAIRS[S.fontPair];
+
+  if(S.showName && S.babyName) {
+    const fs = Math.round(W * 0.105);
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = S.nameColor;
+    ctx.shadowColor = 'rgba(0,0,0,0.07)';
+    ctx.shadowBlur = 5;
+    ctx.fillText(S.babyName, xOff + W/2, yOff + Math.round(H * 0.152));
+    ctx.shadowBlur = 0;
+  }
+
+  if(S.showDate && isMonthlyCard(card.id) && S.birthDate) {
+    const dateStr = getMilestoneDate(card.id, S.birthDate);
+    if(dateStr) {
+      const fs = Math.round(W * 0.04);
+      ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = S.dateColor;
+      ctx.shadowColor = 'rgba(0,0,0,0.05)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(dateStr, xOff + W/2, yOff + Math.round(H * 0.892));
+      ctx.shadowBlur = 0;
+    }
+  }
+}
+
+function setProgress(pct, text) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = text;
+}
+</script>
+</body>
+</html>
