@@ -1260,8 +1260,8 @@ async function exportPDF() {
 
   try {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'in', format: [8.5, 5.5] });
-    const pageW = 8.5, pageH = 5.5;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'in', format: 'letter' });
+    const pageW = 11, pageH = 8.5;
     const yOff = 0;
 
     // Offscreen canvas for PDF rendering (higher resolution)
