@@ -32,7 +32,9 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Jost', sans-serif;
-  background: var(--cream);
+  background-color: #DDD8CC;
+  background-image: radial-gradient(circle, rgba(44,62,45,0.09) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
@@ -49,7 +51,7 @@ body::before {
 /* ─── LAYOUT ─────────────────────────────────── */
 #app {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 600px 1fr;
   min-height: 100vh;
   position: relative; z-index: 1;
 }
@@ -63,7 +65,7 @@ body::before {
   height: 100vh;
   overflow-y: auto;
   position: sticky; top: 0;
-  padding: 1.75rem 1.5rem 3rem;
+  padding: 2rem 2.25rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -75,11 +77,11 @@ body::before {
 
 /* ─── PREVIEW PANEL ──────────────────────────── */
 #preview-panel {
-  padding: 2rem 2rem 3rem;
+  padding: 2.5rem 3rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   min-height: 100vh;
 }
 
@@ -90,14 +92,14 @@ body::before {
 }
 .logo-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 21px;
+  font-size: 28px;
   font-style: italic;
   color: var(--sage-dark);
   letter-spacing: 0.3px;
   line-height: 1.2;
 }
 .logo-sub {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--gold);
@@ -108,8 +110,8 @@ body::before {
 /* ─── SECTION ────────────────────────────────── */
 .section { display: flex; flex-direction: column; gap: 0.65rem; }
 .section-label {
-  font-size: 9px;
-  letter-spacing: 2.5px;
+  font-size: 12px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--sage-light);
   font-weight: 600;
@@ -133,7 +135,7 @@ body::before {
   border: none; background: transparent;
   border-radius: 6px;
   font-family: 'Jost', sans-serif;
-  font-size: 11px; font-weight: 400;
+  font-size: 14px; font-weight: 400;
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s;
@@ -151,7 +153,7 @@ body::before {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5px;
-  max-height: 272px;
+  max-height: 320px;
   overflow-y: auto;
   padding-right: 2px;
   scrollbar-width: thin;
@@ -185,7 +187,7 @@ body::before {
   padding: 10px 3px 3px;
 }
 .card-thumb-name {
-  font-size: 7px;
+  font-size: 9px;
   color: var(--sage-dark);
   text-align: center;
   line-height: 1.25;
@@ -193,7 +195,7 @@ body::before {
 }
 .card-thumb-num {
   position: absolute; top: 3px; left: 3px;
-  font-size: 7px; font-weight: 600;
+  font-size: 9px; font-weight: 600;
   color: var(--sage-dark);
   background: rgba(250,247,242,0.88);
   border-radius: 3px;
@@ -205,7 +207,7 @@ body::before {
   display: flex; align-items: center;
   justify-content: space-between; gap: 0.75rem;
 }
-.toggle-label { font-size: 13px; color: var(--text); }
+.toggle-label { font-size: 16px; color: var(--text); }
 .toggle { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
 .toggle input { opacity: 0; width: 0; height: 0; }
 .toggle-slider {
@@ -231,7 +233,7 @@ body::before {
   border-radius: var(--radius-sm);
   background: rgba(255,255,255,0.7);
   font-family: 'Jost', sans-serif;
-  font-size: 13px; color: var(--text);
+  font-size: 15px; color: var(--text);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   -webkit-appearance: none;
@@ -242,7 +244,7 @@ body::before {
 }
 .input-field::placeholder { color: var(--text-muted); }
 .input-hint {
-  font-size: 10px; color: var(--text-muted);
+  font-size: 13px; color: var(--text-muted);
   font-style: italic; padding-left: 2px;
 }
 
@@ -258,13 +260,13 @@ body::before {
 }
 .font-option:hover { border-color: var(--border-hover); background: var(--gold-pale); }
 .font-option.selected { border-color: var(--gold); background: var(--gold-pale); }
-.font-option-script { font-size: 17px; line-height: 1.2; color: var(--sage-dark); }
-.font-option-body { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
-.font-option-tag { font-size: 8px; color: var(--gold); letter-spacing: 0.3px; margin-top: 3px; font-style: italic; }
+.font-option-script { font-size: 22px; line-height: 1.2; color: var(--sage-dark); }
+.font-option-body { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+.font-option-tag { font-size: 10px; color: var(--gold); letter-spacing: 0.3px; margin-top: 3px; font-style: italic; }
 
 /* ─── COLOR SWATCHES ─────────────────────────── */
 .color-row { display: flex; gap: 7px; flex-wrap: wrap; }
-.color-sub-label { font-size: 10px; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.3px; }
+.color-sub-label { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.3px; }
 .color-swatch {
   width: 26px; height: 26px;
   border-radius: 50%;
@@ -296,7 +298,7 @@ body::before {
   letter-spacing: 4px;
 }
 .welcome-text {
-  font-size: 11.5px;
+  font-size: 14.5px;
   line-height: 1.75;
   color: var(--text-muted);
 }
@@ -344,11 +346,11 @@ body::before {
   transform: rotate(45deg);
 }
 .size-title {
-  font-size: 12px; font-weight: 500;
+  font-size: 15px; font-weight: 500;
   color: var(--sage-dark);
 }
 .size-desc {
-  font-size: 10px; color: var(--text-muted);
+  font-size: 13px; color: var(--text-muted);
   margin-top: 1px;
 }
 .size-hint {
@@ -374,7 +376,7 @@ body::before {
 .back-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .back-thumb-name {
   position: absolute; bottom: 0; left: 0; right: 0;
-  font-size: 7px; text-align: center;
+  font-size: 9px; text-align: center;
   background: rgba(250,247,242,0.92);
   padding: 3px 2px; color: var(--sage-dark); font-weight: 500;
 }
@@ -411,7 +413,7 @@ body::before {
 .preview-top {
   display: flex; align-items: center;
   justify-content: space-between;
-  width: 100%; max-width: 380px;
+  width: 100%; max-width: 540px;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
 }
@@ -447,7 +449,7 @@ body::before {
 /* ─── 3D FLIP ────────────────────────────────── */
 .preview-scene {
   perspective: 1200px;
-  width: 100%; max-width: 380px;
+  width: 100%; max-width: 540px;
 }
 .preview-card-3d {
   transform-style: preserve-3d;
@@ -468,7 +470,7 @@ body::before {
 #preview-canvas, #back-canvas { width: 100%; height: 100%; display: block; }
 
 .preview-footer {
-  width: 100%; max-width: 380px;
+  width: 100%; max-width: 540px;
   display: flex; align-items: center; justify-content: space-between;
 }
 .preview-watermark {
@@ -534,7 +536,7 @@ body::before {
     overflow-y: visible; border-right: none;
     border-top: 1px solid var(--border);
   }
-  .preview-scene { max-width: 220px; }
+  .preview-scene { max-width: 300px; }
   .preview-top { max-width: 100%; }
   .preview-footer { max-width: 100%; }
   .card-grid { grid-template-columns: repeat(5, 1fr); max-height: 200px; }
@@ -661,8 +663,8 @@ body::before {
     <div class="welcome-icon">✦</div>
     <p class="welcome-text">
       Below you can design your own personalised milestone cards — pick your favourite style, font, colours, and make them truly yours.<br><br>
-      When downloading, you can choose between two print sizes. <strong>Large cards (5.5×8.5")</strong> give you 2 per US Letter page — that's 20 pages pdf total. <strong>Small cards (4×5.5")</strong> fit 4 per page, so just 10 pages — a bit cheaper to print. Adding a card back doubles the page count for both and adds some printing cost since you need to print 2-sided. Based on this, printing at a professional shop should cost you somewhere between <strong>$3 and $10</strong> — totally up to what you prefer!<br><br>
-      Your access to the generator will be valid for at least a month, so please don't rush — you can always come back and finish later. You are free to keep the pdf and print it out multiple times/ repeatedly or print specific cards as needed. I sincerely hope you enjoy these cards! 🌿 And if you're happy with your purchase, <strong>a review on Etsy would mean the world to me. Thank you a million! 💛 </strong>
+      When downloading, you can choose between two print sizes. <strong>Large cards (5.5×8.5")</strong> give you 2 per US Letter page — that's 20 pages total. <strong>Small cards (4×5.5")</strong> fit 4 per page, so just 10 pages — a bit cheaper to print. Adding a card back doubles the page count for both. Based on this, printing at a professional shop should cost you somewhere between <strong>$3 and $10</strong> — totally up to what you prefer!<br><br>
+      Your access is valid for at least a month, so please don't rush — you can always come back and finish later. I sincerely hope you enjoy these cards! 🌿 And if you're happy with your purchase, a review on Etsy would mean the world to me. Thank you a million! 💛
     </p>
   </div>
 
@@ -768,7 +770,7 @@ body::before {
         <span class="size-check"></span>
         <div>
           <div class="size-title">Large — 5.5 × 8.5"</div>
-          <div class="size-desc">2 cards per US Letter page · 10 pages</div>
+          <div class="size-desc">2 cards per US Letter page · 20 pages</div>
         </div>
       </label>
     </div>
@@ -778,7 +780,7 @@ body::before {
         <span class="size-check"></span>
         <div>
           <div class="size-title">Small — 4 × 5.5"</div>
-          <div class="size-desc">4 cards per US Letter page · 5 pages</div>
+          <div class="size-desc">4 cards per US Letter page · 10 pages</div>
         </div>
       </label>
     </div>
@@ -1482,7 +1484,7 @@ async function generateSmallPDF() {
   const sheets = [];
   for(let i = 1; i <= 20; i++) sheets.push('sheet_' + String(i).padStart(2,'0'));
 
-  // 2 sheets per page → 20 pages (US Letter)
+  // 2 sheets per page → 10 pages total
   for(let page = 0; page < 10; page++) {
     const topSheet    = sheets[page * 2];
     const bottomSheet = sheets[page * 2 + 1];
