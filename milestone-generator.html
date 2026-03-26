@@ -1389,5 +1389,74 @@ function setProgress(pct, text) {
   document.getElementById('progress-text').textContent = text;
 }
 </script>
+
+<!-- ═══ NAVIGATION SLIDER ═══ -->
+<style>
+  .nav-slider {
+    position: fixed;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .nav-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    padding: 18px 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px 0 0 8px;
+    transition: all 0.22s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-tab-etsy {
+    background: #F56400;
+    color: white;
+    box-shadow: -2px 2px 12px rgba(245,100,0,0.3);
+  }
+  .nav-tab-etsy:hover {
+    background: #d95800;
+    padding-right: 16px;
+    box-shadow: -4px 2px 18px rgba(245,100,0,0.4);
+  }
+  .nav-tab-explore {
+    background: #2C3E2D;
+    color: #C8B98A;
+    box-shadow: -2px 2px 12px rgba(44,62,45,0.2);
+  }
+  .nav-tab-explore:hover {
+    background: #1e2b1f;
+    padding-right: 16px;
+    box-shadow: -4px 2px 18px rgba(44,62,45,0.3);
+  }
+  .nav-tab .nav-star {
+    margin-bottom: 8px;
+    font-size: 9px;
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+</style>
+
+<div class="nav-slider">
+  <a class="nav-tab nav-tab-etsy" href="https://www.etsy.com/shop/DiscoverVisually?ref=seller-platform-mcnav" target="_blank">
+    <span class="nav-star">✦</span>Back to Etsy
+  </a>
+  <a class="nav-tab nav-tab-explore" href="https://discovervisually.github.io/" target="_blank">
+    <span class="nav-star">✦</span>Explore More
+  </a>
+</div>
+<!-- ═══ END NAVIGATION SLIDER ═══ -->
+
 </body>
 </html>
