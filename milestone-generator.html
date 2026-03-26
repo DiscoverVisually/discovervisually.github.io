@@ -280,6 +280,83 @@ body::before {
   box-shadow: 0 0 0 1px var(--sage-dark), inset 0 0 0 1px rgba(0,0,0,0.06);
 }
 
+/* ─── WELCOME BOX ────────────────────────────── */
+.welcome-box {
+  background: linear-gradient(135deg, rgba(200,185,138,0.10) 0%, rgba(138,154,122,0.08) 100%);
+  border: 1px solid rgba(200,185,138,0.35);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem 1.15rem;
+  position: relative;
+}
+.welcome-icon {
+  font-size: 11px;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 0.6rem;
+  letter-spacing: 4px;
+}
+.welcome-text {
+  font-size: 11.5px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.welcome-text strong {
+  color: var(--sage-dark);
+  font-weight: 500;
+}
+
+/* ─── SIZE SELECTION ─────────────────────────── */
+.size-option {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  transition: border-color 0.18s, background 0.18s;
+  background: rgba(255,255,255,0.5);
+}
+.size-option:has(input:checked) {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+}
+.size-label {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+}
+.size-label input[type="checkbox"] { display: none; }
+.size-check {
+  width: 16px; height: 16px; flex-shrink: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  transition: all 0.15s;
+}
+.size-label input:checked + .size-check {
+  background: var(--sage-dark);
+  border-color: var(--sage-dark);
+}
+.size-label input:checked + .size-check::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 5px; height: 9px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.size-title {
+  font-size: 12px; font-weight: 500;
+  color: var(--sage-dark);
+}
+.size-desc {
+  font-size: 10px; color: var(--text-muted);
+  margin-top: 1px;
+}
+.size-hint {
+  font-size: 10px; color: var(--gold);
+  text-align: center; letter-spacing: 0.3px;
+  font-style: italic; padding: 2px 0;
+}
+
 /* ─── BACK GRID ──────────────────────────────── */
 .back-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
 .back-thumb {
@@ -579,6 +656,18 @@ body::before {
     <div class="logo-sub">Discover Visually · Personalization Studio</div>
   </div>
 
+  <!-- WELCOME MESSAGE -->
+  <div class="welcome-box">
+    <div class="welcome-icon">✦</div>
+    <p class="welcome-text">
+      Below you can design your own personalised milestone cards — pick your favourite style, font, colours, and make them truly yours.<br><br>
+      When downloading, you can choose between two print sizes. <strong>Large cards (5.5×8.5")</strong> give you 2 per US Letter page — that's 10 pages total. <strong>Small cards (4×5.5")</strong> fit 4 per page, so just 5 pages — a bit cheaper to print. Adding a card back doubles the page count for both. Based on this, printing at a professional shop should cost you somewhere between <strong>$3 and $10</strong> — totally up to what you prefer!<br><br>
+      Your access is valid for two weeks, so please don't rush — you can always come back and finish later. I sincerely hope you enjoy these cards! 🌿 And if you're happy with your purchase, a review on Etsy would mean the world to me. Thank you a million! 💛
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
   <!-- CARD SELECTION -->
   <div class="section">
     <div class="section-label">Choose a card</div>
@@ -669,6 +758,32 @@ body::before {
   <button class="surprise-btn" onclick="surpriseMe()">
     <span style="font-size:14px;">✦</span> Surprise Me
   </button>
+
+  <!-- PRINT SIZE SELECTION -->
+  <div class="section" style="gap:0.5rem;">
+    <div class="section-label">Choose print size</div>
+    <div class="size-option">
+      <label class="size-label">
+        <input type="checkbox" id="size-large" checked onchange="updateExportBtn()">
+        <span class="size-check"></span>
+        <div>
+          <div class="size-title">Large — 5.5 × 8.5"</div>
+          <div class="size-desc">2 cards per US Letter page · 10 pages</div>
+        </div>
+      </label>
+    </div>
+    <div class="size-option">
+      <label class="size-label">
+        <input type="checkbox" id="size-small" onchange="updateExportBtn()">
+        <span class="size-check"></span>
+        <div>
+          <div class="size-title">Small — 4 × 5.5"</div>
+          <div class="size-desc">4 cards per US Letter page · 5 pages</div>
+        </div>
+      </label>
+    </div>
+    <div class="size-hint" id="size-hint-both" style="display:none;">✦ Both selected — you'll receive 2 separate PDF files</div>
+  </div>
 
   <!-- EXPORT -->
   <button class="export-btn" id="export-btn" onclick="exportPDF()">
@@ -1250,6 +1365,18 @@ function surpriseMe() {
 }
 
 // ═══════════════════════════════════════════════
+// EXPORT BUTTON STATE
+// ═══════════════════════════════════════════════
+function updateExportBtn() {
+  const large = document.getElementById('size-large').checked;
+  const small = document.getElementById('size-small').checked;
+  const btn   = document.getElementById('export-btn');
+  const hint  = document.getElementById('size-hint-both');
+  btn.disabled = !large && !small;
+  hint.style.display = (large && small) ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════
 // PDF EXPORT
 // ═══════════════════════════════════════════════
 async function exportPDF() {
@@ -1258,98 +1385,166 @@ async function exportPDF() {
   btn.disabled = true;
   overlay.style.display = 'flex';
 
+  const doLarge = document.getElementById('size-large').checked;
+  const doSmall = document.getElementById('size-small').checked;
+
   try {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'landscape', unit: 'in', format: 'letter' });
-    const pageW = 11, pageH = 8.5;
-    const yOff = 0;
+    if(doLarge) await generateLargePDF();
+    if(doSmall) await generateSmallPDF();
 
-    // Offscreen canvas for PDF rendering (higher resolution)
-    const pdfC = document.createElement('canvas');
-    const PW = 2000, PH = Math.round(PW * 11/17);
-    const CW = PW / 2;
-    pdfC.width = PW; pdfC.height = PH;
+    setProgress(100, 'Done! Your PDF is ready.');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      updateExportBtn();
+    }, 1200);
+  } catch(err) {
+    console.error(err);
+    overlay.style.display = 'none';
+    updateExportBtn();
+    alert('Something went wrong generating the PDF. Please try again.');
+  }
+}
 
-    // Group sheets
-    const sheets = [];
-    for(let i = 1; i <= 20; i++) {
-      sheets.push('sheet_' + String(i).padStart(2,'0'));
+// Large: landscape letter, 2 cards per page (5.5×8.5" each)
+async function generateLargePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'landscape', unit: 'in', format: 'letter' });
+  const pageW = 11, pageH = 8.5;
+
+  const pdfC = document.createElement('canvas');
+  const PW = 2200, PH = Math.round(PW * 8.5 / 11);
+  const CW = PW / 2;
+  pdfC.width = PW; pdfC.height = PH;
+
+  const sheets = [];
+  for(let i = 1; i <= 20; i++) sheets.push('sheet_' + String(i).padStart(2,'0'));
+
+  for(let i = 0; i < 20; i++) {
+    const sheetName = sheets[i];
+    const leftCard  = CARDS.find(c => c.sheet === sheetName && c.side === 'left');
+    const rightCard = CARDS.find(c => c.sheet === sheetName && c.side === 'right');
+
+    if(i > 0) doc.addPage();
+    setProgress(Math.round((i / 20) * 45), `Large PDF: page ${i+1} of 20…`);
+
+    const ctx = pdfC.getContext('2d');
+    ctx.clearRect(0, 0, PW, PH);
+    ctx.fillStyle = '#FAF7F2';
+    ctx.fillRect(0, 0, PW, PH);
+
+    try {
+      const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
+      ctx.drawImage(img, 0, 0, PW, PH);
+    } catch(e) {}
+
+    if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  0, CW, PH);
+    if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, 0, CW, PH);
+
+    doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+
+    if(S.showBack && S.backId) {
+      doc.addPage();
+      ctx.clearRect(0, 0, PW, PH);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fillRect(0, 0, PW, PH);
+      try {
+        const backImg = await loadImg(`${BASE}backs/${S.backId}.jpg`);
+        ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0,  0, CW, PH);
+        ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, 0, CW, PH);
+      } catch(e) {}
+      if((S.backShowName && S.babyName) || S.backQuote) {
+        drawBackTextOverlay(ctx, CW/2,    PH/2, CW, PH);
+        drawBackTextOverlay(ctx, CW+CW/2, PH/2, CW, PH);
+      }
+      doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
     }
 
-    for(let i = 0; i < 20; i++) {
-      const sheetName = sheets[i];
+    await new Promise(r => setTimeout(r, 10));
+  }
+
+  setProgress(48, 'Saving large PDF…');
+  doc.save('milestone-large-5.5x8.5.pdf');
+}
+
+// Small: portrait letter, 4 cards per page in 2×2 grid (4×5.5" each)
+async function generateSmallPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+  const pageW = 8.5, pageH = 11;
+
+  // Canvas: 2550×3300 (300dpi letter portrait)
+  const pdfC = document.createElement('canvas');
+  const PW = 2550, PH = 3300;
+  const CW = PW / 2;   // cell width  = 1275 (= 4.25" at 300dpi — slight margin)
+  const CH = PH / 2;   // cell height = 1650 (= 5.5")
+  pdfC.width = PW; pdfC.height = PH;
+
+  const sheets = [];
+  for(let i = 1; i <= 20; i++) sheets.push('sheet_' + String(i).padStart(2,'0'));
+
+  // 2 sheets per page → 10 pages
+  for(let page = 0; page < 10; page++) {
+    const topSheet    = sheets[page * 2];
+    const bottomSheet = sheets[page * 2 + 1];
+
+    if(page > 0) doc.addPage();
+    setProgress(50 + Math.round((page / 10) * 45), `Small PDF: page ${page+1} of 10…`);
+
+    const ctx = pdfC.getContext('2d');
+    ctx.clearRect(0, 0, PW, PH);
+    ctx.fillStyle = '#FAF7F2';
+    ctx.fillRect(0, 0, PW, PH);
+
+    // Draw 4 individual cards (extract halves from each sheet image)
+    for(let row = 0; row < 2; row++) {
+      const sheetName = row === 0 ? topSheet : bottomSheet;
+      if(!sheetName) continue;
       const leftCard  = CARDS.find(c => c.sheet === sheetName && c.side === 'left');
       const rightCard = CARDS.find(c => c.sheet === sheetName && c.side === 'right');
+      const yBase = row * CH;
 
-      if(i > 0) doc.addPage();
-      setProgress(Math.round((i / 20) * 80), `Rendering page ${i+1} of 20...`);
+      try {
+        const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
+        const iW = img.width, iH = img.height;
+        // Left card: left half of sheet
+        ctx.drawImage(img, 0,    0, iW/2, iH, 0,  yBase, CW, CH);
+        // Right card: right half of sheet
+        ctx.drawImage(img, iW/2, 0, iW/2, iH, CW, yBase, CW, CH);
+      } catch(e) {}
 
-      const ctx = pdfC.getContext('2d');
+      if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  yBase, CW, CH);
+      if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, yBase, CW, CH);
+    }
+
+    doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+
+    // Backs
+    if(S.showBack && S.backId) {
+      doc.addPage();
       ctx.clearRect(0, 0, PW, PH);
       ctx.fillStyle = '#FAF7F2';
       ctx.fillRect(0, 0, PW, PH);
 
-      // Draw sheet image
-      try {
-        const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
-        ctx.drawImage(img, 0, 0, PW, PH);
-      } catch(e) { /* use cream bg */ }
-
-      // Text overlays on both cards
-      if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  0,  CW, PH);
-      if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, 0,  CW, PH);
-
-      const imgData = pdfC.toDataURL('image/jpeg', 0.93);
-      doc.addImage(imgData, 'JPEG', 0, 0, pageW, pageH);
-
-      // Back page
-      if(S.showBack && S.backId) {
-        doc.addPage();
-        setProgress(Math.round((i / 20) * 80) + 2, `Adding back ${i+1}...`);
-
-        ctx.clearRect(0, 0, PW, PH);
-        ctx.fillStyle = '#FAF7F2';
-        ctx.fillRect(0, 0, PW, PH);
-
+      for(let row = 0; row < 2; row++) {
+        const yBase = row * CH;
         try {
           const backImg = await loadImg(`${BASE}backs/${S.backId}.jpg`);
-          // Left card back
-          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0, 0, CW, PH);
-          // Right card back
-          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, 0, CW, PH);
-        } catch(e) { /* cream */ }
-
-        // Text overlay on both back cards
-        const hasText = (S.backShowName && S.babyName) || S.backQuote;
-        if(hasText) {
-          drawBackTextOverlay(ctx, CW/2,    PH/2, CW, PH);
-          drawBackTextOverlay(ctx, CW+CW/2, PH/2, CW, PH);
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0,  yBase, CW, CH);
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, yBase, CW, CH);
+        } catch(e) {}
+        if((S.backShowName && S.babyName) || S.backQuote) {
+          drawBackTextOverlay(ctx, CW/2,    yBase + CH/2, CW, CH);
+          drawBackTextOverlay(ctx, CW+CW/2, yBase + CH/2, CW, CH);
         }
-
-        const backData = pdfC.toDataURL('image/jpeg', 0.93);
-        doc.addImage(backData, 'JPEG', 0, 0, pageW, pageH);
       }
-
-      // Small async yield to keep UI responsive
-      await new Promise(r => setTimeout(r, 10));
+      doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
     }
 
-    setProgress(95, 'Finalizing...');
-    await new Promise(r => setTimeout(r, 100));
-    doc.save('milestone-generator.pdf');
-    setProgress(100, 'Done! Your PDF is ready.');
-
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      btn.disabled = false;
-    }, 1200);
-
-  } catch(err) {
-    console.error(err);
-    overlay.style.display = 'none';
-    btn.disabled = false;
-    alert('Something went wrong generating the PDF. Please try again.');
+    await new Promise(r => setTimeout(r, 10));
   }
+
+  setProgress(97, 'Saving small PDF…');
+  doc.save('milestone-small-4x5.5.pdf');
 }
 
 function drawTextOnCardRegion(ctx, card, xOff, yOff, W, H) {
