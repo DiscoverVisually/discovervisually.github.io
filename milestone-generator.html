@@ -614,6 +614,7 @@ body::before {
       </label>
     </div>
     <input type="date" class="input-field hidden" id="birth-date" onchange="updateState()">
+    <span class="input-hint hidden" id="date-birth-label" style="color:var(--sage-light);font-style:normal;font-size:11px;padding-left:2px;">📅 Enter your baby's <strong>date of birth</strong> — milestone dates will be calculated automatically</span>
     <span class="input-hint hidden" id="date-hint"></span>
   </div>
 
@@ -975,14 +976,17 @@ function checkDateVisibility() {
   const row = document.getElementById('date-toggle-row');
   const input = document.getElementById('birth-date');
   const hint = document.getElementById('date-hint');
+  const birthLabel = document.getElementById('date-birth-label');
 
   row.classList.toggle('hidden', !isMonthly);
   if(!isMonthly) {
     input.classList.add('hidden');
     hint.classList.add('hidden');
+    birthLabel.classList.add('hidden');
     return;
   }
   input.classList.toggle('hidden', !S.showDate);
+  birthLabel.classList.toggle('hidden', !S.showDate);
   if(S.showDate && S.birthDate) {
     hint.textContent = 'Milestone date: ' + getMilestoneDate(S.cardId, S.birthDate);
     hint.classList.remove('hidden');
@@ -1256,11 +1260,9 @@ async function exportPDF() {
 
   try {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-    const pageW = 215.9, pageH = 279.4;
-    const pairW = pageW;
-    const pairH = Math.round(pairW * 11 / 17 * 10) / 10;
-    const yOff = (pageH - pairH) / 2;
+    const doc = new jsPDF({ unit: 'in', format: [8.5, 5.5] });
+    const pageW = 8.5, pageH = 5.5;
+    const yOff = 0;
 
     // Offscreen canvas for PDF rendering (higher resolution)
     const pdfC = document.createElement('canvas');
@@ -1298,7 +1300,7 @@ async function exportPDF() {
       if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, 0,  CW, PH);
 
       const imgData = pdfC.toDataURL('image/jpeg', 0.93);
-      doc.addImage(imgData, 'JPEG', 0, yOff, pageW, pairH);
+      doc.addImage(imgData, 'JPEG', 0, 0, pageW, pageH);
 
       // Back page
       if(S.showBack && S.backId) {
@@ -1325,7 +1327,7 @@ async function exportPDF() {
         }
 
         const backData = pdfC.toDataURL('image/jpeg', 0.93);
-        doc.addImage(backData, 'JPEG', 0, yOff, pageW, pairH);
+        doc.addImage(backData, 'JPEG', 0, 0, pageW, pageH);
       }
 
       // Small async yield to keep UI responsive
