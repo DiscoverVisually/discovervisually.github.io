@@ -440,11 +440,7 @@ body::before {
   white-space: nowrap;
 }
 .flip-btn:hover { border-color: var(--gold); color: var(--sage-dark); background: var(--gold-pale); }
-.flip-side-label {
-  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--text-muted); margin-top: 4px; text-align: right;
-  transition: all 0.3s;
-}
+/* flip-side-label defined below */
 
 /* ─── 3D FLIP ────────────────────────────────── */
 .preview-scene {
@@ -473,10 +469,7 @@ body::before {
   width: 100%; max-width: 540px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.preview-watermark {
-  font-size: 10px; color: var(--text-muted);
-  opacity: 0.6; font-style: italic;
-}
+
 .preview-hint {
   font-size: 10px; color: var(--text-muted);
   opacity: 0.7; text-align: right;
@@ -506,6 +499,73 @@ body::before {
   width: 0%;
 }
 .progress-text { font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+
+/* ─── BACK TEXT BOX ──────────────────────────── */
+.back-text-box {
+  margin-top: 12px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(200,185,138,0.08) 0%, rgba(138,154,122,0.06) 100%);
+  border: 1px solid rgba(200,185,138,0.3);
+  border-radius: var(--radius);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.back-text-box-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+  text-align: center;
+}
+
+/* ─── FLIP DOT ───────────────────────────────── */
+.flip-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sage-dark);
+  margin-right: 6px;
+  vertical-align: middle;
+  box-shadow: 0 0 0 2px rgba(44,62,45,0.15);
+}
+.flip-dot-back {
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(200,185,138,0.3);
+}
+.flip-side-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); margin-top: 4px; text-align: right;
+  display: flex; align-items: center; justify-content: flex-end;
+  transition: all 0.3s;
+}
+
+/* ─── SURPRISE TOAST ─────────────────────────── */
+.surprise-toast {
+  position: fixed;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--sage-dark);
+  color: var(--gold-light);
+  padding: 11px 22px;
+  border-radius: 30px;
+  font-size: 12px; letter-spacing: 1px;
+  font-family: 'Jost', sans-serif;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(44,62,45,0.3);
+  z-index: 10000;
+}
+.surprise-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── PROGRESS STEP ──────────────────────────── */
+.progress-step {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+  min-height: 18px;
+}
 
 /* ─── UTILS ──────────────────────────────────── */
 .hidden { display: none !important; }
@@ -740,11 +800,12 @@ body::before {
     </div>
     <div id="back-section" class="hidden">
       <div class="back-grid" id="back-grid"></div>
-      <div id="back-text-section" class="hidden" style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+      <div id="back-text-section" class="hidden back-text-box">
+        <div class="back-text-box-label">✦ Personalise the back</div>
         <input type="text" class="input-field" id="back-quote"
-          placeholder="Add a quote (optional)" oninput="scheduleBackRender()" maxlength="50">
-        <div class="toggle-row">
-          <span class="toggle-label" style="font-size:12px;">Baby's name on back</span>
+          placeholder="Add a quote or dedication on backside — optional" oninput="scheduleBackRender()" maxlength="60">
+        <div class="toggle-row" style="margin-top:4px;">
+          <span class="toggle-label">Show baby's name on back</span>
           <label class="toggle">
             <input type="checkbox" id="back-name-toggle" onchange="scheduleBackRender()">
             <span class="toggle-slider"></span>
@@ -804,7 +865,7 @@ body::before {
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
       <button class="flip-btn" onclick="flipCard()" id="flip-btn">↻ &nbsp;Flip card</button>
-      <div class="flip-side-label" id="flip-side-label">Showing front</div>
+      <div class="flip-side-label" id="flip-side-label"><span class="flip-dot" id="flip-dot"></span>Showing front</div>
     </div>
   </div>
 
@@ -820,21 +881,24 @@ body::before {
   </div>
 
   <div class="preview-footer">
-    <div class="preview-watermark">© Discover Visually · etsy.com/shop/DiscoverVisually</div>
-    <div class="preview-hint">Preview only · watermark not in PDF</div>
+    <div class="preview-hint">Preview · watermark not included in PDF</div>
   </div>
 
 </main>
 
 </div>
 
+<!-- ═══ SURPRISE TOAST ═══ -->
+<div id="surprise-toast" class="surprise-toast"></div>
+
 <!-- ═══ PROGRESS OVERLAY ══════════════════════════════════ -->
 <div id="progress-overlay">
-  <div class="progress-title">Generating your PDF...</div>
+  <div class="progress-step" id="progress-step"></div>
+  <div class="progress-title">Generating your PDF…</div>
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="progress-fill"></div>
   </div>
-  <div class="progress-text" id="progress-text">Preparing cards...</div>
+  <div class="progress-text" id="progress-text">Preparing cards…</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1060,9 +1124,8 @@ function renderBackGrid() {
     d.onclick = () => {
       S.backId = b.id;
       renderBackGrid();
-      const bk = BACKS.find(x => x.id === b.id);
       const ts = document.getElementById('back-text-section');
-      bk.hasText ? ts.classList.remove('hidden') : ts.classList.add('hidden');
+      ts.classList.remove('hidden');
       scheduleBackRender();
     };
     d.innerHTML = `<img src="${BASE}backs/${b.id}.jpg" alt="${b.name}" loading="lazy"><div class="back-thumb-name">${b.name}</div>`;
@@ -1275,58 +1338,115 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
   const fp = FONT_PAIRS[S.fontPair];
   const hasName  = S.backShowName && S.babyName;
   const hasQuote = S.backQuote.length > 0;
+  if(!hasName && !hasQuote) return;
 
-  // Soft white vignette — sized to content
-  const rx = W * 0.42, ry = H * (hasName && hasQuote ? 0.22 : 0.16);
-  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
-  grad.addColorStop(0,   'rgba(255,255,255,0.88)');
-  grad.addColorStop(0.55,'rgba(255,255,255,0.55)');
-  grad.addColorStop(1,   'rgba(255,255,255,0)');
+  // ── Measure content height ──
+  const nameFontSize  = Math.round(W * 0.1);
+  const quoteFontSize = Math.round(W * 0.038);
+  const lineH = quoteFontSize * 1.5;
+
+  // Word-wrap quote
+  let quoteLines = [];
+  if(hasQuote) {
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
+    const words = S.backQuote.split(' ');
+    let line = '';
+    for(const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if(ctx.measureText(test).width > W * 0.72 && line) { quoteLines.push(line); line = w; }
+      else line = test;
+    }
+    if(line) quoteLines.push(line);
+  }
+
+  // Padding and box dimensions
+  const padX = W * 0.08, padY = H * 0.055;
+  const sepH  = hasName && hasQuote ? H * 0.025 : 0;
+  const nameH = hasName ? nameFontSize * 1.1 : 0;
+  const qH    = quoteLines.length * lineH;
+  const innerH = nameH + sepH + qH;
+  const boxW  = W * 0.82, boxH = innerH + padY * 2;
+  const boxX  = cx - boxW / 2, boxY = cy - boxH / 2;
+  const r = Math.min(boxH * 0.22, W * 0.06);
+
   ctx.save();
+
+  // ── Frosted backdrop ──
+  ctx.shadowColor = 'rgba(0,0,0,0.18)';
+  ctx.shadowBlur  = W * 0.04;
+  ctx.shadowOffsetY = W * 0.01;
+
+  // Rounded rect fill
   ctx.beginPath();
-  ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-  ctx.fillStyle = grad;
+  ctx.moveTo(boxX + r, boxY);
+  ctx.lineTo(boxX + boxW - r, boxY);
+  ctx.arcTo(boxX + boxW, boxY,         boxX + boxW, boxY + r,         r);
+  ctx.lineTo(boxX + boxW, boxY + boxH - r);
+  ctx.arcTo(boxX + boxW, boxY + boxH,  boxX + boxW - r, boxY + boxH,  r);
+  ctx.lineTo(boxX + r,   boxY + boxH);
+  ctx.arcTo(boxX,        boxY + boxH,  boxX,        boxY + boxH - r,  r);
+  ctx.lineTo(boxX,       boxY + r);
+  ctx.arcTo(boxX,        boxY,         boxX + r,    boxY,             r);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,0.82)';
   ctx.fill();
-  ctx.restore();
+  ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
 
-  const nameY  = cy - (hasQuote ? H * 0.05 : 0);
-  const quoteY = cy + (hasName  ? H * 0.075 : H * 0.015);
+  // Border
+  ctx.strokeStyle = 'rgba(200,185,138,0.55)';
+  ctx.lineWidth = Math.max(1, W * 0.004);
+  ctx.stroke();
 
+  // ── Gold ornament top ──
+  const ornY = boxY + padY * 0.45;
+  ctx.font = `${Math.round(W * 0.03)}px serif`;
+  ctx.fillStyle = 'rgba(200,185,138,0.9)';
+  ctx.textAlign = 'center';
+  ctx.fillText('✦', cx, ornY);
+
+  // ── Name ──
+  let cursorY = boxY + padY + (hasName ? nameFontSize * 0.88 : 0);
   if(hasName) {
-    let fs = Math.round(W * 0.1);
+    let fs = nameFontSize;
     ctx.font = `${fs}px '${fp.script}', cursive`;
-    while(ctx.measureText(S.babyName).width > W * 0.78 && fs > W * 0.05) {
-      fs -= 2;
-      ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > boxW * 0.82 && fs > W * 0.05) {
+      fs -= 2; ctx.font = `${fs}px '${fp.script}', cursive`;
     }
     ctx.fillStyle = S.textColor;
     ctx.textAlign = 'center';
-    ctx.shadowColor = 'rgba(0,0,0,0.06)';
-    ctx.shadowBlur = 4;
-    ctx.fillText(S.babyName, cx, nameY);
+    ctx.shadowColor = 'rgba(0,0,0,0.07)';
+    ctx.shadowBlur  = 3;
+    ctx.fillText(S.babyName, cx, cursorY);
     ctx.shadowBlur = 0;
+    cursorY += nameFontSize * 0.22;
   }
+
+  // ── Separator line ──
+  if(hasName && hasQuote) {
+    cursorY += sepH * 0.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - W * 0.18, cursorY);
+    ctx.lineTo(cx + W * 0.18, cursorY);
+    ctx.strokeStyle = 'rgba(200,185,138,0.6)';
+    ctx.lineWidth = Math.max(1, W * 0.003);
+    ctx.stroke();
+    cursorY += sepH * 0.9;
+  }
+
+  // ── Quote ──
   if(hasQuote) {
-    const fs = Math.round(W * 0.037);
-    ctx.font = `300 italic ${fs}px '${fp.body}', sans-serif`;
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
     ctx.fillStyle = S.textColor;
     ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0,0,0,0.05)';
-    ctx.shadowBlur = 3;
-    // Word wrap at ~38 chars
-    const words = S.backQuote.split(' ');
-    let line = '', lines = [];
-    for(const w of words) {
-      const test = line ? line + ' ' + w : w;
-      if(ctx.measureText(test).width > W * 0.72 && line) {
-        lines.push(line); line = w;
-      } else { line = test; }
-    }
-    if(line) lines.push(line);
-    const lineH = fs * 1.45;
-    lines.forEach((l, i) => ctx.fillText(l, cx, quoteY + i * lineH));
+    ctx.shadowBlur  = 2;
+    quoteLines.forEach((l, i) => {
+      ctx.fillText(l, cx, cursorY + i * lineH + quoteFontSize * 0.88);
+    });
     ctx.shadowBlur = 0;
   }
+
+  ctx.restore();
 }
 
 // ═══════════════════════════════════════════════
@@ -1335,8 +1455,9 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
 function flipCard() {
   S.showingFront = !S.showingFront;
   document.getElementById('card-3d').classList.toggle('flipped', !S.showingFront);
-  document.getElementById('flip-side-label').textContent =
-    S.showingFront ? 'Showing front' : 'Showing back';
+  const label = document.getElementById('flip-side-label');
+  const dot   = document.getElementById('flip-dot');
+  label.innerHTML = `<span class="flip-dot ${S.showingFront ? '' : 'flip-dot-back'}"></span>${S.showingFront ? 'Showing front' : 'Showing back'}`;
 }
 
 // ═══════════════════════════════════════════════
@@ -1364,6 +1485,18 @@ function surpriseMe() {
   setTimeout(() => { c3d.style.transition = ''; }, 500);
 
   scheduleRender();
+
+  // Toast
+  const fp2 = FONT_PAIRS[S.fontPair];
+  const col = COLORS.find(c => c.v === S.textColor);
+  showToast(`✦  ${card.name}  ·  ${fp2.script}  ·  ${col ? col.name : 'Custom'}`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('surprise-toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 3000);
 }
 
 // ═══════════════════════════════════════════════
@@ -1391,8 +1524,9 @@ async function exportPDF() {
   const doSmall = document.getElementById('size-small').checked;
 
   try {
-    if(doLarge) await generateLargePDF();
-    if(doSmall) await generateSmallPDF();
+    const bothSelected = doLarge && doSmall;
+    if(doLarge) await generateLargePDF(bothSelected ? 'PDF 1 of 2 — Large' : '');
+    if(doSmall) await generateSmallPDF(bothSelected ? 'PDF 2 of 2 — Small' : '');
 
     setProgress(100, 'Done! Your PDF is ready.');
     setTimeout(() => {
@@ -1408,7 +1542,8 @@ async function exportPDF() {
 }
 
 // Large: landscape letter, 2 cards per page (5.5×8.5" each)
-async function generateLargePDF() {
+async function generateLargePDF(stepLabel) {
+  if(stepLabel) document.getElementById('progress-step').textContent = stepLabel;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'landscape', unit: 'in', format: 'letter' });
   const pageW = 11, pageH = 8.5;
@@ -1465,11 +1600,13 @@ async function generateLargePDF() {
   }
 
   setProgress(48, 'Saving large PDF…');
+  document.getElementById('progress-step').textContent = '';
   doc.save('milestone-large-5.5x8.5.pdf');
 }
 
 // Small: portrait letter, 4 cards per page in 2×2 grid (4×5.5" each)
-async function generateSmallPDF() {
+async function generateSmallPDF(stepLabel) {
+  if(stepLabel) document.getElementById('progress-step').textContent = stepLabel;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
   const pageW = 8.5, pageH = 11;
@@ -1546,6 +1683,7 @@ async function generateSmallPDF() {
   }
 
   setProgress(97, 'Saving small PDF…');
+  document.getElementById('progress-step').textContent = '';
   doc.save('milestone-small-4x5.5.pdf');
 }
 
