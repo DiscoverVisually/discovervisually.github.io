@@ -1448,8 +1448,17 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
   ctx.fillStyle = 'rgba(200,185,138,0.95)';
   ctx.fillText('✦', cx, topOrnY);
 
+  // ── Vertically centre content inside box (below ornament) ──
+  const contentTotalH = (hasName ? nameFontSize * 1.05 : 0)
+                      + (hasName && hasQuote ? sepH : 0)
+                      + (hasQuote ? quoteLines.length * lineH : 0);
+  const contentAreaTop  = boxY + padY + ornH * 0.55;
+  const contentAreaBot  = boxY + boxH - padY * 0.9;
+  const contentAreaH    = contentAreaBot - contentAreaTop;
+  const contentStartY   = contentAreaTop + (contentAreaH - contentTotalH) / 2;
+
   // ── Name ──
-  let cursorY = boxY + padY + ornH * 0.6 + nameFontSize * 0.88;
+  let cursorY = contentStartY + (hasName ? nameFontSize * 0.88 : 0);
   if(hasName) {
     let fs = nameFontSize;
     ctx.font = `${fs}px '${fp.script}', cursive`;
@@ -1495,8 +1504,9 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
     ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0,0,0,0.05)';
     ctx.shadowBlur  = 2;
+    const quoteStartY = hasName ? cursorY : contentStartY;
     quoteLines.forEach((l, i) => {
-      ctx.fillText(l, cx, cursorY + quoteFontSize * 0.88 + i * lineH);
+      ctx.fillText(l, cx, quoteStartY + quoteFontSize * 0.88 + i * lineH);
     });
     ctx.shadowBlur = 0;
   }
