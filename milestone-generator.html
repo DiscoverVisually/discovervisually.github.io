@@ -580,27 +580,40 @@ body::before {
 
 /* ─── MOBILE ─────────────────────────────────── */
 @media (max-width: 900px) {
-  #app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh 50vh;
+    height: 100vh;
+    overflow: hidden;
+  }
   #preview-panel {
     order: -1;
-    padding: 1.25rem 1rem 1rem;
-    min-height: auto;
-    position: sticky; top: 0;
-    background: rgba(250,247,242,0.96);
+    padding: 1rem 1rem 0.75rem;
+    min-height: 0;
+    height: 50vh;
+    overflow: hidden;
+    background: rgba(250,247,242,0.97);
     backdrop-filter: blur(12px);
     z-index: 50;
     box-shadow: 0 2px 16px rgba(44,62,45,0.07);
+    justify-content: center;
   }
   #form-panel {
-    height: auto; position: static;
-    overflow-y: visible; border-right: none;
+    height: 50vh;
+    position: static;
+    overflow-y: auto;
+    border-right: none;
     border-top: 1px solid var(--border);
   }
-  .preview-scene { max-width: 300px; }
+  .preview-scene { max-width: 200px; flex-shrink: 0; }
   .preview-top { max-width: 100%; }
   .preview-footer { max-width: 100%; }
-  .card-grid { grid-template-columns: repeat(5, 1fr); max-height: 200px; }
+  .preview-card-name { font-size: 16px; }
+  .preview-category { font-size: 8px; }
+  .flip-btn { font-size: 10px; padding: 5px 10px; }
+  .card-grid { grid-template-columns: repeat(5, 1fr); max-height: 160px; }
   .back-grid { grid-template-columns: repeat(4, 1fr); }
+  .welcome-box { display: none; } /* hide on mobile to save space */
 }
 </style>
 </head>
@@ -1340,10 +1353,10 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
   const hasQuote = S.backQuote.length > 0;
   if(!hasName && !hasQuote) return;
 
-  // ── Measure content height ──
-  const nameFontSize  = Math.round(W * 0.1);
+  // ── Measure text to auto-fit box width ──
+  const nameFontSize  = Math.round(W * 0.105);
   const quoteFontSize = Math.round(W * 0.038);
-  const lineH = quoteFontSize * 1.5;
+  const lineH = quoteFontSize * 1.55;
 
   // Word-wrap quote
   let quoteLines = [];
@@ -1353,59 +1366,90 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
     let line = '';
     for(const w of words) {
       const test = line ? line + ' ' + w : w;
-      if(ctx.measureText(test).width > W * 0.72 && line) { quoteLines.push(line); line = w; }
+      if(ctx.measureText(test).width > W * 0.68 && line) { quoteLines.push(line); line = w; }
       else line = test;
     }
     if(line) quoteLines.push(line);
   }
 
-  // Padding and box dimensions
-  const padX = W * 0.08, padY = H * 0.055;
-  const sepH  = hasName && hasQuote ? H * 0.025 : 0;
-  const nameH = hasName ? nameFontSize * 1.1 : 0;
+  // Measure widths
+  let nameW = 0;
+  if(hasName) {
+    let fs = nameFontSize;
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > W * 0.72 && fs > W * 0.055) {
+      fs -= 2; ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    nameW = ctx.measureText(S.babyName).width;
+  }
+  let quoteW = 0;
+  if(hasQuote) {
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
+    quoteLines.forEach(l => { quoteW = Math.max(quoteW, ctx.measureText(l).width); });
+  }
+
+  // Box width: fit to content + padding, capped at 80% of card
+  const padX = W * 0.07, padY = H * 0.048;
+  const contentW = Math.max(nameW, quoteW);
+  const boxW = Math.min(Math.max(contentW + padX * 2.5, W * 0.38), W * 0.82);
+
+  // Box height
+  const sepH  = hasName && hasQuote ? H * 0.028 : 0;
+  const ornH  = H * 0.05;
+  const nameH = hasName ? nameFontSize * 1.05 : 0;
   const qH    = quoteLines.length * lineH;
-  const innerH = nameH + sepH + qH;
-  const boxW  = W * 0.82, boxH = innerH + padY * 2;
-  const boxX  = cx - boxW / 2, boxY = cy - boxH / 2;
-  const r = Math.min(boxH * 0.22, W * 0.06);
+  const boxH  = ornH + nameH + sepH + qH + padY * 2.2;
+
+  const boxX = cx - boxW / 2;
+  const boxY = cy - boxH / 2;
+  const r = Math.min(boxH * 0.14, W * 0.045);
 
   ctx.save();
 
-  // ── Frosted backdrop ──
-  ctx.shadowColor = 'rgba(0,0,0,0.18)';
-  ctx.shadowBlur  = W * 0.04;
-  ctx.shadowOffsetY = W * 0.01;
+  // ── Drop shadow ──
+  ctx.shadowColor    = 'rgba(0,0,0,0.22)';
+  ctx.shadowBlur     = W * 0.045;
+  ctx.shadowOffsetY  = W * 0.012;
 
-  // Rounded rect fill
-  ctx.beginPath();
-  ctx.moveTo(boxX + r, boxY);
-  ctx.lineTo(boxX + boxW - r, boxY);
-  ctx.arcTo(boxX + boxW, boxY,         boxX + boxW, boxY + r,         r);
-  ctx.lineTo(boxX + boxW, boxY + boxH - r);
-  ctx.arcTo(boxX + boxW, boxY + boxH,  boxX + boxW - r, boxY + boxH,  r);
-  ctx.lineTo(boxX + r,   boxY + boxH);
-  ctx.arcTo(boxX,        boxY + boxH,  boxX,        boxY + boxH - r,  r);
-  ctx.lineTo(boxX,       boxY + r);
-  ctx.arcTo(boxX,        boxY,         boxX + r,    boxY,             r);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(255,255,255,0.82)';
+  // ── Frosted white fill ──
+  roundRect(ctx, boxX, boxY, boxW, boxH, r);
+  ctx.fillStyle = 'rgba(255,255,255,0.86)';
   ctx.fill();
   ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
 
-  // Border
-  ctx.strokeStyle = 'rgba(200,185,138,0.55)';
-  ctx.lineWidth = Math.max(1, W * 0.004);
+  // ── Gold outer border ──
+  roundRect(ctx, boxX, boxY, boxW, boxH, r);
+  ctx.strokeStyle = 'rgba(200,185,138,0.75)';
+  ctx.lineWidth = Math.max(1.5, W * 0.005);
   ctx.stroke();
 
-  // ── Gold ornament top ──
-  const ornY = boxY + padY * 0.45;
-  ctx.font = `${Math.round(W * 0.03)}px serif`;
-  ctx.fillStyle = 'rgba(200,185,138,0.9)';
+  // ── Inner double-line border ──
+  const inset = W * 0.016;
+  roundRect(ctx, boxX + inset, boxY + inset, boxW - inset*2, boxH - inset*2, Math.max(r - inset, 2));
+  ctx.strokeStyle = 'rgba(200,185,138,0.35)';
+  ctx.lineWidth = Math.max(0.8, W * 0.002);
+  ctx.stroke();
+
+  // ── Corner ornaments ──
+  const ornSize = Math.round(W * 0.028);
+  ctx.font = `${ornSize}px serif`;
+  ctx.fillStyle = 'rgba(200,185,138,0.85)';
   ctx.textAlign = 'center';
-  ctx.fillText('✦', cx, ornY);
+  const co = inset * 1.1; // corner offset
+  // top-left, top-right, bottom-left, bottom-right
+  ctx.fillText('✦', boxX + co + ornSize*0.5,   boxY + co + ornSize*0.9);
+  ctx.fillText('✦', boxX + boxW - co - ornSize*0.5, boxY + co + ornSize*0.9);
+  ctx.fillText('✦', boxX + co + ornSize*0.5,   boxY + boxH - co - ornSize*0.1);
+  ctx.fillText('✦', boxX + boxW - co - ornSize*0.5, boxY + boxH - co - ornSize*0.1);
+
+  // ── Top centre ornament ──
+  const topOrnY = boxY + padY * 0.55;
+  ctx.font = `${Math.round(W * 0.032)}px serif`;
+  ctx.fillStyle = 'rgba(200,185,138,0.95)';
+  ctx.fillText('✦', cx, topOrnY);
 
   // ── Name ──
-  let cursorY = boxY + padY + (hasName ? nameFontSize * 0.88 : 0);
+  let cursorY = boxY + padY + ornH * 0.6 + nameFontSize * 0.88;
   if(hasName) {
     let fs = nameFontSize;
     ctx.font = `${fs}px '${fp.script}', cursive`;
@@ -1418,19 +1462,30 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
     ctx.shadowBlur  = 3;
     ctx.fillText(S.babyName, cx, cursorY);
     ctx.shadowBlur = 0;
-    cursorY += nameFontSize * 0.22;
+    cursorY += nameFontSize * 0.25;
   }
 
-  // ── Separator line ──
+  // ── Separator: flourish line ──
   if(hasName && hasQuote) {
-    cursorY += sepH * 0.5;
+    cursorY += sepH * 0.35;
+    const lineLen = boxW * 0.28;
+    // Left line
     ctx.beginPath();
-    ctx.moveTo(cx - W * 0.18, cursorY);
-    ctx.lineTo(cx + W * 0.18, cursorY);
-    ctx.strokeStyle = 'rgba(200,185,138,0.6)';
+    ctx.moveTo(cx - lineLen - W*0.02, cursorY);
+    ctx.lineTo(cx - W*0.025,          cursorY);
+    ctx.strokeStyle = 'rgba(200,185,138,0.7)';
     ctx.lineWidth = Math.max(1, W * 0.003);
     ctx.stroke();
-    cursorY += sepH * 0.9;
+    // Centre diamond
+    ctx.font = `${Math.round(W * 0.022)}px serif`;
+    ctx.fillStyle = 'rgba(200,185,138,0.9)';
+    ctx.fillText('◆', cx, cursorY + W*0.008);
+    // Right line
+    ctx.beginPath();
+    ctx.moveTo(cx + W*0.025, cursorY);
+    ctx.lineTo(cx + lineLen + W*0.02, cursorY);
+    ctx.stroke();
+    cursorY += sepH * 0.85;
   }
 
   // ── Quote ──
@@ -1441,12 +1496,26 @@ function drawBackTextOverlay(ctx, cx, cy, W, H) {
     ctx.shadowColor = 'rgba(0,0,0,0.05)';
     ctx.shadowBlur  = 2;
     quoteLines.forEach((l, i) => {
-      ctx.fillText(l, cx, cursorY + i * lineH + quoteFontSize * 0.88);
+      ctx.fillText(l, cx, cursorY + quoteFontSize * 0.88 + i * lineH);
     });
     ctx.shadowBlur = 0;
   }
 
   ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y,     x + w, y + r,     r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x,     y + h, x,     y + h - r, r);
+  ctx.lineTo(x,    y + r);
+  ctx.arcTo(x,     y,     x + r, y,         r);
+  ctx.closePath();
 }
 
 // ═══════════════════════════════════════════════
