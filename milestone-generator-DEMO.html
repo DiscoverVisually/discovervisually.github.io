@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Milestone Cards — DEMO Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@600&family=Lato:wght@300;400&family=Pacifico&family=Nunito:wght@300;400&family=Pinyon+Script&family=Raleway:wght@300;400&family=Sacramento&family=Josefin+Sans:wght@300;400&family=Satisfy&family=Quicksand:wght@300;400&family=Allura&family=Montserrat:wght@300;400&family=Lobster+Two:ital@0;1&family=Open+Sans:wght@300;400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --cream-dark: #F0EBE0;
+  --sage-dark: #2C3E2D;
+  --sage: #4a6a4a;
+  --sage-light: #8a9a7a;
+  --sage-mist: rgba(44,62,45,0.06);
+  --gold: #C8B98A;
+  --gold-light: #E8D9AA;
+  --gold-pale: rgba(200,185,138,0.12);
+  --text: #2C3E2D;
+  --text-muted: #7a8a72;
+  --border: rgba(44,62,45,0.11);
+  --border-hover: rgba(200,185,138,0.6);
+  --glass: rgba(250,247,242,0.88);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(44,62,45,0.07);
+  --shadow-lg: 0 8px 40px rgba(44,62,45,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: #DDD8CC;
+  background-image: radial-gradient(circle, rgba(44,62,45,0.09) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 10%, rgba(200,185,138,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 90%, rgba(138,154,122,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ─── LAYOUT ─────────────────────────────────── */
+#app {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  min-height: 100vh;
+  position: relative; z-index: 1;
+}
+
+/* ─── FORM PANEL ─────────────────────────────── */
+#form-panel {
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  overflow-y: auto;
+  position: sticky; top: 0;
+  padding: 2rem 2.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#form-panel::-webkit-scrollbar { width: 3px; }
+#form-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* ─── PREVIEW PANEL ──────────────────────────── */
+#preview-panel {
+  padding: 2.5rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 100vh;
+}
+
+/* ─── LOGO ───────────────────────────────────── */
+.logo {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.logo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-style: italic;
+  color: var(--sage-dark);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+.logo-sub {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ─── SECTION ────────────────────────────────── */
+.section { display: flex; flex-direction: column; gap: 0.65rem; }
+.section-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  font-weight: 600;
+}
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.25rem 0;
+}
+
+/* ─── TABS ───────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--sage-mist);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+.tab {
+  flex: 1; padding: 7px 6px;
+  border: none; background: transparent;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.tab.active {
+  background: white;
+  color: var(--sage-dark);
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(44,62,45,0.1);
+}
+
+/* ─── CARD GRID ──────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.card-grid::-webkit-scrollbar { width: 3px; }
+.card-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.card-thumb {
+  aspect-ratio: 4.25/5.5;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.18s;
+  overflow: hidden;
+  position: relative;
+  background: var(--cream-dark);
+}
+.card-thumb:hover { border-color: var(--gold); transform: translateY(-1px); box-shadow: 0 3px 10px rgba(200,185,138,0.25); }
+.card-thumb.selected { border-color: var(--gold); box-shadow: 0 0 0 1.5px var(--gold), 0 3px 12px rgba(200,185,138,0.3); }
+.card-thumb-bg {
+  position: absolute; inset: 0;
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  transition: transform 0.2s;
+}
+.card-thumb:hover .card-thumb-bg { transform: scale(1.03); }
+.card-thumb-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(250,247,242,0.95));
+  padding: 10px 3px 3px;
+}
+.card-thumb-name {
+  font-size: 9px;
+  color: var(--sage-dark);
+  text-align: center;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.card-thumb-num {
+  position: absolute; top: 3px; left: 3px;
+  font-size: 9px; font-weight: 600;
+  color: var(--sage-dark);
+  background: rgba(250,247,242,0.88);
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+/* ─── TOGGLE ─────────────────────────────────── */
+.toggle-row {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 0.75rem;
+}
+.toggle-label { font-size: 16px; color: var(--text); }
+.toggle { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: rgba(44,62,45,0.14);
+  border-radius: 21px; transition: 0.25s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 15px; width: 15px;
+  left: 3px; bottom: 3px;
+  background: white; border-radius: 50%; transition: 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle input:checked + .toggle-slider { background: var(--sage-dark); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(17px); }
+
+/* ─── INPUTS ─────────────────────────────────── */
+.input-field {
+  width: 100%; padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.7);
+  font-family: 'Jost', sans-serif;
+  font-size: 15px; color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+.input-field:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,185,138,0.15);
+}
+.input-field::placeholder { color: var(--text-muted); }
+.input-hint {
+  font-size: 13px; color: var(--text-muted);
+  font-style: italic; padding-left: 2px;
+}
+
+/* ─── FONT GRID ──────────────────────────────── */
+.font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.font-option {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  cursor: pointer;
+  transition: all 0.18s;
+  background: rgba(255,255,255,0.5);
+}
+.font-option:hover { border-color: var(--border-hover); background: var(--gold-pale); }
+.font-option.selected { border-color: var(--gold); background: var(--gold-pale); }
+.font-option-script { font-size: 22px; line-height: 1.2; color: var(--sage-dark); }
+.font-option-body { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+.font-option-tag { font-size: 10px; color: var(--gold); letter-spacing: 0.3px; margin-top: 3px; font-style: italic; }
+
+/* ─── COLOR SWATCHES ─────────────────────────── */
+.color-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.color-sub-label { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.3px; }
+.color-swatch {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+.color-swatch:hover { transform: scale(1.18); }
+.color-swatch.selected {
+  border-color: var(--sage-dark);
+  box-shadow: 0 0 0 1px var(--sage-dark), inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* ─── WELCOME BOX ────────────────────────────── */
+.welcome-box {
+  background: linear-gradient(135deg, rgba(200,185,138,0.10) 0%, rgba(138,154,122,0.08) 100%);
+  border: 1px solid rgba(200,185,138,0.35);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem 1.15rem;
+  position: relative;
+}
+.welcome-icon {
+  font-size: 11px;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 0.6rem;
+  letter-spacing: 4px;
+}
+.welcome-text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.welcome-text strong {
+  color: var(--sage-dark);
+  font-weight: 500;
+}
+
+/* ─── SIZE SELECTION ─────────────────────────── */
+.size-option {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  transition: border-color 0.18s, background 0.18s;
+  background: rgba(255,255,255,0.5);
+}
+.size-option:has(input:checked) {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+}
+.size-label {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+}
+.size-label input[type="checkbox"] { display: none; }
+.size-check {
+  width: 16px; height: 16px; flex-shrink: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  transition: all 0.15s;
+}
+.size-label input:checked + .size-check {
+  background: var(--sage-dark);
+  border-color: var(--sage-dark);
+}
+.size-label input:checked + .size-check::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 5px; height: 9px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.size-title {
+  font-size: 15px; font-weight: 500;
+  color: var(--sage-dark);
+}
+.size-desc {
+  font-size: 13px; color: var(--text-muted);
+  margin-top: 1px;
+}
+.size-hint {
+  font-size: 10px; color: var(--gold);
+  text-align: center; letter-spacing: 0.3px;
+  font-style: italic; padding: 2px 0;
+}
+
+/* ─── BACK GRID ──────────────────────────────── */
+.back-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.back-thumb {
+  aspect-ratio: 4.25/5.5;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.18s;
+  overflow: hidden;
+  position: relative;
+  background: var(--cream-dark);
+}
+.back-thumb:hover { border-color: var(--gold); transform: translateY(-1px); }
+.back-thumb.selected { border-color: var(--gold); box-shadow: 0 0 0 1.5px var(--gold); }
+.back-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.back-thumb-name {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  font-size: 9px; text-align: center;
+  background: rgba(250,247,242,0.92);
+  padding: 3px 2px; color: var(--sage-dark); font-weight: 500;
+}
+
+/* ─── BUTTONS ────────────────────────────────── */
+.surprise-btn {
+  width: 100%; padding: 13px;
+  background: var(--sage-dark);
+  color: var(--cream);
+  border: none; border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.surprise-btn:hover { background: #3a5240; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,62,45,0.22); }
+.surprise-btn:active { transform: translateY(0); }
+
+.export-btn {
+  width: 100%; padding: 15px;
+  background: var(--gold);
+  color: var(--sage-dark);
+  border: none; border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+}
+.export-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,185,138,0.45); }
+.export-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ─── PREVIEW PANEL ──────────────────────────── */
+.preview-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  width: 100%; max-width: 540px;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.preview-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic;
+  color: var(--sage-dark); letter-spacing: 0.3px;
+}
+.preview-category {
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
+  margin-top: 2px; font-weight: 500;
+}
+
+.flip-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; color: var(--text-muted);
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.flip-btn:hover { border-color: var(--gold); color: var(--sage-dark); background: var(--gold-pale); }
+/* flip-side-label defined below */
+
+/* ─── 3D FLIP ────────────────────────────────── */
+.preview-scene {
+  perspective: 1200px;
+  width: 100%; max-width: 540px;
+}
+.preview-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative; width: 100%;
+  aspect-ratio: 4.25/5.5;
+}
+.preview-card-3d.flipped { transform: rotateY(180deg); }
+.preview-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.preview-face.back-face { transform: rotateY(180deg); }
+#preview-canvas, #back-canvas { width: 100%; height: 100%; display: block; }
+
+.preview-footer {
+  width: 100%; max-width: 540px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.preview-hint {
+  font-size: 10px; color: var(--text-muted);
+  opacity: 0.7; text-align: right;
+}
+
+/* ─── PROGRESS ───────────────────────────────── */
+#progress-overlay {
+  position: fixed; inset: 0;
+  background: rgba(250,247,242,0.94);
+  backdrop-filter: blur(12px);
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  z-index: 200; gap: 1.5rem;
+}
+.progress-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-style: italic;
+  color: var(--sage-dark);
+}
+.progress-bar-wrap {
+  width: 300px; height: 2px;
+  background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--gold);
+  border-radius: 2px; transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-text { font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+
+
+/* ─── DEMO BANNER ────────────────────────────── */
+#demo-banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 99998;
+  background: linear-gradient(90deg, #2C3E2D 0%, #3a5240 100%);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; padding: 8px 1rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.demo-banner-badge {
+  background: #F56400;
+  color: white;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2px;
+  padding: 2px 8px; border-radius: 20px;
+  text-transform: uppercase; flex-shrink: 0;
+}
+.demo-banner-text {
+  color: rgba(255,255,255,0.8);
+  font-size: 11px; letter-spacing: 0.3px;
+}
+.demo-banner-link {
+  color: var(--gold-light);
+  font-weight: 600; font-size: 11px;
+  text-decoration: none; flex-shrink: 0;
+  border-bottom: 1px solid rgba(200,185,138,0.4);
+  transition: color 0.2s;
+}
+.demo-banner-link:hover { color: white; }
+
+/* Push app below banner */
+#app { margin-top: 36px; }
+@media (max-width: 900px) { #app { margin-top: 36px; } }
+
+/* ─── DEMO CTA BOX ───────────────────────────── */
+.demo-cta-box {
+  background: linear-gradient(135deg, rgba(245,100,0,0.07) 0%, rgba(200,185,138,0.10) 100%);
+  border: 1.5px solid rgba(245,100,0,0.25);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.2rem;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.75rem;
+  text-align: center;
+}
+.demo-cta-badge {
+  background: #F56400;
+  color: white;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 3px 14px; border-radius: 20px;
+}
+.demo-cta-text {
+  font-size: 13px; color: var(--text-muted);
+  line-height: 1.55;
+}
+.demo-cta-btn {
+  display: block; width: 100%;
+  padding: 14px;
+  background: #F56400;
+  color: white;
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(245,100,0,0.3);
+}
+.demo-cta-btn:hover {
+  background: #d95800;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245,100,0,0.4);
+}
+.demo-cta-hint {
+  font-size: 10px; color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── BACK TEXT BOX ──────────────────────────── */
+.back-text-box {
+  margin-top: 12px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(200,185,138,0.08) 0%, rgba(138,154,122,0.06) 100%);
+  border: 1px solid rgba(200,185,138,0.3);
+  border-radius: var(--radius);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.back-text-box-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+  text-align: center;
+}
+
+/* ─── FLIP DOT ───────────────────────────────── */
+.flip-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sage-dark);
+  margin-right: 6px;
+  vertical-align: middle;
+  box-shadow: 0 0 0 2px rgba(44,62,45,0.15);
+}
+.flip-dot-back {
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(200,185,138,0.3);
+}
+.flip-side-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); margin-top: 4px; text-align: right;
+  display: flex; align-items: center; justify-content: flex-end;
+  transition: all 0.3s;
+}
+
+/* ─── SURPRISE TOAST ─────────────────────────── */
+.surprise-toast {
+  position: fixed;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--sage-dark);
+  color: var(--gold-light);
+  padding: 11px 22px;
+  border-radius: 30px;
+  font-size: 12px; letter-spacing: 1px;
+  font-family: 'Jost', sans-serif;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(44,62,45,0.3);
+  z-index: 10000;
+}
+.surprise-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── PROGRESS STEP ──────────────────────────── */
+.progress-step {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+  min-height: 18px;
+}
+
+/* ─── UTILS ──────────────────────────────────── */
+.hidden { display: none !important; }
+.mt-1 { margin-top: 0.5rem; }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section { animation: fadeIn 0.3s ease both; }
+
+/* ─── MOBILE ─────────────────────────────────── */
+@media (max-width: 900px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh 50vh;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #preview-panel {
+    order: -1;
+    padding: 1rem 1rem 0.75rem;
+    min-height: 0;
+    height: 50vh;
+    overflow: hidden;
+    background: rgba(250,247,242,0.97);
+    backdrop-filter: blur(12px);
+    z-index: 50;
+    box-shadow: 0 2px 16px rgba(44,62,45,0.07);
+    justify-content: center;
+  }
+  #form-panel {
+    height: 50vh;
+    position: static;
+    overflow-y: auto;
+    border-right: none;
+    border-top: 1px solid var(--border);
+  }
+  .preview-scene { max-width: 200px; flex-shrink: 0; }
+  .preview-top { max-width: 100%; }
+  .preview-footer { max-width: 100%; }
+  .preview-card-name { font-size: 16px; }
+  .preview-category { font-size: 8px; }
+  .flip-btn { font-size: 10px; padding: 5px 10px; }
+  .card-grid { grid-template-columns: repeat(5, 1fr); max-height: 160px; }
+  .back-grid { grid-template-columns: repeat(4, 1fr); }
+  .welcome-box { display: none; } /* hide on mobile to save space */
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- ═══ DEMO BANNER ═══ -->
+<div id="demo-banner">
+  <span class="demo-banner-badge">DEMO</span>
+  <span class="demo-banner-text">This is a preview — watermarks will be removed after purchase</span>
+  <a class="demo-banner-link" href="https://www.etsy.com/shop/DiscoverVisually?ref=seller-platform-mcnav" target="_blank">Buy on Etsy ↗</a>
+</div>
+
+<div id="app">
+
+<!-- ═══ FORM PANEL ════════════════════════════════════════ -->
+<aside id="form-panel">
+
+  <div class="logo">
+    <div class="logo-title">Baby Milestone Cards</div>
+    <div class="logo-sub">Discover Visually · Personalization Studio</div>
+  </div>
+
+  <!-- WELCOME MESSAGE -->
+  <div class="welcome-box">
+    <div class="welcome-icon">✦</div>
+    <p class="welcome-text">
+      Below you can design your own personalised milestone cards — pick your favourite style, font, colours, and make them truly yours.<br><br>
+      When downloading, you can choose between two print sizes. <strong>Large cards (5.5×8.5")</strong> give you 2 per US Letter page — that's 20 pages total. <strong>Small cards (4×5.5")</strong> fit 4 per page, so just 10 pages — a bit cheaper to print. Adding a card back doubles the page count for both. Based on this, printing at a professional shop should cost you somewhere between <strong>$3 and $10</strong> — totally up to what you prefer!<br><br>
+      Your access is valid for at least a month, so please don't rush — you can always come back and finish later. I sincerely hope you enjoy these cards! 🌿 And if you're happy with your purchase, a review on Etsy would mean the world to me. Thank you a million! 💛
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CARD SELECTION -->
+  <div class="section">
+    <div class="section-label">Choose a card</div>
+    <div class="tabs">
+      <button class="tab active" onclick="setTab('monthly')">Monthly</button>
+      <button class="tab" onclick="setTab('firsts')">Baby's Firsts</button>
+      <button class="tab" onclick="setTab('special')">Special</button>
+    </div>
+    <div class="card-grid" id="card-grid"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- PERSONALIZATION -->
+  <div class="section">
+    <div class="section-label">Personalization</div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Add baby's name</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-name" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <input type="text" class="input-field hidden" id="baby-name"
+      placeholder="e.g. Emma" oninput="updateState()" maxlength="20">
+
+    <div id="date-toggle-row" class="toggle-row">
+      <span class="toggle-label">Add milestone date</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-date" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <input type="date" class="input-field hidden" id="birth-date" onchange="updateState()">
+    <span class="input-hint hidden" id="date-birth-label" style="color:var(--sage-light);font-style:normal;font-size:11px;padding-left:2px;">📅 Enter your baby's <strong>date of birth</strong> — milestone dates will be calculated automatically</span>
+    <span class="input-hint hidden" id="date-hint"></span>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- FONT STYLE -->
+  <div class="section">
+    <div class="section-label">Font style</div>
+    <div class="font-grid" id="font-grid"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- COLORS -->
+  <div class="section" id="color-section">
+    <div class="section-label">Text color</div>
+    <div class="color-sub-label">Applies to name, date &amp; back text</div>
+    <div class="color-row" id="text-colors"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- BACK DESIGN -->
+  <div class="section">
+    <div class="section-label">Back design</div>
+    <div class="toggle-row">
+      <span class="toggle-label">Add back design</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-back" onchange="updateState()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div id="back-section" class="hidden">
+      <div class="back-grid" id="back-grid"></div>
+      <div id="back-text-section" class="hidden back-text-box">
+        <div class="back-text-box-label">✦ Personalise the back</div>
+        <input type="text" class="input-field" id="back-quote"
+          placeholder="Add a quote or dedication on backside — optional" oninput="scheduleBackRender()" maxlength="60">
+        <div class="toggle-row" style="margin-top:4px;">
+          <span class="toggle-label">Show baby's name on back</span>
+          <label class="toggle">
+            <input type="checkbox" id="back-name-toggle" onchange="scheduleBackRender()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SURPRISE ME -->
+  <button class="surprise-btn" onclick="surpriseMe()">
+    <span style="font-size:14px;">✦</span> Surprise Me
+  </button>
+
+  <!-- DEMO CTA -->
+  <div class="demo-cta-box">
+    <div class="demo-cta-badge">DEMO VERSION</div>
+    <p class="demo-cta-text">Like what you see? Purchase on Etsy to unlock the full PDF download in your chosen print size.</p>
+    <a class="demo-cta-btn" href="https://www.etsy.com/shop/DiscoverVisually?ref=seller-platform-mcnav" target="_blank">
+      🛍 Buy on Etsy — Unlock Download
+    </a>
+    <p class="demo-cta-hint">Includes both Large (5.5×8.5") and Small (4×5.5") print sizes · 40 cards</p>
+  </div>
+
+</aside>
+
+<!-- ═══ PREVIEW PANEL ════════════════════════════════════ -->
+<main id="preview-panel">
+
+  <div class="preview-top">
+    <div>
+      <div class="preview-card-name" id="preview-title">1 Week</div>
+      <div class="preview-category" id="preview-category">Monthly</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+      <button class="flip-btn" onclick="flipCard()" id="flip-btn">↻ &nbsp;Flip card</button>
+      <div class="flip-side-label" id="flip-side-label"><span class="flip-dot" id="flip-dot"></span>Showing front</div>
+    </div>
+  </div>
+
+  <div class="preview-scene">
+    <div class="preview-card-3d" id="card-3d">
+      <div class="preview-face front-face">
+        <canvas id="preview-canvas" oncontextmenu="return false;"></canvas>
+      </div>
+      <div class="preview-face back-face">
+        <canvas id="back-canvas" oncontextmenu="return false;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-footer">
+    <div class="preview-hint">Demo preview · watermark removed after purchase</div>
+  </div>
+
+</main>
+
+</div>
+
+<!-- ═══ SURPRISE TOAST ═══ -->
+<div id="surprise-toast" class="surprise-toast"></div>
+
+<!-- ═══ PROGRESS OVERLAY ══════════════════════════════════ -->
+<div id="progress-overlay">
+  <div class="progress-step" id="progress-step"></div>
+  <div class="progress-title">Generating your PDF…</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-text" id="progress-text">Preparing cards…</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════
+const BASE = 'https://discovervisually.github.io/cards/';
+const SERIES = 'cuteanimals_green';
+
+const CARDS = [
+  {id:1,  name:'1 Week',               cat:'monthly', sheet:'sheet_01', side:'left'},
+  {id:2,  name:'1 Month',              cat:'monthly', sheet:'sheet_01', side:'right'},
+  {id:3,  name:'2 Months',             cat:'monthly', sheet:'sheet_02', side:'left'},
+  {id:4,  name:'3 Months',             cat:'monthly', sheet:'sheet_02', side:'right'},
+  {id:5,  name:'4 Months',             cat:'monthly', sheet:'sheet_03', side:'left'},
+  {id:6,  name:'5 Months',             cat:'monthly', sheet:'sheet_03', side:'right'},
+  {id:7,  name:'6 Months',             cat:'monthly', sheet:'sheet_04', side:'left'},
+  {id:8,  name:'7 Months',             cat:'monthly', sheet:'sheet_04', side:'right'},
+  {id:9,  name:'8 Months',             cat:'monthly', sheet:'sheet_05', side:'left'},
+  {id:10, name:'9 Months',             cat:'monthly', sheet:'sheet_05', side:'right'},
+  {id:11, name:'10 Months',            cat:'monthly', sheet:'sheet_06', side:'left'},
+  {id:12, name:'11 Months',            cat:'monthly', sheet:'sheet_06', side:'right'},
+  {id:13, name:'12 Months',            cat:'monthly', sheet:'sheet_07', side:'left'},
+  {id:14, name:'First Explosion in the Diapers', cat:'firsts', sheet:'sheet_07', side:'right'},
+  {id:15, name:'First Smile',          cat:'firsts',  sheet:'sheet_08', side:'left'},
+  {id:16, name:'First Laugh',          cat:'firsts',  sheet:'sheet_08', side:'right'},
+  {id:17, name:'First Roll',           cat:'firsts',  sheet:'sheet_09', side:'left'},
+  {id:18, name:'First Tooth',          cat:'firsts',  sheet:'sheet_09', side:'right'},
+  {id:19, name:'First Solid Food',     cat:'firsts',  sheet:'sheet_10', side:'left'},
+  {id:20, name:'First Crawl',          cat:'firsts',  sheet:'sheet_10', side:'right'},
+  {id:21, name:'My Best Friend',       cat:'firsts',  sheet:'sheet_11', side:'left'},
+  {id:22, name:'No Sleep Tonight!',    cat:'firsts',  sheet:'sheet_11', side:'right'},
+  {id:23, name:'First Word',           cat:'firsts',  sheet:'sheet_12', side:'left'},
+  {id:24, name:'First Step',           cat:'firsts',  sheet:'sheet_12', side:'right'},
+  {id:25, name:'First Bath',           cat:'firsts',  sheet:'sheet_13', side:'left'},
+  {id:26, name:'First Swim',           cat:'firsts',  sheet:'sheet_13', side:'right'},
+  {id:27, name:'First Haircut',        cat:'firsts',  sheet:'sheet_14', side:'left'},
+  {id:28, name:'First Trip',           cat:'firsts',  sheet:'sheet_14', side:'right'},
+  {id:29, name:'First Christmas',      cat:'firsts',  sheet:'sheet_15', side:'left'},
+  {id:30, name:'First Halloween',      cat:'firsts',  sheet:'sheet_15', side:'right'},
+  {id:31, name:'First Easter',         cat:'firsts',  sheet:'sheet_16', side:'left'},
+  {id:32, name:'First Birthday',       cat:'firsts',  sheet:'sheet_16', side:'right'},
+  {id:33, name:'First Book',           cat:'firsts',  sheet:'sheet_17', side:'left'},
+  {id:34, name:'First Hug',            cat:'firsts',  sheet:'sheet_17', side:'right'},
+  {id:35, name:'Welcome to the World', cat:'special', sheet:'sheet_18', side:'left'},
+  {id:36, name:'Coming Home',          cat:'special', sheet:'sheet_18', side:'right'},
+  {id:37, name:'Baby Shower',          cat:'special', sheet:'sheet_19', side:'left'},
+  {id:38, name:'Baptism',              cat:'special', sheet:'sheet_19', side:'right'},
+  {id:39, name:'You Are Loved',        cat:'special', sheet:'sheet_20', side:'left'},
+  {id:40, name:'Our Little Miracle',   cat:'special', sheet:'sheet_20', side:'right'},
+];
+
+const DATE_OFFSETS = {1:7,2:30,3:60,4:90,5:120,6:150,7:180,8:210,9:240,10:270,11:300,12:330,13:365};
+
+const FONT_PAIRS = [
+  {script:'Great Vibes',    body:'Cormorant Garamond', tag:'Romantic Luxury'},
+  {script:'Dancing Script', body:'Lato',               tag:'Playful Classic'},
+  {script:'Pacifico',       body:'Nunito',             tag:'Fun & Friendly'},
+  {script:'Pinyon Script',  body:'Raleway',            tag:'Vintage Elegance'},
+  {script:'Sacramento',     body:'Josefin Sans',       tag:'Modern Romance'},
+  {script:'Satisfy',        body:'Quicksand',          tag:'Sweet & Soft'},
+  {script:'Allura',         body:'Montserrat',         tag:'Contemporary Chic'},
+  {script:'Lobster Two',    body:'Open Sans',          tag:'Bold & Playful'},
+];
+
+const COLORS = [
+  {name:'Charcoal',    v:'#3D3530'},
+  {name:'Sage Green',  v:'#5C7A5C'},
+  {name:'Warm Gold',   v:'#B8973A'},
+  {name:'Dusty Mauve', v:'#9A7070'},
+  {name:'Slate Blue',  v:'#627585'},
+  {name:'Terracotta',  v:'#A0624A'},
+  {name:'Deep Sage',   v:'#3D5C3D'},
+  {name:'Warm Brown',  v:'#7A5C3A'},
+];
+
+const BACKS = [
+  {id:'back_01_botanical',   name:'Botanical',   hasText:false},
+  {id:'back_02_stars',       name:'Stars',       hasText:false},
+  {id:'back_03_confetti',    name:'Confetti',    hasText:false},
+  {id:'back_04_pawprints',   name:'Pawprints',   hasText:false},
+  {id:'back_05_repeat_quote',name:'Daily Quote', hasText:true},
+  {id:'back_06_big_quote',   name:'Big Quote',   hasText:true},
+  {id:'back_07_silhouettes', name:'Silhouettes', hasText:true},
+  {id:'back_08_personalized',name:'Personalized',hasText:true},
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const S = {
+  tab: 'monthly',
+  cardId: 1,
+  showName: false,
+  babyName: '',
+  showDate: false,
+  birthDate: '',
+  fontPair: 0,
+  textColor: '#3D3530',
+  showBack: false,
+  backId: null,
+  backQuote: '',
+  backShowName: false,
+  showingFront: true,
+};
+
+const imgCache = {};
+let renderTimer = null;
+let backTimer = null;
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+window.addEventListener('load', () => {
+  setupCanvases();
+  renderCardGrid();
+  renderFontGrid();
+  renderColorSwatches('text-colors', 'textColor');
+  renderBackGrid();
+  updatePreview();
+  checkDateVisibility();
+});
+
+function setupCanvases() {
+  ['preview-canvas','back-canvas'].forEach(id => {
+    const c = document.getElementById(id);
+    c.width = 400; c.height = Math.round(400 * 5.5/4.25);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CARD GRID
+// ═══════════════════════════════════════════════
+function renderCardGrid() {
+  const grid = document.getElementById('card-grid');
+  grid.innerHTML = '';
+  CARDS.filter(c => c.cat === S.tab).forEach(card => {
+    const d = document.createElement('div');
+    d.className = 'card-thumb' + (card.id === S.cardId ? ' selected' : '');
+    d.onclick = () => selectCard(card.id);
+    const posX = card.side === 'left' ? '0%' : '100%';
+    const imgUrl = `${BASE}${SERIES}/${card.sheet}.jpg`;
+    d.innerHTML = `
+      <div class="card-thumb-bg" style="background-image:url('${imgUrl}');background-position:${posX} top;"></div>
+      <div class="card-thumb-num">${card.id}</div>
+      <div class="card-thumb-overlay"><div class="card-thumb-name">${card.name}</div></div>
+    `;
+    grid.appendChild(d);
+  });
+}
+
+function setTab(tab) {
+  S.tab = tab;
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['monthly','firsts','special'][i] === tab);
+  });
+  renderCardGrid();
+}
+
+function selectCard(id) {
+  S.cardId = id;
+  // Switch tab if needed
+  const card = CARDS.find(c => c.id === id);
+  if(card.cat !== S.tab) setTab(card.cat);
+  renderCardGrid();
+  document.getElementById('preview-title').textContent = card.name;
+  document.getElementById('preview-category').textContent =
+    card.cat === 'monthly' ? 'Monthly' : card.cat === 'firsts' ? "Baby's Firsts" : 'Special';
+  checkDateVisibility();
+  scheduleRender();
+}
+
+// ═══════════════════════════════════════════════
+// FONT GRID
+// ═══════════════════════════════════════════════
+function renderFontGrid() {
+  const grid = document.getElementById('font-grid');
+  grid.innerHTML = '';
+  FONT_PAIRS.forEach((fp, i) => {
+    const d = document.createElement('div');
+    d.className = 'font-option' + (i === S.fontPair ? ' selected' : '');
+    d.onclick = () => { S.fontPair = i; renderFontGrid(); scheduleRender(); scheduleBackRender(); };
+    d.innerHTML = `
+      <div class="font-option-script" style="font-family:'${fp.script}'">${fp.script.split(' ').slice(0,2).join(' ')}</div>
+      <div class="font-option-body" style="font-family:'${fp.body}'">${fp.body}</div>
+      <div class="font-option-tag">${fp.tag}</div>
+    `;
+    grid.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// COLOR SWATCHES
+// ═══════════════════════════════════════════════
+function renderColorSwatches(containerId, stateKey) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  COLORS.forEach(color => {
+    const s = document.createElement('div');
+    s.className = 'color-swatch' + (S[stateKey] === color.v ? ' selected' : '');
+    s.style.background = color.v;
+    s.title = color.name;
+    s.onclick = () => {
+      S[stateKey] = color.v;
+      renderColorSwatches(containerId, stateKey);
+      scheduleRender();
+      scheduleBackRender();
+    };
+    el.appendChild(s);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// BACK GRID
+// ═══════════════════════════════════════════════
+function renderBackGrid() {
+  const grid = document.getElementById('back-grid');
+  grid.innerHTML = '';
+  BACKS.forEach(b => {
+    const d = document.createElement('div');
+    d.className = 'back-thumb' + (S.backId === b.id ? ' selected' : '');
+    d.onclick = () => {
+      S.backId = b.id;
+      renderBackGrid();
+      const ts = document.getElementById('back-text-section');
+      ts.classList.remove('hidden');
+      scheduleBackRender();
+    };
+    d.innerHTML = `<img src="${BASE}backs/${b.id}.jpg" alt="${b.name}" loading="lazy"><div class="back-thumb-name">${b.name}</div>`;
+    grid.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// STATE UPDATE
+// ═══════════════════════════════════════════════
+function updateState() {
+  S.showName  = document.getElementById('toggle-name').checked;
+  S.showDate  = document.getElementById('toggle-date').checked;
+  S.showBack  = document.getElementById('toggle-back').checked;
+  S.babyName  = document.getElementById('baby-name').value.trim();
+  S.birthDate = document.getElementById('birth-date').value;
+
+  document.getElementById('baby-name').classList.toggle('hidden', !S.showName);
+  checkDateVisibility();
+  document.getElementById('back-section').classList.toggle('hidden', !S.showBack);
+
+  scheduleRender();
+  if(S.showBack) scheduleBackRender();
+}
+
+function checkDateVisibility() {
+  const isMonthly = isMonthlyCard(S.cardId);
+  const row = document.getElementById('date-toggle-row');
+  const input = document.getElementById('birth-date');
+  const hint = document.getElementById('date-hint');
+  const birthLabel = document.getElementById('date-birth-label');
+
+  row.classList.toggle('hidden', !isMonthly);
+  if(!isMonthly) {
+    input.classList.add('hidden');
+    hint.classList.add('hidden');
+    birthLabel.classList.add('hidden');
+    return;
+  }
+  input.classList.toggle('hidden', !S.showDate);
+  birthLabel.classList.toggle('hidden', !S.showDate);
+  if(S.showDate && S.birthDate) {
+    hint.textContent = 'Milestone date: ' + getMilestoneDate(S.cardId, S.birthDate);
+    hint.classList.remove('hidden');
+  } else {
+    hint.classList.add('hidden');
+  }
+}
+
+function isMonthlyCard(id) {
+  const c = CARDS.find(x => x.id === id);
+  return c && c.cat === 'monthly';
+}
+
+// ═══════════════════════════════════════════════
+// DATE CALCULATION
+// ═══════════════════════════════════════════════
+function getMilestoneDate(cardId, dateStr) {
+  if(!dateStr) return '';
+  const offset = DATE_OFFSETS[cardId];
+  if(!offset) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+}
+
+// ═══════════════════════════════════════════════
+// IMAGE LOADING
+// ═══════════════════════════════════════════════
+function loadImg(url) {
+  return new Promise((res, rej) => {
+    if(imgCache[url]) { res(imgCache[url]); return; }
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => { imgCache[url] = img; res(img); };
+    img.onerror = () => rej(new Error('Failed: ' + url));
+    img.src = url;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CANVAS RENDERING
+// ═══════════════════════════════════════════════
+function scheduleRender() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(updatePreview, 80);
+}
+
+function scheduleBackRender() {
+  S.backQuote    = (document.getElementById('back-quote')?.value || '').trim();
+  S.backShowName = document.getElementById('back-name-toggle')?.checked || false;
+  clearTimeout(backTimer);
+  backTimer = setTimeout(renderBackCanvas, 80);
+}
+
+async function updatePreview() {
+  const canvas = document.getElementById('preview-canvas');
+  await renderCardToCanvas(canvas, S.cardId, true);
+  await renderBackCanvas();
+}
+
+async function renderCardToCanvas(canvas, cardId, withWatermark) {
+  const card = CARDS.find(c => c.id === cardId);
+  if(!card) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillRect(0, 0, W, H);
+
+  try {
+    const url = `${BASE}${SERIES}/${card.sheet}.jpg`;
+    const img = await loadImg(url);
+    const sx = card.side === 'left' ? 0 : img.width / 2;
+    ctx.drawImage(img, sx, 0, img.width/2, img.height, 0, 0, W, H);
+  } catch(e) {
+    ctx.font = `500 ${W*0.06}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#2C3E2D';
+    ctx.textAlign = 'center';
+    ctx.fillText(card.name, W/2, H/2 - 20);
+    ctx.font = `300 ${W*0.04}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#7a8a72';
+    ctx.fillText('Image loading...', W/2, H/2 + 20);
+  }
+
+  const fp = FONT_PAIRS[S.fontPair];
+
+  // Name overlay — auto-scale for long names
+  if(S.showName && S.babyName) {
+    const maxW = W * 0.82;
+    let fs = Math.round(W * 0.126); // ~20% bigger than before
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    // Auto-scale down if name is too wide
+    while(ctx.measureText(S.babyName).width > maxW && fs > W * 0.055) {
+      fs -= 2;
+      ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    ctx.textAlign = 'center';
+    ctx.fillStyle = S.textColor;
+    ctx.shadowColor = 'rgba(0,0,0,0.08)';
+    ctx.shadowBlur = 4;
+    ctx.fillText(S.babyName, W/2, Math.round(H * 0.152));
+    ctx.shadowBlur = 0;
+  }
+
+  // Date overlay — ~30% bigger, same color as name
+  if(S.showDate && isMonthlyCard(cardId) && S.birthDate) {
+    const dateStr = getMilestoneDate(cardId, S.birthDate);
+    if(dateStr) {
+      const fs = Math.round(W * 0.052); // ~30% bigger than 0.04
+      ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = S.textColor;
+      ctx.shadowColor = 'rgba(0,0,0,0.06)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(dateStr, W/2, Math.round(H * 0.892));
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // Watermark — DEMO diagonal
+  if(withWatermark) {
+    drawDemoWatermark(ctx, W, H);
+  }
+}
+
+async function renderBackCanvas() {
+  const canvas = document.getElementById('back-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillRect(0, 0, W, H);
+
+  if(!S.showBack || !S.backId) {
+    ctx.font = `300 ${W*0.045}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#b0a898';
+    ctx.textAlign = 'center';
+    ctx.fillText('Select a back design above', W/2, H/2 - 10);
+    ctx.font = `300 ${W*0.035}px 'Jost', sans-serif`;
+    ctx.fillText('to preview the back of the card', W/2, H/2 + 20);
+    return;
+  }
+
+  try {
+    const url = `${BASE}backs/${S.backId}.jpg`;
+    const img = await loadImg(url);
+    // Back shows left half of the back pattern image
+    ctx.drawImage(img, 0, 0, img.width/2, img.height, 0, 0, W, H);
+  } catch(e) {
+    ctx.fillStyle = '#F0EBE0';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Text overlay on back
+  const hasText = (S.backShowName && S.babyName) || S.backQuote;
+  if(hasText) {
+    drawBackTextOverlay(ctx, W/2, H/2, W, H);
+  }
+
+  // Demo watermark on back too
+  drawDemoWatermark(ctx, W, H);
+}
+
+function drawBackTextOverlay(ctx, cx, cy, W, H) {
+  const fp = FONT_PAIRS[S.fontPair];
+  const hasName  = S.backShowName && S.babyName;
+  const hasQuote = S.backQuote.length > 0;
+  if(!hasName && !hasQuote) return;
+
+  // ── Measure text to auto-fit box width ──
+  const nameFontSize  = Math.round(W * 0.105);
+  const quoteFontSize = Math.round(W * 0.038);
+  const lineH = quoteFontSize * 1.55;
+
+  // Word-wrap quote
+  let quoteLines = [];
+  if(hasQuote) {
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
+    const words = S.backQuote.split(' ');
+    let line = '';
+    for(const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if(ctx.measureText(test).width > W * 0.68 && line) { quoteLines.push(line); line = w; }
+      else line = test;
+    }
+    if(line) quoteLines.push(line);
+  }
+
+  // Measure widths
+  let nameW = 0;
+  if(hasName) {
+    let fs = nameFontSize;
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > W * 0.72 && fs > W * 0.055) {
+      fs -= 2; ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    nameW = ctx.measureText(S.babyName).width;
+  }
+  let quoteW = 0;
+  if(hasQuote) {
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
+    quoteLines.forEach(l => { quoteW = Math.max(quoteW, ctx.measureText(l).width); });
+  }
+
+  // Box width: fit to content + padding, capped at 80% of card
+  const padX = W * 0.07, padY = H * 0.048;
+  const contentW = Math.max(nameW, quoteW);
+  const boxW = Math.min(Math.max(contentW + padX * 2.5, W * 0.38), W * 0.82);
+
+  // Box height
+  const sepH  = hasName && hasQuote ? H * 0.028 : 0;
+  const ornH  = H * 0.05;
+  const nameH = hasName ? nameFontSize * 1.05 : 0;
+  const qH    = quoteLines.length * lineH;
+  const boxH  = ornH + nameH + sepH + qH + padY * 2.2;
+
+  const boxX = cx - boxW / 2;
+  const boxY = cy - boxH / 2;
+  const r = Math.min(boxH * 0.14, W * 0.045);
+
+  ctx.save();
+
+  // ── Drop shadow ──
+  ctx.shadowColor    = 'rgba(0,0,0,0.22)';
+  ctx.shadowBlur     = W * 0.045;
+  ctx.shadowOffsetY  = W * 0.012;
+
+  // ── Frosted white fill ──
+  roundRect(ctx, boxX, boxY, boxW, boxH, r);
+  ctx.fillStyle = 'rgba(255,255,255,0.86)';
+  ctx.fill();
+  ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+  // ── Gold outer border ──
+  roundRect(ctx, boxX, boxY, boxW, boxH, r);
+  ctx.strokeStyle = 'rgba(200,185,138,0.75)';
+  ctx.lineWidth = Math.max(1.5, W * 0.005);
+  ctx.stroke();
+
+  // ── Inner double-line border ──
+  const inset = W * 0.016;
+  roundRect(ctx, boxX + inset, boxY + inset, boxW - inset*2, boxH - inset*2, Math.max(r - inset, 2));
+  ctx.strokeStyle = 'rgba(200,185,138,0.35)';
+  ctx.lineWidth = Math.max(0.8, W * 0.002);
+  ctx.stroke();
+
+  // ── Corner ornaments ──
+  const ornSize = Math.round(W * 0.028);
+  ctx.font = `${ornSize}px serif`;
+  ctx.fillStyle = 'rgba(200,185,138,0.85)';
+  ctx.textAlign = 'center';
+  const co = inset * 1.1; // corner offset
+  // top-left, top-right, bottom-left, bottom-right
+  ctx.fillText('✦', boxX + co + ornSize*0.5,   boxY + co + ornSize*0.9);
+  ctx.fillText('✦', boxX + boxW - co - ornSize*0.5, boxY + co + ornSize*0.9);
+  ctx.fillText('✦', boxX + co + ornSize*0.5,   boxY + boxH - co - ornSize*0.1);
+  ctx.fillText('✦', boxX + boxW - co - ornSize*0.5, boxY + boxH - co - ornSize*0.1);
+
+  // ── Top centre ornament ──
+  const topOrnY = boxY + padY * 0.55;
+  ctx.font = `${Math.round(W * 0.032)}px serif`;
+  ctx.fillStyle = 'rgba(200,185,138,0.95)';
+  ctx.fillText('✦', cx, topOrnY);
+
+  // ── Vertically centre content inside box (below ornament) ──
+  const contentTotalH = (hasName ? nameFontSize * 1.05 : 0)
+                      + (hasName && hasQuote ? sepH : 0)
+                      + (hasQuote ? quoteLines.length * lineH : 0);
+  const contentAreaTop  = boxY + padY + ornH * 0.55;
+  const contentAreaBot  = boxY + boxH - padY * 0.9;
+  const contentAreaH    = contentAreaBot - contentAreaTop;
+  const contentStartY   = contentAreaTop + (contentAreaH - contentTotalH) / 2;
+
+  // ── Name ──
+  let cursorY = contentStartY + (hasName ? nameFontSize * 0.88 : 0);
+  if(hasName) {
+    let fs = nameFontSize;
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > boxW * 0.82 && fs > W * 0.05) {
+      fs -= 2; ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    ctx.fillStyle = S.textColor;
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0,0,0,0.07)';
+    ctx.shadowBlur  = 3;
+    ctx.fillText(S.babyName, cx, cursorY);
+    ctx.shadowBlur = 0;
+    cursorY += nameFontSize * 0.25;
+  }
+
+  // ── Separator: flourish line ──
+  if(hasName && hasQuote) {
+    cursorY += sepH * 0.35;
+    const lineLen = boxW * 0.28;
+    // Left line
+    ctx.beginPath();
+    ctx.moveTo(cx - lineLen - W*0.02, cursorY);
+    ctx.lineTo(cx - W*0.025,          cursorY);
+    ctx.strokeStyle = 'rgba(200,185,138,0.7)';
+    ctx.lineWidth = Math.max(1, W * 0.003);
+    ctx.stroke();
+    // Centre diamond
+    ctx.font = `${Math.round(W * 0.022)}px serif`;
+    ctx.fillStyle = 'rgba(200,185,138,0.9)';
+    ctx.fillText('◆', cx, cursorY + W*0.008);
+    // Right line
+    ctx.beginPath();
+    ctx.moveTo(cx + W*0.025, cursorY);
+    ctx.lineTo(cx + lineLen + W*0.02, cursorY);
+    ctx.stroke();
+    cursorY += sepH * 0.85;
+  }
+
+  // ── Quote ──
+  if(hasQuote) {
+    ctx.font = `300 italic ${quoteFontSize}px '${fp.body}', sans-serif`;
+    ctx.fillStyle = S.textColor;
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0,0,0,0.05)';
+    ctx.shadowBlur  = 2;
+    const quoteStartY = hasName ? cursorY : contentStartY;
+    quoteLines.forEach((l, i) => {
+      ctx.fillText(l, cx, quoteStartY + quoteFontSize * 0.88 + i * lineH);
+    });
+    ctx.shadowBlur = 0;
+  }
+
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y,     x + w, y + r,     r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x,     y + h, x,     y + h - r, r);
+  ctx.lineTo(x,    y + r);
+  ctx.arcTo(x,     y,     x + r, y,         r);
+  ctx.closePath();
+}
+
+// ═══════════════════════════════════════════════
+// DEMO WATERMARK
+// ═══════════════════════════════════════════════
+function drawDemoWatermark(ctx, W, H) {
+  ctx.save();
+  ctx.translate(W / 2, H / 2);
+  ctx.rotate(-Math.PI / 5);
+
+  const lines = [
+    'DEMO · DEMO · DEMO · DEMO · DEMO',
+    'Remove watermark with purchase',
+    'DEMO · DEMO · DEMO · DEMO · DEMO',
+  ];
+  const spacing = H * 0.095;
+
+  lines.forEach((line, i) => {
+    const isMainLine = i % 2 === 0;
+    ctx.globalAlpha = isMainLine ? 0.22 : 0.13;
+    ctx.font = isMainLine
+      ? `700 ${Math.round(W * 0.065)}px 'Jost', sans-serif`
+      : `300 ${Math.round(W * 0.038)}px 'Jost', sans-serif`;
+    ctx.fillStyle = '#2C3E2D';
+    ctx.textAlign = 'center';
+    ctx.letterSpacing = '2px';
+    const yOff = (i - 1) * spacing;
+    // Draw 3 repetitions vertically to cover full card
+    for(let rep = -1; rep <= 1; rep++) {
+      ctx.fillText(line, 0, yOff + rep * spacing * lines.length);
+    }
+  });
+
+  ctx.restore();
+}
+
+// ═══════════════════════════════════════════════
+// FLIP
+// ═══════════════════════════════════════════════
+function flipCard() {
+  S.showingFront = !S.showingFront;
+  document.getElementById('card-3d').classList.toggle('flipped', !S.showingFront);
+  const label = document.getElementById('flip-side-label');
+  const dot   = document.getElementById('flip-dot');
+  label.innerHTML = `<span class="flip-dot ${S.showingFront ? '' : 'flip-dot-back'}"></span>${S.showingFront ? 'Showing front' : 'Showing back'}`;
+}
+
+// ═══════════════════════════════════════════════
+// SURPRISE ME
+// ═══════════════════════════════════════════════
+function surpriseMe() {
+  const card = CARDS[Math.floor(Math.random() * CARDS.length)];
+  S.cardId   = card.id;
+  S.fontPair = Math.floor(Math.random() * FONT_PAIRS.length);
+  S.textColor = COLORS[Math.floor(Math.random() * COLORS.length)].v;
+
+  setTab(card.cat);
+  renderFontGrid();
+  renderColorSwatches('text-colors', 'textColor');
+  document.getElementById('preview-title').textContent = card.name;
+  document.getElementById('preview-category').textContent =
+    card.cat === 'monthly' ? 'Monthly' : card.cat === 'firsts' ? "Baby's Firsts" : 'Special';
+  checkDateVisibility();
+
+  // Bounce animation
+  const c3d = document.getElementById('card-3d');
+  c3d.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+  c3d.style.transform = 'scale(0.93) rotate(-1.5deg)';
+  setTimeout(() => { c3d.style.transform = ''; }, 50);
+  setTimeout(() => { c3d.style.transition = ''; }, 500);
+
+  scheduleRender();
+
+  // Toast
+  const fp2 = FONT_PAIRS[S.fontPair];
+  const col = COLORS.find(c => c.v === S.textColor);
+  showToast(`✦  ${card.name}  ·  ${fp2.script}  ·  ${col ? col.name : 'Custom'}`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('surprise-toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT BUTTON STATE
+// ═══════════════════════════════════════════════
+function updateExportBtn() { return; //
+  const large = document.getElementById('size-large').checked;
+  const small = document.getElementById('size-small').checked;
+  const btn   = document.getElementById('export-btn');
+  const hint  = document.getElementById('size-hint-both');
+  btn.disabled = !large && !small;
+  hint.style.display = (large && small) ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════
+// PDF EXPORT
+// ═══════════════════════════════════════════════
+async function exportPDF() {
+  const btn = document.getElementById('export-btn');
+  const overlay = document.getElementById('progress-overlay');
+  btn.disabled = true;
+  overlay.style.display = 'flex';
+
+  const doLarge = document.getElementById('size-large').checked;
+  const doSmall = document.getElementById('size-small').checked;
+
+  try {
+    const bothSelected = doLarge && doSmall;
+    if(doLarge) await generateLargePDF(bothSelected ? 'PDF 1 of 2 — Large' : '');
+    if(doSmall) await generateSmallPDF(bothSelected ? 'PDF 2 of 2 — Small' : '');
+
+    setProgress(100, 'Done! Your PDF is ready.');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      updateExportBtn();
+    }, 1200);
+  } catch(err) {
+    console.error(err);
+    overlay.style.display = 'none';
+    updateExportBtn();
+    alert('Something went wrong generating the PDF. Please try again.');
+  }
+}
+
+// Large: landscape letter, 2 cards per page (5.5×8.5" each)
+async function generateLargePDF(stepLabel) {
+  if(stepLabel) document.getElementById('progress-step').textContent = stepLabel;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'landscape', unit: 'in', format: 'letter' });
+  const pageW = 11, pageH = 8.5;
+
+  const pdfC = document.createElement('canvas');
+  const PW = 2200, PH = Math.round(PW * 8.5 / 11);
+  const CW = PW / 2;
+  pdfC.width = PW; pdfC.height = PH;
+
+  const sheets = [];
+  for(let i = 1; i <= 20; i++) sheets.push('sheet_' + String(i).padStart(2,'0'));
+
+  for(let i = 0; i < 20; i++) {
+    const sheetName = sheets[i];
+    const leftCard  = CARDS.find(c => c.sheet === sheetName && c.side === 'left');
+    const rightCard = CARDS.find(c => c.sheet === sheetName && c.side === 'right');
+
+    if(i > 0) doc.addPage();
+    setProgress(Math.round((i / 20) * 45), `Large PDF: page ${i+1} of 20…`);
+
+    const ctx = pdfC.getContext('2d');
+    ctx.clearRect(0, 0, PW, PH);
+    ctx.fillStyle = '#FAF7F2';
+    ctx.fillRect(0, 0, PW, PH);
+
+    try {
+      const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
+      ctx.drawImage(img, 0, 0, PW, PH);
+    } catch(e) {}
+
+    if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  0, CW, PH);
+    if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, 0, CW, PH);
+
+    doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+
+    if(S.showBack && S.backId) {
+      doc.addPage();
+      ctx.clearRect(0, 0, PW, PH);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fillRect(0, 0, PW, PH);
+      try {
+        const backImg = await loadImg(`${BASE}backs/${S.backId}.jpg`);
+        ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0,  0, CW, PH);
+        ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, 0, CW, PH);
+      } catch(e) {}
+      if((S.backShowName && S.babyName) || S.backQuote) {
+        drawBackTextOverlay(ctx, CW/2,    PH/2, CW, PH);
+        drawBackTextOverlay(ctx, CW+CW/2, PH/2, CW, PH);
+      }
+      doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+    }
+
+    await new Promise(r => setTimeout(r, 10));
+  }
+
+  setProgress(48, 'Saving large PDF…');
+  document.getElementById('progress-step').textContent = '';
+  doc.save('milestone-large-5.5x8.5.pdf');
+}
+
+// Small: portrait letter, 4 cards per page in 2×2 grid (4×5.5" each)
+async function generateSmallPDF(stepLabel) {
+  if(stepLabel) document.getElementById('progress-step').textContent = stepLabel;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+  const pageW = 8.5, pageH = 11;
+
+  // Canvas: 2550×3300 (300dpi letter portrait)
+  const pdfC = document.createElement('canvas');
+  const PW = 2550, PH = 3300;
+  const CW = PW / 2;   // cell width  = 1275 (= 4.25" at 300dpi — slight margin)
+  const CH = PH / 2;   // cell height = 1650 (= 5.5")
+  pdfC.width = PW; pdfC.height = PH;
+
+  const sheets = [];
+  for(let i = 1; i <= 20; i++) sheets.push('sheet_' + String(i).padStart(2,'0'));
+
+  // 2 sheets per page → 10 pages total
+  for(let page = 0; page < 10; page++) {
+    const topSheet    = sheets[page * 2];
+    const bottomSheet = sheets[page * 2 + 1];
+
+    if(page > 0) doc.addPage();
+    setProgress(50 + Math.round((page / 10) * 45), `Small PDF: page ${page+1} of 10…`);
+
+    const ctx = pdfC.getContext('2d');
+    ctx.clearRect(0, 0, PW, PH);
+    ctx.fillStyle = '#FAF7F2';
+    ctx.fillRect(0, 0, PW, PH);
+
+    // Draw 4 individual cards (extract halves from each sheet image)
+    for(let row = 0; row < 2; row++) {
+      const sheetName = row === 0 ? topSheet : bottomSheet;
+      if(!sheetName) continue;
+      const leftCard  = CARDS.find(c => c.sheet === sheetName && c.side === 'left');
+      const rightCard = CARDS.find(c => c.sheet === sheetName && c.side === 'right');
+      const yBase = row * CH;
+
+      try {
+        const img = await loadImg(`${BASE}${SERIES}/${sheetName}.jpg`);
+        const iW = img.width, iH = img.height;
+        // Left card: left half of sheet
+        ctx.drawImage(img, 0,    0, iW/2, iH, 0,  yBase, CW, CH);
+        // Right card: right half of sheet
+        ctx.drawImage(img, iW/2, 0, iW/2, iH, CW, yBase, CW, CH);
+      } catch(e) {}
+
+      if(leftCard)  drawTextOnCardRegion(ctx, leftCard,  0,  yBase, CW, CH);
+      if(rightCard) drawTextOnCardRegion(ctx, rightCard, CW, yBase, CW, CH);
+    }
+
+    doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+
+    // Backs
+    if(S.showBack && S.backId) {
+      doc.addPage();
+      ctx.clearRect(0, 0, PW, PH);
+      ctx.fillStyle = '#FAF7F2';
+      ctx.fillRect(0, 0, PW, PH);
+
+      for(let row = 0; row < 2; row++) {
+        const yBase = row * CH;
+        try {
+          const backImg = await loadImg(`${BASE}backs/${S.backId}.jpg`);
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, 0,  yBase, CW, CH);
+          ctx.drawImage(backImg, 0, 0, backImg.width/2, backImg.height, CW, yBase, CW, CH);
+        } catch(e) {}
+        if((S.backShowName && S.babyName) || S.backQuote) {
+          drawBackTextOverlay(ctx, CW/2,    yBase + CH/2, CW, CH);
+          drawBackTextOverlay(ctx, CW+CW/2, yBase + CH/2, CW, CH);
+        }
+      }
+      doc.addImage(pdfC.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, pageW, pageH);
+    }
+
+    await new Promise(r => setTimeout(r, 10));
+  }
+
+  setProgress(97, 'Saving small PDF…');
+  document.getElementById('progress-step').textContent = '';
+  doc.save('milestone-small-4x5.5.pdf');
+}
+
+function drawTextOnCardRegion(ctx, card, xOff, yOff, W, H) {
+  const fp = FONT_PAIRS[S.fontPair];
+
+  if(S.showName && S.babyName) {
+    const maxW = W * 0.82;
+    let fs = Math.round(W * 0.126);
+    ctx.font = `${fs}px '${fp.script}', cursive`;
+    while(ctx.measureText(S.babyName).width > maxW && fs > W * 0.055) {
+      fs -= 2;
+      ctx.font = `${fs}px '${fp.script}', cursive`;
+    }
+    ctx.textAlign = 'center';
+    ctx.fillStyle = S.textColor;
+    ctx.shadowColor = 'rgba(0,0,0,0.07)';
+    ctx.shadowBlur = 5;
+    ctx.fillText(S.babyName, xOff + W/2, yOff + Math.round(H * 0.152));
+    ctx.shadowBlur = 0;
+  }
+
+  if(S.showDate && isMonthlyCard(card.id) && S.birthDate) {
+    const dateStr = getMilestoneDate(card.id, S.birthDate);
+    if(dateStr) {
+      const fs = Math.round(W * 0.052);
+      ctx.font = `300 ${fs}px '${fp.body}', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = S.textColor;
+      ctx.shadowColor = 'rgba(0,0,0,0.05)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(dateStr, xOff + W/2, yOff + Math.round(H * 0.892));
+      ctx.shadowBlur = 0;
+    }
+  }
+}
+
+function setProgress(pct, text) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = text;
+}
+</script>
+
+<!-- ═══ NAVIGATION SLIDER ═══ -->
+<style>
+  .nav-slider {
+    position: fixed;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .nav-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    padding: 18px 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px 0 0 8px;
+    transition: all 0.22s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-tab-etsy {
+    background: #F56400;
+    color: white;
+    box-shadow: -2px 2px 12px rgba(245,100,0,0.3);
+  }
+  .nav-tab-etsy:hover {
+    background: #d95800;
+    padding-right: 16px;
+    box-shadow: -4px 2px 18px rgba(245,100,0,0.4);
+  }
+  .nav-tab-explore {
+    background: #2C3E2D;
+    color: #C8B98A;
+    box-shadow: -2px 2px 12px rgba(44,62,45,0.2);
+  }
+  .nav-tab-explore:hover {
+    background: #1e2b1f;
+    padding-right: 16px;
+    box-shadow: -4px 2px 18px rgba(44,62,45,0.3);
+  }
+  .nav-tab .nav-star {
+    margin-bottom: 8px;
+    font-size: 9px;
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+</style>
+
+<div class="nav-slider">
+  <a class="nav-tab nav-tab-etsy" href="https://www.etsy.com/shop/DiscoverVisually?ref=seller-platform-mcnav" target="_blank">
+    <span class="nav-star">✦</span>Back to Etsy
+  </a>
+  <a class="nav-tab nav-tab-explore" href="https://discovervisually.github.io/" target="_blank">
+    <span class="nav-star">✦</span>Explore More
+  </a>
+</div>
+<!-- ═══ END NAVIGATION SLIDER ═══ -->
+
+</body>
+</html>
