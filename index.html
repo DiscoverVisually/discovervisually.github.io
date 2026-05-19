@@ -552,6 +552,41 @@
     .ms-page-dtl{padding:0.65rem 0.7rem;border:1px solid rgba(168,85,247,0.3);color:var(--muted);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
     .ms-page-dtl:hover{border-color:var(--violet-bright);color:var(--violet-bright);}
     @media(max-width:768px){.ms-page-grid{grid-template-columns:repeat(2,1fr);}.ms-page-cards-inner{padding:2rem 1.5rem;}}
+
+    .romantasy-page{background:radial-gradient(1200px 600px at 15% 0%,rgba(124,58,237,0.20),transparent 60%),radial-gradient(900px 500px at 85% 10%,rgba(232,200,74,0.12),transparent 55%),#060606;}
+    .romantasy-shell{max-width:1220px;margin:0 auto;padding:8.5rem 2.2rem 4rem;}
+    .romantasy-top{display:grid;grid-template-columns:1.1fr 0.9fr;gap:1.2rem;align-items:stretch;margin-bottom:1rem;}
+    .romantasy-hero-panel,.romantasy-offer-panel{border:1px solid rgba(255,255,255,0.14);background:rgba(10,10,10,0.84);backdrop-filter:blur(18px);padding:2rem;}
+    .romantasy-badge{display:inline-block;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+    .romantasy-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,4.9rem);line-height:0.96;margin-bottom:1rem;max-width:15ch;}
+    .romantasy-sub{color:rgba(240,239,232,0.78);line-height:1.72;max-width:58ch;margin-bottom:1.2rem;}
+    .romantasy-meta{display:flex;gap:0.5rem;flex-wrap:wrap;list-style:none;margin-bottom:0.8rem;}
+    .romantasy-meta li{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.4rem 0.62rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.16);}
+    .romantasy-cta-row{display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:1rem;}
+    .romantasy-primary{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.4rem;background:linear-gradient(135deg,#f2d780,#e7ba37);color:#171717;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border:none;}
+    .romantasy-secondary{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.35rem;background:transparent;color:var(--text);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,0.25);}
+    .romantasy-note{font-size:0.72rem;color:var(--muted);margin-top:0.85rem;}
+    .romantasy-offer-title{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.9rem;}
+    .romantasy-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1rem;}
+    .romantasy-kpi{border:1px solid rgba(255,255,255,0.12);padding:0.75rem;background:rgba(255,255,255,0.02);}
+    .romantasy-kpi strong{display:block;font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--accent);}
+    .romantasy-kpi span{font-size:0.6rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);}
+    .romantasy-offer-list{list-style:none;display:grid;gap:0.45rem;}
+    .romantasy-offer-list li{font-size:0.85rem;color:rgba(240,239,232,0.86);}
+    .romantasy-products-head{display:flex;align-items:center;justify-content:space-between;margin:2rem 0 1rem;gap:1rem;}
+    .romantasy-products-head h2{font-family:'Playfair Display',serif;font-size:clamp(1.35rem,2.4vw,2rem);}
+    .romantasy-products-head p{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+    .romantasy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+    .romantasy-card{border:1px solid rgba(255,255,255,0.12);background:rgba(9,9,9,0.86);padding:1rem;display:flex;flex-direction:column;gap:0.6rem;min-height:236px;}
+    .romantasy-card .pill{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);}
+    .romantasy-card h3{font-family:'Playfair Display',serif;font-size:1.08rem;line-height:1.3;}
+    .romantasy-card p{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+    .romantasy-card .romantasy-secondary,.romantasy-card .romantasy-primary{margin-top:auto;align-self:flex-start;}
+    .romantasy-sticky{position:sticky;bottom:0;z-index:60;margin-top:1.8rem;border:1px solid rgba(255,255,255,0.18);background:rgba(7,7,7,0.95);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;}
+    .romantasy-sticky-copy{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+    @media(max-width:980px){.romantasy-top{grid-template-columns:1fr;}.romantasy-kpis,.romantasy-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:700px){.romantasy-shell{padding:7.4rem 1.1rem 3rem;}.romantasy-hero-panel,.romantasy-offer-panel{padding:1.25rem;}.romantasy-kpis,.romantasy-grid{grid-template-columns:1fr;}.romantasy-products-head{flex-direction:column;align-items:flex-start;}.romantasy-sticky{flex-direction:column;align-items:stretch;}}
+
     *:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
     @media (prefers-reduced-motion: reduce){
       *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
@@ -639,6 +674,7 @@
         <li><a onclick="go('#cat-educational')">Arts, Crafts &amp; Educational</a></li>
         <li><a onclick="go('#cat-forchildren')">For Children</a></li>
         <li><a onclick="go('#cat-spiritual')">Spiritual</a></li>
+        <li><a onclick="go('#romantasy-landing')">Romantasy</a></li>
         <li><a onclick="go('#cat-slovak')">Slovenčina</a></li>
         <li><a onclick="go('#cat-polish')">Polski</a></li>
         <li><a class="nav-milestone" onclick="go('#milestonecards')">✦ Milestone Cards</a></li>
@@ -648,6 +684,7 @@
           <li><a onclick="go('#cat-educational')">Arts, Crafts &amp; Educational</a></li>
           <li><a onclick="go('#cat-forchildren')">For Children</a></li>
           <li><a onclick="go('#cat-spiritual')">Spiritual</a></li>
+          <li><a onclick="go('#romantasy-landing')">Romantasy</a></li>
           <li><a onclick="go('#cat-slovak')">Slovenčina</a></li>
           <li><a onclick="go('#cat-polish')">Polski</a></li>
           <li><a onclick="go('#milestonecards')">Milestone Cards</a></li>
@@ -698,6 +735,7 @@
           <button class="catalog-filter-btn" data-target="cat-row-spiritual">Spiritual</button>
           <button class="catalog-filter-btn" data-target="cat-row-slovak">Slovenčina</button>
           <button class="catalog-filter-btn" data-target="cat-row-polish">Polski</button>
+          <button class="catalog-filter-btn" data-target="cat-row-romantasy">Romantasy</button>
         </div>
 
         <!-- Educational -->
@@ -852,6 +890,27 @@
             </div>
           </div>
         </div>
+
+        <!-- Romantasy -->
+        <div class="cat-row" id="cat-row-romantasy">
+          <div class="cat-row-head" onclick="go('#romantasy-landing')">
+            <span class="cat-row-name">Romantasy</span>
+            <div class="cat-row-meta"><span class="cat-row-count">5 placeholders</span><span class="cat-row-arrow">View landing →</span></div>
+          </div>
+          <div class="cards-scroll">
+            <div class="book-card-h soon">
+              <div class="bh-cover"><div class="bh-placeholder"><div class="bh-placeholder-icon">✦</div><span>Romantasy
+Volume I</span></div><span class="bh-soon-badge">Placeholder</span></div>
+              <div class="bh-body"><div class="bh-tag">Romance + Fantasy</div><div class="bh-title">Title to be announced</div><div class="bh-author">DiscoverVisually</div></div>
+            </div>
+            <div class="book-card-h soon">
+              <div class="bh-cover"><div class="bh-placeholder"><div class="bh-placeholder-icon">✦</div><span>Romantasy
+Volume II</span></div><span class="bh-soon-badge">Placeholder</span></div>
+              <div class="bh-body"><div class="bh-tag">Romance + Fantasy</div><div class="bh-title">Title to be announced</div><div class="bh-author">DiscoverVisually</div></div>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /col-books -->
 
       <!-- RIGHT: MILESTONE CARDS (40%) -->
@@ -935,6 +994,60 @@
 
   <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
 </div><!-- /page-home -->
+
+
+
+<!-- ████ ROMANTASY LANDING ████ -->
+<div class="page content-layer romantasy-page" id="page-romantasy-landing">
+  <nav><a class="nav-logo" onclick="go('#home')">Discover<em>Visually</em></a><div class="nav-right"><div class="breadcrumb"><a onclick="go('#home')">Home</a><span class="sep">›</span><span class="current">Romantasy</span></div></div></nav>
+  <section class="romantasy-shell">
+    <div class="romantasy-top">
+      <div class="romantasy-hero-panel">
+        <div class="romantasy-badge">Romantasy Launch · 5-book Collection</div>
+        <h1 class="romantasy-title">Epic romance.<br><em style="font-style:italic;font-weight:400;color:var(--accent);">Dark magic.</em><br>One binge-worthy universe.</h1>
+        <p class="romantasy-sub">A clean, conversion-first landing for Romantasy readers: premium storytelling hooks, quick product scan, and strong CTAs. All titles and links are placeholders until you send final assets.</p>
+        <ul class="romantasy-meta"><li>Enemies to lovers</li><li>Fated bonds</li><li>High-stakes kingdoms</li></ul>
+        <div class="romantasy-cta-row">
+          <a class="romantasy-primary" href="#" onclick="event.preventDefault()">Get Early Access</a>
+          <a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Join ARC Waitlist</a>
+        </div>
+        <p class="romantasy-note">No spam. Only launch updates and early-reader drops.</p>
+      </div>
+      <aside class="romantasy-offer-panel">
+        <div class="romantasy-offer-title">Launch Snapshot</div>
+        <div class="romantasy-kpis">
+          <div class="romantasy-kpi"><strong>5</strong><span>Books in wave</span></div>
+          <div class="romantasy-kpi"><strong>3</strong><span>Bonus perks</span></div>
+          <div class="romantasy-kpi"><strong>24h</strong><span>Early-bird window</span></div>
+        </div>
+        <ul class="romantasy-offer-list">
+          <li>• Placeholder collector bundle strategy</li>
+          <li>• Placeholder signed-edition incentive</li>
+          <li>• Placeholder bonus chapter unlock</li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="romantasy-products-head">
+      <h2>Pick your next obsession</h2>
+      <p>All books are placeholders for now</p>
+    </div>
+    <div class="romantasy-grid">
+      <article class="romantasy-card"><span class="pill">Placeholder #1</span><h3>Romantasy Title I</h3><p>Enemies to lovers · cursed kingdom · dragon court intrigue.</p><a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Notify me</a></article>
+      <article class="romantasy-card"><span class="pill">Placeholder #2</span><h3>Romantasy Title II</h3><p>Fated mates · political marriage · ancient magic awakening.</p><a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Notify me</a></article>
+      <article class="romantasy-card"><span class="pill">Placeholder #3</span><h3>Romantasy Title III</h3><p>Shadow prince · forbidden academy · prophecy romance arc.</p><a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Notify me</a></article>
+      <article class="romantasy-card"><span class="pill">Placeholder #4</span><h3>Romantasy Title IV</h3><p>War bride · rival realms · slow-burn high-stakes devotion.</p><a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Notify me</a></article>
+      <article class="romantasy-card"><span class="pill">Placeholder #5</span><h3>Romantasy Title V</h3><p>Immortal guardian · mortal thief · destiny-bound rebellion.</p><a class="romantasy-secondary" href="#" onclick="event.preventDefault()">Notify me</a></article>
+      <article class="romantasy-card"><span class="pill">Bundle CTA</span><h3>Collector Bundle</h3><p>All 5 books + exclusive art extras. Final mechanics coming soon.</p><a class="romantasy-primary" href="#" onclick="event.preventDefault()">Reserve Bundle</a></article>
+    </div>
+
+    <div class="romantasy-sticky">
+      <div class="romantasy-sticky-copy">Ready for launch day? Lock your early access.</div>
+      <a class="romantasy-primary" href="#" onclick="event.preventDefault()">Get Launch Access</a>
+    </div>
+  </section>
+  <div class="footer-glass"><div class="footer-logo">Discover<em>Visually</em></div><div class="footer-txt">© 2026 DiscoverVisually · discovervisually.github.io</div></div>
+</div>
 
 <!-- ████ CAT: EDUCATIONAL ████ -->
 <div class="page content-layer" id="page-cat-educational">
