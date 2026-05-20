@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,6 +72,11 @@
 
     @media (max-width:1100px){.hero{grid-template-columns:1fr}.sub{font-size:22px}.grid,.trust{grid-template-columns:1fr}.btn{font-size:18px}.big p,.small p,.trust div{font-size:18px}.usp b{font-size:18px}.usp small{font-size:13px}}
   </style>
+  <script>
+    function go(hash){window.location.hash=hash}
+    function route(){const id=(location.hash||'#home').replace('#','');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));(document.getElementById('page-'+id)||document.getElementById('page-home')).classList.add('active');const buy=document.getElementById('mobile-buy');buy.href=id==='cat-romantasy'?'https://www.amazon.com':'https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7';window.scrollTo(0,0)}
+    addEventListener('hashchange',route);addEventListener('DOMContentLoaded',route);
+  </script>
 </head>
 <body>
   <div class="frame">
