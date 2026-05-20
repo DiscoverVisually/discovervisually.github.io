@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,6 +44,11 @@
     @media (max-width:1120px){h1{font-size:52px}.sub,.sub2{font-size:21px}.cat-grid{grid-template-columns:1fr}.trust{grid-template-columns:1fr}}
     @media (max-width:860px){.top-row{flex-wrap:wrap}.hero{grid-template-columns:1fr}.nav{overflow:auto;white-space:nowrap;width:100%}.books img{height:250px}.books img.tall{height:270px}.books img.small{height:230px}}
   </style>
+  <script>
+    function go(hash){window.location.hash=hash}
+    function route(){const id=(location.hash||'#home').replace('#','');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));(document.getElementById('page-'+id)||document.getElementById('page-home')).classList.add('active');const buy=document.getElementById('mobile-buy');buy.href=id==='cat-romantasy'?'https://www.amazon.com':'https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7';window.scrollTo(0,0)}
+    addEventListener('hashchange',route);addEventListener('DOMContentLoaded',route);
+  </script>
 </head>
 <body>
 <header class="top"><div class="container top-row"><div class="brand"><a class="logo" href="#">Discover<span>Visually</span></a><div class="tag">Modern Creative Publishing House</div></div><nav class="nav"><a class="active" href="#">Home</a><a href="#">Spiritual</a><a href="#">Romantasy</a><a href="#">For Children</a><a href="#">Arts, Crafts & Educational</a><a href="#">Non-English Books</a></nav><a class="club" href="#">Join the Club ✧</a></div></header>
