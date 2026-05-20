@@ -4,45 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DiscoverVisually — Modern Creative Publishing House</title>
-  <meta name="description" content="Visual books across Spiritual, Romantasy, For Children, Arts & Educational, and Non-English categories." />
+  <meta name="description" content="Discover visual-first books across Spiritual, Romantasy, For Children, Educational, and Non-English categories." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#050b18;--text:#efe7dc;--muted:#b8bcc6;--gold:#d7a243;--gold2:#f2c87a;--line:#263857;--max:1320px}
-    *{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Inter,sans-serif;background:radial-gradient(1000px 500px at 10% -10%,#17315f 0,transparent 50%),radial-gradient(800px 420px at 100% 0,#3d2511 0,transparent 40%),#040a16}
-    a{text-decoration:none;color:inherit}.container{max-width:var(--max);margin:0 auto;padding:0 24px}
-    .top{position:sticky;top:0;z-index:50;background:rgba(4,10,22,.88);backdrop-filter:blur(8px);border-bottom:1px solid #1a2a44}
-    .top-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}.logo{font-family:Cinzel,serif;font-size:35px}.logo span{color:var(--gold2)}.tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#97a4bd}
-    .brand{display:flex;align-items:center;gap:16px}.nav{display:flex;gap:22px;font-size:14px;color:#d5daea}.nav a.active,.nav a:hover{color:#fff;border-bottom:2px solid var(--gold);padding-bottom:5px}
-    .club{border:1px solid #8b6730;border-radius:11px;padding:10px 16px;color:#f0cf8c;font-weight:600}
+    :root{--bg:#050c18;--line:#1f304d;--line-soft:#243654;--text:#eee7dc;--gold:#d8a443;--gold-soft:#f2cc7b;--max:1280px}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(#040a15,#061021);font-family:Inter,sans-serif;color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    .frame{padding:10px 0 16px;background:radial-gradient(1000px 420px at 2% -10%,#12284f 0,transparent 62%),radial-gradient(900px 420px at 100% -10%,#36210f 0,transparent 62%),var(--bg)}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
 
-    .hero{display:grid;grid-template-columns:1fr 1.3fr;gap:22px;padding:34px 0 22px;border-bottom:1px solid #1c2d49}
-    .ey{font-size:14px;letter-spacing:.16em;color:#d9a74d;text-transform:uppercase;margin-bottom:16px}
-    h1{margin:0 0 14px;font-family:Cinzel,serif;font-size:67px;line-height:1.04}.gold{color:var(--gold)}
-    .sub{font-size:29px;line-height:1.2}.sub2{margin-top:12px;color:var(--muted);font-size:24px}
-    .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}.btn{padding:13px 20px;border-radius:10px;font-weight:600}.btn-g{background:linear-gradient(180deg,#e4b960,#c98b30);color:#131313}.btn-o{border:1px solid #88622e;color:#f0cc86}
-    .usp{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.usp>div{display:flex;gap:8px;align-items:flex-start;border:1px solid #213452;background:rgba(10,20,38,.55);border-radius:999px;padding:10px 12px}.usp b{font-size:13px;display:block}.usp span{font-size:12px;color:#adb9cd}
+    .top{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #1a2a45}
+    .brand{display:flex;align-items:center;gap:16px}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1}
+    .logo span{color:var(--gold-soft)}
+    .tag{font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:#95a5c0}
+    .menu{display:flex;gap:22px;font-size:12px;color:#ccd5e5}
+    .menu a{padding-bottom:5px;border-bottom:2px solid transparent;transition:.18s ease}
+    .menu a.active,.menu a:hover{color:#fff;border-bottom-color:var(--gold)}
+    .right{display:flex;align-items:center;gap:14px;color:#d8ddee}
+    .icon{font-size:14px;opacity:.95}
+    .club{border:1px solid #83602f;border-radius:10px;padding:8px 14px;color:#ebc57d;font-size:14px;font-weight:600}
 
-    .bookstage{position:relative;min-height:430px;border-radius:12px;overflow:hidden;background:radial-gradient(circle at 80% 20%,rgba(243,173,87,.15),transparent 40%),linear-gradient(180deg,#0b1730,#0a1429 55%,#070d1b)}
-    .bookstage:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1600&q=80') center/cover no-repeat;opacity:.2;mix-blend-mode:screen}
-    .bookstage:after{content:"";position:absolute;left:0;right:0;bottom:56px;height:120px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55));}
-    .books{position:absolute;left:24px;right:24px;bottom:70px;display:flex;align-items:flex-end;gap:10px}
-    .books img{display:block;height:340px;width:auto;object-fit:cover;border:1px solid #3f3123;border-radius:3px;box-shadow:0 18px 24px rgba(0,0,0,.55)}
-    .books img.tall{height:365px}.books img.small{height:320px}
-    .stone-shelf{position:absolute;left:0;right:0;bottom:0;height:74px;background:linear-gradient(180deg,#4f4a46,#322f2d 45%,#1f1c1a);border-top:2px solid #7b736c;box-shadow:0 -10px 28px rgba(0,0,0,.6) inset}
+    .hero{display:grid;grid-template-columns:35.8% 64.2%;gap:16px;padding:22px 18px 14px}
+    .ey{font-size:13px;letter-spacing:.17em;color:#d8a64f;text-transform:uppercase;margin-bottom:11px}
+    h1{font-family:'Cormorant Garamond',serif;font-size:60px;line-height:.95;margin:0 0 12px}
+    .gold{color:var(--gold)}
+    .sub{font-size:33px;line-height:1.18;color:#d7ddea;margin-bottom:20px;max-width:96%}
 
-    .section{padding:20px 0}.section h2{font-family:Cinzel,serif;color:#dfb463;font-size:39px;margin:0 0 12px}
-    .cat-grid{display:grid;grid-template-columns:1fr 1fr .95fr;gap:12px}
-    .big,.small{border:1px solid #2b3f61;border-radius:12px;overflow:hidden;position:relative}
-    .big{min-height:300px;padding:22px;background:linear-gradient(150deg,#0f1e3b,#0a1328)}
-    .big.sp:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=1200&q=80') center/cover no-repeat;opacity:.35}
-    .big.ro:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80') center/cover no-repeat;opacity:.35}
-    .big *{position:relative}.big h3,.small h3{font-family:Cinzel,serif;margin:0}.big h3{font-size:47px}.big p{font-size:22px;color:#c0cae0;max-width:320px}
-    .small-col{display:flex;flex-direction:column;gap:10px}.small{min-height:93px;padding:14px 16px;background:linear-gradient(145deg,#111d37,#0b1429)}.small h3{font-size:35px}.small p{margin:3px 0 0;color:#c0c9dd;font-size:18px}
-    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.trust div{border:1px solid #263b5a;border-radius:12px;background:#091427;padding:13px}.trust b{color:#e6b65f}
-    @media (max-width:1120px){h1{font-size:52px}.sub,.sub2{font-size:21px}.cat-grid{grid-template-columns:1fr}.trust{grid-template-columns:1fr}}
-    @media (max-width:860px){.top-row{flex-wrap:wrap}.hero{grid-template-columns:1fr}.nav{overflow:auto;white-space:nowrap;width:100%}.books img{height:250px}.books img.tall{height:270px}.books img.small{height:230px}}
+    .cta{display:flex;gap:12px;margin-bottom:16px}
+    .btn{padding:12px 22px;border-radius:8px;font-size:22px;font-family:'Cormorant Garamond',serif;font-weight:700;display:inline-flex;align-items:center;gap:8px;line-height:1}
+    .btn.g{background:linear-gradient(#e2b65e,#c98b2f);color:#101010}
+    .btn.o{border:1px solid #7f5d2a;color:#ebc67f;background:rgba(7,12,24,.35)}
+
+    .usp{display:flex;gap:10px;flex-wrap:wrap}
+    .usp .item{display:flex;align-items:flex-start;gap:7px;border:1px solid var(--line);border-radius:999px;padding:10px 11px;background:rgba(10,18,34,.45)}
+    .usp b{font-size:24px;font-family:'Cormorant Garamond',serif;line-height:.9;display:block}
+    .usp small{font-size:18px;color:#aeb8cc;display:block;line-height:1.1}
+
+    .shelf{position:relative;min-height:468px;border-radius:10px;overflow:hidden;background:#071024;border:1px solid #1a2945}
+    .shelf-bg{position:absolute;inset:0;background:url('landingpic.png') center/cover no-repeat,linear-gradient(180deg,#0b1730,#080f1f)}
+    .shelf-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,11,22,.33),rgba(7,11,22,.06) 38%,rgba(7,11,22,.2))}
+
+    .cats{margin:7px 18px 0;padding-top:14px;border-top:1px solid #1d2d48}
+    .cats h2{margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:44px;color:#dbae58}
+    .grid{display:grid;grid-template-columns:34% 34% 32%;gap:10px}
+    .big,.small{border:1px solid #2a3d5f;border-radius:10px;overflow:hidden;position:relative;background:#0d1830}
+    .big{min-height:272px;padding:16px}
+    .big:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 62% 47%,rgba(227,170,72,.28),transparent 40%)}
+    .big.rom:before{background:radial-gradient(circle at 58% 45%,rgba(161,103,230,.34),transparent 40%)}
+    .big>*{position:relative}
+    .big h3{font-family:'Cormorant Garamond',serif;font-size:58px;line-height:.9;margin:0}
+    .big p{font-size:33px;line-height:1.1;max-width:290px;color:#c0cade;margin:5px 0 14px}
+
+    .stack{display:flex;flex-direction:column;gap:10px}
+    .small{min-height:84px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(140deg,#111d37,#0b1428)}
+    .small h3{margin:0;font-family:'Cormorant Garamond',serif;font-size:43px;line-height:.9}
+    .small p{margin:1px 0 0;color:#c1cae0;font-size:31px;line-height:1}
+    .small .arr{font-size:30px;color:#ddb05f}
+
+    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .trust .t{border:1px solid var(--line-soft);border-radius:10px;padding:12px;background:#091426;min-height:66px;display:flex;flex-direction:column;justify-content:center}
+    .trust b{color:#e7b962;font-family:'Cormorant Garamond',serif;font-size:32px;line-height:.9}
+    .trust div{font-size:23px;line-height:1.05;color:#bcc6d8}
+
+    @media (max-width:1100px){.hero{grid-template-columns:1fr}.sub{font-size:22px}.grid,.trust{grid-template-columns:1fr}.btn{font-size:18px}.big p,.small p,.trust div{font-size:18px}.usp b{font-size:18px}.usp small{font-size:13px}}
   </style>
   <script>
     function go(hash){window.location.hash=hash}
@@ -51,36 +79,45 @@
   </script>
 </head>
 <body>
-<header class="top"><div class="container top-row"><div class="brand"><a class="logo" href="#">Discover<span>Visually</span></a><div class="tag">Modern Creative Publishing House</div></div><nav class="nav"><a class="active" href="#">Home</a><a href="#">Spiritual</a><a href="#">Romantasy</a><a href="#">For Children</a><a href="#">Arts, Crafts & Educational</a><a href="#">Non-English Books</a></nav><a class="club" href="#">Join the Club ✧</a></div></header>
-<main class="container">
-  <section class="hero">
-    <div>
-      <div class="ey">Inspiration. Stories. Discovery.</div>
-      <h1>Every category opens<br>a <span class="gold">different world.</span></h1>
-      <div class="sub">Explore handpicked books across genres<br>and find your next great read.</div>
-      <div class="cta"><a class="btn btn-g" href="#">Shop Spiritual →</a><a class="btn btn-o" href="#">Explore Romantasy →</a></div>
-      <div class="usp"><div>📘 <div><b>Carefully curated</b><span>Quality books handpicked for you.</span></div></div><div>🎁 <div><b>Perfect gifts</b><span>Beautiful stories for every occasion.</span></div></div><div>🛡️ <div><b>Secure shopping</b><span>Safe checkout and easy returns.</span></div></div></div>
-    </div>
-    <div class="bookstage">
-      <div class="books">
-        <img class="tall" src="covers/cover-bible.jpg" alt="The Visual Bible">
-        <img class="tall" src="covers/Otterfront.jpg" alt="Romantasy cover">
-        <img src="covers/hedgehog.jpg" alt="Pippin the Hedgehog">
-        <img class="small" src="covers/frontdrawing1.jpg" alt="5 Drawing Worlds">
-        <img class="small" src="covers/vydrafront.jpg" alt="Stela Potočná">
+  <div class="frame">
+    <header class="wrap top">
+      <div class="brand"><a class="logo" href="#">Discover<span>Visually</span></a><div class="tag">Modern Creative Publishing House</div></div>
+      <nav class="menu"><a class="active" href="#">Home</a><a href="#">Spiritual</a><a href="#">Romantasy</a><a href="#">For Children</a><a href="#">Arts, Crafts &amp; Educational</a><a href="#">Non-English Books</a></nav>
+      <div class="right"><span class="icon">⌕</span><span class="icon">♡</span><span class="icon">🛒</span><a class="club" href="#">Join the Club ✧</a></div>
+    </header>
+
+    <main class="wrap hero">
+      <section>
+        <div class="ey">Inspiration. Stories. Discovery.</div>
+        <h1>Every category opens<br>a <span class="gold">different world.</span></h1>
+        <div class="sub">Explore handpicked books across genres<br>and find your next great read.</div>
+        <div class="cta"><a href="#" class="btn g">Shop Spiritual →</a><a href="#" class="btn o">Explore Romantasy →</a></div>
+        <div class="usp">
+          <div class="item">📘 <span><b>Carefully curated</b><small>Quality books handpicked for you.</small></span></div>
+          <div class="item">🎁 <span><b>Perfect gifts</b><small>Beautiful stories for every occasion.</small></span></div>
+          <div class="item">🛡️ <span><b>Secure shopping</b><small>Safe checkout and easy returns.</small></span></div>
+        </div>
+      </section>
+      <section class="shelf" aria-label="Featured books shelf visual"><div class="shelf-bg"></div><div class="shelf-overlay"></div></section>
+    </main>
+
+    <section class="wrap cats">
+      <h2>Shop by category</h2>
+      <div class="grid">
+        <article class="big"><h3>Spiritual</h3><p>Visual guides to faith, inner peace, and deeper meaning.</p><a class="btn g" href="#">Explore Spiritual →</a></article>
+        <article class="big rom"><h3>Romantasy</h3><p>Epic love stories in magical worlds that stay with you.</p><a class="btn g" href="#">Explore Romantasy →</a></article>
+        <div class="stack">
+          <article class="small"><div><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p></div><div class="arr">›</div></article>
+          <article class="small"><div><h3>Arts, Crafts &amp; Educational</h3><p>Creative, practical, and perfect for curious minds.</p></div><div class="arr">›</div></article>
+          <article class="small"><div><h3>Non-English Books</h3><p>Stories and knowledge from around the world.</p></div><div class="arr">›</div></article>
+        </div>
       </div>
-      <div class="stone-shelf"></div>
-    </div>
-  </section>
-  <section class="section">
-    <h2>Shop by category</h2>
-    <div class="cat-grid">
-      <article class="big sp"><h3>Spiritual</h3><p>Visual guides to faith, inner peace, and deeper meaning.</p><a class="btn btn-g" href="#">Explore Spiritual →</a></article>
-      <article class="big ro"><h3>Romantasy</h3><p>Epic love stories in magical worlds that stay with you.</p><a class="btn btn-g" href="#">Explore Romantasy →</a></article>
-      <div class="small-col"><article class="small"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p></article><article class="small"><h3>Arts, Crafts & Educational</h3><p>Creative, practical, and perfect for curious minds.</p></article><article class="small"><h3>Non-English Books</h3><p>Stories and knowledge from around the world.</p></article></div>
-    </div>
-    <div class="trust"><div><b>Join the Club</b><p>Exclusive deals, early access & more.</p></div><div><b>Free shipping</b><p>On orders over $50.</p></div><div><b>Loved by readers</b><p>Thousands of happy customers.</p></div></div>
-  </section>
-</main>
+      <div class="trust">
+        <div class="t"><b>Join the Club</b><div>Exclusive deals, early access &amp; more.</div></div>
+        <div class="t"><b>Free shipping</b><div>On orders over $50.</div></div>
+        <div class="t"><b>Loved by readers</b><div>Thousands of happy customers.</div></div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
