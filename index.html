@@ -4,36 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DiscoverVisually — Modern Creative Publishing House</title>
-  <meta name="description" content="DiscoverVisually curates visual books across Spiritual, Romantasy, For Children, Educational, and Non-English categories." />
+  <meta name="description" content="Visual books across Spiritual, Romantasy, For Children, Arts & Educational, and Non-English categories." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#050b18;--bg2:#081228;--line:#22324c;--text:#eee8df;--muted:#b8b8b8;--gold:#d8a13e;--gold2:#f1c976;--panel:#0a1428;--panel2:#0f1d36;--ok:#74d18f;--max:1300px;--r:14px}
-    *{box-sizing:border-box}html,body{margin:0}body{font-family:Inter,sans-serif;color:var(--text);background:radial-gradient(circle at 22% -8%,#132955 0,transparent 44%),radial-gradient(circle at 100% 0,#3a230f 0,transparent 34%),linear-gradient(180deg,var(--bg),#070f1f 60%,#071122)}
+    :root{--bg:#050b18;--text:#efe7dc;--muted:#b8bcc6;--gold:#d7a243;--gold2:#f2c87a;--line:#263857;--max:1320px}
+    *{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Inter,sans-serif;background:radial-gradient(1000px 500px at 10% -10%,#17315f 0,transparent 50%),radial-gradient(800px 420px at 100% 0,#3d2511 0,transparent 40%),#040a16}
     a{text-decoration:none;color:inherit}.container{max-width:var(--max);margin:0 auto;padding:0 24px}
-    .top{position:sticky;top:0;z-index:50;background:rgba(5,11,24,.82);backdrop-filter:blur(10px);border-bottom:1px solid #192844}
-    .top-row{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:14px}.logo{font-family:Cinzel,serif;font-size:33px}.logo span{color:var(--gold2)}.tag{font-size:11px;letter-spacing:.17em;color:#98a6bf;text-transform:uppercase}
-    .nav{display:flex;gap:24px;font-size:14px;color:#d2d8e5}.nav a{padding:4px 0;border-bottom:2px solid transparent}.nav a:hover,.nav a.active{color:#fff;border-bottom-color:var(--gold)}
-    .actions{display:flex;align-items:center;gap:12px}.icon{opacity:.92}.club{border:1px solid #8a652f;padding:10px 16px;border-radius:11px;color:#f2d08b;font-weight:600}
-    .hero{display:grid;grid-template-columns:1fr 1.28fr;gap:22px;padding:34px 0 26px;border-bottom:1px solid #1b2c49}
-    .eyebrow{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#d8a74f;margin-bottom:16px}
-    h1{font-family:Cinzel,serif;font-size:68px;line-height:1.04;margin:0 0 14px}.gold{color:var(--gold)}.lead{font-size:29px;line-height:1.2}.sub{margin-top:12px;color:var(--muted);font-size:24px}
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 21px;border-radius:10px;font-weight:600}.btn-gold{background:linear-gradient(180deg,#e3b95e,#c98c2f);color:#0f0f0f}.btn-dark{border:1px solid #8b642d;color:#f2cd84}
-    .usp{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.usp-item{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border:1px solid #1f3150;border-radius:999px;background:rgba(8,15,31,.58)}.usp-item b{font-size:13px;display:block}.usp-item span{font-size:12px;color:#aeb9c9;line-height:1.25}
-    .hero-books{position:relative}.covers{display:flex;align-items:flex-end;gap:10px;padding-bottom:18px;overflow:auto}.covers img{height:360px;border-radius:4px;border:1px solid #3d3125;box-shadow:0 15px 30px rgba(0,0,0,.52)}.covers img.tall{height:378px}.shelf{position:absolute;left:0;right:0;bottom:0;height:14px;background:linear-gradient(180deg,#352311,#130d08)}
-    .section{padding:20px 0}.section h2{font-family:Cinzel,serif;color:#ddb25f;font-size:39px;margin:0 0 14px}
-    .cat-grid{display:grid;grid-template-columns:1fr 1fr .95fr;gap:12px}.card-lg,.card-sm{border:1px solid #2a3d5e;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(145deg,#0f1d39,#0b152b)}
-    .card-lg{min-height:302px;padding:22px}.card-lg::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 45%,rgba(236,170,73,.24),transparent 35%)}.card-lg.rom::before{background:radial-gradient(circle at 60% 45%,rgba(173,117,255,.30),transparent 35%)}
-    .card-lg h3,.card-sm h3{font-family:Cinzel,serif;margin:0}.card-lg h3{font-size:47px}.card-lg p{color:#c0cad9;max-width:330px;font-size:22px;margin:8px 0 18px}
-    .card-sm-wrap{display:flex;flex-direction:column;gap:10px}.card-sm{display:grid;grid-template-columns:1fr auto;align-items:center;min-height:94px;padding:14px 16px;background:linear-gradient(145deg,#111d37,#0b1429)}.card-sm h3{font-size:37px}.card-sm p{margin:3px 0 0;color:#bfcae0;font-size:18px}
-    .arrow{font-size:26px;color:#d7a74a}
-    .book-lists{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.list{border:1px solid #223654;border-radius:12px;background:#091426;padding:12px}.list h4{margin:0 0 9px;font-family:Cinzel,serif;color:#efcb85;font-size:20px}.list ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}.list li{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #1b2a45;padding-top:7px;font-size:14px}.list li:first-child{border-top:none;padding-top:0}.status{color:var(--ok)}
-    .bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.badge{display:flex;align-items:center;gap:10px;border:1px solid #263a58;border-radius:12px;background:#091325;padding:13px}.badge b{color:#e8b75f}.badge p{margin:0;color:#bdc6d7;font-size:13px}
-    footer{padding:20px 0 34px;color:#98a5bf;font-size:13px}
-    @media (max-width:1120px){h1{font-size:52px}.lead,.sub{font-size:21px}.cat-grid,.book-lists{grid-template-columns:1fr}}
-    @media (max-width:860px){.top-row{flex-wrap:wrap}.hero{grid-template-columns:1fr}.nav{overflow:auto;white-space:nowrap;width:100%}.covers img{height:250px}.covers img.tall{height:266px}.card-sm h3{font-size:29px}h1{font-size:44px}.lead,.sub{font-size:18px}}
+    .top{position:sticky;top:0;z-index:50;background:rgba(4,10,22,.88);backdrop-filter:blur(8px);border-bottom:1px solid #1a2a44}
+    .top-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}.logo{font-family:Cinzel,serif;font-size:35px}.logo span{color:var(--gold2)}.tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#97a4bd}
+    .brand{display:flex;align-items:center;gap:16px}.nav{display:flex;gap:22px;font-size:14px;color:#d5daea}.nav a.active,.nav a:hover{color:#fff;border-bottom:2px solid var(--gold);padding-bottom:5px}
+    .club{border:1px solid #8b6730;border-radius:11px;padding:10px 16px;color:#f0cf8c;font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 1.3fr;gap:22px;padding:34px 0 22px;border-bottom:1px solid #1c2d49}
+    .ey{font-size:14px;letter-spacing:.16em;color:#d9a74d;text-transform:uppercase;margin-bottom:16px}
+    h1{margin:0 0 14px;font-family:Cinzel,serif;font-size:67px;line-height:1.04}.gold{color:var(--gold)}
+    .sub{font-size:29px;line-height:1.2}.sub2{margin-top:12px;color:var(--muted);font-size:24px}
+    .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}.btn{padding:13px 20px;border-radius:10px;font-weight:600}.btn-g{background:linear-gradient(180deg,#e4b960,#c98b30);color:#131313}.btn-o{border:1px solid #88622e;color:#f0cc86}
+    .usp{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.usp>div{display:flex;gap:8px;align-items:flex-start;border:1px solid #213452;background:rgba(10,20,38,.55);border-radius:999px;padding:10px 12px}.usp b{font-size:13px;display:block}.usp span{font-size:12px;color:#adb9cd}
+
+    .bookstage{position:relative;min-height:430px;border-radius:12px;overflow:hidden;background:radial-gradient(circle at 80% 20%,rgba(243,173,87,.15),transparent 40%),linear-gradient(180deg,#0b1730,#0a1429 55%,#070d1b)}
+    .bookstage:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1600&q=80') center/cover no-repeat;opacity:.2;mix-blend-mode:screen}
+    .bookstage:after{content:"";position:absolute;left:0;right:0;bottom:56px;height:120px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55));}
+    .books{position:absolute;left:24px;right:24px;bottom:70px;display:flex;align-items:flex-end;gap:10px}
+    .books img{display:block;height:340px;width:auto;object-fit:cover;border:1px solid #3f3123;border-radius:3px;box-shadow:0 18px 24px rgba(0,0,0,.55)}
+    .books img.tall{height:365px}.books img.small{height:320px}
+    .stone-shelf{position:absolute;left:0;right:0;bottom:0;height:74px;background:linear-gradient(180deg,#4f4a46,#322f2d 45%,#1f1c1a);border-top:2px solid #7b736c;box-shadow:0 -10px 28px rgba(0,0,0,.6) inset}
+
+    .section{padding:20px 0}.section h2{font-family:Cinzel,serif;color:#dfb463;font-size:39px;margin:0 0 12px}
+    .cat-grid{display:grid;grid-template-columns:1fr 1fr .95fr;gap:12px}
+    .big,.small{border:1px solid #2b3f61;border-radius:12px;overflow:hidden;position:relative}
+    .big{min-height:300px;padding:22px;background:linear-gradient(150deg,#0f1e3b,#0a1328)}
+    .big.sp:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=1200&q=80') center/cover no-repeat;opacity:.35}
+    .big.ro:before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80') center/cover no-repeat;opacity:.35}
+    .big *{position:relative}.big h3,.small h3{font-family:Cinzel,serif;margin:0}.big h3{font-size:47px}.big p{font-size:22px;color:#c0cae0;max-width:320px}
+    .small-col{display:flex;flex-direction:column;gap:10px}.small{min-height:93px;padding:14px 16px;background:linear-gradient(145deg,#111d37,#0b1429)}.small h3{font-size:35px}.small p{margin:3px 0 0;color:#c0c9dd;font-size:18px}
+    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.trust div{border:1px solid #263b5a;border-radius:12px;background:#091427;padding:13px}.trust b{color:#e6b65f}
+    @media (max-width:1120px){h1{font-size:52px}.sub,.sub2{font-size:21px}.cat-grid{grid-template-columns:1fr}.trust{grid-template-columns:1fr}}
+    @media (max-width:860px){.top-row{flex-wrap:wrap}.hero{grid-template-columns:1fr}.nav{overflow:auto;white-space:nowrap;width:100%}.books img{height:250px}.books img.tall{height:270px}.books img.small{height:230px}}
   </style>
   <script>
     function go(hash){window.location.hash=hash}
@@ -42,86 +51,36 @@
   </script>
 </head>
 <body>
-  <header class="top">
-    <div class="container top-row">
-      <div class="brand"><a class="logo" href="#home">Discover<span>Visually</span></a><div class="tag">Modern Creative Publishing House</div></div>
-      <nav class="nav"><a class="active" href="#home">Home</a><a href="#spiritual">Spiritual</a><a href="#romantasy">Romantasy</a><a href="#children">For Children</a><a href="#educational">Arts, Crafts & Educational</a><a href="#non-english">Non-English Books</a></nav>
-      <div class="actions"><span class="icon">⌕</span><span class="icon">♡</span><span class="icon">🛒</span><a class="club" href="#club">Join the Club ✧</a></div>
+<header class="top"><div class="container top-row"><div class="brand"><a class="logo" href="#">Discover<span>Visually</span></a><div class="tag">Modern Creative Publishing House</div></div><nav class="nav"><a class="active" href="#">Home</a><a href="#">Spiritual</a><a href="#">Romantasy</a><a href="#">For Children</a><a href="#">Arts, Crafts & Educational</a><a href="#">Non-English Books</a></nav><a class="club" href="#">Join the Club ✧</a></div></header>
+<main class="container">
+  <section class="hero">
+    <div>
+      <div class="ey">Inspiration. Stories. Discovery.</div>
+      <h1>Every category opens<br>a <span class="gold">different world.</span></h1>
+      <div class="sub">Explore handpicked books across genres<br>and find your next great read.</div>
+      <div class="cta"><a class="btn btn-g" href="#">Shop Spiritual →</a><a class="btn btn-o" href="#">Explore Romantasy →</a></div>
+      <div class="usp"><div>📘 <div><b>Carefully curated</b><span>Quality books handpicked for you.</span></div></div><div>🎁 <div><b>Perfect gifts</b><span>Beautiful stories for every occasion.</span></div></div><div>🛡️ <div><b>Secure shopping</b><span>Safe checkout and easy returns.</span></div></div></div>
     </div>
-  </header>
-
-  <main class="container" id="home">
-    <section class="hero">
-      <div>
-        <div class="eyebrow">Inspiration. Stories. Discovery.</div>
-        <h1>Every category opens<br>a <span class="gold">different world.</span></h1>
-        <div class="lead">Explore handpicked books across genres<br>and find your next great read.</div>
-        <div class="cta"><a class="btn btn-gold" href="#spiritual">Shop Spiritual →</a><a class="btn btn-dark" href="#romantasy">Explore Romantasy →</a></div>
-        <div class="usp">
-          <div class="usp-item"><div>📘</div><div><b>Carefully curated</b><span>Quality books handpicked for you.</span></div></div>
-          <div class="usp-item"><div>🎁</div><div><b>Perfect gifts</b><span>Beautiful stories for every occasion.</span></div></div>
-          <div class="usp-item"><div>🛡️</div><div><b>Secure shopping</b><span>Safe checkout and easy returns.</span></div></div>
-        </div>
+    <div class="bookstage">
+      <div class="books">
+        <img class="tall" src="covers/cover-bible.jpg" alt="The Visual Bible">
+        <img class="tall" src="covers/Otterfront.jpg" alt="Romantasy cover">
+        <img src="covers/hedgehog.jpg" alt="Pippin the Hedgehog">
+        <img class="small" src="covers/frontdrawing1.jpg" alt="5 Drawing Worlds">
+        <img class="small" src="covers/vydrafront.jpg" alt="Stela Potočná">
       </div>
-      <div class="hero-books">
-        <div class="covers">
-          <img class="tall" src="covers/cover-bible.jpg" alt="The Visual Bible"/>
-          <img class="tall" src="covers/Otterfront.jpg" alt="Romantasy cover"/>
-          <img src="covers/hedgehog.jpg" alt="Pippin the Hedgehog"/>
-          <img src="covers/frontdrawing1.jpg" alt="5 Drawing Worlds"/>
-          <img src="covers/vydrafront.jpg" alt="Stela Potočná"/>
-        </div>
-        <div class="shelf"></div>
-      </div>
-    </section>
-
-    <section class="section" id="categories">
-      <h2>Shop by category</h2>
-      <div class="cat-grid">
-        <article class="card-lg" id="spiritual"><h3>Spiritual</h3><p>Visual guides to faith, inner peace, and deeper meaning.</p><a class="btn btn-gold" href="https://www.amazon.com/Visual-Bible-Easy-Understand-Christianity/dp/B0GM1LLLQ7" target="_blank">Explore Spiritual →</a></article>
-        <article class="card-lg rom" id="romantasy"><h3>Romantasy</h3><p>Epic love stories in magical worlds that stay with you.</p><a class="btn btn-gold" href="https://www.amazon.com" target="_blank">Explore Romantasy →</a></article>
-        <div class="card-sm-wrap">
-          <article class="card-sm" id="children"><div><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p></div><div class="arrow">›</div></article>
-          <article class="card-sm" id="educational"><div><h3>Arts, Crafts & Educational</h3><p>Creative, practical, and perfect for curious minds.</p></div><div class="arrow">›</div></article>
-          <article class="card-sm" id="non-english"><div><h3>Non-English Books</h3><p>Stories and knowledge from around the world.</p></div><div class="arrow">›</div></article>
-        </div>
-      </div>
-
-      <div class="book-lists">
-        <section class="list">
-          <h4>Spiritual Picks</h4>
-          <ul>
-            <li><span>The Visual Bible</span><span class="status">Available</span></li>
-            <li><span>My First Holy Communion</span><span class="status">Available</span></li>
-            <li><span>Bible Workbook for Kids</span><span class="status">Available</span></li>
-          </ul>
-        </section>
-        <section class="list">
-          <h4>Family & Learning</h4>
-          <ul>
-            <li><span>Pippin the Hedgehog</span><span class="status">Available</span></li>
-            <li><span>5 Drawing Worlds</span><span class="status">Available</span></li>
-            <li><span>Grade 2 Math Workbook</span><span class="status">Available</span></li>
-          </ul>
-        </section>
-        <section class="list">
-          <h4>Non-English Titles</h4>
-          <ul>
-            <li><span>Ježko Pippin</span><span class="status">Available</span></li>
-            <li><span>Stela Potočná</span><span class="status">Available</span></li>
-            <li><span>Polish editions (selected)</span><span class="status">Expanding</span></li>
-          </ul>
-        </section>
-      </div>
-
-      <div class="bottom" id="club">
-        <div class="badge"><div>👑</div><div><b>Join the Club</b><p>Exclusive deals, early access & more.</p></div></div>
-        <div class="badge"><div>🚚</div><div><b>Free shipping</b><p>On orders over $50.</p></div></div>
-        <div class="badge"><div>💛</div><div><b>Loved by readers</b><p>Thousands of happy customers.</p></div></div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="container">© DiscoverVisually — a small visual creative publishing house.</footer>
+      <div class="stone-shelf"></div>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Shop by category</h2>
+    <div class="cat-grid">
+      <article class="big sp"><h3>Spiritual</h3><p>Visual guides to faith, inner peace, and deeper meaning.</p><a class="btn btn-g" href="#">Explore Spiritual →</a></article>
+      <article class="big ro"><h3>Romantasy</h3><p>Epic love stories in magical worlds that stay with you.</p><a class="btn btn-g" href="#">Explore Romantasy →</a></article>
+      <div class="small-col"><article class="small"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p></article><article class="small"><h3>Arts, Crafts & Educational</h3><p>Creative, practical, and perfect for curious minds.</p></article><article class="small"><h3>Non-English Books</h3><p>Stories and knowledge from around the world.</p></article></div>
+    </div>
+    <div class="trust"><div><b>Join the Club</b><p>Exclusive deals, early access & more.</p></div><div><b>Free shipping</b><p>On orders over $50.</p></div><div><b>Loved by readers</b><p>Thousands of happy customers.</p></div></div>
+  </section>
+</main>
 </body>
 </html>
