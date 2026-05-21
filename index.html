@@ -53,6 +53,10 @@
       --cat3: url("images/categories/children.jpg");
       --cat4: url("images/categories/arts-education.jpg");
       --cat5: url("images/categories/non-english.jpg");
+
+      --scrollY: 0px;
+      --scrollY2: 0px;
+      --scrollY3: 0px;
     }
 
     * {
@@ -69,8 +73,8 @@
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 75% -10%, rgba(216,168,74,.18), transparent 32rem),
-        radial-gradient(circle at 8% 10%, rgba(124,244,109,.07), transparent 24rem),
+        radial-gradient(circle at 75% -10%, rgba(216,168,74,.16), transparent 30rem),
+        radial-gradient(circle at 8% 10%, rgba(124,244,109,.07), transparent 22rem),
         linear-gradient(180deg, #03050a, var(--bg) 45%, #060810);
       overflow-x: hidden;
     }
@@ -78,15 +82,36 @@
     body::before {
       content: "";
       position: fixed;
+      inset: -12vh 0;
+      pointer-events: none;
+      z-index: -5;
+      background:
+        linear-gradient(90deg, rgba(5,7,13,.88), rgba(5,7,13,.38), rgba(5,7,13,.9)),
+        var(--hero),
+        linear-gradient(135deg, #111827, #070b12);
+      background-size: cover;
+      background-position: center;
+      transform: translate3d(0, calc(var(--scrollY) * -0.18), 0) scale(1.08);
+      filter: blur(2px) saturate(.92) brightness(.72);
+      opacity: .42;
+      will-change: transform;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -3;
-      background-image:
+      z-index: -4;
+      background:
+        radial-gradient(circle at 18% calc(18% + var(--scrollY2)), rgba(216,168,74,.18), transparent 18rem),
+        radial-gradient(circle at 88% calc(12% + var(--scrollY3)), rgba(124,244,109,.10), transparent 15rem),
+        radial-gradient(circle at 70% calc(70% - var(--scrollY2)), rgba(129,83,220,.13), transparent 22rem),
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-      background-size: 76px 76px;
-      mask-image: radial-gradient(circle at 55% 20%, black 0 42%, transparent 76%);
-      opacity: .38;
+      background-size: auto, auto, auto, 72px 72px, 72px 72px;
+      opacity: .9;
+      will-change: background-position;
     }
 
     a {
@@ -105,7 +130,7 @@
     }
 
     .shell {
-      width: min(var(--max), calc(100% - 48px));
+      width: min(var(--max), calc(100% - 44px));
       margin: auto;
     }
 
@@ -116,51 +141,53 @@
     }
 
     .topbar .shell {
-      min-height: 36px;
+      min-height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .spark {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--green);
       display: inline-block;
       transform: rotate(45deg);
       box-shadow: 0 0 22px rgba(124,244,109,.7);
+      flex: 0 0 auto;
     }
 
     .header {
       position: sticky;
       top: 0;
       z-index: 30;
-      background: rgba(5,7,13,.74);
+      background: rgba(5,7,13,.76);
       border-bottom: 1px solid rgba(255,255,255,.09);
       backdrop-filter: blur(22px);
     }
 
     .nav {
-      height: 74px;
+      height: 60px;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
     }
 
     .logo {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
     }
 
     .mark {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 27px;
+      font-size: 24px;
       font-weight: 900;
       letter-spacing: -.06em;
+      white-space: nowrap;
     }
 
     .mark span {
@@ -168,30 +195,30 @@
     }
 
     .kicker {
-      padding-left: 14px;
+      padding-left: 12px;
       border-left: 1px solid rgba(255,255,255,.16);
       text-transform: uppercase;
-      letter-spacing: .18em;
+      letter-spacing: .16em;
       color: rgba(248,243,234,.55);
-      font-size: 11px;
-      line-height: 1.35;
+      font-size: 10px;
+      line-height: 1.25;
     }
 
     .links {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       border: 1px solid rgba(255,255,255,.09);
       background: rgba(255,255,255,.035);
       border-radius: 999px;
-      padding: 6px;
+      padding: 5px;
     }
 
     .links a {
-      padding: 10px 14px;
+      padding: 8px 10px;
       border-radius: 999px;
       color: rgba(248,243,234,.76);
-      font-size: 14px;
+      font-size: 12.5px;
       white-space: nowrap;
     }
 
@@ -205,12 +232,12 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .icon {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border: 1px solid rgba(255,255,255,.11);
       background: rgba(255,255,255,.035);
       border-radius: 999px;
@@ -228,13 +255,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 0 20px;
+      gap: 9px;
+      min-height: 42px;
+      padding: 0 16px;
       border-radius: 999px;
       font-weight: 800;
       border: 1px solid transparent;
       cursor: pointer;
+      font-size: 14px;
       transition:
         transform .22s cubic-bezier(.2,.8,.2,1),
         box-shadow .22s cubic-bezier(.2,.8,.2,1),
@@ -248,7 +276,7 @@
     .primary {
       color: #0b0b0c;
       background: linear-gradient(135deg, var(--gold2), var(--gold) 62%, #bd8032);
-      box-shadow: 0 16px 38px rgba(216,168,74,.26);
+      box-shadow: 0 16px 38px rgba(216,168,74,.24);
     }
 
     .secondary {
@@ -261,29 +289,41 @@
       display: none;
     }
 
-    .hero {
+    .above-fold {
       position: relative;
-      isolation: isolate;
-      min-height: calc(100vh - 110px);
-      padding: 70px 0 48px;
+      min-height: calc(100vh - 90px);
       display: grid;
-      align-items: center;
+      grid-template-rows: auto auto;
+      align-content: start;
+      gap: 20px;
+      padding: 34px 0 28px;
       overflow: hidden;
     }
 
-    .hero::after {
+    .above-fold::before {
       content: "";
       position: absolute;
-      inset: auto 0 0;
-      height: 240px;
+      inset: 0 0 auto;
+      height: 72%;
+      pointer-events: none;
       z-index: -1;
-      background: linear-gradient(180deg, transparent, var(--bg));
+      background:
+        radial-gradient(circle at 75% 24%, rgba(216,168,74,.20), transparent 24rem),
+        radial-gradient(circle at 16% 20%, rgba(124,244,109,.08), transparent 20rem),
+        linear-gradient(180deg, rgba(5,7,13,.08), rgba(5,7,13,.92));
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      align-items: center;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(340px, .78fr) minmax(520px, 1.22fr);
-      gap: 44px;
+      grid-template-columns: minmax(360px, .82fr) minmax(520px, 1.18fr);
+      gap: 34px;
       align-items: center;
     }
 
@@ -291,19 +331,20 @@
       display: inline-flex;
       gap: 10px;
       align-items: center;
-      margin: 0 0 20px;
+      margin: 0 0 14px;
       color: var(--gold2);
       text-transform: uppercase;
-      letter-spacing: .24em;
-      font-size: 13px;
+      letter-spacing: .22em;
+      font-size: 11px;
       font-weight: 900;
     }
 
     .h1 {
-      font-size: clamp(56px, 8vw, 112px);
-      line-height: .88;
+      font-size: clamp(42px, 5.6vw, 82px);
+      line-height: .89;
       margin: 0;
       font-weight: 780;
+      max-width: 720px;
     }
 
     .gold {
@@ -312,72 +353,75 @@
     }
 
     .copy {
-      font-size: clamp(17px, 1.4vw, 21px);
-      line-height: 1.6;
+      font-size: clamp(15px, 1.08vw, 18px);
+      line-height: 1.52;
       color: rgba(248,243,234,.78);
-      max-width: 600px;
-      margin: 26px 0 0;
+      max-width: 570px;
+      margin: 18px 0 0;
     }
 
     .ctas {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 32px;
+      margin-top: 22px;
     }
 
     .proofs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 36px;
-      max-width: 700px;
+      gap: 10px;
+      margin-top: 22px;
+      max-width: 660px;
     }
 
     .proof {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: flex-start;
-      padding: 14px;
+      padding: 11px;
       border: 1px solid rgba(255,255,255,.09);
-      border-radius: 18px;
+      border-radius: 16px;
       background: rgba(255,255,255,.035);
+      backdrop-filter: blur(10px);
     }
 
     .proof i {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 11px;
       background: rgba(216,168,74,.13);
       display: grid;
       place-items: center;
       color: var(--gold2);
       font-style: normal;
+      font-size: 15px;
+      flex: 0 0 auto;
     }
 
     .proof strong {
       display: block;
-      font-size: 14px;
+      font-size: 12.5px;
     }
 
     .proof span span {
       display: block;
       color: rgba(248,243,234,.58);
-      font-size: 12px;
-      line-height: 1.35;
-      margin-top: 3px;
+      font-size: 11px;
+      line-height: 1.25;
+      margin-top: 2px;
     }
 
     .hero-art-wrap {
       position: relative;
-      min-height: 610px;
+      min-height: clamp(330px, 41vh, 430px);
       perspective: 1200px;
     }
 
     .hero-art {
       position: absolute;
       inset: 0;
-      border-radius: 34px;
+      border-radius: 28px;
       overflow: hidden;
       border: 1px solid rgba(216,168,74,.16);
       background:
@@ -388,8 +432,18 @@
         linear-gradient(135deg, #111827, #070b12);
       background-size: cover;
       background-position: center;
-      box-shadow: 0 50px 120px rgba(0,0,0,.55);
+      box-shadow: 0 34px 80px rgba(0,0,0,.48);
       transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5,7,13,.38), transparent 40%, rgba(5,7,13,.22)),
+        radial-gradient(circle at 62% 70%, rgba(243,208,138,.12), transparent 18rem);
+      pointer-events: none;
     }
 
     .float {
@@ -397,16 +451,16 @@
       z-index: 2;
       border: 1px solid rgba(216,168,74,.26);
       background: rgba(5,7,13,.72);
-      border-radius: 22px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      border-radius: 20px;
+      box-shadow: 0 18px 58px rgba(0,0,0,.36);
       backdrop-filter: blur(16px);
     }
 
     .pick {
       right: 2%;
-      top: 7%;
-      width: 210px;
-      padding: 16px;
+      top: 6%;
+      width: 190px;
+      padding: 14px;
     }
 
     .tag {
@@ -414,42 +468,42 @@
       background: var(--gold2);
       color: #11100d;
       border-radius: 999px;
-      padding: 6px 9px;
-      font-size: 11px;
+      padding: 5px 8px;
+      font-size: 10px;
       text-transform: uppercase;
       font-weight: 900;
       letter-spacing: .08em;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .pick strong {
       display: block;
-      font-size: 21px;
+      font-size: 18px;
       line-height: 1.05;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
     .pick span:last-child {
-      font-size: 13px;
+      font-size: 12px;
       color: rgba(248,243,234,.62);
-      line-height: 1.45;
+      line-height: 1.38;
     }
 
     .path {
-      left: -14px;
-      bottom: 62px;
-      width: 360px;
-      padding: 14px;
+      left: -10px;
+      bottom: 28px;
+      width: 320px;
+      padding: 12px;
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
     }
 
     .path i {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 15px;
       background: rgba(124,244,109,.1);
       color: var(--green);
       display: grid;
@@ -460,50 +514,55 @@
     .path small {
       display: block;
       color: rgba(248,243,234,.58);
-      font-size: 12px;
+      font-size: 11px;
       margin-top: 2px;
     }
 
-    .section {
-      padding: 86px 0;
+    .compact-categories {
       position: relative;
+      z-index: 2;
+    }
+
+    .compact-categories .section-head {
+      margin-bottom: 14px;
     }
 
     .section-head {
       display: flex;
       align-items: end;
       justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 28px;
+      gap: 24px;
+      margin-bottom: 24px;
     }
 
     .section-k {
       color: var(--green);
       text-transform: uppercase;
       letter-spacing: .2em;
-      font-size: 12px;
+      font-size: 10.5px;
       font-weight: 900;
-      margin: 0 0 10px;
+      margin: 0 0 7px;
     }
 
-    .section h2 {
-      font-size: clamp(36px, 4vw, 66px);
+    .section h2,
+    .compact-categories h2 {
+      font-size: clamp(28px, 3vw, 46px);
       line-height: .95;
       margin: 0;
     }
 
     .section-p {
-      max-width: 620px;
+      max-width: 570px;
       color: rgba(248,243,234,.68);
-      font-size: 17px;
-      line-height: 1.6;
-      margin: 14px 0 0;
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 10px 0 0;
     }
 
     .cat-grid {
       display: grid;
       grid-template-columns: 1.05fr 1.05fr .92fr;
-      gap: 18px;
+      gap: 14px;
     }
 
     .big,
@@ -513,21 +572,21 @@
       overflow: hidden;
       border: 1px solid var(--line);
       background: var(--panel);
-      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      box-shadow: 0 18px 52px rgba(0,0,0,.32);
       transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s;
     }
 
     .big:hover,
     .small:hover {
-      transform: translateY(-6px);
+      transform: translateY(-5px);
       border-color: rgba(216,168,74,.42);
-      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
+      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 22px 70px rgba(0,0,0,.42);
     }
 
     .big {
-      min-height: 480px;
-      border-radius: 30px;
-      padding: 28px;
+      min-height: clamp(205px, 25vh, 270px);
+      border-radius: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -540,9 +599,9 @@
       inset: 0;
       z-index: -2;
       background:
-        linear-gradient(180deg, rgba(5,7,13,.03), rgba(5,7,13,.72) 58%, rgba(5,7,13,.95)),
+        linear-gradient(180deg, rgba(5,7,13,.08), rgba(5,7,13,.66) 52%, rgba(5,7,13,.95)),
         var(--cat),
-        radial-gradient(circle at 62% 38%, rgba(216,168,74,.25), transparent 20rem),
+        radial-gradient(circle at 62% 38%, rgba(216,168,74,.25), transparent 18rem),
         linear-gradient(135deg, #101827, #080b12);
       background-size: cover;
       background-position: center;
@@ -561,7 +620,7 @@
       inset: 0;
       z-index: -1;
       background:
-        radial-gradient(circle at 20% 20%, rgba(243,208,138,.14), transparent 14rem),
+        radial-gradient(circle at 20% 20%, rgba(243,208,138,.13), transparent 13rem),
         linear-gradient(135deg, rgba(255,255,255,.06), transparent 36%);
     }
 
@@ -573,17 +632,17 @@
 
     .badge {
       position: absolute;
-      left: 22px;
-      top: 22px;
+      left: 16px;
+      top: 16px;
       display: inline-flex;
-      gap: 8px;
+      gap: 7px;
       align-items: center;
       background: rgba(5,7,13,.55);
       border: 1px solid rgba(243,208,138,.24);
       border-radius: 999px;
-      padding: 8px 11px;
+      padding: 7px 9px;
       color: var(--gold2);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: .1em;
@@ -592,8 +651,8 @@
 
     .badge::before {
       content: "";
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       background: var(--gold2);
       border-radius: 50%;
       box-shadow: 0 0 18px rgba(243,208,138,.65);
@@ -602,7 +661,7 @@
     .big h3,
     .small h3 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(32px, 3vw, 54px);
+      font-size: clamp(24px, 2.1vw, 36px);
       line-height: 1;
       letter-spacing: -.055em;
       margin: 0;
@@ -611,9 +670,10 @@
     .big p,
     .small p {
       color: rgba(248,243,234,.74);
-      line-height: 1.55;
-      max-width: 440px;
-      margin: 12px 0 22px;
+      line-height: 1.42;
+      max-width: 420px;
+      margin: 9px 0 14px;
+      font-size: 13px;
     }
 
     .mini {
@@ -623,46 +683,52 @@
       background: linear-gradient(135deg, var(--gold2), var(--gold));
       color: #0b0b0c;
       border-radius: 999px;
-      padding: 12px 16px;
+      padding: 9px 12px;
       width: max-content;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 12.5px;
     }
 
     .small-stack {
       display: grid;
-      gap: 18px;
+      gap: 14px;
     }
 
     .small {
-      min-height: 148px;
-      border-radius: 24px;
-      padding: 24px 70px 22px 24px;
+      min-height: clamp(62px, 7.6vh, 82px);
+      border-radius: 20px;
+      padding: 14px 56px 14px 16px;
       display: grid;
       align-items: center;
     }
 
     .small h3 {
-      font-size: 30px;
+      font-size: clamp(19px, 1.45vw, 25px);
     }
 
     .small p {
-      font-size: 15px;
-      margin: 8px 0 0;
+      font-size: 12px;
+      margin: 5px 0 0;
+      max-width: 360px;
     }
 
     .arrow {
       position: absolute;
-      right: 18px;
-      bottom: 18px;
-      width: 38px;
-      height: 38px;
+      right: 14px;
+      bottom: 14px;
+      width: 32px;
+      height: 32px;
       border-radius: 999px;
       display: grid;
       place-items: center;
       color: #0b0b0c;
       background: linear-gradient(135deg, var(--gold2), var(--gold));
       font-weight: 900;
+    }
+
+    .section {
+      padding: 64px 0;
+      position: relative;
     }
 
     .books {
@@ -676,15 +742,15 @@
     .book-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-      margin-top: 34px;
+      gap: 16px;
+      margin-top: 28px;
     }
 
     .book {
-      min-height: 460px;
-      padding: 16px;
+      min-height: 410px;
+      padding: 14px;
       border: 1px solid rgba(255,255,255,.11);
-      border-radius: 28px;
+      border-radius: 26px;
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
       box-shadow: 0 20px 70px rgba(0,0,0,.38);
       display: flex;
@@ -699,8 +765,8 @@
 
     .cover {
       flex: 1;
-      min-height: 290px;
-      border-radius: 20px;
+      min-height: 250px;
+      border-radius: 18px;
       border: 1px solid rgba(216,168,74,.18);
       background:
         linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.34)),
@@ -716,14 +782,14 @@
     .cover::after {
       content: attr(data-ph);
       position: absolute;
-      inset: auto 12px 12px;
-      padding: 9px 10px;
-      border-radius: 12px;
+      inset: auto 10px 10px;
+      padding: 8px 9px;
+      border-radius: 11px;
       border: 1px dashed rgba(255,255,255,.22);
       background: rgba(0,0,0,.42);
       color: rgba(248,243,234,.66);
-      font-size: 11px;
-      line-height: 1.3;
+      font-size: 10px;
+      line-height: 1.25;
       backdrop-filter: blur(12px);
     }
 
@@ -735,7 +801,7 @@
 
     .book h3 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 25px;
+      font-size: 22px;
       letter-spacing: -.045em;
       line-height: 1;
       margin: 0;
@@ -743,17 +809,17 @@
 
     .book p {
       color: rgba(248,243,234,.62);
-      font-size: 13px;
-      line-height: 1.45;
+      font-size: 12.5px;
+      line-height: 1.4;
     }
 
     .book-info {
-      padding: 16px 4px 0;
+      padding: 14px 3px 0;
     }
 
     .label {
       color: var(--green);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -767,9 +833,9 @@
 
     .quiz {
       border: 1px solid rgba(216,168,74,.24);
-      border-radius: 30px;
-      padding: 34px;
-      min-height: 470px;
+      border-radius: 28px;
+      padding: 30px;
+      min-height: 430px;
       background:
         radial-gradient(circle at 12% 12%, rgba(124,244,109,.13), transparent 18rem),
         radial-gradient(circle at 82% 74%, rgba(216,168,74,.18), transparent 20rem),
@@ -778,14 +844,14 @@
     }
 
     .quiz h2 {
-      font-size: clamp(38px, 4vw, 72px);
+      font-size: clamp(34px, 3.4vw, 60px);
       line-height: .92;
     }
 
     .quiz p {
       color: rgba(248,243,234,.7);
-      font-size: 17px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.55;
     }
 
     .option {
@@ -793,14 +859,15 @@
       display: flex;
       justify-content: space-between;
       gap: 18px;
-      padding: 16px;
+      padding: 14px;
       border: 1px solid rgba(255,255,255,.1);
-      border-radius: 18px;
+      border-radius: 17px;
       background: rgba(255,255,255,.045);
       color: var(--text);
-      margin-top: 12px;
+      margin-top: 11px;
       cursor: pointer;
       text-align: left;
+      font-size: 13px;
     }
 
     .option:hover,
@@ -812,7 +879,7 @@
     .result {
       display: none;
       margin-top: 18px;
-      padding: 16px;
+      padding: 15px;
       border-radius: 18px;
       background: rgba(124,244,109,.1);
       border: 1px solid rgba(124,244,109,.23);
@@ -825,16 +892,16 @@
 
     .steps {
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
     .step {
       display: grid;
-      grid-template-columns: 86px 1fr;
-      gap: 18px;
+      grid-template-columns: 74px 1fr;
+      gap: 16px;
       align-items: center;
-      min-height: 145px;
-      padding: 22px;
+      min-height: 130px;
+      padding: 20px;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 24px;
       background: rgba(255,255,255,.045);
@@ -842,33 +909,34 @@
     }
 
     .num {
-      width: 70px;
-      height: 70px;
-      border-radius: 24px;
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
       display: grid;
       place-items: center;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 28px;
+      font-size: 25px;
       color: #0b0b0c;
       background: linear-gradient(135deg, var(--gold2), var(--gold));
     }
 
     .step h3 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 29px;
+      font-size: 26px;
       letter-spacing: -.04em;
       margin: 0;
     }
 
     .step p {
       color: rgba(248,243,234,.65);
-      line-height: 1.5;
-      margin: 6px 0 0;
+      line-height: 1.45;
+      margin: 5px 0 0;
+      font-size: 14px;
     }
 
     .parallax {
       position: relative;
-      min-height: 540px;
+      min-height: 480px;
       display: grid;
       align-items: center;
       overflow: hidden;
@@ -877,7 +945,7 @@
 
     .pbg {
       position: absolute;
-      inset: -12% 0;
+      inset: -14% 0;
       z-index: -2;
       background:
         linear-gradient(90deg, rgba(5,7,13,.86), rgba(5,7,13,.36) 54%, rgba(5,7,13,.92)),
@@ -901,32 +969,32 @@
     }
 
     .band {
-      max-width: 680px;
-      padding: 48px 0;
+      max-width: 650px;
+      padding: 44px 0;
     }
 
     .band h2 {
-      font-size: clamp(42px, 5vw, 82px);
+      font-size: clamp(38px, 4.2vw, 70px);
       line-height: .92;
     }
 
     .band p {
       color: rgba(248,243,234,.72);
-      font-size: 19px;
-      line-height: 1.65;
+      font-size: 17px;
+      line-height: 1.6;
     }
 
     .trust {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 15px;
     }
 
     .trust-card {
-      min-height: 210px;
-      padding: 24px;
+      min-height: 190px;
+      padding: 22px;
       border: 1px solid rgba(255,255,255,.1);
-      border-radius: 26px;
+      border-radius: 24px;
       background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
       box-shadow: 0 20px 70px rgba(0,0,0,.38);
     }
@@ -934,30 +1002,31 @@
     .trust-card b {
       display: block;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 26px;
+      font-size: 24px;
       letter-spacing: -.04em;
       margin-bottom: 8px;
     }
 
     .trust-card p {
       color: rgba(248,243,234,.64);
-      line-height: 1.5;
+      line-height: 1.45;
+      font-size: 14px;
     }
 
     .ico {
       color: var(--gold2);
-      font-size: 30px;
-      margin-bottom: 18px;
+      font-size: 28px;
+      margin-bottom: 15px;
     }
 
     .newsletter {
-      padding-bottom: 110px;
+      padding-bottom: 90px;
     }
 
     .club {
       border: 1px solid rgba(216,168,74,.24);
-      border-radius: 36px;
-      padding: clamp(32px, 5vw, 64px);
+      border-radius: 34px;
+      padding: clamp(30px, 4.4vw, 58px);
       background:
         radial-gradient(circle at 82% 16%, rgba(124,244,109,.13), transparent 20rem),
         radial-gradient(circle at 18% 72%, rgba(216,168,74,.18), transparent 23rem),
@@ -969,20 +1038,20 @@
     .club-grid {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 36px;
+      gap: 32px;
       align-items: end;
     }
 
     .club h2 {
-      font-size: clamp(40px, 5vw, 82px);
+      font-size: clamp(38px, 4.5vw, 74px);
       line-height: .92;
     }
 
     .club p {
       max-width: 620px;
       color: rgba(248,243,234,.72);
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.55;
     }
 
     .signup {
@@ -1015,9 +1084,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 24px;
-      min-height: 94px;
+      min-height: 86px;
       color: rgba(248,243,234,.54);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .footer-links {
@@ -1028,7 +1097,7 @@
 
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(20px);
       transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
     }
 
@@ -1051,12 +1120,16 @@
         display: grid;
       }
 
+      .above-fold {
+        min-height: auto;
+      }
+
       .hero-grid {
         grid-template-columns: 1fr;
       }
 
       .hero-art-wrap {
-        min-height: 560px;
+        min-height: 440px;
       }
 
       .cat-grid {
@@ -1069,7 +1142,7 @@
       }
 
       .small {
-        min-height: 220px;
+        min-height: 160px;
       }
 
       .book-grid {
@@ -1099,7 +1172,7 @@
       }
 
       .nav {
-        height: 66px;
+        height: 64px;
       }
 
       .mark {
@@ -1111,13 +1184,13 @@
         display: none;
       }
 
-      .hero {
-        min-height: auto;
-        padding: 48px 0 30px;
+      .above-fold {
+        padding: 42px 0 32px;
+        gap: 38px;
       }
 
       .h1 {
-        font-size: clamp(48px, 16vw, 70px);
+        font-size: clamp(46px, 15vw, 68px);
       }
 
       .copy {
@@ -1131,11 +1204,11 @@
       }
 
       .hero-art-wrap {
-        min-height: 390px;
+        min-height: 360px;
       }
 
       .pick {
-        width: 190px;
+        width: 180px;
         top: 14px;
         right: 12px;
       }
@@ -1149,7 +1222,7 @@
       }
 
       .section {
-        padding: 62px 0;
+        padding: 58px 0;
       }
 
       .section-head {
@@ -1163,16 +1236,33 @@
       }
 
       .big {
-        min-height: 410px;
-        padding: 24px;
+        min-height: 300px;
+        padding: 22px;
+      }
+
+      .small {
+        min-height: 160px;
+        padding: 22px 64px 22px 22px;
+      }
+
+      .small h3 {
+        font-size: 28px;
+      }
+
+      .small p {
+        font-size: 14px;
       }
 
       .book {
         min-height: 430px;
       }
 
+      .cover {
+        min-height: 280px;
+      }
+
       .parallax {
-        min-height: 470px;
+        min-height: 450px;
       }
 
       .trust {
@@ -1198,6 +1288,68 @@
       }
     }
 
+    @media (max-height: 780px) and (min-width: 1181px) {
+      .topbar .shell {
+        min-height: 28px;
+      }
+
+      .nav {
+        height: 56px;
+      }
+
+      .above-fold {
+        min-height: calc(100vh - 84px);
+        padding: 24px 0 20px;
+        gap: 14px;
+      }
+
+      .h1 {
+        font-size: clamp(40px, 5vw, 72px);
+      }
+
+      .copy {
+        margin-top: 14px;
+        font-size: 15px;
+      }
+
+      .ctas {
+        margin-top: 18px;
+      }
+
+      .proofs {
+        margin-top: 18px;
+      }
+
+      .hero-art-wrap {
+        min-height: 350px;
+      }
+
+      .big {
+        min-height: 210px;
+      }
+
+      .small {
+        min-height: 65px;
+      }
+
+      .compact-categories .section-head {
+        margin-bottom: 10px;
+      }
+
+      .section-p {
+        display: none;
+      }
+
+      .big p {
+        font-size: 12.5px;
+        margin-bottom: 12px;
+      }
+
+      .small p {
+        display: none;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -1207,6 +1359,7 @@
         scroll-behavior: auto !important;
       }
 
+      body::before,
       .pbg {
         transform: none !important;
       }
@@ -1258,91 +1411,93 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="shell hero-grid">
-        <div class="reveal in">
-          <p class="eyebrow"><span class="spark"></span> Inspiration. Stories. Discovery.</p>
-          <h1 class="h1 serif">Every category opens <span class="gold">a different world.</span></h1>
-          <p class="copy">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight. Start with the world that calls to you first.</p>
+    <div class="above-fold">
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div class="reveal in">
+            <p class="eyebrow"><span class="spark"></span> Inspiration. Stories. Discovery.</p>
+            <h1 class="h1 serif">Every category opens <span class="gold">a different world.</span></h1>
+            <p class="copy">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight. Start with the world that calls to you first.</p>
 
-          <div class="ctas">
-            <a href="#spiritual" class="btn primary">Shop Spiritual →</a>
-            <a href="#romantasy" class="btn secondary">Explore Romantasy →</a>
+            <div class="ctas">
+              <a href="#spiritual" class="btn primary">Shop Spiritual →</a>
+              <a href="#romantasy" class="btn secondary">Explore Romantasy →</a>
+            </div>
+
+            <div class="proofs">
+              <div class="proof"><i>📖</i><span><strong>Carefully curated</strong><span>Books with clear themes.</span></span></div>
+              <div class="proof"><i>🎁</i><span><strong>Perfect gifts</strong><span>Visual and easy to choose.</span></span></div>
+              <div class="proof"><i>🛡</i><span><strong>Secure shopping</strong><span>Clear path to each title.</span></span></div>
+            </div>
           </div>
 
-          <div class="proofs">
-            <div class="proof"><i>📖</i><span><strong>Carefully curated</strong><span>Books with clear themes and purpose.</span></span></div>
-            <div class="proof"><i>🎁</i><span><strong>Perfect gifts</strong><span>Visual, memorable, easy to choose.</span></span></div>
-            <div class="proof"><i>🛡</i><span><strong>Secure shopping</strong><span>Clear paths to the right title.</span></span></div>
+          <div class="hero-art-wrap" data-tilt>
+            <div class="hero-art"></div>
+
+            <aside class="float pick">
+              <span class="tag">Featured</span>
+              <strong class="serif">Start with a world, not a search box.</strong>
+              <span>Category-first discovery for gift buyers and curious readers.</span>
+            </aside>
+
+            <aside class="float path">
+              <i>⌁</i>
+              <span><strong>Reader path</strong><small>Choose a category → discover the best-fit book → gift or read.</small></span>
+              <b>→</b>
+            </aside>
           </div>
         </div>
+      </section>
 
-        <div class="hero-art-wrap" data-tilt>
-          <div class="hero-art"></div>
-
-          <aside class="float pick">
-            <span class="tag">Featured</span>
-            <strong class="serif">Start with a world, not a search box.</strong>
-            <span>Category-first discovery for gift buyers and curious readers.</span>
-          </aside>
-
-          <aside class="float path">
-            <i>⌁</i>
-            <span><strong>Reader path</strong><small>Choose a category → discover the best-fit book → gift or read.</small></span>
-            <b>→</b>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="categories">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div>
-            <p class="section-k">Category-first discovery</p>
-            <h2 class="serif">Shop by category</h2>
-            <p class="section-p">A landing page built around the fastest decision a reader can make: “Which world do I want to enter?”</p>
+      <section class="compact-categories" id="categories">
+        <div class="shell">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-k">Category-first discovery</p>
+              <h2 class="serif">Shop by category</h2>
+              <p class="section-p">Pick the world first. Then discover the book that fits.</p>
+            </div>
+            <a class="btn secondary" href="#featured-books">View featured books →</a>
           </div>
-          <a class="btn secondary" href="#featured-books">View featured books →</a>
-        </div>
 
-        <div class="cat-grid">
-          <a class="big spiritual reveal" id="spiritual" href="#">
-            <span class="badge">Priority</span>
-            <h3>Spiritual</h3>
-            <p>Visual guides to faith, reflection, symbolism, and deeper meaning — crafted for readers who want beauty and substance.</p>
-            <span class="mini">Explore Spiritual →</span>
-          </a>
-
-          <a class="big romantasy reveal" id="romantasy" href="#">
-            <span class="badge">Priority</span>
-            <h3>Romantasy</h3>
-            <p>Magical worlds, intense emotions, high-concept hooks, and collectible story experiences for fantasy-romance readers.</p>
-            <span class="mini">Explore Romantasy →</span>
-          </a>
-
-          <div class="small-stack">
-            <a class="small children reveal" id="children" href="#">
-              <h3>For Children</h3>
-              <p>Fun stories, real facts, brave characters, and big imagination.</p>
-              <span class="arrow">→</span>
+          <div class="cat-grid">
+            <a class="big spiritual reveal" id="spiritual" href="#">
+              <span class="badge">Priority</span>
+              <h3>Spiritual</h3>
+              <p>Visual guides to faith, reflection, symbolism, and deeper meaning.</p>
+              <span class="mini">Explore Spiritual →</span>
             </a>
 
-            <a class="small education reveal" id="education" href="#">
-              <h3>Arts, Crafts & Educational</h3>
-              <p>Creative learning books for curious minds and visual thinkers.</p>
-              <span class="arrow">→</span>
+            <a class="big romantasy reveal" id="romantasy" href="#">
+              <span class="badge">Priority</span>
+              <h3>Romantasy</h3>
+              <p>Magical worlds, intense emotions, high-concept hooks, and collectible story experiences.</p>
+              <span class="mini">Explore Romantasy →</span>
             </a>
 
-            <a class="small nonenglish reveal" id="nonenglish" href="#">
-              <h3>Non-English Books</h3>
-              <p>Selected stories and knowledge titles beyond English.</p>
-              <span class="arrow">→</span>
-            </a>
+            <div class="small-stack">
+              <a class="small children reveal" id="children" href="#">
+                <h3>For Children</h3>
+                <p>Fun stories, real facts, brave characters, and big imagination.</p>
+                <span class="arrow">→</span>
+              </a>
+
+              <a class="small education reveal" id="education" href="#">
+                <h3>Arts, Crafts & Educational</h3>
+                <p>Creative learning books for curious minds and visual thinkers.</p>
+                <span class="arrow">→</span>
+              </a>
+
+              <a class="small nonenglish reveal" id="nonenglish" href="#">
+                <h3>Non-English Books</h3>
+                <p>Selected stories and knowledge titles beyond English.</p>
+                <span class="arrow">→</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <section class="section books" id="featured-books">
       <div class="shell">
@@ -1596,16 +1751,24 @@
     let ticking = false;
 
     function updateParallax() {
-      if (!parallaxBg) return;
-      const rect = parallaxBg.parentElement.getBoundingClientRect();
-      const viewport = innerHeight || 800;
-      const progress = (rect.top - viewport) / (rect.height + viewport);
-      const y = Math.max(-80, Math.min(80, progress * -120));
-      parallaxBg.style.setProperty("--py", y + "px");
+      const y = window.scrollY || window.pageYOffset || 0;
+
+      document.documentElement.style.setProperty("--scrollY", y + "px");
+      document.documentElement.style.setProperty("--scrollY2", (y * 0.08) + "px");
+      document.documentElement.style.setProperty("--scrollY3", (y * 0.13) + "px");
+
+      if (parallaxBg) {
+        const rect = parallaxBg.parentElement.getBoundingClientRect();
+        const viewport = innerHeight || 800;
+        const progress = (rect.top - viewport) / (rect.height + viewport);
+        const py = Math.max(-85, Math.min(85, progress * -130));
+        parallaxBg.style.setProperty("--py", py + "px");
+      }
+
       ticking = false;
     }
 
-    if (parallaxBg && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
       addEventListener("scroll", () => {
         if (!ticking) {
           requestAnimationFrame(updateParallax);
