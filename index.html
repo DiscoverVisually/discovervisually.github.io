@@ -3,115 +3,99 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DiscoverVisually — Creative Visual Book Publishing House</title>
-  <meta name="description" content="Discover visually rich books from an indie creative publishing house: spiritual guides, romantasy, children's books, creative learning, and non-English titles." />
+  <title>DiscoverVisually — Visual Books for Every World</title>
+  <meta name="description" content="DiscoverVisually is an indie visual book publishing house creating immersive books across spiritual wisdom, romantasy, children's stories, arts, crafts, educational titles, and non-English books." />
 
   <!--
-    IMAGE PATHS
+    IMAGE PLACEHOLDER MAP
+    Put final generated assets into these paths, or change the CSS variables below.
 
-    Hero:
-    landingpic.png
+    GLOBAL / HERO
+    images/hero/hero-3d-book-field.jpg
+      - wide cinematic background with several floating / tilted 3D book covers
+      - dark premium bookstore atmosphere, warm gold, subtle purple accents
+      - should occupy the full hero right side and continue behind the top area
 
-    Book covers:
-    images/covers/bible-mysteries.png
-    images/covers/kpop-demon-idol-romantasy.png
-    images/covers/pippin-the-hedgehog.png
-    images/covers/drawing-worlds.png
-    images/covers/stela-potocna.png
+    images/hero/hero-main-book.png
+      - main large floating 3D book cover, transparent PNG preferred
+      - shown as the largest tilted book in the hero
 
-    Optional category backgrounds:
-    images/categories/spiritual.jpg
-    images/categories/romantasy.jpg
-    images/categories/children.jpg
-    images/categories/arts-education.jpg
-    images/categories/non-english.jpg
+    images/hero/hero-side-book-left.png
+      - smaller floating 3D book to the left of main book
+
+    images/hero/hero-side-book-right.png
+      - smaller floating 3D book to the right of main book
+
+    images/hero/hero-side-book-far.png
+      - far-right blurred/background book
+
+    CATEGORY CARDS
+    images/categories/spiritual-card.jpg
+    images/categories/romantasy-card.jpg
+    images/categories/children-card.jpg
+    images/categories/arts-education-card.jpg
+    images/categories/non-english-card.jpg
+
+    OPTIONAL TEXTURES / DECORATIVE
+    images/textures/gold-dust.png
+    images/textures/book-spine-wall.jpg
   -->
 
   <style>
     :root {
-      --bg: #05070d;
-      --bg2: #080d16;
-      --panel: rgba(13, 18, 30, .76);
-      --line: rgba(255,255,255,.11);
-      --gold: #d8a84a;
-      --gold2: #f3d08a;
+      --bg: #050506;
+      --bg-soft: #080808;
+      --panel: rgba(9, 9, 9, .58);
+      --panel-strong: rgba(7, 7, 7, .78);
+      --line: rgba(236, 184, 92, .22);
+      --line-soft: rgba(255, 255, 255, .09);
+      --gold: #d6a54b;
+      --gold-soft: #efcd83;
+      --gold-dark: #9a6928;
+      --text: #f7efe3;
+      --muted: rgba(247, 239, 227, .68);
+      --muted-2: rgba(247, 239, 227, .48);
       --green: #7cf46d;
-      --text: #f8f3ea;
-      --muted: #b9b2a6;
-      --max: 1440px;
+      --max: 1680px;
+      --radius: 26px;
+      --shadow: 0 24px 80px rgba(0,0,0,.48);
+      --shadow-gold: 0 0 0 1px rgba(214,165,75,.25), 0 24px 80px rgba(0,0,0,.56);
 
-      --hero: url("landingpic.png");
+      --hero-bg: url("images/hero/hero-3d-book-field.jpg");
+      --hero-main-book: url("images/hero/hero-main-book.png");
+      --hero-side-book-left: url("images/hero/hero-side-book-left.png");
+      --hero-side-book-right: url("images/hero/hero-side-book-right.png");
+      --hero-side-book-far: url("images/hero/hero-side-book-far.png");
 
-      --cover1: url("images/covers/bible-mysteries.png");
-      --cover2: url("images/covers/kpop-demon-idol-romantasy.png");
-      --cover3: url("images/covers/pippin-the-hedgehog.png");
-      --cover4: url("images/covers/drawing-worlds.png");
-      --cover5: url("images/covers/stela-potocna.png");
-
-      --cat1: url("images/categories/spiritual.jpg");
-      --cat2: url("images/categories/romantasy.jpg");
-      --cat3: url("images/categories/children.jpg");
-      --cat4: url("images/categories/arts-education.jpg");
-      --cat5: url("images/categories/non-english.jpg");
+      --cat-spiritual: url("images/categories/spiritual-card.jpg");
+      --cat-romantasy: url("images/categories/romantasy-card.jpg");
+      --cat-children: url("images/categories/children-card.jpg");
+      --cat-education: url("images/categories/arts-education-card.jpg");
+      --cat-nonenglish: url("images/categories/non-english-card.jpg");
 
       --scrollY: 0px;
-      --scrollY2: 0px;
-      --scrollY3: 0px;
+      --mouseX: 0px;
+      --mouseY: 0px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
-      scroll-behavior: smooth;
       background: var(--bg);
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
+      min-height: 100vh;
       color: var(--text);
+      background: var(--bg);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at 75% -10%, rgba(216,168,74,.16), transparent 30rem),
-        radial-gradient(circle at 8% 10%, rgba(124,244,109,.07), transparent 22rem),
-        linear-gradient(180deg, #03050a, var(--bg) 45%, #060810);
       overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: -12vh 0;
-      pointer-events: none;
-      z-index: -5;
-      background:
-        linear-gradient(90deg, rgba(5,7,13,.88), rgba(5,7,13,.38), rgba(5,7,13,.9)),
-        var(--hero),
-        linear-gradient(135deg, #111827, #070b12);
-      background-size: cover;
-      background-position: center;
-      transform: translate3d(0, calc(var(--scrollY) * -0.18), 0) scale(1.08);
-      filter: blur(2px) saturate(.92) brightness(.72);
-      opacity: .42;
-      will-change: transform;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -4;
-      background:
-        radial-gradient(circle at 18% calc(18% + var(--scrollY2)), rgba(216,168,74,.18), transparent 18rem),
-        radial-gradient(circle at 88% calc(12% + var(--scrollY3)), rgba(124,244,109,.10), transparent 15rem),
-        radial-gradient(circle at 70% calc(70% - var(--scrollY2)), rgba(129,83,220,.13), transparent 22rem),
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-      background-size: auto, auto, auto, 72px 72px, 72px 72px;
-      opacity: .9;
-      will-change: background-position;
+    body::selection {
+      background: rgba(214,165,75,.35);
     }
 
     a {
@@ -130,404 +114,546 @@
     }
 
     .shell {
-      width: min(var(--max), calc(100% - 44px));
-      margin: auto;
+      width: min(var(--max), calc(100% - 72px));
+      margin-inline: auto;
     }
 
-    .topbar {
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: linear-gradient(90deg, rgba(216,168,74,.1), rgba(124,244,109,.06), rgba(216,168,74,.05));
-      color: rgba(248,243,234,.78);
+    .ambient-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 76% -10%, rgba(214,165,75,.20), transparent 32rem),
+        radial-gradient(circle at 8% 22%, rgba(214,165,75,.09), transparent 25rem),
+        linear-gradient(180deg, #040404 0%, #060608 44%, #020203 100%);
     }
 
-    .topbar .shell {
-      min-height: 30px;
+    .ambient-photo {
+      position: absolute;
+      inset: -14vh -8vw;
+      background:
+        linear-gradient(90deg, rgba(4,4,5,.72) 0%, rgba(4,4,5,.35) 42%, rgba(4,4,5,.58) 100%),
+        var(--hero-bg),
+        radial-gradient(circle at 70% 35%, rgba(214,165,75,.16), transparent 30rem);
+      background-size: cover;
+      background-position: center;
+      opacity: .54;
+      filter: blur(1px) saturate(1.06) brightness(.82);
+      transform:
+        translate3d(
+          calc(var(--mouseX) * -0.42),
+          calc((var(--scrollY) * -0.11) + (var(--mouseY) * -0.28)),
+          0
+        )
+        scale(1.08);
+      will-change: transform;
+      animation: ambientBreathe 24s ease-in-out infinite alternate;
+    }
+
+    .ambient-gold-left,
+    .ambient-gold-right {
+      position: absolute;
+      width: 40vw;
+      height: 110vh;
+      top: -5vh;
+      opacity: .48;
+      filter: blur(26px);
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+
+    .ambient-gold-left {
+      left: -20vw;
+      background:
+        radial-gradient(ellipse at 70% 18%, rgba(214,165,75,.32), transparent 40%),
+        radial-gradient(ellipse at 75% 64%, rgba(124,244,109,.12), transparent 42%);
+      animation: sideWashLeft 20s ease-in-out infinite alternate;
+    }
+
+    .ambient-gold-right {
+      right: -18vw;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(214,165,75,.24), transparent 42%),
+        radial-gradient(ellipse at 20% 65%, rgba(118,88,210,.14), transparent 44%);
+      animation: sideWashRight 25s ease-in-out infinite alternate;
+    }
+
+    .ambient-dust {
+      position: absolute;
+      inset: -10%;
+      opacity: .52;
+      background-image:
+        radial-gradient(circle, rgba(239,205,131,.60) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,255,255,.18) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(124,244,109,.25) 0 1px, transparent 1.5px);
+      background-size: 180px 130px, 260px 190px, 360px 280px;
+      animation: dustMove 34s linear infinite;
+      will-change: background-position, transform;
+    }
+
+    .ambient-vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(2,2,3,.88) 0%, rgba(2,2,3,.24) 21%, rgba(2,2,3,.18) 72%, rgba(2,2,3,.70) 100%),
+        linear-gradient(180deg, rgba(2,2,3,.45), transparent 24%, rgba(2,2,3,.65) 100%);
+    }
+
+    @keyframes ambientBreathe {
+      0% { opacity: .44; filter: blur(1px) saturate(.98) brightness(.72); }
+      50% { opacity: .60; filter: blur(1px) saturate(1.13) brightness(.88); }
+      100% { opacity: .50; filter: blur(1px) saturate(1.05) brightness(.80); }
+    }
+
+    @keyframes sideWashLeft {
+      0% { transform: translate3d(-20px, 0, 0) scaleY(.96); opacity: .38; }
+      100% { transform: translate3d(70px, 45px, 0) scaleY(1.06); opacity: .62; }
+    }
+
+    @keyframes sideWashRight {
+      0% { transform: translate3d(32px, -10px, 0) scaleY(.98); opacity: .34; }
+      100% { transform: translate3d(-70px, 56px, 0) scaleY(1.08); opacity: .56; }
+    }
+
+    @keyframes dustMove {
+      0% {
+        background-position: 0 0, 80px 40px, 140px 100px;
+        transform: translate3d(0,0,0);
+      }
+      100% {
+        background-position: -260px 190px, 260px -160px, -220px -260px;
+        transform: translate3d(-60px, 38px, 0);
+      }
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    .site-header {
+      height: 78px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    .spark {
-      width: 7px;
-      height: 7px;
-      background: var(--green);
-      display: inline-block;
-      transform: rotate(45deg);
-      box-shadow: 0 0 22px rgba(124,244,109,.7);
-      flex: 0 0 auto;
-    }
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: rgba(5,7,13,.76);
-      border-bottom: 1px solid rgba(255,255,255,.09);
-      backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(3,3,4,.58);
+      backdrop-filter: blur(18px) saturate(1.15);
     }
 
     .nav {
-      height: 60px;
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 1fr auto auto;
       align-items: center;
-      gap: 20px;
+      gap: 28px;
     }
 
-    .logo {
-      display: flex;
-      gap: 12px;
+    .brand {
+      display: inline-flex;
       align-items: center;
+      gap: 16px;
+      min-width: 310px;
     }
 
-    .mark {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -.06em;
-      white-space: nowrap;
-    }
-
-    .mark span {
-      color: var(--green);
-    }
-
-    .kicker {
-      padding-left: 12px;
-      border-left: 1px solid rgba(255,255,255,.16);
-      text-transform: uppercase;
-      letter-spacing: .16em;
-      color: rgba(248,243,234,.55);
-      font-size: 10px;
-      line-height: 1.25;
-    }
-
-    .links {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      border: 1px solid rgba(255,255,255,.09);
-      background: rgba(255,255,255,.035);
-      border-radius: 999px;
-      padding: 5px;
-    }
-
-    .links a {
-      padding: 8px 10px;
-      border-radius: 999px;
-      color: rgba(248,243,234,.76);
-      font-size: 12.5px;
-      white-space: nowrap;
-    }
-
-    .links a:hover,
-    .links a.active {
-      color: #0b0b0c;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-    }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .icon {
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(255,255,255,.11);
-      background: rgba(255,255,255,.035);
-      border-radius: 999px;
-      color: var(--text);
+    .brand-symbol {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(214,165,75,.55);
       display: grid;
       place-items: center;
+      transform: rotate(45deg);
+      color: var(--gold-soft);
+      background: rgba(214,165,75,.08);
+      box-shadow: inset 0 0 24px rgba(214,165,75,.08);
+    }
+
+    .brand-symbol span {
+      transform: rotate(-45deg);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -.08em;
+    }
+
+    .brand-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 29px;
+      letter-spacing: -.055em;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-word span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      background: rgba(5,5,6,.56);
+      box-shadow: 0 12px 40px rgba(0,0,0,.28);
+    }
+
+    .nav-links a {
+      padding: 12px 21px;
+      border-radius: 999px;
+      color: rgba(247,239,227,.76);
+      font-size: 15px;
+      transition: background .2s ease, color .2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold-soft);
+      background: rgba(214,165,75,.10);
+      box-shadow: inset 0 0 0 1px rgba(214,165,75,.22);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(255,255,255,.03);
       cursor: pointer;
     }
 
-    .menu {
-      display: none;
+    .cart {
+      position: relative;
+    }
+
+    .cart::after {
+      content: "2";
+      position: absolute;
+      top: -6px;
+      right: -3px;
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--gold);
+      color: #090806;
+      font-weight: 900;
+      font-size: 12px;
     }
 
     .btn {
+      min-height: 52px;
+      padding: 0 28px;
+      border-radius: 7px;
+      border: 1px solid rgba(214,165,75,.56);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 999px;
-      font-weight: 800;
-      border: 1px solid transparent;
+      gap: 16px;
+      color: #0b0906;
+      background:
+        linear-gradient(135deg, rgba(255,232,171,.95), rgba(214,165,75,.95) 58%, rgba(154,105,40,.95));
+      box-shadow: 0 18px 45px rgba(214,165,75,.18);
+      font-weight: 760;
+      transition: transform .22s ease, box-shadow .22s ease;
       cursor: pointer;
-      font-size: 14px;
-      transition:
-        transform .22s cubic-bezier(.2,.8,.2,1),
-        box-shadow .22s cubic-bezier(.2,.8,.2,1),
-        border-color .22s;
     }
 
     .btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 24px 56px rgba(214,165,75,.26);
     }
 
-    .primary {
-      color: #0b0b0c;
-      background: linear-gradient(135deg, var(--gold2), var(--gold) 62%, #bd8032);
-      box-shadow: 0 16px 38px rgba(216,168,74,.24);
-    }
-
-    .secondary {
-      background: rgba(255,255,255,.04);
-      border-color: rgba(216,168,74,.34);
+    .btn.secondary {
       color: var(--text);
+      background: rgba(6,6,7,.48);
+      border-color: rgba(214,165,75,.34);
+      box-shadow: none;
     }
 
-    .mobile {
-      display: none;
-    }
-
-    .above-fold {
-      position: relative;
-      min-height: calc(100vh - 90px);
+    .btn.secondary .play {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      border: 1px solid rgba(214,165,75,.65);
       display: grid;
-      grid-template-rows: auto auto;
-      align-content: start;
-      gap: 20px;
-      padding: 34px 0 28px;
-      overflow: hidden;
-    }
-
-    .above-fold::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto;
-      height: 72%;
-      pointer-events: none;
-      z-index: -1;
-      background:
-        radial-gradient(circle at 75% 24%, rgba(216,168,74,.20), transparent 24rem),
-        radial-gradient(circle at 16% 20%, rgba(124,244,109,.08), transparent 20rem),
-        linear-gradient(180deg, rgba(5,7,13,.08), rgba(5,7,13,.92));
+      place-items: center;
+      color: var(--gold-soft);
+      font-size: 12px;
     }
 
     .hero {
       position: relative;
-      isolation: isolate;
-      display: grid;
-      align-items: center;
+      padding: 54px 0 18px;
+      min-height: 560px;
+      overflow: hidden;
     }
 
     .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(360px, .82fr) minmax(520px, 1.18fr);
-      gap: 34px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      margin: 0 0 14px;
-      color: var(--gold2);
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      font-size: 11px;
-      font-weight: 900;
-    }
-
-    .h1 {
-      font-size: clamp(42px, 5.6vw, 82px);
-      line-height: .89;
-      margin: 0;
-      font-weight: 780;
-      max-width: 720px;
-    }
-
-    .gold {
-      color: var(--gold2);
-      text-shadow: 0 0 44px rgba(216,168,74,.2);
-    }
-
-    .copy {
-      font-size: clamp(15px, 1.08vw, 18px);
-      line-height: 1.52;
-      color: rgba(248,243,234,.78);
-      max-width: 570px;
-      margin: 18px 0 0;
-    }
-
-    .ctas {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-
-    .proofs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 22px;
-      max-width: 660px;
-    }
-
-    .proof {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 11px;
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 16px;
-      background: rgba(255,255,255,.035);
-      backdrop-filter: blur(10px);
-    }
-
-    .proof i {
-      width: 30px;
-      height: 30px;
-      border-radius: 11px;
-      background: rgba(216,168,74,.13);
-      display: grid;
-      place-items: center;
-      color: var(--gold2);
-      font-style: normal;
-      font-size: 15px;
-      flex: 0 0 auto;
-    }
-
-    .proof strong {
-      display: block;
-      font-size: 12.5px;
-    }
-
-    .proof span span {
-      display: block;
-      color: rgba(248,243,234,.58);
-      font-size: 11px;
-      line-height: 1.25;
-      margin-top: 2px;
-    }
-
-    .hero-art-wrap {
       position: relative;
-      min-height: clamp(330px, 41vh, 430px);
-      perspective: 1200px;
+      display: grid;
+      grid-template-columns: minmax(460px, .82fr) minmax(660px, 1.18fr);
+      gap: 44px;
+      align-items: center;
     }
 
-    .hero-art {
-      position: absolute;
-      inset: 0;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(216,168,74,.16);
-      background:
-        linear-gradient(90deg, rgba(5,7,13,.18), transparent 35%, rgba(5,7,13,.28)),
-        linear-gradient(180deg, rgba(255,255,255,.08), transparent 40%),
-        var(--hero),
-        radial-gradient(circle at 60% 50%, rgba(216,168,74,.28), transparent 28rem),
-        linear-gradient(135deg, #111827, #070b12);
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 34px 80px rgba(0,0,0,.48);
-      transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    .hero-content {
+      position: relative;
+      z-index: 4;
     }
 
-    .hero-art::after {
+    .hero h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(58px, 5.3vw, 92px);
+      line-height: .98;
+      font-weight: 430;
+      letter-spacing: -.06em;
+      text-wrap: balance;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 24px 0 0;
+      color: rgba(247,239,227,.74);
+      font-size: 20px;
+      line-height: 1.52;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 42px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 500px;
+      perspective: 1500px;
+      transform-style: preserve-3d;
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
       content: "";
       position: absolute;
-      inset: 0;
+      inset: -12% -10% -10% -12%;
+      z-index: -4;
       background:
-        linear-gradient(90deg, rgba(5,7,13,.38), transparent 40%, rgba(5,7,13,.22)),
-        radial-gradient(circle at 62% 70%, rgba(243,208,138,.12), transparent 18rem);
-      pointer-events: none;
+        linear-gradient(90deg, rgba(3,3,4,.40), transparent 28%, rgba(3,3,4,.15)),
+        var(--hero-bg),
+        radial-gradient(circle at 50% 44%, rgba(214,165,75,.24), transparent 22rem);
+      background-size: cover;
+      background-position: center;
+      opacity: .78;
+      filter: saturate(1.08) brightness(.88);
+      transform:
+        translate3d(
+          calc(var(--mouseX) * -0.6),
+          calc(var(--mouseY) * -0.4),
+          -80px
+        )
+        scale(1.03);
+      will-change: transform;
+      border-radius: 34px;
+      mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 92%, transparent 100%);
     }
 
-    .float {
+    .book-float {
       position: absolute;
+      background:
+        var(--book-img),
+        linear-gradient(145deg, #171719, #080809);
+      background-size: cover;
+      background-position: center;
+      border-radius: 7px;
+      border: 1px solid rgba(214,165,75,.25);
+      box-shadow:
+        26px 28px 60px rgba(0,0,0,.55),
+        inset -10px 0 20px rgba(255,255,255,.06),
+        inset 8px 0 12px rgba(0,0,0,.3);
+      will-change: transform;
+      overflow: hidden;
+    }
+
+    .book-float::after {
+      content: attr(data-placeholder);
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 9px 10px;
+      border-radius: 9px;
+      border: 1px dashed rgba(214,165,75,.28);
+      background: rgba(0,0,0,.42);
+      color: rgba(247,239,227,.58);
+      font-size: 11px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .book-main {
+      --book-img: var(--hero-main-book);
+      width: clamp(260px, 22vw, 385px);
+      height: clamp(380px, 32vw, 540px);
+      left: 43%;
+      top: 0;
+      z-index: 4;
+      transform:
+        translate3d(calc(var(--mouseX) * -0.55), calc(var(--mouseY) * -0.42), 90px)
+        rotateY(-13deg)
+        rotateZ(3deg);
+      animation: bookMainFloat 9s ease-in-out infinite alternate;
+    }
+
+    .book-left {
+      --book-img: var(--hero-side-book-left);
+      width: 160px;
+      height: 245px;
+      left: 14%;
+      top: 150px;
       z-index: 2;
-      border: 1px solid rgba(216,168,74,.26);
-      background: rgba(5,7,13,.72);
-      border-radius: 20px;
-      box-shadow: 0 18px 58px rgba(0,0,0,.36);
-      backdrop-filter: blur(16px);
+      opacity: .84;
+      transform:
+        translate3d(calc(var(--mouseX) * -0.22), calc(var(--mouseY) * -0.20), 10px)
+        rotateY(-21deg)
+        rotateZ(-9deg);
+      animation: bookLeftFloat 12s ease-in-out infinite alternate;
     }
 
-    .pick {
-      right: 2%;
-      top: 6%;
-      width: 190px;
-      padding: 14px;
+    .book-right {
+      --book-img: var(--hero-side-book-right);
+      width: 185px;
+      height: 285px;
+      right: 10%;
+      top: 85px;
+      z-index: 3;
+      opacity: .92;
+      transform:
+        translate3d(calc(var(--mouseX) * -0.38), calc(var(--mouseY) * -0.28), 45px)
+        rotateY(16deg)
+        rotateZ(7deg);
+      animation: bookRightFloat 11s ease-in-out infinite alternate;
     }
 
-    .tag {
-      display: inline-flex;
-      background: var(--gold2);
-      color: #11100d;
-      border-radius: 999px;
-      padding: 5px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      font-weight: 900;
-      letter-spacing: .08em;
-      margin-bottom: 10px;
+    .book-far {
+      --book-img: var(--hero-side-book-far);
+      width: 160px;
+      height: 250px;
+      right: -3%;
+      top: 160px;
+      z-index: 1;
+      opacity: .50;
+      filter: blur(.6px);
+      transform:
+        translate3d(calc(var(--mouseX) * -0.14), calc(var(--mouseY) * -0.16), -60px)
+        rotateY(24deg)
+        rotateZ(-4deg);
+      animation: bookFarFloat 16s ease-in-out infinite alternate;
     }
 
-    .pick strong {
-      display: block;
-      font-size: 18px;
-      line-height: 1.05;
-      margin-bottom: 7px;
+    @keyframes bookMainFloat {
+      from { margin-top: 0; }
+      to { margin-top: -18px; }
     }
 
-    .pick span:last-child {
-      font-size: 12px;
-      color: rgba(248,243,234,.62);
-      line-height: 1.38;
+    @keyframes bookLeftFloat {
+      from { margin-top: 0; margin-left: 0; }
+      to { margin-top: 14px; margin-left: -16px; }
     }
 
-    .path {
-      left: -10px;
-      bottom: 28px;
-      width: 320px;
-      padding: 12px;
+    @keyframes bookRightFloat {
+      from { margin-top: 0; margin-right: 0; }
+      to { margin-top: -14px; margin-right: -12px; }
+    }
+
+    @keyframes bookFarFloat {
+      from { margin-top: 0; }
+      to { margin-top: 20px; }
+    }
+
+    .trust-strip {
+      position: relative;
+      z-index: 4;
+      max-width: 940px;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 10px;
-      align-items: center;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: -28px;
+      border: 1px solid rgba(214,165,75,.20);
+      border-radius: 9px;
+      background: rgba(5,5,6,.62);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.32);
     }
 
-    .path i {
-      width: 40px;
-      height: 40px;
-      border-radius: 15px;
-      background: rgba(124,244,109,.1);
-      color: var(--green);
+    .trust-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 20px 26px;
+      border-right: 1px solid rgba(255,255,255,.10);
+    }
+
+    .trust-item:last-child {
+      border-right: 0;
+    }
+
+    .trust-icon {
+      width: 38px;
+      height: 38px;
       display: grid;
       place-items: center;
-      font-style: normal;
+      border: 1px solid rgba(214,165,75,.36);
+      border-radius: 999px;
+      color: var(--gold-soft);
+      background: rgba(214,165,75,.06);
     }
 
-    .path small {
+    .trust-item strong {
       display: block;
-      color: rgba(248,243,234,.58);
-      font-size: 11px;
-      margin-top: 2px;
+      font-size: 15px;
+      color: rgba(239,205,131,.95);
+      font-weight: 560;
     }
 
-    .compact-categories {
-      position: relative;
-      z-index: 2;
+    .trust-item span {
+      display: block;
+      margin-top: 3px;
+      font-size: 13px;
+      color: rgba(247,239,227,.58);
+      line-height: 1.25;
     }
 
-    .compact-categories .section-head {
-      margin-bottom: 14px;
+    .catalog-panel {
+      margin-top: 26px;
+      padding: 30px 44px 42px;
+      border: 1px solid rgba(214,165,75,.20);
+      border-radius: 17px;
+      background:
+        linear-gradient(180deg, rgba(8,8,8,.70), rgba(5,5,6,.62)),
+        radial-gradient(circle at 50% 0%, rgba(214,165,75,.07), transparent 32rem);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
     }
 
-    .section-head {
+    .catalog-head {
       display: flex;
       align-items: end;
       justify-content: space-between;
@@ -535,818 +661,415 @@
       margin-bottom: 24px;
     }
 
-    .section-k {
-      color: var(--green);
-      text-transform: uppercase;
-      letter-spacing: .2em;
-      font-size: 10.5px;
-      font-weight: 900;
-      margin: 0 0 7px;
-    }
-
-    .section h2,
-    .compact-categories h2 {
-      font-size: clamp(28px, 3vw, 46px);
-      line-height: .95;
+    .catalog-head h2 {
       margin: 0;
-    }
-
-    .section-p {
-      max-width: 570px;
-      color: rgba(248,243,234,.68);
-      font-size: 14px;
-      line-height: 1.45;
-      margin: 10px 0 0;
-    }
-
-    .cat-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 1.05fr .92fr;
-      gap: 14px;
-    }
-
-    .big,
-    .small {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: var(--panel);
-      box-shadow: 0 18px 52px rgba(0,0,0,.32);
-      transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s;
-    }
-
-    .big:hover,
-    .small:hover {
-      transform: translateY(-5px);
-      border-color: rgba(216,168,74,.42);
-      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 22px 70px rgba(0,0,0,.42);
-    }
-
-    .big {
-      min-height: clamp(205px, 25vh, 270px);
-      border-radius: 24px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .big::before,
-    .small::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background:
-        linear-gradient(180deg, rgba(5,7,13,.08), rgba(5,7,13,.66) 52%, rgba(5,7,13,.95)),
-        var(--cat),
-        radial-gradient(circle at 62% 38%, rgba(216,168,74,.25), transparent 18rem),
-        linear-gradient(135deg, #101827, #080b12);
-      background-size: cover;
-      background-position: center;
-      transition: transform .5s;
-    }
-
-    .big:hover::before,
-    .small:hover::before {
-      transform: scale(1.045);
-    }
-
-    .big::after,
-    .small::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(243,208,138,.13), transparent 13rem),
-        linear-gradient(135deg, rgba(255,255,255,.06), transparent 36%);
-    }
-
-    .spiritual { --cat: var(--cat1); }
-    .romantasy { --cat: var(--cat2); }
-    .children { --cat: var(--cat3); }
-    .education { --cat: var(--cat4); }
-    .nonenglish { --cat: var(--cat5); }
-
-    .badge {
-      position: absolute;
-      left: 16px;
-      top: 16px;
-      display: inline-flex;
-      gap: 7px;
-      align-items: center;
-      background: rgba(5,7,13,.55);
-      border: 1px solid rgba(243,208,138,.24);
-      border-radius: 999px;
-      padding: 7px 9px;
-      color: var(--gold2);
-      font-size: 10px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      backdrop-filter: blur(16px);
-    }
-
-    .badge::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      background: var(--gold2);
-      border-radius: 50%;
-      box-shadow: 0 0 18px rgba(243,208,138,.65);
-    }
-
-    .big h3,
-    .small h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(24px, 2.1vw, 36px);
+      font-size: 37px;
+      font-weight: 430;
       line-height: 1;
-      letter-spacing: -.055em;
-      margin: 0;
     }
 
-    .big p,
-    .small p {
-      color: rgba(248,243,234,.74);
-      line-height: 1.42;
-      max-width: 420px;
-      margin: 9px 0 14px;
-      font-size: 13px;
-    }
-
-    .mini {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-      color: #0b0b0c;
-      border-radius: 999px;
-      padding: 9px 12px;
-      width: max-content;
-      font-weight: 900;
-      font-size: 12.5px;
-    }
-
-    .small-stack {
-      display: grid;
-      gap: 14px;
-    }
-
-    .small {
-      min-height: clamp(62px, 7.6vh, 82px);
-      border-radius: 20px;
-      padding: 14px 56px 14px 16px;
-      display: grid;
-      align-items: center;
-    }
-
-    .small h3 {
-      font-size: clamp(19px, 1.45vw, 25px);
-    }
-
-    .small p {
-      font-size: 12px;
-      margin: 5px 0 0;
-      max-width: 360px;
-    }
-
-    .arrow {
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
+    .gold-rule {
       width: 32px;
-      height: 32px;
-      border-radius: 999px;
+      height: 2px;
+      background: var(--gold);
+      margin-top: 14px;
+    }
+
+    .view-all {
+      color: rgba(239,205,131,.88);
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 1.08fr 1fr;
+      gap: 16px;
+    }
+
+    .category-card {
+      position: relative;
+      display: block;
+      min-height: 280px;
+      overflow: hidden;
+      border: 1px solid rgba(214,165,75,.22);
+      border-radius: 9px;
+      background:
+        linear-gradient(90deg, rgba(4,4,5,.78), rgba(4,4,5,.42)),
+        var(--cat-img),
+        linear-gradient(135deg, #161310, #060607);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 18px 48px rgba(0,0,0,.38);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(239,205,131,.48);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 82% 22%, var(--cat-glow), transparent 15rem),
+        linear-gradient(180deg, transparent 38%, rgba(4,4,5,.86) 100%);
+      pointer-events: none;
+    }
+
+    .category-card.spiritual {
+      --cat-img: var(--cat-spiritual);
+      --cat-glow: rgba(214,165,75,.34);
+    }
+
+    .category-card.romantasy {
+      --cat-img: var(--cat-romantasy);
+      --cat-glow: rgba(198,75,140,.32);
+    }
+
+    .category-card.children {
+      --cat-img: var(--cat-children);
+      --cat-glow: rgba(124,244,109,.16);
+    }
+
+    .category-card.education {
+      --cat-img: var(--cat-education);
+      --cat-glow: rgba(255,151,62,.20);
+    }
+
+    .category-card.nonenglish {
+      --cat-img: var(--cat-nonenglish);
+      --cat-glow: rgba(90,150,255,.18);
+    }
+
+    .cat-content {
+      position: absolute;
+      inset: auto 30px 28px 30px;
+      z-index: 2;
+    }
+
+    .cat-icon {
+      width: 58px;
+      height: 58px;
       display: grid;
       place-items: center;
-      color: #0b0b0c;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-      font-weight: 900;
+      margin-bottom: 26px;
+      border: 1px solid rgba(239,205,131,.50);
+      border-radius: 999px;
+      color: var(--gold-soft);
+      background: rgba(5,5,6,.42);
+      backdrop-filter: blur(10px);
     }
 
-    .section {
-      padding: 64px 0;
-      position: relative;
+    .cat-label {
+      display: block;
+      color: rgba(239,205,131,.76);
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 12px;
     }
 
-    .books {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), transparent),
-        radial-gradient(circle at 15% 10%, rgba(216,168,74,.12), transparent 28rem),
-        radial-gradient(circle at 86% 42%, rgba(124,244,109,.08), transparent 24rem);
-      border-block: 1px solid rgba(255,255,255,.06);
+    .category-card h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -.045em;
+      font-weight: 430;
     }
 
-    .book-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
+    .category-card p {
+      max-width: 300px;
+      margin: 16px 0 26px;
+      color: rgba(247,239,227,.68);
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    .cat-link {
+      color: var(--gold-soft);
+      display: inline-flex;
+      align-items: center;
       gap: 16px;
-      margin-top: 28px;
+      font-size: 16px;
     }
 
-    .book {
-      min-height: 410px;
-      padding: 14px;
-      border: 1px solid rgba(255,255,255,.11);
-      border-radius: 26px;
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
-      box-shadow: 0 20px 70px rgba(0,0,0,.38);
-      display: flex;
-      flex-direction: column;
-      transition: transform .3s, border-color .3s;
+    .compact-stack {
+      display: grid;
+      gap: 10px;
     }
 
-    .book:hover {
-      transform: translateY(-7px);
-      border-color: rgba(216,168,74,.42);
-    }
-
-    .cover {
-      flex: 1;
-      min-height: 250px;
-      border-radius: 18px;
-      border: 1px solid rgba(216,168,74,.18);
+    .compact-category {
+      min-height: 87px;
+      display: grid;
+      grid-template-columns: 82px 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 20px;
+      border: 1px solid rgba(214,165,75,.22);
+      border-radius: 9px;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.34)),
-        var(--cover),
-        radial-gradient(circle at 50% 35%, rgba(216,168,74,.25), transparent 11rem),
-        linear-gradient(135deg, #121a2b, #070910);
+        linear-gradient(90deg, rgba(4,4,5,.78), rgba(4,4,5,.34)),
+        var(--cat-img),
+        linear-gradient(135deg, #161310, #060607);
       background-size: cover;
       background-position: center;
       position: relative;
       overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease;
     }
 
-    .cover::after {
-      content: attr(data-ph);
-      position: absolute;
-      inset: auto 10px 10px;
-      padding: 8px 9px;
-      border-radius: 11px;
-      border: 1px dashed rgba(255,255,255,.22);
-      background: rgba(0,0,0,.42);
-      color: rgba(248,243,234,.66);
-      font-size: 10px;
-      line-height: 1.25;
-      backdrop-filter: blur(12px);
+    .compact-category:hover {
+      transform: translateY(-3px);
+      border-color: rgba(239,205,131,.48);
     }
 
-    .c1 { --cover: var(--cover1); }
-    .c2 { --cover: var(--cover2); }
-    .c3 { --cover: var(--cover3); }
-    .c4 { --cover: var(--cover4); }
-    .c5 { --cover: var(--cover5); }
-
-    .book h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 22px;
-      letter-spacing: -.045em;
-      line-height: 1;
+    .compact-category .cat-icon {
       margin: 0;
+      width: 54px;
+      height: 54px;
     }
 
-    .book p {
-      color: rgba(248,243,234,.62);
-      font-size: 12.5px;
-      line-height: 1.4;
-    }
-
-    .book-info {
-      padding: 14px 3px 0;
-    }
-
-    .label {
-      color: var(--green);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .panel-grid {
-      display: grid;
-      grid-template-columns: .85fr 1.15fr;
-      gap: 22px;
-    }
-
-    .quiz {
-      border: 1px solid rgba(216,168,74,.24);
-      border-radius: 28px;
-      padding: 30px;
-      min-height: 430px;
-      background:
-        radial-gradient(circle at 12% 12%, rgba(124,244,109,.13), transparent 18rem),
-        radial-gradient(circle at 82% 74%, rgba(216,168,74,.18), transparent 20rem),
-        linear-gradient(135deg, rgba(16,23,37,.94), rgba(7,10,18,.9));
-      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
-    }
-
-    .quiz h2 {
-      font-size: clamp(34px, 3.4vw, 60px);
-      line-height: .92;
-    }
-
-    .quiz p {
-      color: rgba(248,243,234,.7);
-      font-size: 15px;
-      line-height: 1.55;
-    }
-
-    .option {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 17px;
-      background: rgba(255,255,255,.045);
-      color: var(--text);
-      margin-top: 11px;
-      cursor: pointer;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    .option:hover,
-    .option.selected {
-      border-color: rgba(216,168,74,.55);
-      background: rgba(216,168,74,.11);
-    }
-
-    .result {
-      display: none;
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 18px;
-      background: rgba(124,244,109,.1);
-      border: 1px solid rgba(124,244,109,.23);
-      color: rgba(248,243,234,.82);
-    }
-
-    .result.show {
-      display: block;
-    }
-
-    .steps {
-      display: grid;
-      gap: 16px;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 74px 1fr;
-      gap: 16px;
-      align-items: center;
-      min-height: 130px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 24px;
-      background: rgba(255,255,255,.045);
-      box-shadow: 0 20px 70px rgba(0,0,0,.38);
-    }
-
-    .num {
-      width: 62px;
-      height: 62px;
-      border-radius: 22px;
-      display: grid;
-      place-items: center;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 25px;
-      color: #0b0b0c;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-    }
-
-    .step h3 {
+    .compact-category h3 {
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 26px;
+      line-height: 1;
       letter-spacing: -.04em;
+      font-weight: 430;
+    }
+
+    .compact-category p {
+      margin: 6px 0 0;
+      color: rgba(247,239,227,.65);
+      font-size: 14px;
+    }
+
+    .circle-arrow {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(239,205,131,.42);
+      color: var(--gold-soft);
+      background: rgba(4,4,5,.36);
+    }
+
+    .lower-sections {
+      padding: 78px 0 120px;
+    }
+
+    .placeholder-note {
       margin: 0;
-    }
-
-    .step p {
-      color: rgba(248,243,234,.65);
-      line-height: 1.45;
-      margin: 5px 0 0;
-      font-size: 14px;
-    }
-
-    .parallax {
-      position: relative;
-      min-height: 480px;
-      display: grid;
-      align-items: center;
-      overflow: hidden;
-      border-block: 1px solid rgba(255,255,255,.07);
-    }
-
-    .pbg {
-      position: absolute;
-      inset: -14% 0;
-      z-index: -2;
-      background:
-        linear-gradient(90deg, rgba(5,7,13,.86), rgba(5,7,13,.36) 54%, rgba(5,7,13,.92)),
-        var(--hero),
-        radial-gradient(circle at 60% 50%, rgba(216,168,74,.18), transparent 24rem),
-        linear-gradient(135deg, #111827, #070b12);
-      background-size: cover;
-      background-position: center;
-      transform: translateY(var(--py, 0));
-      will-change: transform;
-    }
-
-    .parallax::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background:
-        linear-gradient(180deg, var(--bg), transparent 20%, transparent 76%, var(--bg)),
-        radial-gradient(circle at 22% 42%, rgba(216,168,74,.16), transparent 22rem);
-    }
-
-    .band {
-      max-width: 650px;
-      padding: 44px 0;
-    }
-
-    .band h2 {
-      font-size: clamp(38px, 4.2vw, 70px);
-      line-height: .92;
-    }
-
-    .band p {
-      color: rgba(248,243,234,.72);
-      font-size: 17px;
-      line-height: 1.6;
-    }
-
-    .trust {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
-
-    .trust-card {
-      min-height: 190px;
-      padding: 22px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
-      box-shadow: 0 20px 70px rgba(0,0,0,.38);
-    }
-
-    .trust-card b {
-      display: block;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      letter-spacing: -.04em;
-      margin-bottom: 8px;
-    }
-
-    .trust-card p {
-      color: rgba(248,243,234,.64);
-      line-height: 1.45;
-      font-size: 14px;
-    }
-
-    .ico {
-      color: var(--gold2);
-      font-size: 28px;
-      margin-bottom: 15px;
-    }
-
-    .newsletter {
-      padding-bottom: 90px;
-    }
-
-    .club {
-      border: 1px solid rgba(216,168,74,.24);
-      border-radius: 34px;
-      padding: clamp(30px, 4.4vw, 58px);
-      background:
-        radial-gradient(circle at 82% 16%, rgba(124,244,109,.13), transparent 20rem),
-        radial-gradient(circle at 18% 72%, rgba(216,168,74,.18), transparent 23rem),
-        linear-gradient(135deg, rgba(18,25,39,.96), rgba(7,10,18,.92));
-      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
-      overflow: hidden;
-    }
-
-    .club-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 32px;
-      align-items: end;
-    }
-
-    .club h2 {
-      font-size: clamp(38px, 4.5vw, 74px);
-      line-height: .92;
-    }
-
-    .club p {
-      max-width: 620px;
-      color: rgba(248,243,234,.72);
-      font-size: 16px;
+      padding: 22px 26px;
+      border: 1px dashed rgba(214,165,75,.30);
+      border-radius: 14px;
+      color: rgba(247,239,227,.66);
+      background: rgba(5,5,6,.52);
       line-height: 1.55;
     }
 
-    .signup {
-      display: flex;
-      width: min(560px, 100%);
-      padding: 8px;
-      gap: 8px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(5,7,13,.58);
-      border-radius: 999px;
+    .mobile-menu {
+      display: none;
     }
 
-    .signup input {
-      flex: 1;
-      min-width: 0;
-      border: 0;
-      outline: 0;
-      color: var(--text);
-      background: transparent;
-      padding: 0 16px;
-    }
+    @media (max-width: 1320px) {
+      .shell {
+        width: min(var(--max), calc(100% - 42px));
+      }
 
-    .footer {
-      border-top: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.28);
-    }
-
-    .footer .shell {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      min-height: 86px;
-      color: rgba(248,243,234,.54);
-      font-size: 13px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 1180px) {
       .nav {
         grid-template-columns: 1fr auto;
       }
 
-      .kicker,
-      .links {
+      .nav-links {
         display: none;
       }
 
-      .menu {
+      .mobile-menu {
         display: grid;
-      }
-
-      .above-fold {
-        min-height: auto;
       }
 
       .hero-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-art-wrap {
-        min-height: 440px;
+      .hero-visual {
+        min-height: 430px;
       }
 
-      .cat-grid {
+      .book-main {
+        left: 46%;
+      }
+
+      .trust-strip {
+        margin-top: 20px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-item:nth-child(2) {
+        border-right: 0;
+      }
+
+      .category-grid {
         grid-template-columns: 1fr 1fr;
       }
 
-      .small-stack {
+      .compact-stack {
         grid-column: 1 / -1;
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .small {
-        min-height: 160px;
-      }
-
-      .book-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .panel-grid {
+      .compact-category {
+        min-height: 150px;
         grid-template-columns: 1fr;
-      }
-
-      .trust {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .club-grid {
-        grid-template-columns: 1fr;
+        align-items: end;
+        padding: 18px;
       }
     }
 
-    @media (max-width: 760px) {
-      .shell {
-        width: min(100% - 32px, var(--max));
+    @media (max-width: 820px) {
+      .site-header {
+        height: 68px;
       }
 
-      .topbar {
-        display: none;
+      .brand {
+        min-width: 0;
       }
 
-      .nav {
-        height: 64px;
+      .brand-symbol {
+        width: 36px;
+        height: 36px;
       }
 
-      .mark {
+      .brand-word {
         font-size: 23px;
       }
 
-      .actions .btn,
-      .hide-mobile {
+      .nav-actions .icon-btn {
         display: none;
       }
 
-      .above-fold {
-        padding: 42px 0 32px;
-        gap: 38px;
+      .btn.header-cta {
+        display: none;
       }
 
-      .h1 {
-        font-size: clamp(46px, 15vw, 68px);
+      .hero {
+        padding: 42px 0 10px;
       }
 
-      .copy {
+      .hero h1 {
+        font-size: clamp(44px, 14vw, 70px);
+      }
+
+      .hero-copy {
         font-size: 16px;
       }
 
-      .ctas,
-      .proofs {
+      .hero-actions {
         display: grid;
         grid-template-columns: 1fr;
       }
 
-      .hero-art-wrap {
+      .hero-visual {
         min-height: 360px;
       }
 
-      .pick {
-        width: 180px;
-        top: 14px;
-        right: 12px;
-      }
-
-      .path {
+      .book-left,
+      .book-right,
+      .book-far {
         display: none;
       }
 
-      .hero-art {
-        border-radius: 24px;
+      .book-main {
+        width: 230px;
+        height: 330px;
+        left: 50%;
+        transform: translateX(-50%) rotateY(-10deg) rotateZ(3deg);
       }
 
-      .section {
-        padding: 58px 0;
-      }
-
-      .section-head {
-        display: block;
-      }
-
-      .cat-grid,
-      .small-stack,
-      .book-grid {
+      .trust-strip,
+      .category-grid,
+      .compact-stack {
         grid-template-columns: 1fr;
       }
 
-      .big {
-        min-height: 300px;
+      .trust-item {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+      }
+
+      .trust-item:last-child {
+        border-bottom: 0;
+      }
+
+      .catalog-panel {
         padding: 22px;
       }
 
-      .small {
-        min-height: 160px;
-        padding: 22px 64px 22px 22px;
+      .catalog-head {
+        display: block;
       }
 
-      .small h3 {
-        font-size: 28px;
+      .category-card {
+        min-height: 300px;
       }
 
-      .small p {
-        font-size: 14px;
-      }
-
-      .book {
-        min-height: 430px;
-      }
-
-      .cover {
-        min-height: 280px;
-      }
-
-      .parallax {
-        min-height: 450px;
-      }
-
-      .trust {
-        grid-template-columns: 1fr;
-      }
-
-      .step {
-        grid-template-columns: 1fr;
-      }
-
-      .signup {
-        border-radius: 24px;
-        flex-direction: column;
-      }
-
-      .signup input {
-        min-height: 46px;
-      }
-
-      .footer .shell {
-        padding: 24px 0;
-        display: grid;
+      .compact-category {
+        min-height: 110px;
+        grid-template-columns: 58px 1fr auto;
       }
     }
 
-    @media (max-height: 780px) and (min-width: 1181px) {
-      .topbar .shell {
-        min-height: 28px;
+    @media (max-height: 780px) and (min-width: 1321px) {
+      .site-header {
+        height: 66px;
       }
 
-      .nav {
-        height: 56px;
+      .hero {
+        padding: 36px 0 10px;
+        min-height: 480px;
       }
 
-      .above-fold {
-        min-height: calc(100vh - 84px);
-        padding: 24px 0 20px;
-        gap: 14px;
+      .hero h1 {
+        font-size: clamp(52px, 4.8vw, 76px);
       }
 
-      .h1 {
-        font-size: clamp(40px, 5vw, 72px);
-      }
-
-      .copy {
-        margin-top: 14px;
-        font-size: 15px;
-      }
-
-      .ctas {
+      .hero-copy {
+        font-size: 17px;
         margin-top: 18px;
       }
 
-      .proofs {
+      .hero-actions {
+        margin-top: 28px;
+      }
+
+      .hero-visual {
+        min-height: 430px;
+      }
+
+      .trust-strip {
+        margin-top: -42px;
+      }
+
+      .category-card {
+        min-height: 240px;
+      }
+
+      .compact-category {
+        min-height: 75px;
+      }
+
+      .catalog-panel {
         margin-top: 18px;
-      }
-
-      .hero-art-wrap {
-        min-height: 350px;
-      }
-
-      .big {
-        min-height: 210px;
-      }
-
-      .small {
-        min-height: 65px;
-      }
-
-      .compact-categories .section-head {
-        margin-bottom: 10px;
-      }
-
-      .section-p {
-        display: none;
-      }
-
-      .big p {
-        font-size: 12.5px;
-        margin-bottom: 12px;
-      }
-
-      .small p {
-        display: none;
+        padding-top: 24px;
       }
     }
 
@@ -1355,439 +1078,233 @@
       *::before,
       *::after {
         animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
         transition-duration: .001ms !important;
         scroll-behavior: auto !important;
-      }
-
-      body::before,
-      .pbg {
-        transform: none !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="shell">
-      <span class="spark"></span>
-      <span><b style="color:var(--gold2)">Creative indie publishing house:</b> visual books, story-rich guides, and collectible titles for curious readers.</span>
-    </div>
+  <div class="ambient-stage" aria-hidden="true">
+    <div class="ambient-photo"></div>
+    <div class="ambient-gold-left"></div>
+    <div class="ambient-gold-right"></div>
+    <div class="ambient-dust"></div>
+    <div class="ambient-vignette"></div>
   </div>
 
-  <header class="header">
-    <div class="shell nav">
-      <a href="#" class="logo">
-        <span class="mark">Discover<span>Visually</span></span>
-        <span class="kicker">Modern Creative<br>Publishing House</span>
-      </a>
+  <div class="page">
+    <header class="site-header">
+      <div class="shell nav">
+        <a class="brand" href="#" aria-label="DiscoverVisually home">
+          <span class="brand-symbol"><span>DV</span></span>
+          <span class="brand-word">Discover<span>Visually</span></span>
+        </a>
 
-      <nav class="links" aria-label="Main navigation">
-        <a class="active" href="#">Home</a>
-        <a href="#spiritual">Spiritual</a>
-        <a href="#romantasy">Romantasy</a>
-        <a href="#children">For Children</a>
-        <a href="#education">Arts & Educational</a>
-        <a href="#nonenglish">Non-English</a>
-      </nav>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a class="active" href="#">Home</a>
+          <a href="#catalog">Catalog</a>
+          <a href="#categories">Categories</a>
+          <a href="#about">About Us</a>
+          <a href="#creators">For Creators</a>
+          <a href="#journal">Journal</a>
+        </nav>
 
-      <div class="actions">
-        <button class="icon hide-mobile" aria-label="Search">⌕</button>
-        <button class="icon hide-mobile" aria-label="Wishlist">♡</button>
-        <a href="#club" class="btn primary">Join the Club →</a>
-        <button class="icon menu" data-menu>☰</button>
+        <div class="nav-actions">
+          <button class="icon-btn" aria-label="Search">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.35-4.35M10.8 18.1a7.3 7.3 0 1 1 0-14.6 7.3 7.3 0 0 1 0 14.6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="Account">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <button class="icon-btn cart" aria-label="Cart">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8h15l-2 9H8L6 8ZM6 8 5 4H2M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a class="btn header-cta" href="#catalog">Explore Catalog <span>→</span></a>
+          <button class="icon-btn mobile-menu" aria-label="Open menu">☰</button>
+        </div>
       </div>
-    </div>
+    </header>
 
-    <div class="mobile" data-mobile>
-      <div class="shell" style="padding:0 0 18px;display:grid;gap:8px">
-        <a class="btn secondary" href="#spiritual">Spiritual</a>
-        <a class="btn secondary" href="#romantasy">Romantasy</a>
-        <a class="btn secondary" href="#children">For Children</a>
-        <a class="btn secondary" href="#education">Arts & Educational</a>
-        <a class="btn secondary" href="#nonenglish">Non-English Books</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <div class="above-fold">
+    <main>
       <section class="hero">
         <div class="shell hero-grid">
-          <div class="reveal in">
-            <p class="eyebrow"><span class="spark"></span> Inspiration. Stories. Discovery.</p>
-            <h1 class="h1 serif">Every category opens <span class="gold">a different world.</span></h1>
-            <p class="copy">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight. Start with the world that calls to you first.</p>
+          <div class="hero-content">
+            <h1 class="serif">Every category opens a different world.</h1>
+            <p class="hero-copy">DiscoverVisually is an indie visual book publishing house crafting immersive worlds through artful storytelling, curated for curious minds and beautiful souls.</p>
 
-            <div class="ctas">
-              <a href="#spiritual" class="btn primary">Shop Spiritual →</a>
-              <a href="#romantasy" class="btn secondary">Explore Romantasy →</a>
-            </div>
-
-            <div class="proofs">
-              <div class="proof"><i>📖</i><span><strong>Carefully curated</strong><span>Books with clear themes.</span></span></div>
-              <div class="proof"><i>🎁</i><span><strong>Perfect gifts</strong><span>Visual and easy to choose.</span></span></div>
-              <div class="proof"><i>🛡</i><span><strong>Secure shopping</strong><span>Clear path to each title.</span></span></div>
+            <div class="hero-actions">
+              <a class="btn" href="#catalog">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" stroke="currentColor" stroke-width="2"/></svg>
+                Explore Catalog
+                <span>›</span>
+              </a>
+              <a class="btn secondary" href="#story"><span class="play">▶</span> Watch Our Story</a>
             </div>
           </div>
 
-          <div class="hero-art-wrap" data-tilt>
-            <div class="hero-art"></div>
-
-            <aside class="float pick">
-              <span class="tag">Featured</span>
-              <strong class="serif">Start with a world, not a search box.</strong>
-              <span>Category-first discovery for gift buyers and curious readers.</span>
-            </aside>
-
-            <aside class="float path">
-              <i>⌁</i>
-              <span><strong>Reader path</strong><small>Choose a category → discover the best-fit book → gift or read.</small></span>
-              <b>→</b>
-            </aside>
+          <div class="hero-visual" aria-label="3D floating book cover field">
+            <div class="book-float book-left" data-placeholder="images/hero/hero-side-book-left.png"></div>
+            <div class="book-float book-main" data-placeholder="images/hero/hero-main-book.png"></div>
+            <div class="book-float book-right" data-placeholder="images/hero/hero-side-book-right.png"></div>
+            <div class="book-float book-far" data-placeholder="images/hero/hero-side-book-far.png"></div>
           </div>
         </div>
-      </section>
 
-      <section class="compact-categories" id="categories">
         <div class="shell">
-          <div class="section-head reveal">
-            <div>
-              <p class="section-k">Category-first discovery</p>
-              <h2 class="serif">Shop by category</h2>
-              <p class="section-p">Pick the world first. Then discover the book that fits.</p>
+          <div class="trust-strip" aria-label="Trust signals">
+            <div class="trust-item">
+              <span class="trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
+              </span>
+              <span><strong>Indie & Independent</strong><span>Proudly independent publishing</span></span>
             </div>
-            <a class="btn secondary" href="#featured-books">View featured books →</a>
-          </div>
-
-          <div class="cat-grid">
-            <a class="big spiritual reveal" id="spiritual" href="#">
-              <span class="badge">Priority</span>
-              <h3>Spiritual</h3>
-              <p>Visual guides to faith, reflection, symbolism, and deeper meaning.</p>
-              <span class="mini">Explore Spiritual →</span>
-            </a>
-
-            <a class="big romantasy reveal" id="romantasy" href="#">
-              <span class="badge">Priority</span>
-              <h3>Romantasy</h3>
-              <p>Magical worlds, intense emotions, high-concept hooks, and collectible story experiences.</p>
-              <span class="mini">Explore Romantasy →</span>
-            </a>
-
-            <div class="small-stack">
-              <a class="small children reveal" id="children" href="#">
-                <h3>For Children</h3>
-                <p>Fun stories, real facts, brave characters, and big imagination.</p>
-                <span class="arrow">→</span>
-              </a>
-
-              <a class="small education reveal" id="education" href="#">
-                <h3>Arts, Crafts & Educational</h3>
-                <p>Creative learning books for curious minds and visual thinkers.</p>
-                <span class="arrow">→</span>
-              </a>
-
-              <a class="small nonenglish reveal" id="nonenglish" href="#">
-                <h3>Non-English Books</h3>
-                <p>Selected stories and knowledge titles beyond English.</p>
-                <span class="arrow">→</span>
-              </a>
+            <div class="trust-item">
+              <span class="trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </span>
+              <span><strong>Curated with Care</strong><span>Handpicked stories & art</span></span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              <span><strong>Sustainably Printed</strong><span>Eco-friendly materials</span></span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              <span><strong>Global Shipping</strong><span>Books to your world</span></span>
             </div>
           </div>
         </div>
       </section>
-    </div>
 
-    <section class="section books" id="featured-books">
-      <div class="shell">
-        <div class="section-head reveal">
+      <section class="shell catalog-panel" id="catalog">
+        <div class="catalog-head">
           <div>
-            <p class="section-k">Featured shelf</p>
-            <h2 class="serif">Books that sell the world first</h2>
-            <p class="section-p">Replace these placeholders with your real covers. The layout is built so the visual promise of each book carries the conversion work.</p>
+            <h2 class="serif">Shop by category</h2>
+            <div class="gold-rule"></div>
           </div>
+          <a class="view-all" href="#categories">View all categories <span>›</span></a>
         </div>
 
-        <div class="book-grid">
-          <a class="book reveal" href="#">
-            <div class="cover c1" data-ph="images/covers/bible-mysteries.png"></div>
-            <div class="book-info">
-              <span class="label">Spiritual</span>
-              <h3>The Visual Guide to Bible Mysteries</h3>
-              <p>Faith, history, symbols, and debated questions in a visual guide format.</p>
+        <div class="category-grid" id="categories">
+          <a class="category-card spiritual" href="#">
+            <div class="cat-content">
+              <span class="cat-icon">
+                <svg width="29" height="29" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21c4-4 7-8 7-12a7 7 0 0 0-14 0c0 4 3 8 7 12Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 21c0-6 2-10 5-14M12 21C12 15 10 11 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="cat-label">Spiritual</span>
+              <h3>Spiritual</h3>
+              <p>Timeless wisdom. Inner journeys. Higher perspective.</p>
+              <span class="cat-link">Explore Spiritual <span>›</span></span>
             </div>
           </a>
 
-          <a class="book reveal" href="#">
-            <div class="cover c2" data-ph="images/covers/kpop-demon-idol-romantasy.png"></div>
-            <div class="book-info">
-              <span class="label">Romantasy</span>
-              <h3>K-Pop Demon Idol Romantasy</h3>
-              <p>A high-hook genre blend designed for emotionally driven readers.</p>
+          <a class="category-card romantasy" href="#">
+            <div class="cat-content">
+              <span class="cat-icon">
+                <svg width="29" height="29" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M6 7h12M8 7l4-5 4 5M9 22h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="cat-label">Romantasy</span>
+              <h3>Romantasy</h3>
+              <p>Epic romance. Arcane worlds. Unforgettable tales.</p>
+              <span class="cat-link">Explore Romantasy <span>›</span></span>
             </div>
           </a>
 
-          <a class="book reveal" href="#">
-            <div class="cover c3" data-ph="images/covers/pippin-the-hedgehog.png"></div>
-            <div class="book-info">
-              <span class="label">For Children</span>
-              <h3>Pippin the Hedgehog</h3>
-              <p>Curious, warm, fact-filled storytelling for young readers.</p>
-            </div>
-          </a>
+          <div class="compact-stack">
+            <a class="compact-category children" href="#" style="--cat-img: var(--cat-children)">
+              <span class="cat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 14c3.3 0 6-2.2 6-5s-2.7-5-6-5-6 2.2-6 5 2.7 5 6 5Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 14c-2 1-3 2.4-3 4v2h14v-2c0-1.6-1-3-3-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span>
+                <h3>For Children</h3>
+                <p>Stories that inspire young minds</p>
+              </span>
+              <span class="circle-arrow">›</span>
+            </a>
 
-          <a class="book reveal" href="#">
-            <div class="cover c4" data-ph="images/covers/drawing-worlds.png"></div>
-            <div class="book-info">
-              <span class="label">Arts & Educational</span>
-              <h3>5 Drawing Worlds</h3>
-              <p>Creative learning through iconic visual styles and guided practice.</p>
-            </div>
-          </a>
+            <a class="compact-category education" href="#" style="--cat-img: var(--cat-education)">
+              <span class="cat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>
+                <h3>Arts, Crafts & Educational</h3>
+                <p>Learn. Create. Grow.</p>
+              </span>
+              <span class="circle-arrow">›</span>
+            </a>
 
-          <a class="book reveal" href="#">
-            <div class="cover c5" data-ph="images/covers/stela-potocna.png"></div>
-            <div class="book-info">
-              <span class="label">Non-English</span>
-              <h3>Stela Potočná</h3>
-              <p>Localized storytelling with a strong visual hook and character appeal.</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell panel-grid">
-        <div class="quiz reveal">
-          <p class="eyebrow"><span class="spark"></span> Reader path</p>
-          <h2 class="serif">Not sure where to start?</h2>
-          <p>Let the homepage act like a guided shelf. Each answer nudges the reader toward the category most likely to convert.</p>
-
-          <button class="option" data-r="Start with Spiritual — visual guides with meaning, symbolism, and reflection.">
-            <span>I want meaning, symbolism, and faith-inspired visuals.</span>
-            <b>Spiritual</b>
-          </button>
-
-          <button class="option" data-r="Start with Romantasy — high emotion, magic, and genre hooks.">
-            <span>I want emotion, tension, magic, and a dramatic world.</span>
-            <b>Romantasy</b>
-          </button>
-
-          <button class="option" data-r="Start with For Children or Arts & Educational — playful, visual, and giftable.">
-            <span>I need a giftable book for kids or creative learners.</span>
-            <b>Gift picks</b>
-          </button>
-
-          <div class="result" data-result></div>
-        </div>
-
-        <div class="steps">
-          <div class="step reveal">
-            <span class="num">01</span>
-            <div>
-              <h3>Clear first decision</h3>
-              <p>The page avoids throwing every book at the visitor. It asks them to pick a world first.</p>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <span class="num">02</span>
-            <div>
-              <h3>Visual proof above the fold</h3>
-              <p>The hero image creates instant publishing-house credibility before the user scrolls.</p>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <span class="num">03</span>
-            <div>
-              <h3>CTA repetition without clutter</h3>
-              <p>Primary CTAs appear across the journey, always with clear intent.</p>
-            </div>
+            <a class="compact-category nonenglish" href="#" style="--cat-img: var(--cat-nonenglish)">
+              <span class="cat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="1.8"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span>
+                <h3>Non-English Books</h3>
+                <p>Stories in every language</p>
+              </span>
+              <span class="circle-arrow">›</span>
+            </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="parallax">
-      <div class="pbg" data-pbg></div>
-      <div class="shell">
-        <div class="band reveal">
-          <p class="eyebrow"><span class="spark"></span> Creative & indie</p>
-          <h2 class="serif">A publishing house built around visual discovery.</h2>
-          <p>Use this band as a dramatic break between commercial sections. It keeps the site memorable while still pushing readers toward category selection.</p>
-          <a href="#featured-books" class="btn primary">Browse the shelf →</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div>
-            <p class="section-k">Why readers stay</p>
-            <h2 class="serif">Trust signals without looking generic</h2>
-          </div>
-        </div>
-
-        <div class="trust">
-          <div class="trust-card reveal">
-            <div class="ico">📚</div>
-            <b>Curated books</b>
-            <p>Every title is framed by reader intent, category promise, and visual appeal.</p>
-          </div>
-
-          <div class="trust-card reveal">
-            <div class="ico">🎁</div>
-            <b>Giftable titles</b>
-            <p>Designed for birthdays, holidays, curiosity, faith, and creative learning.</p>
-          </div>
-
-          <div class="trust-card reveal">
-            <div class="ico">✨</div>
-            <b>Visual-first</b>
-            <p>Strong covers, cinematic imagery, and scannable category paths sell fast.</p>
-          </div>
-
-          <div class="trust-card reveal">
-            <div class="ico">✓</div>
-            <b>Easy choice</b>
-            <p>Category-first UX reduces hesitation and helps visitors find the right shelf.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="newsletter" id="club">
-      <div class="shell">
-        <div class="club reveal">
-          <div class="club-grid">
-            <div>
-              <p class="eyebrow"><span class="spark"></span> Join the Club</p>
-              <h2 class="serif">Get new worlds before everyone else.</h2>
-              <p>Use this as a newsletter, launch list, Amazon author page CTA, or coming-soon capture section.</p>
-
-              <form class="signup" onsubmit="event.preventDefault();this.querySelector('button').textContent='Joined';">
-                <input type="email" placeholder="Enter your email" aria-label="Email address">
-                <button class="btn primary" type="submit">Join the Club</button>
-              </form>
-            </div>
-
-            <div style="display:grid;gap:12px;min-width:min(360px,100%)">
-              <a class="btn secondary" href="#spiritual">Shop Spiritual</a>
-              <a class="btn secondary" href="#romantasy">Explore Romantasy</a>
-              <a class="btn secondary" href="#categories">View all categories</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="shell">
-      <div>
-        <b style="color:var(--text)">Discover<span style="color:var(--green)">Visually</span></b>
-        <span style="margin-left:10px">© <span id="year"></span> Creative visual publishing house.</span>
-      </div>
-
-      <div class="footer-links">
-        <a href="#categories">Categories</a>
-        <a href="#featured-books">Featured books</a>
-        <a href="#club">Join the Club</a>
-      </div>
-    </div>
-  </footer>
+      <section class="lower-sections shell">
+        <p class="placeholder-note">
+          <strong>Image placeholders used in this UI:</strong><br>
+          hero background: <code>images/hero/hero-3d-book-field.jpg</code> · main hero book: <code>images/hero/hero-main-book.png</code> · side books:
+          <code>images/hero/hero-side-book-left.png</code>, <code>images/hero/hero-side-book-right.png</code>, <code>images/hero/hero-side-book-far.png</code> · category images:
+          <code>images/categories/spiritual-card.jpg</code>, <code>images/categories/romantasy-card.jpg</code>, <code>images/categories/children-card.jpg</code>, <code>images/categories/arts-education-card.jpg</code>, <code>images/categories/non-english-card.jpg</code>.
+        </p>
+      </section>
+    </main>
+  </div>
 
   <script>
-    const $ = (s, p = document) => p.querySelector(s);
-    const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+    const root = document.documentElement;
 
-    $("#year").textContent = new Date().getFullYear();
+    let latestMouseX = 0;
+    let latestMouseY = 0;
+    let mouseTicking = false;
 
-    const menu = $("[data-menu]");
-    const mobilePanel = $("[data-mobile]");
-
-    if (menu && mobilePanel) {
-      menu.addEventListener("click", () => {
-        mobilePanel.style.display = mobilePanel.style.display === "block" ? "none" : "block";
-      });
+    function updateMouseVars() {
+      root.style.setProperty("--mouseX", latestMouseX + "px");
+      root.style.setProperty("--mouseY", latestMouseY + "px");
+      mouseTicking = false;
     }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: .12,
-      rootMargin: "0px 0px -60px 0px"
-    });
+    if (matchMedia("(pointer:fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      addEventListener("mousemove", event => {
+        latestMouseX = (event.clientX / innerWidth - 0.5) * 30;
+        latestMouseY = (event.clientY / innerHeight - 0.5) * 24;
 
-    $$(".reveal").forEach(el => observer.observe(el));
-
-    const tilt = $("[data-tilt]");
-
-    if (tilt && matchMedia("(pointer:fine)").matches) {
-      const art = $(".hero-art", tilt);
-
-      tilt.addEventListener("mousemove", event => {
-        const rect = tilt.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - .5;
-        const y = (event.clientY - rect.top) / rect.height - .5;
-        art.style.transform = `rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
-      });
-
-      tilt.addEventListener("mouseleave", () => {
-        art.style.transform = "rotateY(0) rotateX(0)";
-      });
-    }
-
-    const parallaxBg = $("[data-pbg]");
-    let ticking = false;
-
-    function updateParallax() {
-      const y = window.scrollY || window.pageYOffset || 0;
-
-      document.documentElement.style.setProperty("--scrollY", y + "px");
-      document.documentElement.style.setProperty("--scrollY2", (y * 0.08) + "px");
-      document.documentElement.style.setProperty("--scrollY3", (y * 0.13) + "px");
-
-      if (parallaxBg) {
-        const rect = parallaxBg.parentElement.getBoundingClientRect();
-        const viewport = innerHeight || 800;
-        const progress = (rect.top - viewport) / (rect.height + viewport);
-        const py = Math.max(-85, Math.min(85, progress * -130));
-        parallaxBg.style.setProperty("--py", py + "px");
-      }
-
-      ticking = false;
-    }
-
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      addEventListener("scroll", () => {
-        if (!ticking) {
-          requestAnimationFrame(updateParallax);
-          ticking = true;
+        if (!mouseTicking) {
+          requestAnimationFrame(updateMouseVars);
+          mouseTicking = true;
         }
       }, { passive: true });
-
-      updateParallax();
     }
 
-    $$(".option").forEach(button => {
-      button.addEventListener("click", () => {
-        $$(".option").forEach(item => item.classList.remove("selected"));
-        button.classList.add("selected");
-        const result = $("[data-result]");
-        result.textContent = button.dataset.r;
-        result.classList.add("show");
-      });
-    });
+    let scrollTicking = false;
+
+    function updateScrollVars() {
+      root.style.setProperty("--scrollY", (scrollY || pageYOffset || 0) + "px");
+      scrollTicking = false;
+    }
+
+    addEventListener("scroll", () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(updateScrollVars);
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    updateScrollVars();
   </script>
 </body>
 </html>
