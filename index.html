@@ -1,118 +1,1630 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DiscoverVisually — Modern Creative Publishing House</title>
-    <meta name="description" content="DiscoverVisually is a modern creative publishing house with spiritual, romantasy, children’s, educational, and non-English visual books." />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a href="#home" class="logo" aria-label="DiscoverVisually home">
-          Discover<span>Visually</span>
-        </a>
-        <nav class="main-nav" aria-label="Primary">
-          <a href="#home">Home</a>
-          <a href="#spiritual">Spiritual</a>
-          <a href="#romantasy">Romantasy</a>
-          <a href="#children">For Children</a>
-          <a href="#arts">Arts, Crafts &amp; Educational</a>
-          <a href="#non-english">Non-English Books</a>
-        </nav>
-        <a href="#categories" class="btn btn-primary">Join the Club</a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DiscoverVisually — Creative Visual Book Publishing House</title>
+  <meta name="description" content="Discover visually rich books from an indie creative publishing house: spiritual guides, romantasy, children's books, creative learning, and non-English titles." />
+
+  <!--
+    IMAGE PATHS
+
+    Hero:
+    landingpic.png
+
+    Book covers:
+    images/covers/bible-mysteries.png
+    images/covers/kpop-demon-idol-romantasy.png
+    images/covers/pippin-the-hedgehog.png
+    images/covers/drawing-worlds.png
+    images/covers/stela-potocna.png
+
+    Optional category backgrounds:
+    images/categories/spiritual.jpg
+    images/categories/romantasy.jpg
+    images/categories/children.jpg
+    images/categories/arts-education.jpg
+    images/categories/non-english.jpg
+  -->
+
+  <style>
+    :root {
+      --bg: #05070d;
+      --bg2: #080d16;
+      --panel: rgba(13, 18, 30, .76);
+      --line: rgba(255,255,255,.11);
+      --gold: #d8a84a;
+      --gold2: #f3d08a;
+      --green: #7cf46d;
+      --text: #f8f3ea;
+      --muted: #b9b2a6;
+      --max: 1440px;
+
+      --hero: url("landingpic.png");
+
+      --cover1: url("images/covers/bible-mysteries.png");
+      --cover2: url("images/covers/kpop-demon-idol-romantasy.png");
+      --cover3: url("images/covers/pippin-the-hedgehog.png");
+      --cover4: url("images/covers/drawing-worlds.png");
+      --cover5: url("images/covers/stela-potocna.png");
+
+      --cat1: url("images/categories/spiritual.jpg");
+      --cat2: url("images/categories/romantasy.jpg");
+      --cat3: url("images/categories/children.jpg");
+      --cat4: url("images/categories/arts-education.jpg");
+      --cat5: url("images/categories/non-english.jpg");
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 75% -10%, rgba(216,168,74,.18), transparent 32rem),
+        radial-gradient(circle at 8% 10%, rgba(124,244,109,.07), transparent 24rem),
+        linear-gradient(180deg, #03050a, var(--bg) 45%, #060810);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -3;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 76px 76px;
+      mask-image: radial-gradient(circle at 55% 20%, black 0 42%, transparent 76%);
+      opacity: .38;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .serif {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.055em;
+    }
+
+    .shell {
+      width: min(var(--max), calc(100% - 48px));
+      margin: auto;
+    }
+
+    .topbar {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(90deg, rgba(216,168,74,.1), rgba(124,244,109,.06), rgba(216,168,74,.05));
+      color: rgba(248,243,234,.78);
+    }
+
+    .topbar .shell {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .spark {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      display: inline-block;
+      transform: rotate(45deg);
+      box-shadow: 0 0 22px rgba(124,244,109,.7);
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(5,7,13,.74);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(22px);
+    }
+
+    .nav {
+      height: 74px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .mark {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: -.06em;
+    }
+
+    .mark span {
+      color: var(--green);
+    }
+
+    .kicker {
+      padding-left: 14px;
+      border-left: 1px solid rgba(255,255,255,.16);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: rgba(248,243,234,.55);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(255,255,255,.035);
+      border-radius: 999px;
+      padding: 6px;
+    }
+
+    .links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: rgba(248,243,234,.76);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .links a:hover,
+    .links a.active {
+      color: #0b0b0c;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.035);
+      border-radius: 999px;
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition:
+        transform .22s cubic-bezier(.2,.8,.2,1),
+        box-shadow .22s cubic-bezier(.2,.8,.2,1),
+        border-color .22s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      color: #0b0b0c;
+      background: linear-gradient(135deg, var(--gold2), var(--gold) 62%, #bd8032);
+      box-shadow: 0 16px 38px rgba(216,168,74,.26);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.04);
+      border-color: rgba(216,168,74,.34);
+      color: var(--text);
+    }
+
+    .mobile {
+      display: none;
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      min-height: calc(100vh - 110px);
+      padding: 70px 0 48px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 240px;
+      z-index: -1;
+      background: linear-gradient(180deg, transparent, var(--bg));
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(340px, .78fr) minmax(520px, 1.22fr);
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 20px;
+      color: var(--gold2);
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .h1 {
+      font-size: clamp(56px, 8vw, 112px);
+      line-height: .88;
+      margin: 0;
+      font-weight: 780;
+    }
+
+    .gold {
+      color: var(--gold2);
+      text-shadow: 0 0 44px rgba(216,168,74,.2);
+    }
+
+    .copy {
+      font-size: clamp(17px, 1.4vw, 21px);
+      line-height: 1.6;
+      color: rgba(248,243,234,.78);
+      max-width: 600px;
+      margin: 26px 0 0;
+    }
+
+    .ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .proofs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+      max-width: 700px;
+    }
+
+    .proof {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 18px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .proof i {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(216,168,74,.13);
+      display: grid;
+      place-items: center;
+      color: var(--gold2);
+      font-style: normal;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .proof span span {
+      display: block;
+      color: rgba(248,243,234,.58);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 3px;
+    }
+
+    .hero-art-wrap {
+      position: relative;
+      min-height: 610px;
+      perspective: 1200px;
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      border-radius: 34px;
+      overflow: hidden;
+      border: 1px solid rgba(216,168,74,.16);
+      background:
+        linear-gradient(90deg, rgba(5,7,13,.18), transparent 35%, rgba(5,7,13,.28)),
+        linear-gradient(180deg, rgba(255,255,255,.08), transparent 40%),
+        var(--hero),
+        radial-gradient(circle at 60% 50%, rgba(216,168,74,.28), transparent 28rem),
+        linear-gradient(135deg, #111827, #070b12);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 50px 120px rgba(0,0,0,.55);
+      transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .float {
+      position: absolute;
+      z-index: 2;
+      border: 1px solid rgba(216,168,74,.26);
+      background: rgba(5,7,13,.72);
+      border-radius: 22px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      backdrop-filter: blur(16px);
+    }
+
+    .pick {
+      right: 2%;
+      top: 7%;
+      width: 210px;
+      padding: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      background: var(--gold2);
+      color: #11100d;
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    .pick strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+
+    .pick span:last-child {
+      font-size: 13px;
+      color: rgba(248,243,234,.62);
+      line-height: 1.45;
+    }
+
+    .path {
+      left: -14px;
+      bottom: 62px;
+      width: 360px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .path i {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: rgba(124,244,109,.1);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-style: normal;
+    }
+
+    .path small {
+      display: block;
+      color: rgba(248,243,234,.58);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .section {
+      padding: 86px 0;
+      position: relative;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-k {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      font-size: 12px;
+      font-weight: 900;
+      margin: 0 0 10px;
+    }
+
+    .section h2 {
+      font-size: clamp(36px, 4vw, 66px);
+      line-height: .95;
+      margin: 0;
+    }
+
+    .section-p {
+      max-width: 620px;
+      color: rgba(248,243,234,.68);
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 14px 0 0;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.05fr .92fr;
+      gap: 18px;
+    }
+
+    .big,
+    .small {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s;
+    }
+
+    .big:hover,
+    .small:hover {
+      transform: translateY(-6px);
+      border-color: rgba(216,168,74,.42);
+      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
+    }
+
+    .big {
+      min-height: 480px;
+      border-radius: 30px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .big::before,
+    .small::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(180deg, rgba(5,7,13,.03), rgba(5,7,13,.72) 58%, rgba(5,7,13,.95)),
+        var(--cat),
+        radial-gradient(circle at 62% 38%, rgba(216,168,74,.25), transparent 20rem),
+        linear-gradient(135deg, #101827, #080b12);
+      background-size: cover;
+      background-position: center;
+      transition: transform .5s;
+    }
+
+    .big:hover::before,
+    .small:hover::before {
+      transform: scale(1.045);
+    }
+
+    .big::after,
+    .small::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(243,208,138,.14), transparent 14rem),
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 36%);
+    }
+
+    .spiritual { --cat: var(--cat1); }
+    .romantasy { --cat: var(--cat2); }
+    .children { --cat: var(--cat3); }
+    .education { --cat: var(--cat4); }
+    .nonenglish { --cat: var(--cat5); }
+
+    .badge {
+      position: absolute;
+      left: 22px;
+      top: 22px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(5,7,13,.55);
+      border: 1px solid rgba(243,208,138,.24);
+      border-radius: 999px;
+      padding: 8px 11px;
+      color: var(--gold2);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      backdrop-filter: blur(16px);
+    }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: var(--gold2);
+      border-radius: 50%;
+      box-shadow: 0 0 18px rgba(243,208,138,.65);
+    }
+
+    .big h3,
+    .small h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(32px, 3vw, 54px);
+      line-height: 1;
+      letter-spacing: -.055em;
+      margin: 0;
+    }
+
+    .big p,
+    .small p {
+      color: rgba(248,243,234,.74);
+      line-height: 1.55;
+      max-width: 440px;
+      margin: 12px 0 22px;
+    }
+
+    .mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #0b0b0c;
+      border-radius: 999px;
+      padding: 12px 16px;
+      width: max-content;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .small-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .small {
+      min-height: 148px;
+      border-radius: 24px;
+      padding: 24px 70px 22px 24px;
+      display: grid;
+      align-items: center;
+    }
+
+    .small h3 {
+      font-size: 30px;
+    }
+
+    .small p {
+      font-size: 15px;
+      margin: 8px 0 0;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #0b0b0c;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      font-weight: 900;
+    }
+
+    .books {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent),
+        radial-gradient(circle at 15% 10%, rgba(216,168,74,.12), transparent 28rem),
+        radial-gradient(circle at 86% 42%, rgba(124,244,109,.08), transparent 24rem);
+      border-block: 1px solid rgba(255,255,255,.06);
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .book {
+      min-height: 460px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, border-color .3s;
+    }
+
+    .book:hover {
+      transform: translateY(-7px);
+      border-color: rgba(216,168,74,.42);
+    }
+
+    .cover {
+      flex: 1;
+      min-height: 290px;
+      border-radius: 20px;
+      border: 1px solid rgba(216,168,74,.18);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.34)),
+        var(--cover),
+        radial-gradient(circle at 50% 35%, rgba(216,168,74,.25), transparent 11rem),
+        linear-gradient(135deg, #121a2b, #070910);
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::after {
+      content: attr(data-ph);
+      position: absolute;
+      inset: auto 12px 12px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(0,0,0,.42);
+      color: rgba(248,243,234,.66);
+      font-size: 11px;
+      line-height: 1.3;
+      backdrop-filter: blur(12px);
+    }
+
+    .c1 { --cover: var(--cover1); }
+    .c2 { --cover: var(--cover2); }
+    .c3 { --cover: var(--cover3); }
+    .c4 { --cover: var(--cover4); }
+    .c5 { --cover: var(--cover5); }
+
+    .book h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      letter-spacing: -.045em;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .book p {
+      color: rgba(248,243,234,.62);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .book-info {
+      padding: 16px 4px 0;
+    }
+
+    .label {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 22px;
+    }
+
+    .quiz {
+      border: 1px solid rgba(216,168,74,.24);
+      border-radius: 30px;
+      padding: 34px;
+      min-height: 470px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(124,244,109,.13), transparent 18rem),
+        radial-gradient(circle at 82% 74%, rgba(216,168,74,.18), transparent 20rem),
+        linear-gradient(135deg, rgba(16,23,37,.94), rgba(7,10,18,.9));
+      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
+    }
+
+    .quiz h2 {
+      font-size: clamp(38px, 4vw, 72px);
+      line-height: .92;
+    }
+
+    .quiz p {
+      color: rgba(248,243,234,.7);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .option {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      color: var(--text);
+      margin-top: 12px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .option:hover,
+    .option.selected {
+      border-color: rgba(216,168,74,.55);
+      background: rgba(216,168,74,.11);
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(124,244,109,.1);
+      border: 1px solid rgba(124,244,109,.23);
+      color: rgba(248,243,234,.82);
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .steps {
+      display: grid;
+      gap: 18px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 18px;
+      align-items: center;
+      min-height: 145px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      background: rgba(255,255,255,.045);
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+    }
+
+    .num {
+      width: 70px;
+      height: 70px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      color: #0b0b0c;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+    }
+
+    .step h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 29px;
+      letter-spacing: -.04em;
+      margin: 0;
+    }
+
+    .step p {
+      color: rgba(248,243,234,.65);
+      line-height: 1.5;
+      margin: 6px 0 0;
+    }
+
+    .parallax {
+      position: relative;
+      min-height: 540px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      border-block: 1px solid rgba(255,255,255,.07);
+    }
+
+    .pbg {
+      position: absolute;
+      inset: -12% 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(5,7,13,.86), rgba(5,7,13,.36) 54%, rgba(5,7,13,.92)),
+        var(--hero),
+        radial-gradient(circle at 60% 50%, rgba(216,168,74,.18), transparent 24rem),
+        linear-gradient(135deg, #111827, #070b12);
+      background-size: cover;
+      background-position: center;
+      transform: translateY(var(--py, 0));
+      will-change: transform;
+    }
+
+    .parallax::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, var(--bg), transparent 20%, transparent 76%, var(--bg)),
+        radial-gradient(circle at 22% 42%, rgba(216,168,74,.16), transparent 22rem);
+    }
+
+    .band {
+      max-width: 680px;
+      padding: 48px 0;
+    }
+
+    .band h2 {
+      font-size: clamp(42px, 5vw, 82px);
+      line-height: .92;
+    }
+
+    .band p {
+      color: rgba(248,243,234,.72);
+      font-size: 19px;
+      line-height: 1.65;
+    }
+
+    .trust {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .trust-card {
+      min-height: 210px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+    }
+
+    .trust-card b {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 26px;
+      letter-spacing: -.04em;
+      margin-bottom: 8px;
+    }
+
+    .trust-card p {
+      color: rgba(248,243,234,.64);
+      line-height: 1.5;
+    }
+
+    .ico {
+      color: var(--gold2);
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .newsletter {
+      padding-bottom: 110px;
+    }
+
+    .club {
+      border: 1px solid rgba(216,168,74,.24);
+      border-radius: 36px;
+      padding: clamp(32px, 5vw, 64px);
+      background:
+        radial-gradient(circle at 82% 16%, rgba(124,244,109,.13), transparent 20rem),
+        radial-gradient(circle at 18% 72%, rgba(216,168,74,.18), transparent 23rem),
+        linear-gradient(135deg, rgba(18,25,39,.96), rgba(7,10,18,.92));
+      box-shadow: 0 0 0 1px rgba(216,168,74,.18), 0 24px 80px rgba(0,0,0,.45);
+      overflow: hidden;
+    }
+
+    .club-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 36px;
+      align-items: end;
+    }
+
+    .club h2 {
+      font-size: clamp(40px, 5vw, 82px);
+      line-height: .92;
+    }
+
+    .club p {
+      max-width: 620px;
+      color: rgba(248,243,234,.72);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .signup {
+      display: flex;
+      width: min(560px, 100%);
+      padding: 8px;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(5,7,13,.58);
+      border-radius: 999px;
+    }
+
+    .signup input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      padding: 0 16px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.28);
+    }
+
+    .footer .shell {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      min-height: 94px;
+      color: rgba(248,243,234,.54);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1180px) {
+      .nav {
+        grid-template-columns: 1fr auto;
+      }
+
+      .kicker,
+      .links {
+        display: none;
+      }
+
+      .menu {
+        display: grid;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art-wrap {
+        min-height: 560px;
+      }
+
+      .cat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .small-stack {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .small {
+        min-height: 220px;
+      }
+
+      .book-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .panel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .trust {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .club-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 32px, var(--max));
+      }
+
+      .topbar {
+        display: none;
+      }
+
+      .nav {
+        height: 66px;
+      }
+
+      .mark {
+        font-size: 23px;
+      }
+
+      .actions .btn,
+      .hide-mobile {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 48px 0 30px;
+      }
+
+      .h1 {
+        font-size: clamp(48px, 16vw, 70px);
+      }
+
+      .copy {
+        font-size: 16px;
+      }
+
+      .ctas,
+      .proofs {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art-wrap {
+        min-height: 390px;
+      }
+
+      .pick {
+        width: 190px;
+        top: 14px;
+        right: 12px;
+      }
+
+      .path {
+        display: none;
+      }
+
+      .hero-art {
+        border-radius: 24px;
+      }
+
+      .section {
+        padding: 62px 0;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .cat-grid,
+      .small-stack,
+      .book-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .big {
+        min-height: 410px;
+        padding: 24px;
+      }
+
+      .book {
+        min-height: 430px;
+      }
+
+      .parallax {
+        min-height: 470px;
+      }
+
+      .trust {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+      }
+
+      .signup {
+        border-radius: 24px;
+        flex-direction: column;
+      }
+
+      .signup input {
+        min-height: 46px;
+      }
+
+      .footer .shell {
+        padding: 24px 0;
+        display: grid;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .pbg {
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="shell">
+      <span class="spark"></span>
+      <span><b style="color:var(--gold2)">Creative indie publishing house:</b> visual books, story-rich guides, and collectible titles for curious readers.</span>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="shell nav">
+      <a href="#" class="logo">
+        <span class="mark">Discover<span>Visually</span></span>
+        <span class="kicker">Modern Creative<br>Publishing House</span>
+      </a>
+
+      <nav class="links" aria-label="Main navigation">
+        <a class="active" href="#">Home</a>
+        <a href="#spiritual">Spiritual</a>
+        <a href="#romantasy">Romantasy</a>
+        <a href="#children">For Children</a>
+        <a href="#education">Arts & Educational</a>
+        <a href="#nonenglish">Non-English</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon hide-mobile" aria-label="Search">⌕</button>
+        <button class="icon hide-mobile" aria-label="Wishlist">♡</button>
+        <a href="#club" class="btn primary">Join the Club →</a>
+        <button class="icon menu" data-menu>☰</button>
       </div>
-    </header>
+    </div>
 
-    <main id="home">
-      <section class="hero container">
-        <div class="hero-copy">
-          <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
-          <h1>Every category opens a different world.</h1>
-          <p class="lead">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight.</p>
-          <div class="hero-cta">
-            <a href="#spiritual" class="btn btn-primary">Shop Spiritual</a>
-            <a href="#romantasy" class="btn btn-secondary">Explore Romantasy</a>
+    <div class="mobile" data-mobile>
+      <div class="shell" style="padding:0 0 18px;display:grid;gap:8px">
+        <a class="btn secondary" href="#spiritual">Spiritual</a>
+        <a class="btn secondary" href="#romantasy">Romantasy</a>
+        <a class="btn secondary" href="#children">For Children</a>
+        <a class="btn secondary" href="#education">Arts & Educational</a>
+        <a class="btn secondary" href="#nonenglish">Non-English Books</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="reveal in">
+          <p class="eyebrow"><span class="spark"></span> Inspiration. Stories. Discovery.</p>
+          <h1 class="h1 serif">Every category opens <span class="gold">a different world.</span></h1>
+          <p class="copy">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight. Start with the world that calls to you first.</p>
+
+          <div class="ctas">
+            <a href="#spiritual" class="btn primary">Shop Spiritual →</a>
+            <a href="#romantasy" class="btn secondary">Explore Romantasy →</a>
           </div>
-          <ul class="hero-trust" aria-label="Store benefits">
-            <li>Carefully curated</li>
-            <li>Perfect gifts</li>
-            <li>Secure shopping</li>
-          </ul>
-        </div>
-        <div class="hero-image-frame">
-          <img src="landingpic.png" alt="Cinematic DiscoverVisually bookshelf hero with premium book titles" />
-        </div>
-      </section>
 
-      <section id="categories" class="container categories">
-        <h2>Shop by category</h2>
-        <div class="feature-grid">
-          <article id="spiritual" class="card card-feature" style="--card-image: url('covers/womenfrontbible.jpg');">
-            <div class="card-content">
-              <h3>Spiritual</h3>
-              <p>Visual guides to faith, reflection, and deeper meaning.</p>
-              <a href="#" class="card-link">Explore</a>
-            </div>
-          </article>
-
-          <article id="romantasy" class="card card-feature" style="--card-image: url('covers/hanselgretelcover.png');">
-            <div class="card-content">
-              <h3>Romantasy</h3>
-              <p>Magical worlds, intense emotions, and story-rich escapes.</p>
-              <a href="#" class="card-link">Explore</a>
-            </div>
-          </article>
+          <div class="proofs">
+            <div class="proof"><i>📖</i><span><strong>Carefully curated</strong><span>Books with clear themes and purpose.</span></span></div>
+            <div class="proof"><i>🎁</i><span><strong>Perfect gifts</strong><span>Visual, memorable, easy to choose.</span></span></div>
+            <div class="proof"><i>🛡</i><span><strong>Secure shopping</strong><span>Clear paths to the right title.</span></span></div>
+          </div>
         </div>
 
-        <div class="compact-grid">
-          <article id="children" class="card card-compact" style="--card-image: url('covers/hedgehog.jpg');">
-            <div class="card-content">
+        <div class="hero-art-wrap" data-tilt>
+          <div class="hero-art"></div>
+
+          <aside class="float pick">
+            <span class="tag">Featured</span>
+            <strong class="serif">Start with a world, not a search box.</strong>
+            <span>Category-first discovery for gift buyers and curious readers.</span>
+          </aside>
+
+          <aside class="float path">
+            <i>⌁</i>
+            <span><strong>Reader path</strong><small>Choose a category → discover the best-fit book → gift or read.</small></span>
+            <b>→</b>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-k">Category-first discovery</p>
+            <h2 class="serif">Shop by category</h2>
+            <p class="section-p">A landing page built around the fastest decision a reader can make: “Which world do I want to enter?”</p>
+          </div>
+          <a class="btn secondary" href="#featured-books">View featured books →</a>
+        </div>
+
+        <div class="cat-grid">
+          <a class="big spiritual reveal" id="spiritual" href="#">
+            <span class="badge">Priority</span>
+            <h3>Spiritual</h3>
+            <p>Visual guides to faith, reflection, symbolism, and deeper meaning — crafted for readers who want beauty and substance.</p>
+            <span class="mini">Explore Spiritual →</span>
+          </a>
+
+          <a class="big romantasy reveal" id="romantasy" href="#">
+            <span class="badge">Priority</span>
+            <h3>Romantasy</h3>
+            <p>Magical worlds, intense emotions, high-concept hooks, and collectible story experiences for fantasy-romance readers.</p>
+            <span class="mini">Explore Romantasy →</span>
+          </a>
+
+          <div class="small-stack">
+            <a class="small children reveal" id="children" href="#">
               <h3>For Children</h3>
-              <p>Fun stories, real facts, and big imagination.</p>
-              <a href="#" class="card-link">Explore</a>
-            </div>
-          </article>
+              <p>Fun stories, real facts, brave characters, and big imagination.</p>
+              <span class="arrow">→</span>
+            </a>
 
-          <article id="arts" class="card card-compact" style="--card-image: url('covers/frontdrawing1.jpg');">
-            <div class="card-content">
-              <h3>Arts, Crafts &amp; Educational</h3>
-              <p>Creative learning books for curious minds.</p>
-              <a href="#" class="card-link">Explore</a>
-            </div>
-          </article>
+            <a class="small education reveal" id="education" href="#">
+              <h3>Arts, Crafts & Educational</h3>
+              <p>Creative learning books for curious minds and visual thinkers.</p>
+              <span class="arrow">→</span>
+            </a>
 
-          <article id="non-english" class="card card-compact" style="--card-image: url('covers/vydrafront.jpg');">
-            <div class="card-content">
+            <a class="small nonenglish reveal" id="nonenglish" href="#">
               <h3>Non-English Books</h3>
               <p>Selected stories and knowledge titles beyond English.</p>
-              <a href="#" class="card-link">Explore</a>
-            </div>
-          </article>
+              <span class="arrow">→</span>
+            </a>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="value-strip">
-        <div class="container value-grid">
-          <article>
-            <h3>Join the Club</h3>
-            <p>Exclusive updates, early previews, and selected offers.</p>
-          </article>
-          <article>
-            <h3>Giftable titles</h3>
-            <p>Beautiful books for readers of every age.</p>
-          </article>
-          <article>
-            <h3>Carefully curated</h3>
-            <p>Every title is selected with purpose.</p>
-          </article>
-          <article>
-            <h3>Secure shopping</h3>
-            <p>Simple checkout and reader-friendly experience.</p>
-          </article>
+    <section class="section books" id="featured-books">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-k">Featured shelf</p>
+            <h2 class="serif">Books that sell the world first</h2>
+            <p class="section-p">Replace these placeholders with your real covers. The layout is built so the visual promise of each book carries the conversion work.</p>
+          </div>
         </div>
-      </section>
-    </main>
-  </body>
+
+        <div class="book-grid">
+          <a class="book reveal" href="#">
+            <div class="cover c1" data-ph="images/covers/bible-mysteries.png"></div>
+            <div class="book-info">
+              <span class="label">Spiritual</span>
+              <h3>The Visual Guide to Bible Mysteries</h3>
+              <p>Faith, history, symbols, and debated questions in a visual guide format.</p>
+            </div>
+          </a>
+
+          <a class="book reveal" href="#">
+            <div class="cover c2" data-ph="images/covers/kpop-demon-idol-romantasy.png"></div>
+            <div class="book-info">
+              <span class="label">Romantasy</span>
+              <h3>K-Pop Demon Idol Romantasy</h3>
+              <p>A high-hook genre blend designed for emotionally driven readers.</p>
+            </div>
+          </a>
+
+          <a class="book reveal" href="#">
+            <div class="cover c3" data-ph="images/covers/pippin-the-hedgehog.png"></div>
+            <div class="book-info">
+              <span class="label">For Children</span>
+              <h3>Pippin the Hedgehog</h3>
+              <p>Curious, warm, fact-filled storytelling for young readers.</p>
+            </div>
+          </a>
+
+          <a class="book reveal" href="#">
+            <div class="cover c4" data-ph="images/covers/drawing-worlds.png"></div>
+            <div class="book-info">
+              <span class="label">Arts & Educational</span>
+              <h3>5 Drawing Worlds</h3>
+              <p>Creative learning through iconic visual styles and guided practice.</p>
+            </div>
+          </a>
+
+          <a class="book reveal" href="#">
+            <div class="cover c5" data-ph="images/covers/stela-potocna.png"></div>
+            <div class="book-info">
+              <span class="label">Non-English</span>
+              <h3>Stela Potočná</h3>
+              <p>Localized storytelling with a strong visual hook and character appeal.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell panel-grid">
+        <div class="quiz reveal">
+          <p class="eyebrow"><span class="spark"></span> Reader path</p>
+          <h2 class="serif">Not sure where to start?</h2>
+          <p>Let the homepage act like a guided shelf. Each answer nudges the reader toward the category most likely to convert.</p>
+
+          <button class="option" data-r="Start with Spiritual — visual guides with meaning, symbolism, and reflection.">
+            <span>I want meaning, symbolism, and faith-inspired visuals.</span>
+            <b>Spiritual</b>
+          </button>
+
+          <button class="option" data-r="Start with Romantasy — high emotion, magic, and genre hooks.">
+            <span>I want emotion, tension, magic, and a dramatic world.</span>
+            <b>Romantasy</b>
+          </button>
+
+          <button class="option" data-r="Start with For Children or Arts & Educational — playful, visual, and giftable.">
+            <span>I need a giftable book for kids or creative learners.</span>
+            <b>Gift picks</b>
+          </button>
+
+          <div class="result" data-result></div>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <span class="num">01</span>
+            <div>
+              <h3>Clear first decision</h3>
+              <p>The page avoids throwing every book at the visitor. It asks them to pick a world first.</p>
+            </div>
+          </div>
+
+          <div class="step reveal">
+            <span class="num">02</span>
+            <div>
+              <h3>Visual proof above the fold</h3>
+              <p>The hero image creates instant publishing-house credibility before the user scrolls.</p>
+            </div>
+          </div>
+
+          <div class="step reveal">
+            <span class="num">03</span>
+            <div>
+              <h3>CTA repetition without clutter</h3>
+              <p>Primary CTAs appear across the journey, always with clear intent.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="parallax">
+      <div class="pbg" data-pbg></div>
+      <div class="shell">
+        <div class="band reveal">
+          <p class="eyebrow"><span class="spark"></span> Creative & indie</p>
+          <h2 class="serif">A publishing house built around visual discovery.</h2>
+          <p>Use this band as a dramatic break between commercial sections. It keeps the site memorable while still pushing readers toward category selection.</p>
+          <a href="#featured-books" class="btn primary">Browse the shelf →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-k">Why readers stay</p>
+            <h2 class="serif">Trust signals without looking generic</h2>
+          </div>
+        </div>
+
+        <div class="trust">
+          <div class="trust-card reveal">
+            <div class="ico">📚</div>
+            <b>Curated books</b>
+            <p>Every title is framed by reader intent, category promise, and visual appeal.</p>
+          </div>
+
+          <div class="trust-card reveal">
+            <div class="ico">🎁</div>
+            <b>Giftable titles</b>
+            <p>Designed for birthdays, holidays, curiosity, faith, and creative learning.</p>
+          </div>
+
+          <div class="trust-card reveal">
+            <div class="ico">✨</div>
+            <b>Visual-first</b>
+            <p>Strong covers, cinematic imagery, and scannable category paths sell fast.</p>
+          </div>
+
+          <div class="trust-card reveal">
+            <div class="ico">✓</div>
+            <b>Easy choice</b>
+            <p>Category-first UX reduces hesitation and helps visitors find the right shelf.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter" id="club">
+      <div class="shell">
+        <div class="club reveal">
+          <div class="club-grid">
+            <div>
+              <p class="eyebrow"><span class="spark"></span> Join the Club</p>
+              <h2 class="serif">Get new worlds before everyone else.</h2>
+              <p>Use this as a newsletter, launch list, Amazon author page CTA, or coming-soon capture section.</p>
+
+              <form class="signup" onsubmit="event.preventDefault();this.querySelector('button').textContent='Joined';">
+                <input type="email" placeholder="Enter your email" aria-label="Email address">
+                <button class="btn primary" type="submit">Join the Club</button>
+              </form>
+            </div>
+
+            <div style="display:grid;gap:12px;min-width:min(360px,100%)">
+              <a class="btn secondary" href="#spiritual">Shop Spiritual</a>
+              <a class="btn secondary" href="#romantasy">Explore Romantasy</a>
+              <a class="btn secondary" href="#categories">View all categories</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <div>
+        <b style="color:var(--text)">Discover<span style="color:var(--green)">Visually</span></b>
+        <span style="margin-left:10px">© <span id="year"></span> Creative visual publishing house.</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#categories">Categories</a>
+        <a href="#featured-books">Featured books</a>
+        <a href="#club">Join the Club</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const $ = (s, p = document) => p.querySelector(s);
+    const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+
+    $("#year").textContent = new Date().getFullYear();
+
+    const menu = $("[data-menu]");
+    const mobilePanel = $("[data-mobile]");
+
+    if (menu && mobilePanel) {
+      menu.addEventListener("click", () => {
+        mobilePanel.style.display = mobilePanel.style.display === "block" ? "none" : "block";
+      });
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: .12,
+      rootMargin: "0px 0px -60px 0px"
+    });
+
+    $$(".reveal").forEach(el => observer.observe(el));
+
+    const tilt = $("[data-tilt]");
+
+    if (tilt && matchMedia("(pointer:fine)").matches) {
+      const art = $(".hero-art", tilt);
+
+      tilt.addEventListener("mousemove", event => {
+        const rect = tilt.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - .5;
+        const y = (event.clientY - rect.top) / rect.height - .5;
+        art.style.transform = `rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+      });
+
+      tilt.addEventListener("mouseleave", () => {
+        art.style.transform = "rotateY(0) rotateX(0)";
+      });
+    }
+
+    const parallaxBg = $("[data-pbg]");
+    let ticking = false;
+
+    function updateParallax() {
+      if (!parallaxBg) return;
+      const rect = parallaxBg.parentElement.getBoundingClientRect();
+      const viewport = innerHeight || 800;
+      const progress = (rect.top - viewport) / (rect.height + viewport);
+      const y = Math.max(-80, Math.min(80, progress * -120));
+      parallaxBg.style.setProperty("--py", y + "px");
+      ticking = false;
+    }
+
+    if (parallaxBg && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      addEventListener("scroll", () => {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateParallax();
+    }
+
+    $$(".option").forEach(button => {
+      button.addEventListener("click", () => {
+        $$(".option").forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+        const result = $("[data-result]");
+        result.textContent = button.dataset.r;
+        result.classList.add("show");
+      });
+    });
+  </script>
+</body>
 </html>
