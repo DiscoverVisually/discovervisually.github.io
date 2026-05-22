@@ -123,7 +123,7 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
+      overflow-x: hidden;
       background:
         radial-gradient(circle at 76% -10%, rgba(214,165,75,.20), transparent 32rem),
         radial-gradient(circle at 8% 22%, rgba(214,165,75,.09), transparent 25rem),
@@ -447,6 +447,7 @@
       perspective: 1500px;
       transform-style: preserve-3d;
       isolation: isolate;
+      overflow: visible;
     }
 
     .hero-visual::before {
@@ -460,7 +461,7 @@
         radial-gradient(circle at 50% 44%, rgba(214,165,75,.24), transparent 22rem);
       background-size: cover;
       background-position: center;
-      opacity: .78;
+      opacity: .62;
       filter: saturate(1.08) brightness(.88);
       transform:
         translate3d(
@@ -509,62 +510,74 @@
 
     .book-main {
       --book-img: var(--hero-main-book);
-      width: clamp(260px, 22vw, 385px);
-      height: clamp(380px, 32vw, 540px);
-      left: 43%;
-      top: 0;
-      z-index: 4;
+      width: clamp(230px, 18vw, 330px);
+      height: clamp(340px, 27vw, 470px);
+      left: 48%;
+      top: 18px;
+      z-index: 5;
       transform:
-        translate3d(calc(var(--mouseX) * -0.55), calc(var(--mouseY) * -0.42), 90px)
-        rotateY(-13deg)
+        translate3d(calc(var(--mouseX) * -0.42), calc(var(--mouseY) * -0.30), 90px)
+        rotateY(-12deg)
         rotateZ(3deg);
-      animation: bookMainFloat 9s ease-in-out infinite alternate;
+    }
+
+    .book-main .book-surface {
+      animation: bookMainFloat 13s cubic-bezier(.37,0,.63,1) infinite alternate;
     }
 
     .book-left {
       --book-img: var(--hero-side-book-left);
-      width: 160px;
-      height: 245px;
-      left: 14%;
+      width: clamp(120px, 10vw, 165px);
+      height: clamp(178px, 15vw, 250px);
+      left: 18%;
       top: 150px;
-      z-index: 2;
-      opacity: .84;
+      z-index: 3;
+      opacity: .94;
       transform:
-        translate3d(calc(var(--mouseX) * -0.22), calc(var(--mouseY) * -0.20), 10px)
-        rotateY(-21deg)
-        rotateZ(-9deg);
-      animation: bookLeftFloat 12s ease-in-out infinite alternate;
+        translate3d(calc(var(--mouseX) * -0.18), calc(var(--mouseY) * -0.16), 20px)
+        rotateY(-18deg)
+        rotateZ(-8deg);
+    }
+
+    .book-left .book-surface {
+      animation: bookLeftFloat 16s cubic-bezier(.37,0,.63,1) infinite alternate;
     }
 
     .book-right {
       --book-img: var(--hero-side-book-right);
-      width: 185px;
-      height: 285px;
-      right: 10%;
-      top: 85px;
-      z-index: 3;
-      opacity: .92;
+      width: clamp(132px, 11vw, 190px);
+      height: clamp(198px, 17vw, 292px);
+      right: 9%;
+      top: 102px;
+      z-index: 4;
+      opacity: .94;
       transform:
-        translate3d(calc(var(--mouseX) * -0.38), calc(var(--mouseY) * -0.28), 45px)
-        rotateY(16deg)
+        translate3d(calc(var(--mouseX) * -0.28), calc(var(--mouseY) * -0.22), 46px)
+        rotateY(15deg)
         rotateZ(7deg);
-      animation: bookRightFloat 11s ease-in-out infinite alternate;
+    }
+
+    .book-right .book-surface {
+      animation: bookRightFloat 15s cubic-bezier(.37,0,.63,1) infinite alternate;
     }
 
     .book-far {
       --book-img: var(--hero-side-book-far);
-      width: 160px;
-      height: 250px;
-      right: -3%;
-      top: 160px;
-      z-index: 1;
-      opacity: .50;
-      filter: blur(.6px);
+      width: clamp(118px, 9vw, 155px);
+      height: clamp(182px, 14vw, 246px);
+      right: 0;
+      top: 190px;
+      z-index: 2;
+      opacity: .68;
+      filter: blur(.4px);
       transform:
-        translate3d(calc(var(--mouseX) * -0.14), calc(var(--mouseY) * -0.16), -60px)
-        rotateY(24deg)
+        translate3d(calc(var(--mouseX) * -0.12), calc(var(--mouseY) * -0.12), -42px)
+        rotateY(22deg)
         rotateZ(-4deg);
-      animation: bookFarFloat 16s ease-in-out infinite alternate;
+    }
+
+    .book-far .book-surface {
+      animation: bookFarFloat 20s cubic-bezier(.37,0,.63,1) infinite alternate;
     }
 
     @keyframes bookMainFloat {
@@ -867,13 +880,7 @@
     }
 
     .placeholder-note {
-      margin: 0;
-      padding: 22px 26px;
-      border: 1px dashed rgba(214,165,75,.30);
-      border-radius: 14px;
-      color: rgba(247,239,227,.66);
-      background: rgba(5,5,6,.52);
-      line-height: 1.55;
+      display: none;
     }
 
     .mobile-menu {
@@ -1146,10 +1153,10 @@
           </div>
 
           <div class="hero-visual" aria-label="3D floating book cover field">
-            <div class="book-float book-left" data-placeholder="images/hero/hero-side-book-left.png"></div>
-            <div class="book-float book-main" data-placeholder="images/hero/hero-main-book.png"></div>
-            <div class="book-float book-right" data-placeholder="images/hero/hero-side-book-right.png"></div>
-            <div class="book-float book-far" data-placeholder="images/hero/hero-side-book-far.png"></div>
+            <div class="book-float book-left"><div class="book-surface"></div></div>
+            <div class="book-float book-main"><div class="book-surface"></div></div>
+            <div class="book-float book-right"><div class="book-surface"></div></div>
+            <div class="book-float book-far"><div class="book-surface"></div></div>
           </div>
         </div>
 
@@ -1268,43 +1275,48 @@
   <script>
     const root = document.documentElement;
 
-    let latestMouseX = 0;
-    let latestMouseY = 0;
-    let mouseTicking = false;
-
-    function updateMouseVars() {
-      root.style.setProperty("--mouseX", latestMouseX + "px");
-      root.style.setProperty("--mouseY", latestMouseY + "px");
-      mouseTicking = false;
-    }
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let currentMouseX = 0;
+    let currentMouseY = 0;
+    let pointerActive = false;
 
     if (matchMedia("(pointer:fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      addEventListener("mousemove", event => {
-        latestMouseX = (event.clientX / innerWidth - 0.5) * 30;
-        latestMouseY = (event.clientY / innerHeight - 0.5) * 24;
+      pointerActive = true;
 
-        if (!mouseTicking) {
-          requestAnimationFrame(updateMouseVars);
-          mouseTicking = true;
-        }
+      addEventListener("mousemove", event => {
+        targetMouseX = (event.clientX / innerWidth - 0.5) * 18;
+        targetMouseY = (event.clientY / innerHeight - 0.5) * 14;
       }, { passive: true });
     }
 
-    let scrollTicking = false;
+    let lastScrollY = 0;
 
-    function updateScrollVars() {
-      root.style.setProperty("--scrollY", (scrollY || pageYOffset || 0) + "px");
-      scrollTicking = false;
+    function animateScene() {
+      if (pointerActive) {
+        currentMouseX += (targetMouseX - currentMouseX) * 0.075;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.075;
+
+        root.style.setProperty("--mouseX", currentMouseX.toFixed(2) + "px");
+        root.style.setProperty("--mouseY", currentMouseY.toFixed(2) + "px");
+      }
+
+      const y = scrollY || pageYOffset || 0;
+      if (Math.abs(y - lastScrollY) > 0.2) {
+        lastScrollY = y;
+        root.style.setProperty("--scrollY", y.toFixed(1) + "px");
+      }
+
+      requestAnimationFrame(animateScene);
     }
 
-    addEventListener("scroll", () => {
-      if (!scrollTicking) {
-        requestAnimationFrame(updateScrollVars);
-        scrollTicking = true;
-      }
-    }, { passive: true });
-
-    updateScrollVars();
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      requestAnimationFrame(animateScene);
+    } else {
+      root.style.setProperty("--scrollY", "0px");
+      root.style.setProperty("--mouseX", "0px");
+      root.style.setProperty("--mouseY", "0px");
+    }
   </script>
 </body>
 </html>
