@@ -453,26 +453,21 @@
     .hero-visual::before {
       content: "";
       position: absolute;
-      inset: -12% -10% -10% -12%;
+      inset: -12% -8% -12% -18%;
       z-index: -4;
       background:
-        linear-gradient(90deg, rgba(3,3,4,.40), transparent 28%, rgba(3,3,4,.15)),
-        var(--hero-bg),
-        radial-gradient(circle at 50% 44%, rgba(214,165,75,.24), transparent 22rem);
-      background-size: cover;
-      background-position: center;
-      opacity: .62;
-      filter: saturate(1.08) brightness(.88);
+        radial-gradient(circle at 54% 42%, rgba(214,165,75,.16), transparent 22rem),
+        linear-gradient(90deg, rgba(3,3,4,.42), transparent 36%, rgba(3,3,4,.22));
+      opacity: .85;
+      pointer-events: none;
       transform:
         translate3d(
-          calc(var(--mouseX) * -0.6),
-          calc(var(--mouseY) * -0.4),
+          calc(var(--mouseX) * -0.4),
+          calc(var(--mouseY) * -0.3),
           -80px
         )
-        scale(1.03);
+        scale(1.02);
       will-change: transform;
-      border-radius: 34px;
-      mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 92%, transparent 100%);
     }
 
     .book-float {
@@ -492,31 +487,16 @@
       overflow: hidden;
     }
 
-    .book-float::after {
-      content: attr(data-placeholder);
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
-      padding: 9px 10px;
-      border-radius: 9px;
-      border: 1px dashed rgba(214,165,75,.28);
-      background: rgba(0,0,0,.42);
-      color: rgba(247,239,227,.58);
-      font-size: 11px;
-      text-align: center;
-      backdrop-filter: blur(8px);
-    }
 
     .book-main {
       --book-img: var(--hero-main-book);
-      width: clamp(230px, 18vw, 330px);
-      height: clamp(340px, 27vw, 470px);
-      left: 48%;
-      top: 18px;
+      width: clamp(230px, 17vw, 315px);
+      height: clamp(340px, 26vw, 455px);
+      left: 50%;
+      top: 16px;
       z-index: 5;
       transform:
-        translate3d(calc(var(--mouseX) * -0.42), calc(var(--mouseY) * -0.30), 90px)
+        translate3d(calc(var(--mouseX) * -0.36), calc(var(--mouseY) * -0.26), 90px)
         rotateY(-12deg)
         rotateZ(3deg);
     }
@@ -527,14 +507,14 @@
 
     .book-left {
       --book-img: var(--hero-side-book-left);
-      width: clamp(120px, 10vw, 165px);
-      height: clamp(178px, 15vw, 250px);
-      left: 18%;
-      top: 150px;
+      width: clamp(106px, 8.6vw, 145px);
+      height: clamp(158px, 13vw, 220px);
+      left: 22%;
+      top: 168px;
       z-index: 3;
       opacity: .94;
       transform:
-        translate3d(calc(var(--mouseX) * -0.18), calc(var(--mouseY) * -0.16), 20px)
+        translate3d(calc(var(--mouseX) * -0.14), calc(var(--mouseY) * -0.12), 20px)
         rotateY(-18deg)
         rotateZ(-8deg);
     }
@@ -545,14 +525,14 @@
 
     .book-right {
       --book-img: var(--hero-side-book-right);
-      width: clamp(132px, 11vw, 190px);
-      height: clamp(198px, 17vw, 292px);
-      right: 9%;
-      top: 102px;
+      width: clamp(112px, 9vw, 155px);
+      height: clamp(168px, 13.8vw, 235px);
+      right: 16%;
+      top: 146px;
       z-index: 4;
       opacity: .94;
       transform:
-        translate3d(calc(var(--mouseX) * -0.28), calc(var(--mouseY) * -0.22), 46px)
+        translate3d(calc(var(--mouseX) * -0.22), calc(var(--mouseY) * -0.16), 46px)
         rotateY(15deg)
         rotateZ(7deg);
     }
@@ -563,15 +543,15 @@
 
     .book-far {
       --book-img: var(--hero-side-book-far);
-      width: clamp(118px, 9vw, 155px);
-      height: clamp(182px, 14vw, 246px);
-      right: 0;
-      top: 190px;
+      width: clamp(96px, 7.8vw, 132px);
+      height: clamp(148px, 12vw, 210px);
+      right: 3%;
+      top: 188px;
       z-index: 2;
-      opacity: .68;
-      filter: blur(.4px);
+      opacity: .72;
+      filter: blur(.25px);
       transform:
-        translate3d(calc(var(--mouseX) * -0.12), calc(var(--mouseY) * -0.12), -42px)
+        translate3d(calc(var(--mouseX) * -0.10), calc(var(--mouseY) * -0.10), -42px)
         rotateY(22deg)
         rotateZ(-4deg);
     }
@@ -1156,7 +1136,7 @@
             <div class="book-float book-left"><div class="book-surface"></div></div>
             <div class="book-float book-main"><div class="book-surface"></div></div>
             <div class="book-float book-right"><div class="book-surface"></div></div>
-            <div class="book-float book-far"><div class="book-surface"></div></div>
+            <div class="book-float book-far"><div class="book-surface"></div></div></div>
           </div>
         </div>
 
