@@ -1,0 +1,9 @@
+{
+  "name": "discovervisually.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static DiscoverVisually website",
+  "scripts": {
+    "build": "node ./scripts/build-check.js"
+  }
+}
