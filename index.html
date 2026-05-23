@@ -588,10 +588,10 @@
 
 
     .book-main {
-      width: clamp(380px, 27.6vw, 520px);
-      height: clamp(560px, 40.6vw, 780px);
+      width: clamp(190px, 13.8vw, 260px);
+      height: clamp(280px, 20.3vw, 390px);
       left: 44%;
-      top: -84px;
+      top: -28px;
       z-index: 5;
       transform:
         translate3d(calc(var(--mouseX) * -0.30), calc(var(--mouseY) * -0.20), 90px)
@@ -604,10 +604,10 @@
     }
 
     .book-left {
-      width: clamp(200px, 15.4vw, 272px);
-      height: clamp(292px, 22.8vw, 412px);
-      left: 6%;
-      top: 76px;
+      width: clamp(100px, 7.7vw, 136px);
+      height: clamp(146px, 11.4vw, 206px);
+      left: 14%;
+      top: 126px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -621,10 +621,10 @@
     }
 
     .book-right {
-      width: clamp(204px, 15.6vw, 284px);
-      height: clamp(304px, 24vw, 428px);
-      right: 8%;
-      top: 84px;
+      width: clamp(102px, 7.8vw, 142px);
+      height: clamp(152px, 12vw, 214px);
+      right: 18%;
+      top: 128px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -638,10 +638,10 @@
     }
 
     .book-far {
-      width: clamp(192px, 14.2vw, 264px);
-      height: clamp(284px, 21.8vw, 404px);
-      right: -4%;
-      top: 72px;
+      width: clamp(96px, 7.1vw, 132px);
+      height: clamp(142px, 10.9vw, 202px);
+      right: 2%;
+      top: 116px;
       z-index: 3;
       opacity: .90;
       filter: blur(.12px);
@@ -1041,13 +1041,13 @@
     }
 
     .trust-strip.slim {
-      max-width: 940px;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      width: min(940px, 100%);
+      max-width: 900px;
+      grid-template-columns: repeat(4, auto);
+      width: min(900px, 100%);
       margin-top: -24px;
       margin-left: 0;
       margin-right: auto;
-      border-radius: 12px;
+      border-radius: 999px;
       padding: 7px;
       gap: 4px;
     }
@@ -1777,21 +1777,21 @@
             </div>
           </div>
 
-          <div class="hero-visual" aria-hidden="true">
-            <div class="book-float book-left">
-              <img src="images/hero/hero-side-book-left.png" alt="" loading="eager" />
+          <div class="hero-visual" aria-label="3D floating book cover field">
+            <a class="book-float book-left" href="#spiritual" aria-label="Open Spiritual visual guides">
+              <img src="images/hero/hero-side-book-left.png" alt="Spiritual book cover" loading="eager" />
               <span class="book-label">Spiritual Visual Guides</span>
-            </div>
-            <div class="book-float book-main">
-              <img src="images/hero/hero-main-book.png" alt="" loading="eager" />
+            </a>
+            <a class="book-float book-main" href="#catalog" aria-label="Explore the DiscoverVisually catalog">
+              <img src="images/hero/hero-main-book.png" alt="DiscoverVisually catalog hero book" loading="eager" />
               <span class="book-label">Discover the Catalog</span>
-            </div>
-            <div class="book-float book-right">
-              <img src="images/hero/hero-side-book-right.png" alt="" loading="eager" />
+            </a>
+            <a class="book-float book-right" href="#romantasy" aria-label="Open Romantasy books">
+              <img src="images/hero/hero-side-book-right.png" alt="Romantasy book cover" loading="eager" />
               <span class="book-label">Romantasy Field Guides</span>
-            </div>
-            <div class="book-float book-far">
-              <img src="images/hero/hero-side-book-far.png" alt="" loading="lazy" />
+            </a>
+            <a class="book-float book-far" href="#spiritual" aria-label="Open Bible mysteries and spiritual books">
+              <img src="images/hero/hero-side-book-far.png" alt="Visual Bible mysteries book cover" loading="lazy" />
               <span class="book-label">Bible Mysteries</span>
             </div></div>
           </div>
