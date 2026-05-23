@@ -485,6 +485,7 @@
       transform-style: preserve-3d;
       isolation: isolate;
       overflow: visible;
+      pointer-events: none;
     }
 
     .hero-panel {
@@ -590,7 +591,7 @@
       width: clamp(190px, 13.8vw, 260px);
       height: clamp(280px, 20.3vw, 390px);
       left: 44%;
-      top: 18px;
+      top: -28px;
       z-index: 5;
       transform:
         translate3d(calc(var(--mouseX) * -0.30), calc(var(--mouseY) * -0.20), 90px)
@@ -707,7 +708,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0;
-      margin-top: -18px;
+      margin-top: -116px;
       border: 1px solid rgba(214,165,75,.20);
       border-radius: 9px;
       background: rgba(5,5,6,.62);
@@ -1361,7 +1362,7 @@
       }
 
       .trust-strip {
-        margin-top: 20px;
+        margin-top: -72px;
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -1455,6 +1456,10 @@
       .category-grid,
       .compact-stack {
         grid-template-columns: 1fr;
+      }
+
+      .trust-strip {
+        margin-top: -24px;
       }
 
       .trust-item {
@@ -1787,7 +1792,7 @@
             <a class="book-float book-far" href="#spiritual" aria-label="Open Bible mysteries and spiritual books">
               <img src="images/hero/hero-side-book-far.png" alt="Visual Bible mysteries book cover" loading="lazy" />
               <span class="book-label">Bible Mysteries</span>
-            </a></div>
+            </div></div>
           </div>
         </div>
 
