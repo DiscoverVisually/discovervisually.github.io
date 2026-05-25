@@ -588,10 +588,10 @@
 
 
     .book-main {
-      width: clamp(190px, 13.8vw, 260px);
-      height: clamp(280px, 20.3vw, 390px);
+      width: clamp(570px, 41.4vw, 780px);
+      height: clamp(840px, 60.9vw, 1170px);
       left: 44%;
-      top: -28px;
+      top: -220px;
       z-index: 5;
       transform:
         translate3d(calc(var(--mouseX) * -0.30), calc(var(--mouseY) * -0.20), 90px)
@@ -604,10 +604,10 @@
     }
 
     .book-left {
-      width: clamp(100px, 7.7vw, 136px);
-      height: clamp(146px, 11.4vw, 206px);
-      left: 14%;
-      top: 126px;
+      width: clamp(300px, 23.1vw, 408px);
+      height: clamp(438px, 34.2vw, 618px);
+      left: 2%;
+      top: 46px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -621,10 +621,10 @@
     }
 
     .book-right {
-      width: clamp(102px, 7.8vw, 142px);
-      height: clamp(152px, 12vw, 214px);
-      right: 18%;
-      top: 128px;
+      width: clamp(306px, 23.4vw, 426px);
+      height: clamp(456px, 36vw, 642px);
+      right: 2%;
+      top: 52px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -638,10 +638,10 @@
     }
 
     .book-far {
-      width: clamp(96px, 7.1vw, 132px);
-      height: clamp(142px, 10.9vw, 202px);
-      right: 2%;
-      top: 116px;
+      width: clamp(288px, 21.3vw, 396px);
+      height: clamp(426px, 32.7vw, 606px);
+      right: -9%;
+      top: 36px;
       z-index: 3;
       opacity: .90;
       filter: blur(.12px);
@@ -1041,13 +1041,13 @@
     }
 
     .trust-strip.slim {
-      max-width: 900px;
-      grid-template-columns: repeat(4, auto);
-      width: min(900px, 100%);
-      margin-top: -24px;
+      max-width: 940px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      width: min(940px, 100%);
+      margin-top: 22px;
       margin-left: 0;
       margin-right: auto;
-      border-radius: 999px;
+      border-radius: 12px;
       padding: 7px;
       gap: 4px;
     }
@@ -1775,56 +1775,55 @@
               </a>
               <a class="btn secondary" href="#romantasy"><span class="play">⌁</span> Explore Romantasy</a>
             </div>
+
+            <div class="trust-strip slim" aria-label="Trust signals">
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <span><strong>Indie publishing</strong><span>Independent visual books</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </span>
+                <span><strong>Curated visual books</strong><span>Handpicked stories & art</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span><strong>Giftable titles</strong><span>Designed to keep and revisit</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span><strong>Global readers</strong><span>Books to your world</span></span>
+              </div>
+            </div>
           </div>
 
-          <div class="hero-visual" aria-label="3D floating book cover field">
-            <a class="book-float book-left" href="#spiritual" aria-label="Open Spiritual visual guides">
-              <img src="images/hero/hero-side-book-left.png" alt="Spiritual book cover" loading="eager" />
+          <div class="hero-visual" aria-hidden="true">
+            <div class="book-float book-left">
+              <img src="images/hero/hero-side-book-left.png" alt="" loading="eager" />
               <span class="book-label">Spiritual Visual Guides</span>
-            </a>
-            <a class="book-float book-main" href="#catalog" aria-label="Explore the DiscoverVisually catalog">
-              <img src="images/hero/hero-main-book.png" alt="DiscoverVisually catalog hero book" loading="eager" />
+            </div>
+            <div class="book-float book-main">
+              <img src="images/hero/hero-main-book.png" alt="" loading="eager" />
               <span class="book-label">Discover the Catalog</span>
-            </a>
-            <a class="book-float book-right" href="#romantasy" aria-label="Open Romantasy books">
-              <img src="images/hero/hero-side-book-right.png" alt="Romantasy book cover" loading="eager" />
+            </div>
+            <div class="book-float book-right">
+              <img src="images/hero/hero-side-book-right.png" alt="" loading="eager" />
               <span class="book-label">Romantasy Field Guides</span>
-            </a>
-            <a class="book-float book-far" href="#spiritual" aria-label="Open Bible mysteries and spiritual books">
-              <img src="images/hero/hero-side-book-far.png" alt="Visual Bible mysteries book cover" loading="lazy" />
+            </div>
+            <div class="book-float book-far">
+              <img src="images/hero/hero-side-book-far.png" alt="" loading="lazy" />
               <span class="book-label">Bible Mysteries</span>
             </div></div>
           </div>
         </div>
 
-        <div class="shell">
-          <div class="trust-strip slim" aria-label="Trust signals">
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
-              </span>
-              <span><strong>Indie publishing</strong><span>Independent visual books</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-              </span>
-              <span><strong>Curated visual books</strong><span>Handpicked stories & art</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              <span><strong>Giftable titles</strong><span>Designed to keep and revisit</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              <span><strong>Global readers</strong><span>Books to your world</span></span>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section class="shell catalog-panel" id="catalog">
