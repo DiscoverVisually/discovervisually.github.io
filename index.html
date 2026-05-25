@@ -94,6 +94,24 @@
       overflow-x: hidden;
     }
 
+    .skip-link {
+      position: absolute;
+      top: -44px;
+      left: 18px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(239,205,131,.62);
+      color: #120d03;
+      background: var(--gold-soft);
+      font-weight: 700;
+      transition: top .2s ease;
+    }
+
+    .skip-link:focus-visible {
+      top: 10px;
+    }
+
     body::selection {
       background: rgba(214,165,75,.35);
     }
@@ -101,6 +119,12 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid rgba(239,205,131,.95);
+      outline-offset: 3px;
     }
 
     button,
@@ -241,6 +265,9 @@
       border-bottom: 1px solid rgba(255,255,255,.08);
       background: rgba(3,3,4,.58);
       backdrop-filter: blur(18px) saturate(1.15);
+      position: sticky;
+      top: 0;
+      z-index: 22;
     }
 
     .nav {
@@ -401,6 +428,7 @@
       padding: 34px 0 8px;
       min-height: 430px;
       overflow: visible;
+      scroll-margin-top: 88px;
     }
 
     .hero-grid {
@@ -426,6 +454,15 @@
       text-wrap: balance;
     }
 
+    .eyebrow {
+      margin: 0 0 16px;
+      color: rgba(239,205,131,.88);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 640;
+    }
+
     .hero-copy {
       max-width: 640px;
       margin: 18px 0 0;
@@ -448,6 +485,7 @@
       transform-style: preserve-3d;
       isolation: isolate;
       overflow: visible;
+      pointer-events: none;
     }
 
     .hero-panel {
@@ -534,28 +572,26 @@
 
     .book-float {
       position: absolute;
-      background:
-        var(--book-img),
-        linear-gradient(145deg, #171719, #080809);
-      background-size: cover;
-      background-position: center;
       border-radius: 7px;
-      border: 1px solid rgba(214,165,75,.25);
-      box-shadow:
-        26px 28px 60px rgba(0,0,0,.55),
-        inset -10px 0 20px rgba(255,255,255,.06),
-        inset 8px 0 12px rgba(0,0,0,.3);
+      box-shadow: 22px 24px 54px rgba(0,0,0,.50);
       will-change: transform;
       overflow: hidden;
     }
 
+    .book-float img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(14px 18px 20px rgba(0,0,0,.45));
+    }
+
 
     .book-main {
-      --book-img: var(--hero-main-book);
-      width: clamp(190px, 13.8vw, 260px);
-      height: clamp(280px, 20.3vw, 390px);
+      width: clamp(285px, 20.7vw, 390px);
+      height: clamp(420px, 30.45vw, 585px);
       left: 44%;
-      top: 18px;
+      top: -28px;
       z-index: 5;
       transform:
         translate3d(calc(var(--mouseX) * -0.30), calc(var(--mouseY) * -0.20), 90px)
@@ -568,11 +604,10 @@
     }
 
     .book-left {
-      --book-img: var(--hero-side-book-left);
-      width: clamp(100px, 7.7vw, 136px);
-      height: clamp(146px, 11.4vw, 206px);
-      left: 14%;
-      top: 126px;
+      width: clamp(150px, 11.55vw, 204px);
+      height: clamp(219px, 17.1vw, 309px);
+      left: 9%;
+      top: 108px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -586,11 +621,10 @@
     }
 
     .book-right {
-      --book-img: var(--hero-side-book-right);
-      width: clamp(102px, 7.8vw, 142px);
-      height: clamp(152px, 12vw, 214px);
-      right: 18%;
-      top: 128px;
+      width: clamp(153px, 11.7vw, 213px);
+      height: clamp(228px, 18vw, 321px);
+      right: 12%;
+      top: 110px;
       z-index: 4;
       opacity: .98;
       transform:
@@ -604,11 +638,10 @@
     }
 
     .book-far {
-      --book-img: var(--hero-side-book-far);
-      width: clamp(96px, 7.1vw, 132px);
-      height: clamp(142px, 10.9vw, 202px);
-      right: 2%;
-      top: 116px;
+      width: clamp(144px, 10.65vw, 198px);
+      height: clamp(213px, 16.35vw, 303px);
+      right: -1%;
+      top: 96px;
       z-index: 3;
       opacity: .90;
       filter: blur(.12px);
@@ -675,7 +708,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0;
-      margin-top: -18px;
+      margin-top: -116px;
       border: 1px solid rgba(214,165,75,.20);
       border-radius: 9px;
       background: rgba(5,5,6,.62);
@@ -723,7 +756,7 @@
     }
 
     .catalog-panel {
-      margin-top: 8px;
+      margin-top: -42px;
       padding: 22px 40px 34px;
       border: 1px solid rgba(214,165,75,.20);
       border-radius: 17px;
@@ -732,6 +765,7 @@
         radial-gradient(circle at 50% 0%, rgba(214,165,75,.07), transparent 32rem);
       box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
+      scroll-margin-top: 92px;
     }
 
     .catalog-head {
@@ -961,9 +995,9 @@
       pointer-events: auto;
     }
 
-    .book-float:hover .book-surface {
+    .book-float:hover img {
       filter:
-        drop-shadow(24px 34px 36px rgba(0,0,0,.62))
+        drop-shadow(20px 28px 30px rgba(0,0,0,.62))
         drop-shadow(0 0 24px rgba(214,165,75,.20));
     }
 
@@ -1007,12 +1041,13 @@
     }
 
     .trust-strip.slim {
-      max-width: 900px;
-      grid-template-columns: repeat(4, auto);
-      width: max-content;
-      min-width: min(900px, 100%);
-      margin-top: -24px;
-      border-radius: 999px;
+      max-width: 940px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      width: min(940px, 100%);
+      margin-top: 22px;
+      margin-left: 0;
+      margin-right: auto;
+      border-radius: 12px;
       padding: 7px;
       gap: 4px;
     }
@@ -1025,7 +1060,7 @@
       padding: 8px 14px;
       border-right: 1px solid rgba(255,255,255,.08);
       border-bottom: 0;
-      white-space: nowrap;
+      white-space: normal;
     }
 
     .trust-strip.slim .trust-item:last-child {
@@ -1084,6 +1119,7 @@
       position: relative;
       z-index: 2;
       padding: 70px 0 0;
+      scroll-margin-top: 92px;
     }
 
     .section-title-row {
@@ -1327,7 +1363,7 @@
       }
 
       .trust-strip {
-        margin-top: 20px;
+        margin-top: -72px;
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -1421,6 +1457,10 @@
       .category-grid,
       .compact-stack {
         grid-template-columns: 1fr;
+      }
+
+      .trust-strip {
+        margin-top: -24px;
       }
 
       .trust-item {
@@ -1686,6 +1726,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="ambient-stage" aria-hidden="true">
     <div class="ambient-photo"></div>
     <div class="ambient-gold-left"></div>
@@ -1704,11 +1745,11 @@
 
         <nav class="nav-links" aria-label="Main navigation">
           <a class="active" href="#">Home</a>
-          <a href="#catalog">Catalog</a>
-          <a href="#categories">Categories</a>
-          <a href="#about">About Us</a>
-          <a href="#gift-guide">Gift Guide</a>
-          <a href="#journal">Journal</a>
+          <a href="#spiritual">Spiritual</a>
+          <a href="#romantasy">Romantasy</a>
+          <a href="#children">For Children</a>
+          <a href="#education">Arts, Crafts & Educational</a>
+          <a href="#nonenglish">Non-English Books</a>
         </nav>
 
         <div class="nav-actions">
@@ -1718,71 +1759,71 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="hero">
         <div class="shell hero-grid">
           <div class="hero-content">
+            <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
             <h1 class="serif">Every category opens a different world.</h1>
             <p class="hero-copy">DiscoverVisually is an indie visual book publishing house crafting immersive worlds through artful storytelling, curated for curious minds and beautiful souls.</p>
 
             <div class="hero-actions">
               <a class="btn" href="#catalog">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" stroke="currentColor" stroke-width="2"/></svg>
-                Explore Catalog
+                Shop Spiritual
                 <span>›</span>
               </a>
-              <a class="btn secondary" href="#categories"><span class="play">⌁</span> Find Your Category</a>
+              <a class="btn secondary" href="#romantasy"><span class="play">⌁</span> Explore Romantasy</a>
+            </div>
+
+            <div class="trust-strip slim" aria-label="Trust signals">
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <span><strong>Indie publishing</strong><span>Independent visual books</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </span>
+                <span><strong>Curated visual books</strong><span>Handpicked stories & art</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span><strong>Giftable titles</strong><span>Designed to keep and revisit</span></span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span><strong>Global readers</strong><span>Books to your world</span></span>
+              </div>
             </div>
           </div>
 
-          <div class="hero-visual" aria-label="3D floating book cover field">
-            <a class="book-float book-left" href="#spiritual" aria-label="Open Spiritual visual guides">
-              <div class="book-surface"></div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="book-float book-left">
+              <img src="images/hero/hero-side-book-left.png" alt="" loading="eager" />
               <span class="book-label">Spiritual Visual Guides</span>
-            </a>
-            <a class="book-float book-main" href="#catalog" aria-label="Explore the DiscoverVisually catalog">
-              <div class="book-surface"></div>
+            </div>
+            <div class="book-float book-main">
+              <img src="images/hero/hero-main-book.png" alt="" loading="eager" />
               <span class="book-label">Discover the Catalog</span>
-            </a>
-            <a class="book-float book-right" href="#romantasy" aria-label="Open Romantasy books">
-              <div class="book-surface"></div>
+            </div>
+            <div class="book-float book-right">
+              <img src="images/hero/hero-side-book-right.png" alt="" loading="eager" />
               <span class="book-label">Romantasy Field Guides</span>
-            </a>
-            <a class="book-float book-far" href="#spiritual" aria-label="Open Bible mysteries and spiritual books">
-              <div class="book-surface"></div>
+            </div>
+            <div class="book-float book-far">
+              <img src="images/hero/hero-side-book-far.png" alt="" loading="lazy" />
               <span class="book-label">Bible Mysteries</span>
-            </a></div>
+            </div></div>
           </div>
         </div>
 
-        <div class="shell">
-          <div class="trust-strip slim" aria-label="Trust signals">
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
-              </span>
-              <span><strong>Indie publishing</strong><span>Independent visual books</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-              </span>
-              <span><strong>Curated visual books</strong><span>Handpicked stories & art</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              <span><strong>Giftable titles</strong><span>Designed to keep and revisit</span></span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              <span><strong>Global readers</strong><span>Books to your world</span></span>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section class="shell catalog-panel" id="catalog">
@@ -1795,7 +1836,7 @@
         </div>
 
         <div class="category-grid" id="categories">
-          <a class="category-card spiritual" href="#">
+          <a class="category-card spiritual" id="spiritual" href="#featured-books">
             <div class="cat-content">
               <span class="cat-icon">
                 <svg width="29" height="29" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21c4-4 7-8 7-12a7 7 0 0 0-14 0c0 4 3 8 7 12Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 21c0-6 2-10 5-14M12 21C12 15 10 11 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -1807,7 +1848,7 @@
             </div>
           </a>
 
-          <a class="category-card romantasy" href="#">
+          <a class="category-card romantasy" id="romantasy" href="#featured-books">
             <div class="cat-content">
               <span class="cat-icon">
                 <svg width="29" height="29" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M6 7h12M8 7l4-5 4 5M9 22h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1820,7 +1861,7 @@
           </a>
 
           <div class="compact-stack">
-            <a class="compact-category children" href="#" style="--cat-img: var(--cat-children)">
+            <a class="compact-category children" id="children" href="#featured-books" style="--cat-img: var(--cat-children)">
               <span class="cat-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 14c3.3 0 6-2.2 6-5s-2.7-5-6-5-6 2.2-6 5 2.7 5 6 5Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 14c-2 1-3 2.4-3 4v2h14v-2c0-1.6-1-3-3-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
               </span>
@@ -1831,7 +1872,7 @@
               <span class="circle-arrow">›</span>
             </a>
 
-            <a class="compact-category education" href="#" style="--cat-img: var(--cat-education)">
+            <a class="compact-category education" id="education" href="#featured-books" style="--cat-img: var(--cat-education)">
               <span class="cat-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
@@ -1842,7 +1883,7 @@
               <span class="circle-arrow">›</span>
             </a>
 
-            <a class="compact-category nonenglish" href="#" style="--cat-img: var(--cat-nonenglish)">
+            <a class="compact-category nonenglish" id="nonenglish" href="#featured-books" style="--cat-img: var(--cat-nonenglish)">
               <span class="cat-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="1.8"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
               </span>
