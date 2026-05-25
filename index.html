@@ -1001,6 +1001,29 @@
         drop-shadow(0 0 24px rgba(214,165,75,.20));
     }
 
+    .book-main img { animation: bookPulseMain 6s ease-in-out infinite; }
+    .book-left img { animation: bookPulseLeft 7.5s ease-in-out infinite; }
+    .book-right img { animation: bookPulseRight 6.8s ease-in-out infinite; }
+    .book-far img { animation: bookPulseFar 8.2s ease-in-out infinite; }
+
+    @keyframes bookPulseMain {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    @keyframes bookPulseLeft {
+      0%,100% { transform: scale(.98) translateY(0); }
+      50% { transform: scale(1.05) translateY(-7px); }
+    }
+    @keyframes bookPulseRight {
+      0%,100% { transform: scale(.99) translateY(0); }
+      50% { transform: scale(1.05) translateY(6px); }
+    }
+    @keyframes bookPulseFar {
+      0%,100% { transform: scale(.97) translateY(0); }
+      50% { transform: scale(1.04) translateY(-5px); }
+    }
+
+
     .book-label {
       position: absolute;
       left: 50%;
@@ -1072,9 +1095,10 @@
       height: 28px;
     }
 
-    .trust-strip.slim .trust-icon svg {
+    .trust-strip.slim .trust-icon img {
       width: 16px;
       height: 16px;
+      display: block;
     }
 
     .trust-strip.slim strong {
@@ -1779,25 +1803,25 @@
             <div class="trust-strip slim" aria-label="Trust signals">
               <div class="trust-item">
                 <span class="trust-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2"/></svg>
+                  <img src="images/icons/trust-indie.svg" alt="" loading="lazy" />
                 </span>
                 <span><strong>Indie publishing</strong><span>Independent visual books</span></span>
               </div>
               <div class="trust-item">
                 <span class="trust-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2 3 7 7 1-5 5 1 7-6-3.5L6 22l1-7-5-5 7-1 3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  <img src="images/icons/trust-curated.svg" alt="" loading="lazy" />
                 </span>
                 <span><strong>Curated visual books</strong><span>Handpicked stories & art</span></span>
               </div>
               <div class="trust-item">
                 <span class="trust-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21c8-2 13-7 14-18C8 4 3 10 5 21Z" stroke="currentColor" stroke-width="2"/><path d="M9 15c2-2 4-4 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <img src="images/icons/trust-gift.svg" alt="" loading="lazy" />
                 </span>
                 <span><strong>Giftable titles</strong><span>Designed to keep and revisit</span></span>
               </div>
               <div class="trust-item">
                 <span class="trust-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <img src="images/icons/trust-global.svg" alt="" loading="lazy" />
                 </span>
                 <span><strong>Global readers</strong><span>Books to your world</span></span>
               </div>
