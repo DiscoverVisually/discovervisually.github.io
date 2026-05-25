@@ -425,8 +425,8 @@
 
     .hero {
       position: relative;
-      padding: 34px 0 8px;
-      min-height: 430px;
+      padding: 34px 0 0;
+      min-height: 390px;
       overflow: visible;
       scroll-margin-top: 88px;
     }
@@ -756,7 +756,7 @@
     }
 
     .catalog-panel {
-      margin-top: -42px;
+      margin-top: -120px;
       padding: 22px 40px 34px;
       border: 1px solid rgba(214,165,75,.20);
       border-radius: 17px;
@@ -1005,6 +1005,10 @@
     .book-left img { animation: bookPulseLeft 7.5s ease-in-out infinite; }
     .book-right img { animation: bookPulseRight 6.8s ease-in-out infinite; }
     .book-far img { animation: bookPulseFar 8.2s ease-in-out infinite; }
+    .book-main { animation: driftMain 18s ease-in-out infinite alternate; }
+    .book-left { animation: driftLeft 22s ease-in-out infinite alternate; }
+    .book-right { animation: driftRight 20s ease-in-out infinite alternate; }
+    .book-far { animation: driftFar 24s ease-in-out infinite alternate; }
 
     @keyframes bookPulseMain {
       0%,100% { transform: scale(1); }
@@ -1021,6 +1025,22 @@
     @keyframes bookPulseFar {
       0%,100% { transform: scale(.97) translateY(0); }
       50% { transform: scale(1.04) translateY(-5px); }
+    }
+    @keyframes driftMain {
+      from { margin-left: -8px; }
+      to { margin-left: 14px; }
+    }
+    @keyframes driftLeft {
+      from { margin-left: -14px; }
+      to { margin-left: 10px; }
+    }
+    @keyframes driftRight {
+      from { margin-left: 10px; }
+      to { margin-left: -12px; }
+    }
+    @keyframes driftFar {
+      from { margin-left: 16px; }
+      to { margin-left: -10px; }
     }
 
 
