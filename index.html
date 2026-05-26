@@ -1,11 +1,75 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>DiscoverVisually — Modern Creative Publishing House</title><meta name="description" content="DiscoverVisually is a modern creative publishing house with premium visual books in Spiritual, Romantasy, Children, Arts & Educational, and Non-English categories." /><link rel="stylesheet" href="styles.css" /></head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DiscoverVisually — Modern Creative Publishing House</title>
+  <meta name="description" content="DiscoverVisually is a modern creative publishing house with premium visual books in Spiritual, Romantasy, Children, Arts & Educational, and Non-English categories." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
 <body>
-<header class="site-header"><div class="container nav-wrap"><a class="logo" href="index.html">Discover<span>Visually</span></a><nav class="main-nav"><a class="active" href="index.html">Home</a><a href="spiritual/">Spiritual</a><a href="romantasy/">Romantasy</a><a href="for-children/">For Children</a><a href="arts-crafts-educational/">Arts, Crafts & Educational</a><a href="non-english-books/">Non-English Books</a></nav><a class="btn btn-primary" href="#categories">Explore Catalog</a></div></header>
-<main>
-<section class="hero container"><div><p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p><h1>Every category opens a different world.</h1><p class="lead">Explore handpicked visual books, story-rich guides, and creative titles made to inspire, teach, and delight. Built for gifting, collecting, and meaningful reading moments.</p><div class="hero-cta"><a class="btn btn-primary" href="spiritual/">Shop Spiritual</a><a class="btn btn-secondary" href="romantasy/">Explore Romantasy</a></div><ul class="hero-trust"><li>Carefully curated</li><li>Perfect gifts</li><li>Secure shopping</li></ul></div><div class="hero-image"><img src="images/hero/hero-3d-book-field.jpg" alt="DiscoverVisually cinematic bookshelf hero visual" /></div></section>
-<section id="categories" class="section container"><h2>Shop by category</h2><div class="feature-grid"><article class="card" style="--card-image:url('images/categories/spiritual-card.jpg')"><div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><a class="btn btn-secondary" href="spiritual/">Explore</a></div></article><article class="card" style="--card-image:url('images/categories/romantasy-card.jpg')"><div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><a class="btn btn-secondary" href="romantasy/">Explore</a></div></article></div><div class="compact-grid"><article class="card compact" style="--card-image:url('images/categories/children-card.jpg')"><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><a class="btn btn-secondary" href="for-children/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/arts-education-card.jpg')"><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><a class="btn btn-secondary" href="arts-crafts-educational/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/non-english-card.jpg')"><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><a class="btn btn-secondary" href="non-english-books/">Explore</a></div></article></div></section>
-<section class="value-strip"><div class="container value-grid"><article class="value-item"><h3>Join the Club</h3><p>Exclusive updates, early previews, and selected offers.</p></article><article class="value-item"><h3>Giftable titles</h3><p>Beautiful books for readers of every age.</p></article><article class="value-item"><h3>Carefully curated</h3><p>Every title is selected with purpose.</p></article><article class="value-item"><h3>Secure shopping</h3><p>Simple checkout and reader-friendly experience.</p></article></div></section>
-</main>
-</body></html>
+  <div class="hero-parallax" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="logo" href="index.html">Discover<span>Visually</span></a>
+      <nav class="main-nav">
+        <a class="active" href="index.html">Home</a><a href="spiritual/">Spiritual</a><a href="romantasy/">Romantasy</a><a href="for-children/">For Children</a><a href="arts-crafts-educational/">Arts, Crafts & Educational</a><a href="non-english-books/">Non-English Books</a>
+      </nav>
+      <button class="btn btn-primary" id="joinClubBtn" type="button">Join the Club</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Build marker: Shop Spiritual -->
+    <section class="hero container">
+      <div class="hero-copy-shell">
+        <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
+        <h1>India visual publishing house<br/>for story-rich, giftable books.</h1>
+        <p class="lead">DiscoverVisually curates immersive visual titles across spiritual reflection, romantasy escapes, children’s worlds, and creative learning designed to convert curiosity into confident buys.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="spiritual/">Explore Spiritual</a><a class="btn btn-secondary" href="romantasy/">Explore Romantasy</a></div>
+        <ul class="hero-trust"><li>Carefully curated</li><li>Perfect gifts</li><li>Secure shopping</li></ul>
+      </div>
+      <div class="hero-image"><img src="images/hero/hero-3d-book-field.jpg" alt="DiscoverVisually cinematic bookshelf hero visual" /></div>
+    </section>
+
+    <section id="categories" class="section container">
+      <h2>Shop by category</h2>
+      <div class="feature-grid"><article class="card" style="--card-image:url('images/categories/spiritual-card.jpg')"><div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><a class="btn btn-secondary" href="spiritual/">Explore</a></div></article><article class="card" style="--card-image:url('images/categories/romantasy-card.jpg')"><div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><a class="btn btn-secondary" href="romantasy/">Explore</a></div></article></div>
+      <div class="compact-grid"><article class="card compact" style="--card-image:url('images/categories/children-card.jpg')"><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><a class="btn btn-secondary" href="for-children/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/arts-education-card.jpg')"><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><a class="btn btn-secondary" href="arts-crafts-educational/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/non-english-card.jpg')"><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><a class="btn btn-secondary" href="non-english-books/">Explore</a></div></article></div>
+    </section>
+
+    <section class="value-strip"><div class="container value-grid"><article class="value-item"><h3>Join the Club</h3><p>Get first access to new titles, early previews, and private offers.</p></article><article class="value-item"><h3>Giftable titles</h3><p>Beautiful books for readers of every age.</p></article><article class="value-item"><h3>Carefully curated</h3><p>Every title is selected with purpose.</p></article><article class="value-item"><h3>Secure shopping</h3><p>Simple checkout and reader-friendly experience.</p></article></div></section>
+  </main>
+
+  <dialog id="clubDialog" class="club-dialog">
+    <form method="dialog" class="club-panel" id="clubForm">
+      <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      <p class="eyebrow">JOIN THE CLUB</p>
+      <h2>Be first to discover our newest visual books.</h2>
+      <p class="lead">No spam. Just handpicked launches, collector drops, and category picks matched to your taste.</p>
+      <label for="clubEmail">Email address</label>
+      <input id="clubEmail" name="email" type="email" placeholder="you@example.com" required />
+      <button class="btn btn-primary" type="submit">Keep me in the loop</button>
+      <p class="tiny-note">By joining, you agree to receive occasional updates from DiscoverVisually.</p>
+    </form>
+  </dialog>
+
+  <script>
+    const bg = document.querySelector('.hero-parallax');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.18;
+      bg.style.transform = `translateY(${y}px) scale(1.06)`;
+    });
+
+    const joinBtn = document.getElementById('joinClubBtn');
+    const dialog = document.getElementById('clubDialog');
+    const form = document.getElementById('clubForm');
+    joinBtn?.addEventListener('click', () => dialog.showModal());
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      dialog.close();
+      joinBtn.textContent = 'Thanks for joining';
+    });
+  </script>
+</body>
+</html>
