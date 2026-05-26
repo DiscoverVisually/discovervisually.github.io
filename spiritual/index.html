@@ -7,28 +7,83 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-  <header class="site-header"><div class="container nav-wrap"><a class="logo" href="../index.html">Discover<span>Visually</span></a><nav class="main-nav"><a href="../index.html">Home</a><a class="active" href="./">Spiritual</a></nav><a class="btn btn-primary" href="book-b0h2y3h96y.html">Book details</a></div></header>
+  <div class="hero-parallax" style="--parallax-image: url('../images/categories/spiritual-card.jpg');" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="logo" href="../index.html">Discover<span>Visually</span></a>
+      <nav class="main-nav"><a href="../index.html">Home</a><a class="active" href="./">Spiritual</a></nav>
+      <a class="btn btn-primary" href="#best-sellers">See Best-Sellers</a>
+    </div>
+  </header>
 
-  <main class="container">
-    <section class="page-hero">
+  <main class="container category-page">
+    <section class="hero-wide category-hero reveal" data-reveal>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div>
         <p class="eyebrow">SPIRITUAL COLLECTION</p>
-        <h1>Featured spiritual title</h1>
-        <p class="lead">One focused recommendation for readers seeking faith-centered reflection and practical inspiration.</p>
+        <h1>Faith-centered visual books that inspire deeper reflection.</h1>
+        <p class="lead">Build trust and intention with premium spiritual reading experiences designed for gifting and personal growth.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#best-sellers">Shop Top 3</a><a class="btn btn-secondary" href="#catalog">Browse Full Collection</a></div>
       </div>
-      <div class="book-mockup-3d" aria-label="3D paperback mockup"><img src="../covers/cover-bible.jpg" alt="Holy Misconceptions front cover mockup"></div>
+      <img src="../images/categories/spiritual-card.jpg" alt="Spiritual category visual">
     </section>
 
-    <section id="books" class="book-grid" style="grid-template-columns:minmax(0,420px);">
-      <article class="book-card">
-        <img src="../covers/cover-bible.jpg" alt="Spiritual book cover from Amazon listing B0H2Y3H96Y">
-        <strong>Amazon Spiritual Featured Book (ASIN: B0H2Y3H96Y)</strong>
-        <p>Selected for spiritual readers who want a guided, visual format and an encouraging faith-oriented experience.</p>
-        <span class="badge">Featured</span>
-        <a class="btn btn-secondary" href="book-b0h2y3h96y.html">View detail page</a>
-        <a class="btn btn-primary" href="https://www.amazon.com/dp/B0H2Y3H96Y" target="_blank" rel="noopener noreferrer">Open on Amazon</a>
-      </article>
+    <section id="best-sellers" class="reveal" data-reveal>
+      <div class="section-head"><h2>Best-Sellers (Top 3)</h2><p class="lead">High-converting picks to guide fast purchase decisions.</p></div>
+      <div class="book-grid top3-grid">
+        <article class="book-card reveal" data-reveal><span class="badge">#1 Best-Seller</span><strong>Spiritual Title Placeholder One</strong><p>Conversion-focused placeholder copy for your hero product in this category.</p><a class="btn btn-primary" href="#">View Product</a></article>
+        <article class="book-card reveal" data-reveal><span class="badge">#2 Best-Seller</span><strong>Spiritual Title Placeholder Two</strong><p>Hook line for social-proof based bestseller positioning and quick checkout intent.</p><a class="btn btn-primary" href="#">View Product</a></article>
+        <article class="book-card reveal" data-reveal><span class="badge">#3 Best-Seller</span><strong>Spiritual Title Placeholder Three</strong><p>Secondary bestseller placeholder for bundle or upsell-ready shopper journeys.</p><a class="btn btn-primary" href="#">View Product</a></article>
+      </div>
+    </section>
+
+    <section id="catalog" class="reveal" data-reveal>
+      <div class="section-head"><h2>Browse more titles</h2><p class="lead">Use subcategory filters to navigate the full placeholder catalog.</p></div>
+      <div class="pill-row" aria-label="Subcategory filters">
+        <button type="button" class="pill active">All</button>
+        <button type="button" class="pill">New Arrivals</button>
+        <button type="button" class="pill">Gift Editions</button>
+        <button type="button" class="pill">Collector Picks</button>
+        <button type="button" class="pill">Under $25</button>
+      </div>
+      <div class="book-grid placeholder-grid">
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book A</strong><p>Subcategory-ready placeholder entry.</p></article>
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book B</strong><p>Subcategory-ready placeholder entry.</p></article>
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book C</strong><p>Subcategory-ready placeholder entry.</p></article>
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book D</strong><p>Subcategory-ready placeholder entry.</p></article>
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book E</strong><p>Subcategory-ready placeholder entry.</p></article>
+        <article class="book-card reveal" data-reveal><strong>Placeholder Book F</strong><p>Subcategory-ready placeholder entry.</p></article>
+      </div>
     </section>
   </main>
+
+  <script>
+    const bg = document.querySelector('.hero-parallax');
+    const revealItems = document.querySelectorAll('[data-reveal]');
+    const hero = document.querySelector('.hero-wide');
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.18;
+      bg.style.transform = `translateY(${y}px) scale(1.12)`;
+    }, { passive: true });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+    revealItems.forEach((item) => revealObserver.observe(item));
+
+    hero?.addEventListener('pointermove', (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      hero.style.setProperty('--mx', `${x}%`);
+      hero.style.setProperty('--my', `${y}%`);
+    });
+  </script>
 </body>
 </html>
