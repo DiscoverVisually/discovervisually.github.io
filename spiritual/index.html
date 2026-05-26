@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+  <div class="hero-parallax" aria-hidden="true"></div>
   <header class="site-header"><div class="container nav-wrap"><a class="logo" href="../index.html">Discover<span>Visually</span></a><nav class="main-nav"><a href="../index.html">Home</a><a class="active" href="./">Spiritual</a></nav><a class="btn btn-primary" href="book-b0h2y3h96y.html">Book details</a></div></header>
 
   <main class="container">
-    <section class="page-hero">
+    <section class="page-hero hero-wide reveal" data-reveal>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div>
         <p class="eyebrow">SPIRITUAL COLLECTION</p>
         <h1>Featured spiritual title</h1>
@@ -19,8 +21,8 @@
       <div class="book-mockup-3d" aria-label="3D paperback mockup"><img src="../covers/cover-bible.jpg" alt="Holy Misconceptions front cover mockup"></div>
     </section>
 
-    <section id="books" class="book-grid" style="grid-template-columns:minmax(0,420px);">
-      <article class="book-card">
+    <section id="books" class="book-grid reveal" data-reveal style="grid-template-columns:minmax(0,420px);">
+      <article class="book-card reveal" data-reveal>
         <img src="../covers/cover-bible.jpg" alt="Spiritual book cover from Amazon listing B0H2Y3H96Y">
         <strong>Amazon Spiritual Featured Book (ASIN: B0H2Y3H96Y)</strong>
         <p>Selected for spiritual readers who want a guided, visual format and an encouraging faith-oriented experience.</p>
@@ -30,5 +32,34 @@
       </article>
     </section>
   </main>
+
+  <script>
+    const bg = document.querySelector('.hero-parallax');
+    const revealItems = document.querySelectorAll('[data-reveal]');
+    const hero = document.querySelector('.hero-wide');
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.18;
+      bg.style.transform = `translateY(${y}px) scale(1.12)`;
+    }, { passive: true });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+    revealItems.forEach((item) => revealObserver.observe(item));
+
+    hero?.addEventListener('pointermove', (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      hero.style.setProperty('--mx', `${x}%`);
+      hero.style.setProperty('--my', `${y}%`);
+    });
+  </script>
 </body>
 </html>
