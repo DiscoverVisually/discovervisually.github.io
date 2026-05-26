@@ -1,0 +1,21 @@
+<svg width="560" height="120" viewBox="0 0 560 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">DiscoverVisually logo</title>
+  <desc id="logoDesc">Diamond DV symbol followed by DiscoverVisually wordmark in premium gold with subtle green accent.</desc>
+  <defs>
+    <linearGradient id="goldGradient" x1="70" y1="0" x2="560" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F3D08A"/>
+      <stop offset="0.5" stop-color="#D8A84A"/>
+      <stop offset="1" stop-color="#9A6928"/>
+    </linearGradient>
+    <linearGradient id="symbolGradient" x1="8" y1="8" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F6DDA6"/>
+      <stop offset="0.5" stop-color="#D8A84A"/>
+      <stop offset="1" stop-color="#8B5B22"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="10" y="10" width="100" height="100" rx="14" transform="rotate(45 60 60)" fill="rgba(216,168,74,0.1)" stroke="url(#symbolGradient)" stroke-width="4"/>
+  <text x="60" y="70" text-anchor="middle" fill="#F3D08A" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700" letter-spacing="-2">DV</text>
+
+  <text x="140" y="76" fill="url(#goldGradient)" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" letter-spacing="-1.8">Discover<tspan fill="#F3D08A">V</tspan><tspan fill="#7CF46D">isually</tspan></text>
+</svg>
