@@ -19,25 +19,27 @@
     </div>
   </header>
 
-  <main>
+  <main class="container landing-layout">
     <!-- Build marker: Shop Spiritual -->
-    <section class="hero container">
-      <div class="hero-copy-shell">
-        <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
-        <h1>India visual publishing house<br/>for story-rich, giftable books.</h1>
-        <p class="lead">DiscoverVisually curates immersive visual titles across spiritual reflection, romantasy escapes, children’s worlds, and creative learning designed to convert curiosity into confident buys.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="spiritual/">Explore Spiritual</a><a class="btn btn-secondary" href="romantasy/">Explore Romantasy</a></div>
-        <ul class="hero-trust"><li>Carefully curated</li><li>Perfect gifts</li><li>Secure shopping</li></ul>
-      </div>
-      </section>
-
-    <section id="categories" class="section container">
-      <h2>Shop by category</h2>
-      <div class="feature-grid"><article class="card" style="--card-image:url('images/categories/spiritual-card.jpg')"><div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><a class="btn btn-secondary" href="spiritual/">Explore</a></div></article><article class="card" style="--card-image:url('images/categories/romantasy-card.jpg')"><div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><a class="btn btn-secondary" href="romantasy/">Explore</a></div></article></div>
-      <div class="compact-grid"><article class="card compact" style="--card-image:url('images/categories/children-card.jpg')"><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><a class="btn btn-secondary" href="for-children/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/arts-education-card.jpg')"><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><a class="btn btn-secondary" href="arts-crafts-educational/">Explore</a></div></article><article class="card compact" style="--card-image:url('images/categories/non-english-card.jpg')"><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><a class="btn btn-secondary" href="non-english-books/">Explore</a></div></article></div>
+    <section class="hero-wide">
+      <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
+      <h1>Discover Visually - Creative visual publishing house</h1>
+      <p class="lead">Premium, story-rich, conversion-ready books for spiritual readers, romantasy lovers, children, and creative learners.</p>
+      <div class="hero-cta"><a class="btn btn-primary" href="spiritual/">Explore Spiritual</a><a class="btn btn-secondary" href="romantasy/">Explore Romantasy</a></div>
     </section>
 
-    <section class="value-strip"><div class="container value-grid"><article class="value-item"><h3>Join the Club</h3><p>Get first access to new titles, early previews, and private offers.</p></article><article class="value-item"><h3>Giftable titles</h3><p>Beautiful books for readers of every age.</p></article><article class="value-item"><h3>Carefully curated</h3><p>Every title is selected with purpose.</p></article><article class="value-item"><h3>Secure shopping</h3><p>Simple checkout and reader-friendly experience.</p></article></div></section>
+    <section id="categories" class="shop-grid-wrap">
+      <h2>Shop by category</h2>
+      <div class="shop-grid">
+        <article class="card card-large parallax-card" data-speed="0.08" style="--card-image:url('images/categories/spiritual-card.jpg')"><div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><a class="btn btn-secondary" href="spiritual/">Explore</a></div></article>
+        <article class="card card-large parallax-card" data-speed="0.12" style="--card-image:url('images/categories/romantasy-card.jpg')"><div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><a class="btn btn-secondary" href="romantasy/">Explore</a></div></article>
+        <div class="right-stack">
+          <article class="card card-compact parallax-card" data-speed="0.1" style="--card-image:url('images/categories/children-card.jpg')"><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><a class="btn btn-secondary" href="for-children/">Explore</a></div></article>
+          <article class="card card-compact parallax-card" data-speed="0.14" style="--card-image:url('images/categories/arts-education-card.jpg')"><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><a class="btn btn-secondary" href="arts-crafts-educational/">Explore</a></div></article>
+          <article class="card card-compact parallax-card" data-speed="0.16" style="--card-image:url('images/categories/non-english-card.jpg')"><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><a class="btn btn-secondary" href="non-english-books/">Explore</a></div></article>
+        </div>
+      </div>
+    </section>
   </main>
 
   <dialog id="clubDialog" class="club-dialog">
@@ -49,26 +51,28 @@
       <label for="clubEmail">Email address</label>
       <input id="clubEmail" name="email" type="email" placeholder="you@example.com" required />
       <button class="btn btn-primary" type="submit">Keep me in the loop</button>
-      <p class="tiny-note">By joining, you agree to receive occasional updates from DiscoverVisually.</p>
     </form>
   </dialog>
 
   <script>
     const bg = document.querySelector('.hero-parallax');
+    const cards = document.querySelectorAll('.parallax-card');
     window.addEventListener('scroll', () => {
-      const y = window.scrollY * 0.18;
-      bg.style.transform = `translateY(${y}px) scale(1.06)`;
-    });
+      const y = window.scrollY * 0.22;
+      bg.style.transform = `translateY(${y}px) scale(1.12)`;
+      cards.forEach((card) => {
+        const speed = Number(card.dataset.speed || 0.1);
+        const rect = card.getBoundingClientRect();
+        const offset = (window.innerHeight - rect.top) * speed;
+        card.style.setProperty('--shift', `${Math.max(-30, Math.min(30, offset))}px`);
+      });
+    }, { passive: true });
 
     const joinBtn = document.getElementById('joinClubBtn');
     const dialog = document.getElementById('clubDialog');
     const form = document.getElementById('clubForm');
     joinBtn?.addEventListener('click', () => dialog.showModal());
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      dialog.close();
-      joinBtn.textContent = 'Thanks for joining';
-    });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); dialog.close(); joinBtn.textContent = 'Thanks for joining'; });
   </script>
 </body>
 </html>
