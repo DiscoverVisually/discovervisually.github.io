@@ -69,7 +69,7 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
 .shop-grid-wrap h2 { margin: 0 0 .65rem; font-size: clamp(1.5rem, 2.7vw, 2.25rem); }
 .shop-grid { display: grid; grid-template-columns: 1fr 1fr .9fr; gap: .8rem; align-items: stretch; }
 .right-stack { display: grid; gap: .8rem; }
-.card { position: relative; border: 1px solid var(--border-soft); border-radius: 16px; overflow: hidden; background: var(--surface); display: flex; align-items: end; }
+.card { position: relative; border: 1px solid var(--border-soft); border-radius: 16px; overflow: hidden; background: var(--surface); display: flex; align-items: end; cursor: pointer; }
 .card-large { min-height: 340px; }
 .card-compact { min-height: 108px; }
 .card::before { content: ""; position: absolute; inset: -12%; background-image: linear-gradient(to top, rgba(4,6,10,.86), rgba(4,6,10,.24)), var(--card-image); background-size: cover; background-position: center calc(50% + var(--shift, 0px)); transition: background-position .12s linear, transform .2s ease; }
@@ -80,14 +80,15 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
 .card::after {
   content: "";
   position: absolute;
-  inset: -90% -60%;
-  background: linear-gradient(118deg, transparent 36%, rgba(255, 231, 180, 0.45) 50%, transparent 63%);
-  transform: translateX(-56%);
+  inset: -110% -80%;
+  background: linear-gradient(122deg, transparent 35%, rgba(255, 236, 191, 0.7) 49%, rgba(255, 220, 142, 0.44) 54%, transparent 67%);
+  transform: translateX(-72%) translateY(6%) rotate(-3deg);
   opacity: 0;
-  transition: transform .45s ease, opacity .25s ease;
+  transition: transform .52s ease, opacity .24s ease;
   pointer-events: none;
 }
-.card:hover::after { transform: translateX(55%); opacity: 1; }
+.card:hover::after,
+.card:focus-within::after { transform: translateX(66%) translateY(-5%) rotate(-3deg); opacity: 1; }
 
 .priority-card::after {
   content: "";
@@ -97,7 +98,7 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
   animation: sweep 16s ease-in-out infinite;
   pointer-events: none;
 }
-.card-content { position: relative; z-index: 1; padding: .95rem; }
+.card-content { position: relative; z-index: 1; padding: .95rem; pointer-events: none; }
 .card p { color: #dbd6cc; margin: .45rem 0 .65rem; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
