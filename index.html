@@ -32,28 +32,22 @@
     <section id="categories" class="shop-grid-wrap reveal" data-reveal>
       <h2>Shop by category</h2>
       <div class="shop-grid">
-        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.08" style="--card-image:url('images/categories/spiritual-card.jpg')"><div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><a class="btn btn-secondary" href="spiritual/">Explore</a></div></article>
-        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.12" style="--card-image:url('images/categories/romantasy-card.jpg')"><div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><a class="btn btn-secondary" href="romantasy/">Explore</a></div></article>
+        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.08" style="--card-image:url('images/categories/spiritual-card.jpg')">
+          <a class="card-link" href="spiritual/" aria-label="Go to Spiritual category"></a>
+          <div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><span class="btn btn-secondary">Explore</span></div>
+        </article>
+        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.12" style="--card-image:url('images/categories/romantasy-card.jpg')">
+          <a class="card-link" href="romantasy/" aria-label="Go to Romantasy category"></a>
+          <div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><span class="btn btn-secondary">Explore</span></div>
+        </article>
         <div class="right-stack">
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.1" style="--card-image:url('images/categories/children-card.jpg')"><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><a class="btn btn-secondary" href="for-children/">Explore</a></div></article>
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.14" style="--card-image:url('images/categories/arts-education-card.jpg')"><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><a class="btn btn-secondary" href="arts-crafts-educational/">Explore</a></div></article>
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.16" style="--card-image:url('images/categories/non-english-card.jpg')"><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><a class="btn btn-secondary" href="non-english-books/">Explore</a></div></article>
+          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.1" style="--card-image:url('images/categories/children-card.jpg')"><a class="card-link" href="for-children/" aria-label="Go to For Children category"></a><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><span class="btn btn-secondary">Explore</span></div></article>
+          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.14" style="--card-image:url('images/categories/arts-education-card.jpg')"><a class="card-link" href="arts-crafts-educational/" aria-label="Go to Arts, Crafts and Educational category"></a><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><span class="btn btn-secondary">Explore</span></div></article>
+          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.16" style="--card-image:url('images/categories/non-english-card.jpg')"><a class="card-link" href="non-english-books/" aria-label="Go to Non-English Books category"></a><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><span class="btn btn-secondary">Explore</span></div></article>
         </div>
       </div>
     </section>
   </main>
-
-  <dialog id="clubDialog" class="club-dialog">
-    <form method="dialog" class="club-panel" id="clubForm">
-      <button class="close-btn" value="cancel" aria-label="Close">×</button>
-      <p class="eyebrow">JOIN THE CLUB</p>
-      <h2>Be first to discover our newest visual books.</h2>
-      <p class="lead">No spam. Just handpicked launches, collector drops, and category picks matched to your taste.</p>
-      <label for="clubEmail">Email address</label>
-      <input id="clubEmail" name="email" type="email" placeholder="you@example.com" required />
-      <button class="btn btn-primary" type="submit">Keep me in the loop</button>
-    </form>
-  </dialog>
 
   <script>
     const bg = document.querySelector('.hero-parallax');
@@ -89,12 +83,6 @@
       hero.style.setProperty('--mx', `${x}%`);
       hero.style.setProperty('--my', `${y}%`);
     });
-
-    const joinBtn = document.getElementById('joinClubBtn');
-    const dialog = document.getElementById('clubDialog');
-    const form = document.getElementById('clubForm');
-    joinBtn?.addEventListener('click', () => dialog.showModal());
-    form?.addEventListener('submit', (e) => { e.preventDefault(); dialog.close(); joinBtn.textContent = 'Thanks for joining'; });
   </script>
 </body>
 </html>

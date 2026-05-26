@@ -13,7 +13,7 @@
 body { margin: 0; color: var(--text-main); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--background); }
 .container { width: min(1220px, 94vw); margin: 0 auto; }
 a { color: inherit; text-decoration: none; }
-.hero-parallax { position: fixed; inset: 0; background: url('images/hero/hero-3d-book-field.jpg') center/cover no-repeat; z-index: -2; transform: scale(1.12); }
+.hero-parallax { position: fixed; inset: 0; background: var(--parallax-image, url('images/hero/hero-3d-book-field.jpg')) center/cover no-repeat; z-index: -2; transform: scale(1.12); }
 .hero-parallax::after {
   content: "";
   position: absolute;
@@ -74,6 +74,21 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
 .card-compact { min-height: 108px; }
 .card::before { content: ""; position: absolute; inset: -12%; background-image: linear-gradient(to top, rgba(4,6,10,.86), rgba(4,6,10,.24)), var(--card-image); background-size: cover; background-position: center calc(50% + var(--shift, 0px)); transition: background-position .12s linear, transform .2s ease; }
 .card:hover::before { transform: scale(1.03); }
+
+.card-link { position: absolute; inset: 0; z-index: 2; border-radius: inherit; }
+.card-link:focus-visible { outline: 2px solid var(--gold-light); outline-offset: -4px; }
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -90% -60%;
+  background: linear-gradient(118deg, transparent 36%, rgba(255, 231, 180, 0.45) 50%, transparent 63%);
+  transform: translateX(-56%);
+  opacity: 0;
+  transition: transform .45s ease, opacity .25s ease;
+  pointer-events: none;
+}
+.card:hover::after { transform: translateX(55%); opacity: 1; }
+
 .priority-card::after {
   content: "";
   position: absolute;
@@ -100,6 +115,20 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
   0% { transform: translate3d(0, 0, 0) scale(1); }
   100% { transform: translate3d(-1%, -2%, 0) scale(1.05); }
 }
+
+.category-page { display: grid; gap: 1.1rem; padding-bottom: 1.2rem; }
+.category-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; align-items: center; }
+.category-hero img { width: 100%; max-height: 360px; object-fit: cover; border-radius: 14px; border: 1px solid var(--border-soft); position: relative; z-index: 1; }
+.section-head h2 { margin-bottom: .3rem; }
+.book-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+.top3-grid .book-card { min-height: 240px; }
+.placeholder-grid .book-card { min-height: 180px; }
+.book-card { border: 1px solid var(--border-soft); border-radius: 14px; padding: 1rem; background: rgba(8,12,20,.72); display: grid; gap: .55rem; align-content: start; }
+.book-card strong { font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; }
+.badge { display: inline-flex; width: fit-content; padding: .32rem .55rem; border-radius: 999px; border: 1px solid var(--border-gold); color: var(--gold-light); background: rgba(216,168,74,.1); font-size: .78rem; }
+.pill-row { display: flex; gap: .55rem; flex-wrap: wrap; margin-bottom: .7rem; }
+.pill { border: 1px solid var(--border-soft); background: rgba(12,17,28,.62); color: var(--text-main); border-radius: 999px; padding: .45rem .9rem; font: inherit; cursor: pointer; }
+.pill.active, .pill:hover { border-color: var(--border-gold); color: var(--gold-light); }
 @media (prefers-reduced-motion: reduce) {
   .hero-overlay,
   .priority-card::after,
@@ -109,12 +138,15 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
 }
 @media (max-width: 1150px) {
   .shop-grid { grid-template-columns: 1fr 1fr; }
+  .category-hero { grid-template-columns: 1fr; }
+  .book-grid { grid-template-columns: 1fr 1fr; }
   .right-stack { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
   .card-compact { min-height: 170px; }
   .hero-wide h1 { white-space: normal; }
 }
 @media (max-width: 760px) {
   .main-nav { display: none; }
+  .book-grid { grid-template-columns: 1fr; }
   .shop-grid, .right-stack { grid-template-columns: 1fr; }
   .card-large, .card-compact { min-height: 220px; }
   .btn { width: 100%; }
