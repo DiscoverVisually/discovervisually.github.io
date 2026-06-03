@@ -152,3 +152,124 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: .45rem 0; p
   .card-large, .card-compact { min-height: 220px; }
   .btn { width: 100%; }
 }
+
+/* Spiritual featured product */
+.spiritual-page { gap: 1.4rem; }
+.spiritual-hero { grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr); min-height: 480px; padding: clamp(1.1rem, 2.5vw, 2rem); background: linear-gradient(135deg, rgba(7, 10, 17, .9), rgba(24, 16, 7, .64)); }
+.featured-mockup,
+.featured-book-visual { position: relative; z-index: 1; display: grid; place-items: center; min-height: 360px; }
+.featured-mockup::before,
+.featured-book-visual::before {
+  content: "";
+  position: absolute;
+  width: min(420px, 82%);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(243, 208, 138, .26), rgba(216, 168, 74, .08) 44%, transparent 70%);
+  filter: blur(6px);
+}
+.book-mockup-3d {
+  --book-depth: 24px;
+  --book-tilt: -13deg;
+  position: relative;
+  width: min(250px, 72vw);
+  transform: perspective(1100px) rotateY(var(--book-tilt)) rotateX(3deg);
+  transform-style: preserve-3d;
+  filter: drop-shadow(24px 28px 28px rgba(0, 0, 0, .46));
+  transition: transform .28s ease, filter .28s ease;
+}
+.book-mockup-3d.large { width: min(320px, 76vw); }
+.book-mockup-3d:hover { transform: perspective(1100px) rotateY(-9deg) rotateX(2deg) translateY(-4px); filter: drop-shadow(28px 34px 34px rgba(0, 0, 0, .52)); }
+.book-mockup-3d img {
+  display: block;
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 548 / 704;
+  object-fit: contain;
+  border: 1px solid rgba(255, 236, 191, .36);
+  border-radius: 10px 7px 7px 10px;
+  background: #2b1b00;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(2px);
+  box-shadow: inset 9px 0 14px rgba(47, 24, 4, .18), 0 18px 38px rgba(0, 0, 0, .34);
+}
+.book-mockup-3d::before {
+  content: "";
+  position: absolute;
+  top: 2.2%;
+  right: calc(var(--book-depth) * -1 + 2px);
+  width: var(--book-depth);
+  height: 95.6%;
+  border-radius: 0 9px 9px 0;
+  background: linear-gradient(90deg, #8b5d20, #f1cb78 18%, #7a4914 55%, #2a1808);
+  transform: rotateY(74deg) translateZ(-2px);
+  transform-origin: left center;
+  z-index: 1;
+}
+.book-mockup-3d::after {
+  content: "";
+  position: absolute;
+  inset: 4% -12% -7% 13%;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, .48), transparent 68%);
+  transform: translateZ(-42px) rotateX(82deg);
+  z-index: 0;
+}
+.featured-book-section,
+.book-detail-page { padding-bottom: 1.3rem; }
+.featured-book-card,
+.page-hero {
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(243, 208, 138, .15), transparent 34%),
+    linear-gradient(145deg, rgba(12, 17, 28, .86), rgba(6, 9, 15, .84));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .26);
+}
+.featured-book-card { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); gap: clamp(1rem, 3vw, 2.2rem); align-items: center; padding: clamp(1rem, 3vw, 2rem); }
+.featured-book-copy { position: relative; z-index: 1; }
+.featured-book-copy h3,
+.book-detail-hero h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: .96; margin-top: .8rem; }
+.book-subtitle { color: var(--gold-light); font-weight: 800; letter-spacing: .01em; margin: -.1rem 0 .8rem; position: relative; z-index: 1; }
+.book-subtitle span { color: var(--text-main); font-weight: 700; }
+.book-highlights { display: grid; gap: .5rem; color: var(--text-muted); margin: 1rem 0 0; padding-left: 1.2rem; }
+.book-highlights li::marker { color: var(--gold-light); }
+.catalog-grid .product-card { grid-template-columns: 120px minmax(0, 1fr); align-items: center; }
+.product-card img { width: 120px; border-radius: 10px; border: 1px solid var(--border-gold); box-shadow: 0 16px 28px rgba(0,0,0,.34); }
+.catalog-card { min-height: 210px; }
+.page-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr); gap: clamp(1rem, 3vw, 2rem); align-items: center; margin-top: 1rem; padding: clamp(1.1rem, 3vw, 2.2rem); overflow: hidden; position: relative; }
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto auto;
+  width: 480px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(216, 168, 74, .18), transparent 66%);
+}
+.detail-visual { min-height: 430px; }
+.book-detail-strip { margin-top: 1rem; border-radius: 14px; overflow: hidden; }
+.detail-value-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.value-strip { border: 1px solid var(--border-soft); background: rgba(7, 10, 17, .78); }
+.value-grid { display: grid; gap: .8rem; padding: 1rem; }
+.value-item { border: 1px solid var(--border-soft); border-radius: 14px; padding: 1rem; background: rgba(255,255,255,.035); }
+.value-item p { color: var(--text-muted); margin-bottom: 0; }
+.value-item a { color: var(--gold-light); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1150px) {
+  .spiritual-hero,
+  .page-hero,
+  .featured-book-card { grid-template-columns: 1fr; }
+  .detail-value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .spiritual-hero { min-height: auto; }
+  .featured-mockup,
+  .featured-book-visual,
+  .detail-visual { min-height: 300px; }
+  .book-mockup-3d.large { width: min(250px, 72vw); }
+  .catalog-grid .product-card { grid-template-columns: 1fr; }
+  .product-card img { width: min(190px, 64vw); }
+  .detail-value-grid { grid-template-columns: 1fr; }
+}
