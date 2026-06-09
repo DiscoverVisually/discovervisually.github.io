@@ -175,7 +175,13 @@ function ScrollChevron() {
   );
 }
 
-function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
+function Nav({
+  onCategoriesClick,
+  isMobile,
+}: {
+  onCategoriesClick: () => void;
+  isMobile: boolean;
+}) {
   const navLinkStyle: CSSProperties = {
     fontFamily: "'Imprima', sans-serif",
     fontSize: 12,
@@ -213,7 +219,10 @@ function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
         pointerEvents: "auto",
       }}
     >
-      <div className="md:hidden" style={{ padding: "18px 20px" }}>
+      <div
+        className="md:hidden"
+        style={{ display: isMobile ? "block" : "none", padding: "18px 20px" }}
+      >
         <div
           style={{
             display: "flex",
@@ -241,6 +250,7 @@ function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
       <div
         className="hidden md:flex"
         style={{
+          display: isMobile ? "none" : "flex",
           padding: "22px 48px",
           justifyContent: "space-between",
           alignItems: "center",
@@ -2071,14 +2081,14 @@ function HomePage() {
           }}
         />
 
-        <Nav onCategoriesClick={handleCategoriesClick} />
+        <Nav onCategoriesClick={handleCategoriesClick} isMobile={isMobile} />
 
         <div style={scene1Style}>
           <div
             className="md:hidden"
             style={{
               minHeight: "100%",
-              display: "flex",
+              display: isMobile ? "flex" : "none",
               alignItems: "center",
               justifyContent: "center",
               padding: "80px 24px 100px",
@@ -2120,6 +2130,7 @@ function HomePage() {
             className="hidden md:flex xl:hidden"
             style={{
               minHeight: "100%",
+              display: !isMobile && !isDesktop ? "flex" : "none",
               alignItems: "center",
               justifyContent: "center",
               padding: "80px 32px 96px",
@@ -2178,6 +2189,7 @@ function HomePage() {
           <div
             className="hidden xl:block"
             style={{
+              display: isDesktop ? "block" : "none",
               position: "absolute",
               top: "46%",
               left: 60,
@@ -2211,6 +2223,7 @@ function HomePage() {
           <div
             className="hidden xl:flex"
             style={{
+              display: isDesktop ? "flex" : "none",
               position: "absolute",
               right: 40,
               top: "50%",
@@ -2254,6 +2267,7 @@ function HomePage() {
           <div
             className="hidden xl:flex"
             style={{
+              display: isDesktop ? "flex" : "none",
               position: "absolute",
               left: "50%",
               bottom: 36,
