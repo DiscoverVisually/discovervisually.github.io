@@ -1,7 +1,7 @@
 {
   "name": "step-into-wonder",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,14 +10,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "autoprefixer": "^10.4.21",
-    "lucide-react": "latest",
-    "postcss": "^8.5.6",
-    "react": "latest",
-    "react-dom": "latest",
-    "tailwindcss": "^3.4.17",
+    "vite": "latest",
     "typescript": "latest",
-    "vite": "latest"
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
