@@ -1,88 +1,15 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DiscoverVisually — Modern Creative Publishing House</title>
-  <meta name="description" content="DiscoverVisually is a modern creative publishing house with premium visual books in Spiritual, Romantasy, Children, Arts & Educational, and Non-English categories." />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="hero-parallax" aria-hidden="true"></div>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="logo" href="index.html">Discover<span>Visually</span></a>
-      <nav class="main-nav">
-        <a class="active" href="index.html">Home</a><a href="spiritual/">Spiritual</a><a href="romantasy/">Romantasy</a><a href="for-children/">For Children</a><a href="arts-crafts-educational/">Arts, Crafts & Educational</a><a href="non-english-books/">Non-English Books</a>
-      </nav>
-      <button class="btn btn-primary" id="joinClubBtn" type="button">Join the Club</button>
-    </div>
-  </header>
-
-  <main class="container landing-layout">
-    <!-- Build marker: Shop Spiritual -->
-    <section class="hero-wide reveal" data-reveal>
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <p class="eyebrow">INSPIRATION. STORIES. DISCOVERY.</p>
-      <h1>Discover Visually - Creative visual publishing house</h1>
-      <p class="lead">Premium, story-rich, conversion-ready books for spiritual readers, romantasy lovers, children, and creative learners.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="spiritual/">Explore Spiritual</a><a class="btn btn-secondary" href="romantasy/">Explore Romantasy</a></div>
-    </section>
-
-    <section id="categories" class="shop-grid-wrap reveal" data-reveal>
-      <h2>Shop by category</h2>
-      <div class="shop-grid">
-        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.08" style="--card-image:url('images/categories/spiritual-card.jpg')">
-          <a class="card-link" href="spiritual/" aria-label="Go to Spiritual category"></a>
-          <div class="card-content"><h3>Spiritual</h3><p>Visual guides to faith, reflection, and deeper meaning.</p><span class="btn btn-secondary">Explore</span></div>
-        </article>
-        <article class="card card-large parallax-card priority-card reveal" data-reveal data-speed="0.12" style="--card-image:url('images/categories/romantasy-card.jpg')">
-          <a class="card-link" href="romantasy/" aria-label="Go to Romantasy category"></a>
-          <div class="card-content"><h3>Romantasy</h3><p>Magical worlds, intense emotions, and story-rich escapes.</p><span class="btn btn-secondary">Explore</span></div>
-        </article>
-        <div class="right-stack">
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.1" style="--card-image:url('images/categories/children-card.jpg')"><a class="card-link" href="for-children/" aria-label="Go to For Children category"></a><div class="card-content"><h3>For Children</h3><p>Fun stories, real facts, and big imagination.</p><span class="btn btn-secondary">Explore</span></div></article>
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.14" style="--card-image:url('images/categories/arts-education-card.jpg')"><a class="card-link" href="arts-crafts-educational/" aria-label="Go to Arts, Crafts and Educational category"></a><div class="card-content"><h3>Arts, Crafts & Educational</h3><p>Creative learning books for curious minds.</p><span class="btn btn-secondary">Explore</span></div></article>
-          <article class="card card-compact parallax-card reveal" data-reveal data-speed="0.16" style="--card-image:url('images/categories/non-english-card.jpg')"><a class="card-link" href="non-english-books/" aria-label="Go to Non-English Books category"></a><div class="card-content"><h3>Non-English Books</h3><p>Selected stories and knowledge titles beyond English.</p><span class="btn btn-secondary">Explore</span></div></article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const bg = document.querySelector('.hero-parallax');
-    const cards = document.querySelectorAll('.parallax-card');
-    const revealItems = document.querySelectorAll('[data-reveal]');
-
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY * 0.22;
-      bg.style.transform = `translateY(${y}px) scale(1.12)`;
-      cards.forEach((card) => {
-        const speed = Number(card.dataset.speed || 0.1);
-        const rect = card.getBoundingClientRect();
-        const offset = (window.innerHeight - rect.top) * speed;
-        card.style.setProperty('--shift', `${Math.max(-30, Math.min(30, offset))}px`);
-      });
-    }, { passive: true });
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.16 });
-    revealItems.forEach((item) => revealObserver.observe(item));
-
-    const hero = document.querySelector('.hero-wide');
-    hero?.addEventListener('pointermove', (event) => {
-      const rect = hero.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      hero.style.setProperty('--mx', `${x}%`);
-      hero.style.setProperty('--my', `${y}%`);
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&family=Imprima&display=swap" rel="stylesheet" />
+    <title>Step Into Wonder</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
