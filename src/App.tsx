@@ -10,6 +10,8 @@ const HOLY_MISCONCEPTIONS_COVER = "/images/books/holy-misconceptions-cover.svg";
 const HOLY_MISCONCEPTIONS_BACK = "/images/books/holy-misconceptions-back-cover.svg";
 const HOLY_MISCONCEPTIONS_ROUTE = "#/spiritual/holy-misconceptions";
 const HOLY_MISCONCEPTIONS_AMAZON = "https://faithinfullcolor.s.gy/VpoJTo";
+const AMAZON_BADGE_HORIZONTAL = "/images/amazon/available-at-amazon-horizontal-dark.svg";
+const AMAZON_BADGE_STACKED = "/images/amazon/available-at-amazon-stacked-dark.svg";
 const CHILDREN_HERO_BG = "/assets/children-hero-bg.png";
 const ARTS_EDUCATIONAL_HERO_BG = "/assets/arts-education-hero-bg.png";
 const WORLD_BG =
@@ -686,6 +688,7 @@ type Book = {
   tags: string[];
   image: string;
   href: string;
+  amazonUrl?: string;
   badge?: string;
 };
 
@@ -727,6 +730,7 @@ const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
         tags: ["Busting Myths!", "Bible", "Ages 8–12"],
         image: HOLY_MISCONCEPTIONS_COVER,
         href: HOLY_MISCONCEPTIONS_ROUTE,
+        amazonUrl: HOLY_MISCONCEPTIONS_AMAZON,
       },
       {
         title: "Bible Stories for Young Readers",
@@ -1232,6 +1236,7 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
               >
                 Browse All Books
               </button>
+              <AmazonButton href={getAmazonBookUrl(topBooks[0])} compact />
             </div>
           </div>
 
@@ -1422,6 +1427,10 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
         </div>
       </section>
 
+      <p className="amazon-trademark-note">
+        The Amazon trademark is used under license from Amazon.com, Inc. or its affiliates.
+      </p>
+
       <section
         id="member"
         style={{
@@ -1515,15 +1524,29 @@ function BustingMythsShelf() {
   );
 }
 
-function AmazonButton({ children }: { children: string }) {
+function getAmazonBookUrl(book: Book) {
+  return book.amazonUrl ?? `https://www.amazon.com/s?k=${encodeURIComponent(book.title)}`;
+}
+
+function AmazonButton({
+  href = HOLY_MISCONCEPTIONS_AMAZON,
+  variant = "horizontal",
+  compact = false,
+}: {
+  href?: string;
+  variant?: "horizontal" | "stacked";
+  compact?: boolean;
+}) {
+  const badge = variant === "stacked" ? AMAZON_BADGE_STACKED : AMAZON_BADGE_HORIZONTAL;
   return (
     <a
-      className="amazon-button"
-      href={HOLY_MISCONCEPTIONS_AMAZON}
+      className={`amazon-button amazon-button--${variant}${compact ? " amazon-button--compact" : ""}`}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Available at Amazon (opens Amazon in a new tab)"
     >
-      <span>{children}</span><b aria-hidden="true">→</b>
+      <img src={badge} alt="Available at Amazon" />
     </a>
   );
 }
@@ -1540,7 +1563,7 @@ function HolyMisconceptionsPage() {
       <nav className="hm-nav" aria-label="Book navigation">
         <a href="#/" className="hm-brand">Discover<span>Visually</span></a>
         <div className="hm-breadcrumb"><a href="#/spiritual">Spiritual</a><span>/</span><span>Busting Myths!</span></div>
-        <a className="hm-nav-buy" href={HOLY_MISCONCEPTIONS_AMAZON} target="_blank" rel="noopener noreferrer">Buy on Amazon ↗</a>
+        <AmazonButton compact />
       </nav>
 
       <section className="hm-hero">
@@ -1558,7 +1581,7 @@ function HolyMisconceptionsPage() {
             actually says.
           </p>
           <div className="hm-myths"><span>Eve ate an apple?</span><span>Exactly three wise men?</span><span>Angels are babies?</span></div>
-          <AmazonButton>Get the paperback on Amazon</AmazonButton>
+          <AmazonButton variant="stacked" />
           <p className="hm-support">Open the case file. Check the text. Discover the truth.</p>
           <div className="hm-stats"><span><b>25</b> illustrated cases</span><span><b>8–12</b> reader age</span><span><b>Bonus</b> detective pages</span></div>
         </div>
@@ -1597,10 +1620,10 @@ function HolyMisconceptionsPage() {
 
       <section className="hm-final">
         <img src={HOLY_MISCONCEPTIONS_COVER} alt="Holy Misconceptions paperback cover" />
-        <div><div className="product-kicker">Ready to open the first case?</div><h2>Turn “Really?” into a reason to read.</h2><p>Give a curious young reader 25 engaging reasons to check the text, follow the clues, and discover the truth.</p><AmazonButton>Buy Holy Misconceptions! on Amazon</AmazonButton><small>By B. B. Sterling · Paperback · New for 2026</small></div>
+        <div><div className="product-kicker">Ready to open the first case?</div><h2>Turn “Really?” into a reason to read.</h2><p>Give a curious young reader 25 engaging reasons to check the text, follow the clues, and discover the truth.</p><AmazonButton variant="stacked" /><small>By B. B. Sterling · Paperback · New for 2026</small></div>
       </section>
 
-      <div className="hm-mobile-buy"><div><strong>Holy Misconceptions!</strong><small>Paperback · Ages 8–12</small></div><a href={HOLY_MISCONCEPTIONS_AMAZON} target="_blank" rel="noopener noreferrer">Buy on Amazon</a></div>
+      <div className="hm-mobile-buy"><div><strong>Holy Misconceptions!</strong><small>Paperback · Ages 8–12</small></div><AmazonButton compact /></div>
     </main>
   );
 }
@@ -1755,21 +1778,7 @@ function FeaturedBookCard({ book, featured }: { book: Book; featured?: boolean }
           >
             View Book
           </a>
-          <a
-            href="#all-books"
-            style={{
-              borderRadius: 999,
-              padding: "12px 15px",
-              border: "1px solid rgba(255,255,255,0.18)",
-              color: "#fff",
-              textDecoration: "none",
-              fontSize: 12,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-            }}
-          >
-            Look Inside
-          </a>
+          <AmazonButton href={getAmazonBookUrl(book)} compact />
         </div>
       </div>
     </article>
@@ -1778,80 +1787,27 @@ function FeaturedBookCard({ book, featured }: { book: Book; featured?: boolean }
 
 function CompactBookCard({ book }: { book: Book }) {
   return (
-    <a
-      href={book.href}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "112px 1fr",
-        gap: 16,
-        padding: 14,
-        borderRadius: 26,
-        background: "rgba(255,255,255,0.07)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        textDecoration: "none",
-        color: "#fff",
-      }}
-    >
-      <div
-        style={{
-          minHeight: 146,
-          borderRadius: 18,
-          backgroundImage: `url(${book.image})`,
-          backgroundSize: book.image === HOLY_MISCONCEPTIONS_COVER ? "contain" : "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: book.image === HOLY_MISCONCEPTIONS_COVER ? "rgba(8,7,5,.82)" : undefined,
-          backgroundPosition: "center",
-        }}
-      />
-      <div>
+    <article className="compact-book-card">
+      <a className="compact-book-card__details" href={book.href} aria-label={`View ${book.title}`}>
         <div
+          className="compact-book-card__cover"
           style={{
-            color: "rgba(255,255,255,0.5)",
-            fontSize: 11,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
+            backgroundImage: `url(${book.image})`,
+            backgroundSize: book.image === HOLY_MISCONCEPTIONS_COVER ? "contain" : "cover",
+            backgroundColor: book.image === HOLY_MISCONCEPTIONS_COVER ? "rgba(8,7,5,.82)" : undefined,
           }}
-        >
-          {book.eyebrow}
+        />
+        <div>
+          <div className="compact-book-card__eyebrow">{book.eyebrow}</div>
+          <h3>{book.title}</h3>
+          <p>{book.hook}</p>
+          <div className="compact-book-card__tags">
+            {book.tags.map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
         </div>
-        <h3
-          style={{
-            margin: "7px 0 0",
-            fontFamily: "'Viaoda Libre', serif",
-            fontSize: 28,
-            lineHeight: 0.98,
-          }}
-        >
-          {book.title}
-        </h3>
-        <p
-          style={{
-            margin: "10px 0 0",
-            color: "rgba(255,244,238,0.66)",
-            fontSize: 14,
-            lineHeight: 1.45,
-          }}
-        >
-          {book.hook}
-        </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 12 }}>
-          {book.tags.map((tag) => (
-            <span
-              key={tag}
-              style={{
-                padding: "5px 8px",
-                borderRadius: 999,
-                background: "rgba(255,255,255,0.09)",
-                color: "rgba(255,244,238,0.74)",
-                fontSize: 11,
-              }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </a>
+      </a>
+      <AmazonButton href={getAmazonBookUrl(book)} compact />
+    </article>
   );
 }
 
