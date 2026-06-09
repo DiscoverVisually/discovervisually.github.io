@@ -6,6 +6,12 @@ const CURTAIN_LEFT = "/assets/publishing-curtain-left.png";
 const CURTAIN_RIGHT = "/assets/publishing-curtain-right.png";
 const ROMANTASY_HERO_BG = "/assets/romantasy-hero-bg.png";
 const SPIRITUAL_HERO_BG = "/assets/spiritual-hero-bg.png";
+const HOLY_MISCONCEPTIONS_COVER = "/images/books/holy-misconceptions-cover.svg";
+const HOLY_MISCONCEPTIONS_BACK = "/images/books/holy-misconceptions-back-cover.svg";
+const HOLY_MISCONCEPTIONS_ROUTE = "#/spiritual/holy-misconceptions";
+const HOLY_MISCONCEPTIONS_AMAZON = "https://faithinfullcolor.s.gy/VpoJTo";
+const AMAZON_BADGE_HORIZONTAL = "/images/amazon/available-at-amazon-horizontal-dark.svg";
+const AMAZON_BADGE_STACKED = "/images/amazon/available-at-amazon-stacked-dark.svg";
 const CHILDREN_HERO_BG = "/assets/children-hero-bg.png";
 const ARTS_EDUCATIONAL_HERO_BG = "/assets/arts-education-hero-bg.png";
 const WORLD_BG =
@@ -682,6 +688,7 @@ type Book = {
   tags: string[];
   image: string;
   href: string;
+  amazonUrl?: string;
   badge?: string;
 };
 
@@ -715,14 +722,15 @@ const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
     heroOverlay: "linear-gradient(90deg, rgba(12,10,8,0.48) 0%, rgba(30,22,10,0.16) 46%, rgba(18,14,8,0.26) 100%), radial-gradient(circle at 50% 38%, rgba(244,210,139,0.10), transparent 40%)",
     books: [
       {
-        title: "Visual Faith Guides",
-        eyebrow: "Best First Pick",
-        badge: "Start Here",
-        hook: "Beautiful Christian visual books for reflection, Scripture, history, and wonder.",
-        bestFor: ["Christian readers", "Bible study", "Meaningful gifts"],
-        tags: ["Visual Faith", "Christian", "Gift Pick"],
-        image: CARD_IMAGES[0],
-        href: "#",
+        title: "Holy Misconceptions!",
+        eyebrow: "Busting Myths! · Bible Edition",
+        badge: "New 2026 Book",
+        hook: "Twenty-five illustrated Bible case files that help curious kids check the text and discover what Scripture actually says.",
+        bestFor: ["Kids ages 8–12", "Family Bible time", "Sunday school"],
+        tags: ["Busting Myths!", "Bible", "Ages 8–12"],
+        image: HOLY_MISCONCEPTIONS_COVER,
+        href: HOLY_MISCONCEPTIONS_ROUTE,
+        amazonUrl: HOLY_MISCONCEPTIONS_AMAZON,
       },
       {
         title: "Bible Stories for Young Readers",
@@ -1228,6 +1236,7 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
               >
                 Browse All Books
               </button>
+              <AmazonButton href={getAmazonBookUrl(topBooks[0])} compact />
             </div>
           </div>
 
@@ -1248,7 +1257,9 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
                   borderRadius: 28,
                   overflow: "hidden",
                   backgroundImage: `url(${book.image})`,
-                  backgroundSize: "cover",
+                  backgroundSize: book.image === HOLY_MISCONCEPTIONS_COVER ? "contain" : "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundColor: book.image === HOLY_MISCONCEPTIONS_COVER ? "rgba(8,7,5,.82)" : undefined,
                   backgroundPosition: "center",
                   transform: `rotate(${i === 0 ? -4 : i === 1 ? 7 : -9}deg)`,
                   boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
@@ -1293,10 +1304,12 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
           style={{ gap: 20, marginTop: 32 }}
         >
           {topBooks.map((book, i) => (
-            <FeaturedBookCard key={book.title} book={book} featured={i === 1} />
+            <FeaturedBookCard key={book.title} book={book} featured={i === 0} />
           ))}
         </div>
       </section>
+
+      {config.slug === "spiritual" && <BustingMythsShelf />}
 
       <section
         style={{
@@ -1414,6 +1427,10 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
         </div>
       </section>
 
+      <p className="amazon-trademark-note">
+        The Amazon trademark is used under license from Amazon.com, Inc. or its affiliates.
+      </p>
+
       <section
         id="member"
         style={{
@@ -1464,6 +1481,149 @@ function CategoryPage({ config }: { config: CategoryConfig }) {
           </a>
         </div>
       </section>
+    </main>
+  );
+}
+
+function BustingMythsShelf() {
+  return (
+    <section className="busting-shelf" aria-labelledby="busting-myths-title">
+      <div className="busting-shelf__intro">
+        <div className="product-kicker">Featured subsection</div>
+        <h2 id="busting-myths-title">Busting Myths!</h2>
+        <p>
+          Illustrated investigations that turn familiar misconceptions into
+          memorable, evidence-led discoveries for curious young readers.
+        </p>
+        <div className="busting-shelf__proofs" aria-label="Series qualities">
+          <span>Visual case files</span>
+          <span>Curiosity first</span>
+          <span>Truth matters</span>
+        </div>
+      </div>
+      <a className="busting-book" href={HOLY_MISCONCEPTIONS_ROUTE}>
+        <div className="busting-book__covers" aria-hidden="true">
+          <img src={HOLY_MISCONCEPTIONS_BACK} alt="" />
+          <img src={HOLY_MISCONCEPTIONS_COVER} alt="" />
+        </div>
+        <div className="busting-book__copy">
+          <span className="product-pill">Book 1 of 2 · New for 2026</span>
+          <h3>Holy Misconceptions!</h3>
+          <p className="busting-book__subtitle">
+            Everything You Got Wrong About the Bible
+            <em> (And What It Actually Says)</em>
+          </p>
+          <p>
+            Kids ages 8–12 investigate 25 famous Bible mix-ups through visual
+            clues, text checks, “what we know,” and clear verdicts.
+          </p>
+          <span className="gold-button">Open the case file <b>→</b></span>
+        </div>
+      </a>
+    </section>
+  );
+}
+
+function getAmazonBookUrl(book: Book) {
+  return book.amazonUrl ?? `https://www.amazon.com/s?k=${encodeURIComponent(book.title)}`;
+}
+
+function AmazonButton({
+  href = HOLY_MISCONCEPTIONS_AMAZON,
+  variant = "horizontal",
+  compact = false,
+}: {
+  href?: string;
+  variant?: "horizontal" | "stacked";
+  compact?: boolean;
+}) {
+  const badge = variant === "stacked" ? AMAZON_BADGE_STACKED : AMAZON_BADGE_HORIZONTAL;
+  return (
+    <a
+      className={`amazon-button amazon-button--${variant}${compact ? " amazon-button--compact" : ""}`}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Available at Amazon (opens Amazon in a new tab)"
+    >
+      <img src={badge} alt="Available at Amazon" />
+    </a>
+  );
+}
+
+function HolyMisconceptionsPage() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+    document.title = "Holy Misconceptions! | DiscoverVisually";
+    return () => { document.title = "Step Into Wonder"; };
+  }, []);
+
+  return (
+    <main className="hm-page">
+      <nav className="hm-nav" aria-label="Book navigation">
+        <a href="#/" className="hm-brand">Discover<span>Visually</span></a>
+        <div className="hm-breadcrumb"><a href="#/spiritual">Spiritual</a><span>/</span><span>Busting Myths!</span></div>
+        <AmazonButton compact />
+      </nav>
+
+      <section className="hm-hero">
+        <div className="hm-hero__visual">
+          <span className="hm-new-badge">New 2026 book</span>
+          <img src={HOLY_MISCONCEPTIONS_COVER} alt="Cover of Holy Misconceptions! by B. B. Sterling" />
+          <small>Paperback · Book 1 of 2 in the Busting Myths! Series</small>
+        </div>
+        <div className="hm-hero__copy">
+          <div className="product-kicker">Busting Myths! Series · Bible Edition</div>
+          <h1>What if the Bible never said what everyone says it did?</h1>
+          <p className="hm-deck">
+            A fun, visual detective adventure that helps curious kids ages 8–12
+            investigate 25 famous Bible mix-ups—and discover what Scripture
+            actually says.
+          </p>
+          <div className="hm-myths"><span>Eve ate an apple?</span><span>Exactly three wise men?</span><span>Angels are babies?</span></div>
+          <AmazonButton variant="stacked" />
+          <p className="hm-support">Open the case file. Check the text. Discover the truth.</p>
+          <div className="hm-stats"><span><b>25</b> illustrated cases</span><span><b>8–12</b> reader age</span><span><b>Bonus</b> detective pages</span></div>
+        </div>
+      </section>
+
+      <section className="hm-process" aria-labelledby="hm-process-title">
+        <div className="product-kicker">The investigation begins</div>
+        <h2 id="hm-process-title">Kids hear these claims everywhere.<br />Now they can check the evidence.</h2>
+        <div className="hm-process__grid">
+          <article><span>01</span><h3>Spot the claim</h3><p>Begin with a familiar “fact” from stories, art, songs, movies, or tradition.</p></article>
+          <article><span>02</span><h3>Check the text</h3><p>Use visual clues and kid-friendly source checks to see what Scripture actually says.</p></article>
+          <article><span>03</span><h3>Reach a verdict</h3><p>Separate what we know from what we do not know—and learn why the real story matters.</p></article>
+        </div>
+      </section>
+
+      <section className="hm-inside">
+        <div className="hm-inside__cover"><img src={HOLY_MISCONCEPTIONS_BACK} alt="Back cover of Holy Misconceptions showing the investigation topics" /></div>
+        <div className="hm-inside__copy">
+          <div className="product-kicker">Inside the book</div>
+          <h2>25 cases. Five investigation files. One important habit: look closer.</h2>
+          <ul>
+            <li><b>✓</b><span><strong>Bible Story Mix-Ups</strong><small>Investigate details that became “facts” through retelling.</small></span></li>
+            <li><b>✓</b><span><strong>Christmas, Jesus &amp; Art Mix-Ups</strong><small>See where traditions and famous images add to the text.</small></span></li>
+            <li><b>✓</b><span><strong>Angels, Heaven &amp; Spiritual World Mix-Ups</strong><small>Replace cartoon clichés with thoughtful discoveries.</small></span></li>
+            <li><b>✓</b><span><strong>Famous Sayings That Aren't Bible Verses</strong><small>Learn why a popular phrase is not automatically Scripture.</small></span></li>
+            <li><b>✓</b><span><strong>Everyday Faith Questions Kids Actually Hear</strong><small>Discuss forgiveness, judging, prayer, neighbors, and hard feelings.</small></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="hm-audience">
+        <div><div className="product-kicker">Made for curious readers</div><h2>A better kind of Bible conversation.</h2></div>
+        <p>The goal is never to make anyone feel silly for getting a detail wrong. It is to help children slow down, ask honest questions, read carefully, and understand why truth matters.</p>
+        <div className="hm-audience__grid"><article><h3>Family Bible time</h3><p>Short visual cases create natural discussion without turning reading into a lecture.</p></article><article><h3>Homeschool learning</h3><p>Faith-friendly critical thinking supports close reading, source checking, and curiosity.</p></article><article><h3>Church &amp; Sunday school</h3><p>Memorable prompts work well for groups, libraries, classrooms, and guided conversation.</p></article></div>
+      </section>
+
+      <section className="hm-final">
+        <img src={HOLY_MISCONCEPTIONS_COVER} alt="Holy Misconceptions paperback cover" />
+        <div><div className="product-kicker">Ready to open the first case?</div><h2>Turn “Really?” into a reason to read.</h2><p>Give a curious young reader 25 engaging reasons to check the text, follow the clues, and discover the truth.</p><AmazonButton variant="stacked" /><small>By B. B. Sterling · Paperback · New for 2026</small></div>
+      </section>
+
+      <div className="hm-mobile-buy"><div><strong>Holy Misconceptions!</strong><small>Paperback · Ages 8–12</small></div><AmazonButton compact /></div>
     </main>
   );
 }
@@ -1546,7 +1706,9 @@ function FeaturedBookCard({ book, featured }: { book: Book; featured?: boolean }
           height: 250,
           borderRadius: 24,
           backgroundImage: `url(${book.image})`,
-          backgroundSize: "cover",
+          backgroundSize: book.image === HOLY_MISCONCEPTIONS_COVER ? "contain" : "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: book.image === HOLY_MISCONCEPTIONS_COVER ? "rgba(8,7,5,.82)" : undefined,
           backgroundPosition: "center",
           boxShadow: "inset 0 -80px 80px rgba(0,0,0,0.24)",
         }}
@@ -1616,21 +1778,7 @@ function FeaturedBookCard({ book, featured }: { book: Book; featured?: boolean }
           >
             View Book
           </a>
-          <a
-            href="#all-books"
-            style={{
-              borderRadius: 999,
-              padding: "12px 15px",
-              border: "1px solid rgba(255,255,255,0.18)",
-              color: "#fff",
-              textDecoration: "none",
-              fontSize: 12,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-            }}
-          >
-            Look Inside
-          </a>
+          <AmazonButton href={getAmazonBookUrl(book)} compact />
         </div>
       </div>
     </article>
@@ -1639,78 +1787,27 @@ function FeaturedBookCard({ book, featured }: { book: Book; featured?: boolean }
 
 function CompactBookCard({ book }: { book: Book }) {
   return (
-    <a
-      href={book.href}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "112px 1fr",
-        gap: 16,
-        padding: 14,
-        borderRadius: 26,
-        background: "rgba(255,255,255,0.07)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        textDecoration: "none",
-        color: "#fff",
-      }}
-    >
-      <div
-        style={{
-          minHeight: 146,
-          borderRadius: 18,
-          backgroundImage: `url(${book.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <div>
+    <article className="compact-book-card">
+      <a className="compact-book-card__details" href={book.href} aria-label={`View ${book.title}`}>
         <div
+          className="compact-book-card__cover"
           style={{
-            color: "rgba(255,255,255,0.5)",
-            fontSize: 11,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
+            backgroundImage: `url(${book.image})`,
+            backgroundSize: book.image === HOLY_MISCONCEPTIONS_COVER ? "contain" : "cover",
+            backgroundColor: book.image === HOLY_MISCONCEPTIONS_COVER ? "rgba(8,7,5,.82)" : undefined,
           }}
-        >
-          {book.eyebrow}
+        />
+        <div>
+          <div className="compact-book-card__eyebrow">{book.eyebrow}</div>
+          <h3>{book.title}</h3>
+          <p>{book.hook}</p>
+          <div className="compact-book-card__tags">
+            {book.tags.map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
         </div>
-        <h3
-          style={{
-            margin: "7px 0 0",
-            fontFamily: "'Viaoda Libre', serif",
-            fontSize: 28,
-            lineHeight: 0.98,
-          }}
-        >
-          {book.title}
-        </h3>
-        <p
-          style={{
-            margin: "10px 0 0",
-            color: "rgba(255,244,238,0.66)",
-            fontSize: 14,
-            lineHeight: 1.45,
-          }}
-        >
-          {book.hook}
-        </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 12 }}>
-          {book.tags.map((tag) => (
-            <span
-              key={tag}
-              style={{
-                padding: "5px 8px",
-                borderRadius: 999,
-                background: "rgba(255,255,255,0.09)",
-                color: "rgba(255,244,238,0.74)",
-                fontSize: 11,
-              }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </a>
+      </a>
+      <AmazonButton href={getAmazonBookUrl(book)} compact />
+    </article>
   );
 }
 
@@ -2347,19 +2444,18 @@ function HomePage() {
 }
 
 
-function getRouteSlug() {
+function getRoutePath() {
   const hash = window.location.hash.replace(/^#\/?/, "").replace(/^\//, "");
-  if (hash) return hash.split("/")[0];
+  if (hash) return hash.replace(/\/$/, "");
   const path = window.location.pathname.replace(/^\//, "").replace(/\/$/, "");
-  const last = path.split("/").filter(Boolean).pop() ?? "";
-  return last;
+  return path.split("/").filter(Boolean).pop() ?? "";
 }
 
 export default function App() {
-  const [route, setRoute] = useState(getRouteSlug());
+  const [route, setRoute] = useState(getRoutePath());
 
   useEffect(() => {
-    const update = () => setRoute(getRouteSlug());
+    const update = () => setRoute(getRoutePath());
     window.addEventListener("hashchange", update);
     window.addEventListener("popstate", update);
     return () => {
@@ -2369,9 +2465,14 @@ export default function App() {
   }, []);
 
   const normalized = route === "" || route === "home" ? "" : route;
+  const [categorySlug, productSlug] = normalized.split("/");
 
-  if (normalized && CATEGORY_CONFIGS[normalized]) {
-    return <CategoryPage config={CATEGORY_CONFIGS[normalized]} />;
+  if (categorySlug === "spiritual" && productSlug === "holy-misconceptions") {
+    return <HolyMisconceptionsPage />;
+  }
+
+  if (categorySlug && CATEGORY_CONFIGS[categorySlug] && !productSlug) {
+    return <CategoryPage config={CATEGORY_CONFIGS[categorySlug]} />;
   }
 
   return <HomePage />;
