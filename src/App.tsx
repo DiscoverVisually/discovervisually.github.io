@@ -22,11 +22,11 @@ const CARD_IMAGES = [
 const BODY_COPY =
   "Indie-made visual books where stories, art, and wonder come together on every page.";
 
-const HERO_CATEGORIES = [
-  { title: "Spiritual", href: "#/spiritual" },
-  { title: "Romantasy", href: "#/romantasy" },
-  { title: "For Children", href: "#/for-children" },
-];
+const HERO_CATEGORIES = {
+  spiritual: { title: "Spiritual", href: "#/spiritual" },
+  romantasy: { title: "Romantasy", href: "#/romantasy" },
+  forChildren: { title: "For Children", href: "#/for-children" },
+} as const;
 
 const ARC_CARDS = [
   {
@@ -175,7 +175,13 @@ function ScrollChevron() {
   );
 }
 
-function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
+function Nav({
+  onCategoriesClick,
+  isMobile,
+}: {
+  onCategoriesClick: () => void;
+  isMobile: boolean;
+}) {
   const navLinkStyle: CSSProperties = {
     fontFamily: "'Imprima', sans-serif",
     fontSize: 12,
@@ -213,7 +219,10 @@ function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
         pointerEvents: "auto",
       }}
     >
-      <div className="md:hidden" style={{ padding: "18px 20px" }}>
+      <div
+        className="md:hidden"
+        style={{ display: isMobile ? "block" : "none", padding: "18px 20px" }}
+      >
         <div
           style={{
             display: "flex",
@@ -241,6 +250,7 @@ function Nav({ onCategoriesClick }: { onCategoriesClick: () => void }) {
       <div
         className="hidden md:flex"
         style={{
+          display: isMobile ? "none" : "flex",
           padding: "22px 48px",
           justifyContent: "space-between",
           alignItems: "center",
@@ -554,7 +564,9 @@ function ArcCardSlider({
   isMobile: boolean;
 }) {
   const totalCards = cards.length;
-  const cardSpacingDeg = isMobile ? 12 : 9;
+  // Keep neighboring cards from covering each other's top-right CTA area.
+  // Overlapping anchors caused a click on one card to activate the next card.
+  const cardSpacingDeg = isMobile ? 14 : 12;
   const centerIndex = Math.floor(totalCards / 2);
   const arcRadius = isMobile ? 700 : 1100;
   const cardW = isMobile ? 160 : 220;
@@ -1811,7 +1823,8 @@ function HomePage() {
   const ep = easeInOut(scrollProgress);
   const scene1Opacity = clamp(1 - scrollProgress / 0.22, 0, 1);
   const scene2Opacity = clamp((scrollProgress - 0.68) / 0.16, 0, 1);
-  const finalArcOffset = Math.floor(ARC_CARDS.length / 2) * (isMobile ? 12 : 9);
+  const finalArcOffset =
+    Math.floor(ARC_CARDS.length / 2) * (isMobile ? 14 : 12);
   const rotationOffset = lerp(
     0,
     finalArcOffset,
@@ -1856,12 +1869,15 @@ function HomePage() {
   const handleCategoriesClick = () => {
     const node = containerRef.current;
     const target = node
-      ? node.offsetTop + node.scrollHeight - window.innerHeight
+      ? node.getBoundingClientRect().top +
+        window.scrollY +
+        node.scrollHeight -
+        window.innerHeight
       : document.documentElement.scrollHeight - window.innerHeight;
     const start = window.scrollY;
     const end = Math.max(0, target);
     const distance = end - start;
-    const duration = 2800;
+    const duration = 3000;
     const startedAt = performance.now();
 
     const tick = (now: number) => {
@@ -2065,14 +2081,14 @@ function HomePage() {
           }}
         />
 
-        <Nav onCategoriesClick={handleCategoriesClick} />
+        <Nav onCategoriesClick={handleCategoriesClick} isMobile={isMobile} />
 
         <div style={scene1Style}>
           <div
             className="md:hidden"
             style={{
               minHeight: "100%",
-              display: "flex",
+              display: isMobile ? "flex" : "none",
               alignItems: "center",
               justifyContent: "center",
               padding: "80px 24px 100px",
@@ -2114,6 +2130,7 @@ function HomePage() {
             className="hidden md:flex xl:hidden"
             style={{
               minHeight: "100%",
+              display: !isMobile && !isDesktop ? "flex" : "none",
               alignItems: "center",
               justifyContent: "center",
               padding: "80px 32px 96px",
@@ -2148,22 +2165,22 @@ function HomePage() {
                   image={CARD_IMAGES[0]}
                   size={140}
                   radius={22}
-                  title={HERO_CATEGORIES[0].title}
-                  href={HERO_CATEGORIES[0].href}
+                  title={HERO_CATEGORIES.spiritual.title}
+                  href={HERO_CATEGORIES.spiritual.href}
                 />
                 <CategoryCard
                   image={CARD_IMAGES[1]}
                   size={140}
                   radius={22}
-                  title={HERO_CATEGORIES[1].title}
-                  href={HERO_CATEGORIES[1].href}
+                  title={HERO_CATEGORIES.romantasy.title}
+                  href={HERO_CATEGORIES.romantasy.href}
                 />
                 <CategoryCard
                   image={CARD_IMAGES[2]}
                   size={140}
                   radius={22}
-                  title={HERO_CATEGORIES[2].title}
-                  href={HERO_CATEGORIES[2].href}
+                  title={HERO_CATEGORIES.forChildren.title}
+                  href={HERO_CATEGORIES.forChildren.href}
                 />
               </div>
             </div>
@@ -2172,6 +2189,7 @@ function HomePage() {
           <div
             className="hidden xl:block"
             style={{
+              display: isDesktop ? "block" : "none",
               position: "absolute",
               top: "46%",
               left: 60,
@@ -2205,6 +2223,7 @@ function HomePage() {
           <div
             className="hidden xl:flex"
             style={{
+              display: isDesktop ? "flex" : "none",
               position: "absolute",
               right: 40,
               top: "50%",
@@ -2217,24 +2236,24 @@ function HomePage() {
               image={CARD_IMAGES[0]}
               size={158}
               radius={28}
-              title={HERO_CATEGORIES[0].title}
-              href={HERO_CATEGORIES[0].href}
+              title={HERO_CATEGORIES.spiritual.title}
+              href={HERO_CATEGORIES.spiritual.href}
               titleSize={18}
             />
             <CategoryCard
               image={CARD_IMAGES[1]}
               size={158}
               radius={28}
-              title={HERO_CATEGORIES[1].title}
-              href={HERO_CATEGORIES[1].href}
+              title={HERO_CATEGORIES.romantasy.title}
+              href={HERO_CATEGORIES.romantasy.href}
               titleSize={18}
             />
             <CategoryCard
               image={CARD_IMAGES[2]}
               size={158}
               radius={28}
-              title={HERO_CATEGORIES[2].title}
-              href={HERO_CATEGORIES[2].href}
+              title={HERO_CATEGORIES.forChildren.title}
+              href={HERO_CATEGORIES.forChildren.href}
               titleSize={18}
             />
           </div>
@@ -2248,6 +2267,7 @@ function HomePage() {
           <div
             className="hidden xl:flex"
             style={{
+              display: isDesktop ? "flex" : "none",
               position: "absolute",
               left: "50%",
               bottom: 36,
