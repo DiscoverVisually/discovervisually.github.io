@@ -1580,10 +1580,17 @@ function HolyMisconceptionsPage() {
             investigate 25 famous Bible mix-ups—and discover what Scripture
             actually says.
           </p>
-          <div className="hm-myths"><span>Eve ate an apple?</span><span>Exactly three wise men?</span><span>Angels are babies?</span></div>
-          <AmazonButton variant="stacked" />
-          <p className="hm-support">Open the case file. Check the text. Discover the truth.</p>
-          <div className="hm-stats"><span><b>25</b> illustrated cases</span><span><b>8–12</b> reader age</span><span><b>Bonus</b> detective pages</span></div>
+          <div className="hm-myths" aria-label="Myths investigated in the book"><span>Eve ate an apple?</span><span>Exactly three wise men?</span><span>Angels are babies?</span></div>
+          <div className="hm-buy-panel" aria-label="Purchase Holy Misconceptions">
+            <div className="hm-buy-panel__intro">
+              <span>Ready to investigate?</span>
+              <strong>Get the paperback on Amazon</strong>
+              <small>Fast, secure checkout on Amazon</small>
+            </div>
+            <AmazonButton />
+            <p className="hm-support"><span aria-hidden="true">✓</span> Open the case file. Check the text. Discover the truth.</p>
+          </div>
+          <div className="hm-stats" aria-label="Book details"><span><b>25</b> illustrated cases</span><span><b>8–12</b> reader age</span><span><b>Bonus</b> detective pages</span></div>
         </div>
       </section>
 
