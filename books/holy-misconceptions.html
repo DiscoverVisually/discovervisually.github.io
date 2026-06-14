@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0705">
+  <title>Holy Misconceptions! — Bible Myth-Busting Book for Kids Ages 8–12</title>
+  <meta name="description" content="Holy Misconceptions! is a full-color Bible detective book for curious Christian kids ages 8–12, with 25 illustrated case files that check common Bible mix-ups.">
+  <meta property="og:title" content="Holy Misconceptions! — Bible Myth-Busting Book for Kids">
+  <meta property="og:description" content="A full-color Bible detective book with 25 myth-busting case files for curious Christian kids ages 8–12.">
+  <meta property="og:image" content="../images/books/holy-misconceptions-3d-mockup.svg">
+  <meta property="og:type" content="book">
+
+  <style>
+    :root {
+      --bg: #070504;
+      --bg-soft: #0d0906;
+      --panel: rgba(18, 12, 8, .78);
+      --panel-solid: #15100b;
+      --paper: #f1d49a;
+      --paper-deep: #bb7c2e;
+      --gold: #e0ad42;
+      --gold-light: #ffe09a;
+      --red: #a63d2c;
+      --cream: #fff5df;
+      --text: #fff5e4;
+      --muted: rgba(255, 245, 228, .72);
+      --muted-low: rgba(255, 245, 228, .52);
+      --line: rgba(224, 173, 66, .24);
+      --amazon: #ffd463;
+      --amazon-deep: #d99521;
+      --max: 1280px;
+      --shadow: 0 28px 80px rgba(0, 0, 0, .5);
+      --mouse-x: 0px;
+      --mouse-y: 0px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 84% 8%, rgba(224, 173, 66, .11), transparent 28rem),
+        radial-gradient(circle at 8% 36%, rgba(166, 61, 44, .09), transparent 26rem),
+        linear-gradient(180deg, #080604 0%, #0b0705 48%, #050302 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -15%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .23;
+      background-image:
+        radial-gradient(circle, rgba(255, 224, 154, .56) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(255, 255, 255, .18) 0 1px, transparent 1.5px);
+      background-size: 170px 135px, 290px 220px;
+      animation: page-dust 38s linear infinite;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    a:focus-visible {
+      outline: 3px solid var(--gold-light);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+
+    .shell {
+      width: min(var(--max), calc(100% - 56px));
+      margin-inline: auto;
+    }
+
+    .serif {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.045em;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(7, 5, 4, .88);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      white-space: nowrap;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.055em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(224, 173, 66, .55);
+      background: rgba(224, 173, 66, .08);
+      color: var(--gold-light);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: .08em;
+      transform: rotate(45deg);
+    }
+
+    .brand-mark span { transform: rotate(-45deg); }
+    .brand em { color: #80ef72; font-style: normal; }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .header-nav a { transition: color .2s ease; }
+    .header-nav a:hover { color: var(--gold-light); }
+
+    .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 1px solid rgba(255, 224, 154, .52);
+      border-radius: 10px;
+      color: #171006;
+      background: linear-gradient(135deg, #ffe7a7 0%, var(--amazon) 48%, var(--amazon-deep) 100%);
+      box-shadow: 0 15px 42px rgba(224, 173, 66, .2);
+      font-weight: 900;
+      text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 52px rgba(224, 173, 66, .28);
+      filter: brightness(1.04);
+    }
+
+    .btn .arrow { transition: transform .2s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(12, 8, 5, .66);
+      border-color: rgba(224, 173, 66, .38);
+      box-shadow: none;
+    }
+
+    .header-buy { min-height: 42px; padding-inline: 18px; font-size: 14px; }
+
+    .hero-stage {
+      position: relative;
+      min-height: calc(100svh - 64px);
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      overflow: hidden;
+      isolation: isolate;
+      background: #0a0705;
+    }
+
+    .hero-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(255, 215, 123, .26), transparent 17rem),
+        linear-gradient(118deg, transparent 0 54%, rgba(128, 56, 22, .2) 54.2% 54.7%, transparent 54.9%),
+        linear-gradient(30deg, transparent 0 69%, rgba(166, 61, 44, .45) 69.2% 69.6%, transparent 69.8%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .018) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .014) 0 1px, transparent 1px 54px),
+        radial-gradient(ellipse at 79% 42%, #70401d 0%, #2b170d 34%, #0a0705 69%);
+    }
+
+    .hero-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(7, 5, 4, .99) 0%, rgba(7, 5, 4, .94) 31%, rgba(7, 5, 4, .6) 51%, rgba(7, 5, 4, .25) 76%, rgba(7, 5, 4, .42) 100%),
+        linear-gradient(180deg, rgba(7, 5, 4, .2), rgba(7, 5, 4, .06) 65%, rgba(7, 5, 4, .8));
+    }
+
+    .hero-dust {
+      position: absolute;
+      inset: -12%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .38;
+      background-image:
+        radial-gradient(circle, rgba(255, 222, 146, .64) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255, 255, 255, .18) 0 1px, transparent 1.5px);
+      background-size: 142px 112px, 238px 184px;
+      animation: hero-dust 30s linear infinite;
+    }
+
+    .hero {
+      min-height: 0;
+      display: grid;
+      align-items: center;
+      padding: 20px 0 10px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(470px, .95fr) minmax(430px, .82fr);
+      align-items: center;
+      gap: 32px;
+    }
+
+    .hero-copy-wrap { position: relative; z-index: 4; }
+
+    .eyebrow,
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 13px;
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .section-kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 1px;
+      background: var(--red);
+      box-shadow: 0 0 18px rgba(166, 61, 44, .8);
+      transform: rotate(45deg);
+    }
+
+    .hero h1 {
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(52px, 5.2vw, 80px);
+      font-weight: 430;
+      line-height: .89;
+      text-wrap: balance;
+      text-shadow: 0 4px 34px rgba(0, 0, 0, .65);
+    }
+
+    .hero h1 span {
+      color: var(--gold-light);
+      text-shadow: 0 0 38px rgba(224, 173, 66, .2);
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 17px 0 0;
+      color: rgba(255, 245, 228, .82);
+      font-size: clamp(16px, 1.45vw, 18px);
+      line-height: 1.48;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, .8);
+    }
+
+    .hero-copy strong { color: var(--cream); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 21px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 15px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 6px 10px;
+      border: 1px solid rgba(224, 173, 66, .24);
+      border-radius: 999px;
+      color: rgba(255, 245, 228, .86);
+      background: rgba(12, 8, 5, .66);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: clamp(390px, 55vh, 520px);
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+    }
+
+    .book-glow {
+      position: absolute;
+      width: min(430px, 82%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 210, 101, .32), rgba(224, 173, 66, .09) 45%, transparent 70%);
+      filter: blur(9px);
+      animation: glow-pulse 5.5s ease-in-out infinite alternate;
+    }
+
+    .hero-book {
+      position: relative;
+      z-index: 2;
+      width: min(465px, 88%);
+      max-height: 55vh;
+      object-fit: contain;
+      filter: drop-shadow(0 34px 48px rgba(0, 0, 0, .6)) drop-shadow(0 0 36px rgba(224, 173, 66, .14));
+      transform: translate3d(calc(var(--mouse-x) * -.24), calc(var(--mouse-y) * -.18), 0);
+      animation: book-float 7s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    .clue-card {
+      position: absolute;
+      z-index: 3;
+      min-width: 128px;
+      padding: 11px 14px 10px;
+      border: 1px solid rgba(91, 52, 13, .55);
+      border-radius: 3px 9px 4px 8px;
+      color: #211307;
+      background:
+        linear-gradient(rgba(255, 241, 192, .95), rgba(218, 171, 91, .93)),
+        repeating-linear-gradient(0deg, transparent 0 17px, rgba(99, 58, 14, .08) 18px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .38), inset 0 0 20px rgba(112, 59, 11, .08);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1;
+      transform: rotate(var(--rotation));
+      animation: clue-float 6.6s ease-in-out infinite alternate;
+    }
+
+    .clue-card::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #f88b70, #9f2f20 56%, #51140e);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, .4);
+    }
+
+    .clue-card small {
+      display: block;
+      margin-top: 5px;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .72;
+    }
+
+    .clue-one { --rotation: -5deg; top: 15%; left: 2%; animation-delay: -.8s; }
+    .clue-two { --rotation: 4deg; top: 19%; right: 0; animation-delay: -2.1s; }
+    .clue-three { --rotation: -3deg; right: 5%; bottom: 12%; animation-delay: -3.6s; }
+
+    .proof-wrap {
+      position: relative;
+      z-index: 5;
+      padding-bottom: 12px;
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(224, 173, 66, .24);
+      border-radius: 14px;
+      background: rgba(12, 8, 5, .88);
+      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 15px 55px rgba(0, 0, 0, .4);
+    }
+
+    .proof-item {
+      min-width: 0;
+      padding: 10px 14px;
+      border-right: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .proof-item:last-child { border-right: 0; }
+
+    .proof-item strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 13px;
+      line-height: 1.15;
+    }
+
+    .proof-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted-low);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .section {
+      position: relative;
+      padding-top: 88px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2,
+    .gift-banner h2,
+    .final-card h2 {
+      margin: 0;
+      font-size: clamp(38px, 4.4vw, 66px);
+      font-weight: 430;
+      line-height: .95;
+      text-wrap: balance;
+    }
+
+    .section-description {
+      max-width: 660px;
+      margin: 13px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+    }
+
+    .preview-card {
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(7, 5, 4, .08), rgba(7, 5, 4, .88) 78%),
+        var(--preview-image),
+        radial-gradient(circle at 65% 18%, rgba(224, 173, 66, .16), transparent 18rem),
+        linear-gradient(135deg, #2b180c, #0a0604);
+      background-position: center;
+      background-size: cover;
+      box-shadow: var(--shadow);
+    }
+
+    .preview-main {
+      min-height: 458px;
+      --preview-image: url("../images/placeholders/interior-spread-case-file.jpg");
+    }
+
+    .preview-stack { display: grid; gap: 18px; }
+    .preview-eve { --preview-image: url("../images/placeholders/preview-eve-apple.jpg"); }
+    .preview-jonah { --preview-image: url("../images/placeholders/preview-jonah-whale.jpg"); }
+
+    .preview-label {
+      position: absolute;
+      inset: auto 18px 18px;
+      padding: 14px 15px;
+      border: 1px dashed rgba(224, 173, 66, .42);
+      border-radius: 12px;
+      color: rgba(255, 245, 228, .82);
+      background: rgba(8, 5, 3, .78);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .preview-label strong { color: var(--gold-light); }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(224, 173, 66, .19);
+      background:
+        radial-gradient(circle at 85% 10%, rgba(224, 173, 66, .12), transparent 15rem),
+        linear-gradient(135deg, rgba(21, 14, 9, .9), rgba(9, 6, 4, .82));
+      box-shadow: 0 18px 52px rgba(0, 0, 0, .32);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, .07) 50%, transparent 58%);
+      transform: translateX(-130%);
+      transition: transform .7s ease;
+    }
+
+    .card:hover::after { transform: translateX(130%); }
+
+    .benefit-card {
+      min-height: 245px;
+      padding: 27px;
+      border-radius: 18px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border: 1px solid rgba(224, 173, 66, .3);
+      border-radius: 13px;
+      color: var(--gold-light);
+      background: rgba(224, 173, 66, .08);
+      font-size: 22px;
+    }
+
+    .benefit-card h3,
+    .inside-card h3,
+    .fit-card h3 {
+      margin: 0 0 9px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 29px;
+      font-weight: 430;
+      letter-spacing: -.035em;
+      line-height: 1.02;
+    }
+
+    .benefit-card p,
+    .inside-card p,
+    .fit-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .inside-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .inside-card {
+      min-height: 185px;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .inside-card .mini-icon {
+      display: block;
+      margin-bottom: 15px;
+      color: var(--gold);
+      font-size: 21px;
+    }
+
+    .inside-card h3 { font-size: 23px; }
+    .inside-card p { font-size: 14px; }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .fit-card {
+      padding: 29px;
+      border-radius: 18px;
+    }
+
+    .fit-card.not {
+      border-color: rgba(255, 255, 255, .12);
+      background:
+        radial-gradient(circle at 85% 10%, rgba(255, 255, 255, .06), transparent 15rem),
+        linear-gradient(135deg, rgba(16, 13, 11, .9), rgba(8, 6, 5, .84));
+    }
+
+    .fit-card ul {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+    }
+
+    .fit-card li {
+      position: relative;
+      padding: 9px 0 9px 27px;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+      line-height: 1.5;
+    }
+
+    .fit-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 2px;
+      color: var(--gold-light);
+      font-weight: 900;
+    }
+
+    .fit-card.not li::before { content: "—"; color: var(--muted-low); }
+
+    .gift-banner {
+      position: relative;
+      min-height: 390px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      padding: clamp(30px, 5vw, 60px);
+      border: 1px solid rgba(224, 173, 66, .27);
+      border-radius: 24px;
+      background:
+        linear-gradient(90deg, rgba(7, 5, 4, .98), rgba(7, 5, 4, .72) 56%, rgba(7, 5, 4, .3)),
+        linear-gradient(28deg, transparent 0 68%, rgba(166, 61, 44, .42) 68.2% 68.7%, transparent 68.9%),
+        radial-gradient(circle at 82% 22%, rgba(255, 213, 116, .3), transparent 16rem),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .018) 0 1px, transparent 1px 62px),
+        radial-gradient(ellipse at 78% 48%, #6b3b1b 0%, #29160c 38%, #090604 72%);
+      box-shadow: var(--shadow);
+    }
+
+    .gift-banner::before {
+      content: "";
+      position: absolute;
+      top: -35%;
+      right: 6%;
+      width: 360px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 218, 128, .22), transparent 68%);
+      pointer-events: none;
+    }
+
+    .gift-content { position: relative; max-width: 780px; }
+    .gift-banner p:not(.section-kicker) { max-width: 640px; margin: 16px 0 24px; color: var(--muted); font-size: 17px; line-height: 1.55; }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .detail {
+      padding: 18px;
+      border: 1px solid rgba(224, 173, 66, .18);
+      border-radius: 13px;
+      background: rgba(18, 12, 8, .72);
+    }
+
+    .detail strong { display: block; margin-bottom: 5px; color: var(--gold-light); font-size: 13px; }
+    .detail span { color: var(--muted); font-size: 14px; }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 22px;
+      border-radius: 15px;
+    }
+
+    .faq-item h3 { margin: 0 0 8px; color: var(--gold-light); font-size: 18px; }
+    .faq-item p { margin: 0; color: var(--muted); line-height: 1.55; }
+
+    .final-cta { padding: 88px 0 116px; }
+
+    .final-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: clamp(30px, 5vw, 58px);
+      border: 1px solid rgba(224, 173, 66, .28);
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 82% 16%, rgba(224, 173, 66, .2), transparent 22rem),
+        linear-gradient(135deg, rgba(23, 15, 9, .96), rgba(8, 5, 3, .9));
+      box-shadow: var(--shadow);
+    }
+
+    .final-card p { max-width: 700px; margin: 15px 0 0; color: var(--muted); line-height: 1.58; }
+    .amazon-note { margin-top: 9px; color: var(--muted-low); font-size: 12px; }
+
+    .sticky-buy {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      z-index: 70;
+      width: min(820px, calc(100% - 28px));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 9px;
+      border: 1px solid rgba(224, 173, 66, .3);
+      border-radius: 15px;
+      background: rgba(9, 6, 4, .92);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .5);
+      transform: translateX(-50%) translateY(calc(100% + 30px));
+      visibility: hidden;
+      transition: transform .35s ease, visibility .35s ease;
+    }
+
+    .sticky-buy.is-visible {
+      transform: translateX(-50%) translateY(0);
+      visibility: visible;
+    }
+
+    .sticky-buy strong { display: block; color: var(--gold-light); font-size: 15px; }
+    .sticky-buy small { display: block; margin-top: 2px; color: var(--muted-low); font-size: 11px; }
+    .sticky-buy .btn { min-height: 44px; font-size: 14px; }
+
+    @keyframes page-dust {
+      from { transform: translate3d(0, 0, 0); background-position: 0 0, 80px 90px; }
+      to { transform: translate3d(-60px, 48px, 0); background-position: -220px 160px, 260px -180px; }
+    }
+
+    @keyframes hero-dust {
+      from { transform: translate3d(0, 0, 0); background-position: 0 0, 50px 80px; }
+      to { transform: translate3d(-42px, 32px, 0); background-position: -190px 140px, 220px -150px; }
+    }
+
+    @keyframes book-float {
+      from { translate: 0 -7px; }
+      to { translate: 0 10px; }
+    }
+
+    @keyframes clue-float {
+      from { translate: 0 -5px; }
+      to { translate: 0 7px; }
+    }
+
+    @keyframes glow-pulse {
+      from { opacity: .72; transform: scale(.95); }
+      to { opacity: 1; transform: scale(1.05); }
+    }
+
+    @media (max-height: 780px) and (min-width: 1051px) {
+      .hero h1 { font-size: clamp(48px, 4.7vw, 68px); }
+      .hero-copy { margin-top: 13px; font-size: 16px; }
+      .hero-actions { margin-top: 16px; }
+      .badges { margin-top: 11px; }
+      .hero-visual { min-height: 390px; }
+      .hero-book { width: min(395px, 82%); max-height: 51vh; }
+      .proof-item { padding-block: 8px; }
+    }
+
+    @media (max-width: 1050px) {
+      .header-nav { display: none; }
+      .hero-stage { min-height: auto; }
+      .hero { padding: 52px 0 10px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 10px; }
+      .hero-copy-wrap { max-width: 760px; }
+      .hero-visual { min-height: 500px; }
+      .hero-book { max-height: none; }
+      .proof-wrap { padding-top: 8px; }
+      .proof-strip, .benefit-grid, .inside-grid, .details-grid, .faq-grid { grid-template-columns: repeat(2, 1fr); }
+      .preview-grid, .fit-grid, .final-card { grid-template-columns: 1fr; }
+      .final-card .btn { justify-self: start; }
+    }
+
+    @media (max-width: 700px) {
+      html { scroll-padding-top: 70px; }
+      .shell { width: min(var(--max), calc(100% - 28px)); }
+      .header-inner { min-height: 58px; }
+      .brand { font-size: 20px; }
+      .brand-mark { width: 30px; height: 30px; font-size: 9px; }
+      .header-buy { display: none; }
+      .hero-stage::before { background-position: 70% center; opacity: .7; }
+      .hero-stage::after {
+        background:
+          linear-gradient(180deg, rgba(7, 5, 4, .92) 0%, rgba(7, 5, 4, .78) 46%, rgba(7, 5, 4, .35) 72%, rgba(7, 5, 4, .88) 100%),
+          linear-gradient(90deg, rgba(7, 5, 4, .9), rgba(7, 5, 4, .28));
+      }
+      .hero { padding-top: 42px; }
+      .hero h1 { font-size: clamp(44px, 14.5vw, 64px); }
+      .hero-copy { font-size: 16px; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .hero-visual { min-height: 410px; }
+      .hero-book { width: min(390px, 94%); }
+      .clue-card { display: none; }
+      .proof-strip, .benefit-grid, .inside-grid, .details-grid, .faq-grid { grid-template-columns: 1fr; }
+      .proof-item { padding: 9px 13px; border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+      .proof-item:last-child { border-bottom: 0; }
+      .section { padding-top: 68px; }
+      .section-head { display: block; }
+      .section-head > .btn { margin-top: 20px; }
+      .preview-main { min-height: 340px; }
+      .gift-banner { min-height: 380px; padding: 28px; background-position: 66% center; }
+      .final-cta { padding: 68px 0 132px; }
+      .final-card .btn { width: 100%; }
+      .sticky-buy { bottom: 8px; grid-template-columns: 1fr auto; gap: 8px; padding: 7px; }
+      .sticky-buy small { display: none; }
+      .sticky-buy .btn { min-height: 42px; padding-inline: 14px; }
+    }
+
+    @media (max-width: 430px) {
+      .sticky-buy strong { max-width: 145px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .sticky-buy .btn { font-size: 13px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="../index.html" aria-label="DiscoverVisually home">
+        <span class="brand-mark" aria-hidden="true"><span>DV</span></span>
+        <span>Discover<em>Visually</em></span>
+      </a>
+
+      <nav class="header-nav" aria-label="Book page navigation">
+        <a href="#preview">Preview Inside</a>
+        <a href="#whats-inside">What’s Inside</a>
+        <a href="#gift">Gift Pick</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="btn header-buy" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+        Buy on Amazon <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-stage" id="top">
+      <div class="hero-dust" aria-hidden="true"></div>
+      <div class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy-wrap">
+            <p class="eyebrow">New 2026 Book · By B B Sterling · Busting Myths! Series</p>
+            <h1 class="serif">Bible myths. <span>Case closed.</span></h1>
+            <p class="hero-copy">A full-color Bible detective book that helps curious Christian kids ages 8–12 investigate <strong>25 Bible mix-ups</strong>, famous traditions, popular sayings, and faith questions.</p>
+
+            <div class="hero-actions">
+              <a class="btn" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+                Buy on Amazon <span class="arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="btn btn-secondary" href="#preview">
+                Preview Inside <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+
+            <div class="badges" aria-label="Book highlights">
+              <span class="badge">Paperback</span>
+              <span class="badge">Full color</span>
+              <span class="badge">25 case files</span>
+              <span class="badge">Ages 8–12</span>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="book-glow" aria-hidden="true"></div>
+            <img class="hero-book" src="../images/books/holy-misconceptions-3d-mockup.svg" alt="Holy Misconceptions paperback book by B B Sterling">
+            <div class="clue-card clue-one" aria-hidden="true">Apple?<small>Check the text</small></div>
+            <div class="clue-card clue-two" aria-hidden="true">Great fish?<small>Jonah case</small></div>
+            <div class="clue-card clue-three" aria-hidden="true">Bible verse?<small>Really?</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell proof-wrap" aria-label="Why families choose this book">
+        <div class="proof-strip">
+          <div class="proof-item"><strong>🔎 Critical thinking</strong><span>Read carefully. Ask better questions.</span></div>
+          <div class="proof-item"><strong>📖 Visual learning</strong><span>Case-file spreads keep reading active.</span></div>
+          <div class="proof-item"><strong>🏠 Groups &amp; homeschool</strong><span>Made for family, church, and discussion.</span></div>
+          <div class="proof-item"><strong>🎁 Gift-ready</strong><span>A screen-free Christian gift.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="preview">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Preview Inside</p>
+          <h2 class="serif">Every misconception becomes a kid-friendly case file.</h2>
+          <p class="section-description">Clues, text checks, common assumptions, what Scripture says, and a clear verdict turn careful reading into an investigation kids want to finish.</p>
+        </div>
+        <a class="btn" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+          View on Amazon <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="preview-grid">
+        <div class="preview-card preview-main">
+          <div class="preview-label"><strong>Interior case-file spread</strong><br>Future preview image: illustrated evidence, text checks, and a clear verdict.</div>
+        </div>
+        <div class="preview-stack">
+          <div class="preview-card preview-eve">
+            <div class="preview-label"><strong>Eve and the apple?</strong><br>A familiar detail goes under investigation.</div>
+          </div>
+          <div class="preview-card preview-jonah">
+            <div class="preview-label"><strong>Jonah and the whale?</strong><br>Kids follow the clue back to the text.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" aria-labelledby="benefits-title">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Why kids will keep turning pages</p>
+          <h2 class="serif" id="benefits-title">Bible facts, mystery energy, and clear takeaways.</h2>
+        </div>
+      </div>
+
+      <div class="benefit-grid">
+        <article class="card benefit-card">
+          <div class="card-icon" aria-hidden="true">🔎</div>
+          <h3>Detective-style learning</h3>
+          <p>Kids investigate common Bible misunderstandings instead of passively reading long explanations.</p>
+        </article>
+        <article class="card benefit-card">
+          <div class="card-icon" aria-hidden="true">📖</div>
+          <h3>Scripture confidence</h3>
+          <p>Each case helps children compare popular assumptions with what the Bible actually says.</p>
+        </article>
+        <article class="card benefit-card">
+          <div class="card-icon" aria-hidden="true">💬</div>
+          <h3>Conversation starter</h3>
+          <p>Great for family Bible time, homeschool reading, Sunday school, and church discussion.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="whats-inside">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Inside the book</p>
+          <h2 class="serif">25 Bible mix-ups checked like case files.</h2>
+          <p class="section-description">Story details, traditions, popular sayings, visual evidence, and everyday faith questions—all presented for curious readers ages 8–12.</p>
+        </div>
+      </div>
+
+      <div class="inside-grid">
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">⌕</span><h3>Story mix-ups</h3><p>Eve’s apple, Jonah’s fish, Noah’s animals, wise men, angels, and more.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">▤</span><h3>Text checks</h3><p>Kid-friendly explanations compare assumptions with Scripture.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">“ ”</span><h3>Popular sayings</h3><p>Famous phrases people think are Bible verses—and what the Bible teaches.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">?</span><h3>Faith questions</h3><p>Forgiveness, judging, prayer, neighbors, hard feelings, and truth.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">✦</span><h3>Visual clues</h3><p>Evidence-board spreads with pictures, labels, clues, and verdicts.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">＋</span><h3>Bonus pages</h3><p>Interactive detective pages for reflection, review, and discussion.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">⌛</span><h3>Traditions</h3><p>Christmas customs, famous art, and details heard at church or in movies.</p></article>
+        <article class="card inside-card"><span class="mini-icon" aria-hidden="true">✓</span><h3>Clear verdicts</h3><p>Every case ends with a simple, memorable takeaway.</p></article>
+      </div>
+    </section>
+
+    <section class="section shell" aria-label="Who the book is for">
+      <div class="fit-grid">
+        <article class="card fit-card">
+          <h3>Perfect for</h3>
+          <ul>
+            <li>Christian kids ages 8–12 who love facts and mysteries</li>
+            <li>Parents and grandparents looking for a screen-free Christian gift</li>
+            <li>Homeschool reading, Sunday school lessons, and church libraries</li>
+            <li>Reluctant readers who prefer visual, active, clue-based pages</li>
+            <li>Boys and girls who ask, “Wait, is that actually in the Bible?”</li>
+          </ul>
+        </article>
+        <article class="card fit-card not">
+          <h3>Probably not for</h3>
+          <ul>
+            <li>Readers looking for a traditional verse-by-verse commentary</li>
+            <li>Very young children who still need a simple picture Bible</li>
+            <li>Readers expecting a dry textbook or long theology chapters</li>
+            <li>Anyone who wants kids to memorize assumptions instead of checking the text</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="gift">
+      <div class="gift-banner">
+        <div class="gift-content">
+          <p class="section-kicker">Gift-ready Christian book</p>
+          <h2 class="serif">A book that feels like a mystery case file and a Bible learning adventure.</h2>
+          <p>A thoughtful, screen-free gift for curious kids, grandchildren, homeschool families, Sunday school readers, and young Bible detectives who love discovering what is true.</p>
+          <a class="btn" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+            Get the Book on Amazon <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" aria-labelledby="details-title">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Book details</p>
+          <h2 class="serif" id="details-title">Quick facts before you buy.</h2>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail"><strong>Format</strong><span>Paperback</span></div>
+        <div class="detail"><strong>Age range</strong><span>8–12 years</span></div>
+        <div class="detail"><strong>Interior</strong><span>Full color</span></div>
+        <div class="detail"><strong>Trim size</strong><span>US Letter</span></div>
+        <div class="detail"><strong>Series</strong><span>Busting Myths! Series</span></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="faq">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">FAQ</p>
+          <h2 class="serif">Questions parents and gift buyers ask.</h2>
+        </div>
+      </div>
+      <div class="faq-grid">
+        <article class="card faq-item"><h3>Is this a Bible storybook?</h3><p>Not exactly. It is a Bible myth-busting detective book that helps kids investigate common misunderstandings and compare them with Scripture.</p></article>
+        <article class="card faq-item"><h3>Is it suitable for both boys and girls?</h3><p>Yes. The facts, clues, mysteries, and evidence-board style are designed for curious boys and girls ages 8–12.</p></article>
+        <article class="card faq-item"><h3>Is it faith-friendly?</h3><p>Yes. It encourages kids to ask better questions, read carefully, and understand why truth matters—without making them feel silly for a wrong assumption.</p></article>
+        <article class="card faq-item"><h3>Can this work for homeschool or Sunday school?</h3><p>Yes. The short case-file format supports family discussion, homeschool reading, church libraries, and classroom-style lessons.</p></article>
+        <article class="card faq-item"><h3>Is it full color?</h3><p>Yes. The paperback is designed as a full-color visual experience with illustrated clues and case-file layouts.</p></article>
+        <article class="card faq-item"><h3>Where do I buy it?</h3><p>The book is available through Amazon. Click any “Buy on Amazon” button to continue to the product page and complete your purchase there.</p></article>
+      </div>
+    </section>
+
+    <section class="final-cta shell">
+      <div class="final-card">
+        <div>
+          <h2 class="serif">Ready to open the case file?</h2>
+          <p>Give curious kids a fun, visual way to investigate Bible mix-ups, check the text, and build Scripture confidence.</p>
+          <div class="amazon-note">You’ll be redirected to Amazon to complete your purchase.</div>
+        </div>
+        <a class="btn" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+          Buy on Amazon <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sticky-buy" data-sticky-buy aria-label="Buy Holy Misconceptions on Amazon">
+    <div>
+      <strong>Holy Misconceptions!</strong>
+      <small>Paperback · Full-color · Bible myth-busting for ages 8–12</small>
+    </div>
+    <a class="btn" href="https://www.amazon.com/dp/REPLACE_ASIN" target="_blank" rel="noopener noreferrer" data-amazon>
+      Buy on Amazon <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </aside>
+
+  <script>
+    const root = document.documentElement;
+    const stickyBuy = document.querySelector("[data-sticky-buy]");
+    const hero = document.querySelector(".hero-stage");
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (stickyBuy && hero) {
+      const stickyObserver = new IntersectionObserver(([entry]) => {
+        stickyBuy.classList.toggle("is-visible", !entry.isIntersecting);
+      }, { rootMargin: "-45% 0px 0px 0px", threshold: 0 });
+      stickyObserver.observe(hero);
+    }
+
+    if (matchMedia("(pointer: fine)").matches && !reducedMotion.matches) {
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+
+      addEventListener("mousemove", event => {
+        targetX = (event.clientX / innerWidth - .5) * 18;
+        targetY = (event.clientY / innerHeight - .5) * 14;
+      }, { passive: true });
+
+      const animateBook = () => {
+        currentX += (targetX - currentX) * .07;
+        currentY += (targetY - currentY) * .07;
+        root.style.setProperty("--mouse-x", `${currentX.toFixed(2)}px`);
+        root.style.setProperty("--mouse-y", `${currentY.toFixed(2)}px`);
+        requestAnimationFrame(animateBook);
+      };
+
+      requestAnimationFrame(animateBook);
+    }
+  </script>
+</body>
+</html>
