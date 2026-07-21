@@ -472,6 +472,11 @@
         .float-book { cursor: none; }
       }
 </style>
+      <link rel="stylesheet" href="/assets/category-christian-B7k2.css" />
+    <link rel="stylesheet" href="/assets/category-children-B7k2.css" />
+    <link rel="stylesheet" href="/assets/category-women-B7k2.css" />
+    <link rel="stylesheet" href="/assets/category-educational-B7k2.css" />
+    <link rel="stylesheet" href="/assets/category-motion-C4p8.css" />
   </head>
   <body
     class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
@@ -807,6 +812,37 @@
           setTimeout(applyMetadata, 1200);
           setTimeout(initCursor, 800);
         }, { once: true });
+      })();
+    </script>
+      <script id="category-portals-motion">
+      (() => {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const bindPortals = () => {
+          document.querySelectorAll(".portal").forEach((portal) => {
+            if (portal.dataset.motionBound) return;
+            portal.dataset.motionBound = "true";
+            const image = portal.querySelector(".portal-image");
+            if (!image) return;
+            portal.addEventListener("pointermove", (event) => {
+              if (reducedMotion.matches || event.pointerType === "touch") return;
+              const rect = portal.getBoundingClientRect();
+              const x = (event.clientX - rect.left) / rect.width;
+              const y = (event.clientY - rect.top) / rect.height;
+              image.style.setProperty("--mx", `${(x - 0.5) * -12}px`);
+              image.style.setProperty("--my", `${(y - 0.5) * -10}px`);
+              portal.style.setProperty("--glow-x", `${x * 100}%`);
+              portal.style.setProperty("--glow-y", `${y * 100}%`);
+            });
+            portal.addEventListener("pointerleave", () => {
+              image.style.setProperty("--mx", "0px");
+              image.style.setProperty("--my", "0px");
+              portal.style.setProperty("--glow-x", "50%");
+              portal.style.setProperty("--glow-y", "42%");
+            });
+          });
+        };
+        bindPortals();
+        requestAnimationFrame(bindPortals);
       })();
     </script>
   </body>
