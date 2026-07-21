@@ -399,7 +399,36 @@
         .float-book, .orbit-one, .orbit-two { animation: none !important; }
         .float-book:hover, .float-book:focus-visible { translate: 0 -4px; scale: 1.01; }
       }
-    </style>
+    
+      .book-cursor {
+        pointer-events: none;
+        z-index: 80;
+        width: 58px;
+        height: 58px;
+        color: #fff;
+        background: rgba(7,17,30,.86);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(207,173,110,.7);
+        border-radius: 50%;
+        place-items: center;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: .16em;
+        display: none;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        translate: -50% -50%;
+        scale: .8;
+        transition: opacity .18s ease, scale .18s ease;
+      }
+      .book-cursor.is-visible { opacity: 1; scale: 1; }
+      @media (pointer: fine) {
+        .book-cursor { display: grid; }
+        .float-book { cursor: none; }
+      }
+</style>
   </head>
   <body
     class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
@@ -705,6 +734,37 @@
     </main>
     <script id="_R_">
       import("/assets/index-BAbaec-y.js");
+    </script>
+  
+    <script id="hero-behavior-2026">
+      (() => {
+        const title = "Discover Visually — Books Made to Be Explored";
+        const description = "Beautifully visual books created to inspire curiosity, faith and imagination.";
+        const applyMetadata = () => {
+          document.title = title;
+          const meta = document.querySelector('meta[name="description"]');
+          if (meta) meta.setAttribute("content", description);
+        };
+        const initCursor = () => {
+          if (!matchMedia("(pointer: fine)").matches || document.querySelector(".book-cursor")) return;
+          const cursor = document.createElement("div");
+          cursor.className = "book-cursor";
+          cursor.setAttribute("aria-hidden", "true");
+          cursor.textContent = "OPEN";
+          document.body.appendChild(cursor);
+          document.addEventListener("pointermove", (event) => {
+            cursor.style.left = event.clientX + "px";
+            cursor.style.top = event.clientY + "px";
+            cursor.classList.toggle("is-visible", Boolean(event.target.closest(".float-book")));
+          }, { passive: true });
+        };
+        applyMetadata();
+        addEventListener("load", () => {
+          setTimeout(applyMetadata, 0);
+          setTimeout(applyMetadata, 1200);
+          setTimeout(initCursor, 800);
+        }, { once: true });
+      })();
     </script>
   </body>
 </html>
