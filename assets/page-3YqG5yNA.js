@@ -189,26 +189,8 @@ function s() {
                 }),
                 (0, i.jsxs)(`h1`, {
                   children: [
-                    (0, i.jsx)(`span`, {
-                      className: `hero-lead`,
-                      children: `Stories you don’t just read.`,
-                    }),
-                    (0, i.jsxs)(`em`, {
-                      className: `handwritten-reveal`,
-                      "aria-label": `You enter.`,
-                      children: [
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `Y` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `o` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `u` }),
-                        (0, i.jsx)(`span`, { className: `letter-space`, "aria-hidden": `true`, children: `\u00a0` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `e` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `n` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `t` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `e` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `r` }),
-                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `.` }),
-                      ],
-                    }),
+                    `Stories you don’t just read. `,
+                    (0, i.jsx)(`em`, { children: `You enter.` }),
                   ],
                 }),
                 (0, i.jsx)(`p`, {
