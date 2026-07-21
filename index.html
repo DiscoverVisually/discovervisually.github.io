@@ -270,6 +270,136 @@
         --font-geist-mono: "Geist Mono", sans-serif;
       }
     </style>
+  
+    <style id="hero-refinement-2026">
+      /* Premium hero refinement: clearer conversion, deeper books, restrained motion */
+      .hero-copy { animation: heroCopyIn .9s cubic-bezier(.2,.72,.2,1) .08s both; }
+      .hero h1 { animation: heroLineIn .9s cubic-bezier(.2,.72,.2,1) .12s both; }
+      .hero h1 em { animation: heroLineIn .9s cubic-bezier(.2,.72,.2,1) .24s both; }
+      .hero-intro { max-width: 485px; animation: heroFadeIn .75s ease .46s both; }
+      .hero-actions { flex-wrap: wrap; animation: heroFadeIn .75s ease .6s both; }
+      .hero-actions::after {
+        content: "FULL-COLOR INTERIORS · DESIGNED FOR GIFTING · INDEPENDENTLY PUBLISHED";
+        flex-basis: 100%;
+        color: rgba(255,255,255,.5);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: .14em;
+        line-height: 1.5;
+        margin-top: -8px;
+      }
+      .hero-books {
+        width: 47vw;
+        right: 2.5vw;
+        transform-style: preserve-3d;
+      }
+      .hero-books::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: 2% -2% 0;
+        background:
+          radial-gradient(circle at 54% 44%, rgba(207,173,110,.17), transparent 34%),
+          radial-gradient(ellipse at 75% 55%, rgba(104,150,158,.11), transparent 28%),
+          radial-gradient(ellipse at 24% 65%, rgba(184,89,57,.1), transparent 25%);
+        filter: blur(15px);
+      }
+      .hero-books::after {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        width: 72%;
+        height: 28%;
+        left: 14%;
+        bottom: 7%;
+        background: radial-gradient(ellipse, rgba(0,0,0,.56), transparent 68%);
+        filter: blur(16px);
+        transform: rotate(-4deg);
+      }
+      .orbit-one { animation: orbitDrift 28s linear infinite; }
+      .orbit-two { animation: orbitDriftReverse 22s linear infinite; }
+      .float-book {
+        z-index: 2;
+        border-right: 5px solid rgba(238,231,216,.9);
+        border-bottom: 3px solid rgba(205,195,178,.82);
+        border-radius: 2px 5px 6px 2px;
+        box-shadow: 0 34px 72px rgba(0,0,0,.52), 10px 12px 24px rgba(0,0,0,.28);
+        transform-origin: center bottom;
+        will-change: translate, scale, filter;
+        animation: heroBookIn 1.05s cubic-bezier(.18,.78,.2,1) both;
+      }
+      .float-book-one { width: 34%; animation-delay: .2s; }
+      .float-book-two { width: 26%; animation-delay: .36s; }
+      .float-book-three { width: 24%; animation-delay: .48s; }
+      .float-book::after {
+        content: "EXPLORE BOOK  →";
+        z-index: 5;
+        color: #fff;
+        background: rgba(7,17,30,.88);
+        backdrop-filter: blur(7px);
+        border: 1px solid rgba(255,255,255,.22);
+        padding: 10px 12px;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: .16em;
+        opacity: 0;
+        position: absolute;
+        left: 50%;
+        bottom: 13px;
+        translate: -50% 8px;
+        white-space: nowrap;
+        transition: opacity .24s ease, translate .24s ease;
+      }
+      .float-book:hover,
+      .float-book:focus-visible {
+        translate: 0 -10px;
+        scale: 1.035;
+        filter: brightness(1.06) saturate(1.035);
+        box-shadow: 0 46px 92px rgba(0,0,0,.62), 13px 16px 30px rgba(0,0,0,.3);
+      }
+      .float-book:hover::after,
+      .float-book:focus-visible::after { opacity: 1; translate: -50% 0; }
+      .button-light { box-shadow: 0 14px 38px rgba(0,0,0,.18); }
+      .button-light:hover { background: #fff; box-shadow: 0 20px 46px rgba(0,0,0,.26); }
+      @keyframes heroCopyIn {
+        from { opacity: 0; translate: -18px 0; }
+        to { opacity: 1; translate: 0 0; }
+      }
+      @keyframes heroLineIn {
+        from { opacity: 0; translate: 0 17px; }
+        to { opacity: 1; translate: 0 0; }
+      }
+      @keyframes heroFadeIn {
+        from { opacity: 0; translate: 0 10px; }
+        to { opacity: 1; translate: 0 0; }
+      }
+      @keyframes heroBookIn {
+        from { opacity: 0; translate: 0 22px; scale: .965; }
+        to { opacity: 1; translate: 0 0; scale: 1; }
+      }
+      @keyframes orbitDrift { to { rotate: 360deg; } }
+      @keyframes orbitDriftReverse { to { rotate: -360deg; } }
+      @media (width <= 1020px) {
+        .hero-books { width: 78vw; right: -10vw; }
+        .float-book-one { width: 33%; }
+        .float-book-two { width: 25%; }
+        .float-book-three { width: 23%; }
+      }
+      @media (width <= 680px) {
+        .hero { height: 900px; }
+        .hero-actions::after { max-width: 320px; margin-top: 2px; font-size: 8px; }
+        .hero-books { width: 100vw; top: 64%; right: -17vw; }
+        .float-book-one { width: 31%; }
+        .float-book-two { width: 25%; }
+        .float-book-three { width: 24%; }
+        .float-book::after { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-copy, .hero h1, .hero h1 em, .hero-intro, .hero-actions,
+        .float-book, .orbit-one, .orbit-two { animation: none !important; }
+        .float-book:hover, .float-book:focus-visible { translate: 0 -4px; scale: 1.01; }
+      }
+    </style>
   </head>
   <body
     class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
@@ -304,12 +434,12 @@
           </p>
           <h1>Stories you don’t just read. <em>You enter.</em></h1>
           <p class="hero-intro">
-            Visually immersive books for curious young readers, women, families
-            and lifelong explorers.
+            Beautifully visual books created to inspire curiosity, faith and
+            imagination.
           </p>
           <div class="hero-actions">
-            <a class="button button-light" href="#worlds"
-              >Explore the catalogue <span>↘</span></a
+            <a class="button button-light" href="#featured"
+              >Discover the books <span>↘</span></a
             ><a class="text-link" href="#newsletter"
               >Find a book for someone <span>→</span></a
             >
