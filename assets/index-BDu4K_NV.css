@@ -619,10 +619,11 @@ input {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: fill;
 }
 .float-book,
 .display-cover {
+  aspect-ratio: 8.5 / 11;
   padding: 0 !important;
 }
 .float-book:before,
@@ -660,7 +661,7 @@ input {
 }
 .float-book-one {
   width: 30%;
-  height: 67%;
+  height: auto;
   transform: translate(
       calc(var(--mx) * 24px),
       calc(var(--my) * 15px + var(--page-y) * -0.03)
@@ -672,7 +673,7 @@ input {
 }
 .float-book-two {
   width: 23%;
-  height: 52%;
+  height: auto;
   transform: translate(
       calc(var(--mx) * 38px),
       calc(var(--my) * 22px + var(--page-y) * -0.055)
@@ -684,7 +685,7 @@ input {
 }
 .float-book-three {
   width: 21%;
-  height: 48%;
+  height: auto;
   transform: translate(
       calc(var(--mx) * 16px),
       calc(var(--my) * 9px + var(--page-y) * -0.018)
@@ -1127,7 +1128,7 @@ input {
   display: grid;
 }
 .display-cover {
-  aspect-ratio: 0.69;
+  aspect-ratio: 8.5 / 11;
   width: 100%;
   padding: 2.4vw;
   transition: transform 0.45s;
