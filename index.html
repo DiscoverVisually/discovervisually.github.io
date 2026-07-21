@@ -472,11 +472,6 @@
         .float-book { cursor: none; }
       }
 </style>
-      <link rel="stylesheet" href="/assets/category-christian-B7k2.css" />
-    <link rel="stylesheet" href="/assets/category-children-B7k2.css" />
-    <link rel="stylesheet" href="/assets/category-women-B7k2.css" />
-    <link rel="stylesheet" href="/assets/category-educational-B7k2.css" />
-    <link rel="stylesheet" href="/assets/category-motion-C4p8.css" />
   </head>
   <body
     class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
@@ -814,10 +809,24 @@
         }, { once: true });
       })();
     </script>
-      <script id="category-portals-motion">
+  
+    <script id="category-portals-motion">
       (() => {
-        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const bindPortals = () => {
+        const start = () => setTimeout(() => {
+          [
+            "category-christian-B7k2.css",
+            "category-children-B7k2.css",
+            "category-women-B7k2.css",
+            "category-educational-B7k2.css",
+            "category-motion-C4p8.css"
+          ].forEach((file) => {
+            if (document.querySelector(`link[href$="${file}"]`)) return;
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = `/assets/${file}`;
+            document.head.appendChild(link);
+          });
+          const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
           document.querySelectorAll(".portal").forEach((portal) => {
             if (portal.dataset.motionBound) return;
             portal.dataset.motionBound = "true";
@@ -840,9 +849,9 @@
               portal.style.setProperty("--glow-y", "42%");
             });
           });
-        };
-        bindPortals();
-        requestAnimationFrame(bindPortals);
+        }, 1200);
+        if (document.readyState === "complete") start();
+        else window.addEventListener("load", start, { once: true });
       })();
     </script>
   </body>
