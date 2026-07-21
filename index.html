@@ -274,38 +274,19 @@
     <style id="hero-refinement-2026">
       /* Premium hero refinement: clearer conversion, deeper books, restrained motion */
       .hero-copy { animation: heroCopyIn .9s cubic-bezier(.2,.72,.2,1) .08s both; }
-      .hero h1 .hero-lead {
-        display: block;
-        animation: heroLineIn .9s cubic-bezier(.2,.72,.2,1) .12s both;
-      }
-      .hero h1 .handwritten-reveal {
+      .hero h1 { animation: heroLineIn .9s cubic-bezier(.2,.72,.2,1) .12s both; }
+      .hero h1 em {
         position: relative;
-        display: block;
         width: max-content;
         max-width: 100%;
         white-space: nowrap;
-        animation: none;
-      }
-      .handwritten-reveal > span {
-        display: inline-block;
         opacity: 0;
         clip-path: inset(0 0 0 100%);
-        filter: blur(.7px);
-        transform: translateX(5px) rotate(.7deg);
-        animation: handwritingLetter .36s cubic-bezier(.2,.78,.22,1) both;
+        filter: blur(.65px);
+        transform: translateX(6px) rotate(.35deg);
+        animation: handwritingPhrase 1.12s steps(10, end) .88s both;
       }
-      .handwritten-reveal > span:nth-child(10) { animation-delay: .88s; }
-      .handwritten-reveal > span:nth-child(9) { animation-delay: .98s; }
-      .handwritten-reveal > span:nth-child(8) { animation-delay: 1.08s; }
-      .handwritten-reveal > span:nth-child(7) { animation-delay: 1.18s; }
-      .handwritten-reveal > span:nth-child(6) { animation-delay: 1.28s; }
-      .handwritten-reveal > span:nth-child(5) { animation-delay: 1.38s; }
-      .handwritten-reveal > span:nth-child(4) { animation-delay: 1.48s; }
-      .handwritten-reveal > span:nth-child(3) { animation-delay: 1.58s; }
-      .handwritten-reveal > span:nth-child(2) { animation-delay: 1.68s; }
-      .handwritten-reveal > span:nth-child(1) { animation-delay: 1.78s; }
-      .handwritten-reveal .letter-space { width: .22em; }
-      .handwritten-reveal::after {
+      .hero h1 em::after {
         content: "";
         pointer-events: none;
         position: absolute;
@@ -314,13 +295,13 @@
         width: 100%;
         height: 1px;
         opacity: 0;
-        background: linear-gradient(90deg, transparent, rgba(207,173,110,.78) 18%, rgba(207,173,110,.22));
+        background: linear-gradient(90deg, transparent, rgba(207,173,110,.76) 18%, rgba(207,173,110,.2));
         transform: scaleX(0);
         transform-origin: right center;
-        animation: handwritingStroke 1.05s cubic-bezier(.35,.04,.18,1) .86s both;
+        animation: handwritingStroke 1.08s cubic-bezier(.35,.04,.18,1) .86s both;
       }
-      .hero-intro { max-width: 485px; animation: heroFadeIn .75s ease 1.28s both; }
-      .hero-actions { flex-wrap: wrap; animation: heroFadeIn .75s ease 1.48s both; }
+      .hero-intro { max-width: 485px; animation: heroFadeIn .75s ease 1.26s both; }
+      .hero-actions { flex-wrap: wrap; animation: heroFadeIn .75s ease 1.46s both; }
       .hero-actions::after {
         content: "FULL-COLOR INTERIORS · DESIGNED FOR GIFTING · INDEPENDENTLY PUBLISHED";
         flex-basis: 100%;
@@ -416,15 +397,15 @@
         from { opacity: 0; translate: 0 10px; }
         to { opacity: 1; translate: 0 0; }
       }
-      @keyframes handwritingLetter {
-        0% { opacity: 0; clip-path: inset(0 0 0 100%); filter: blur(.7px); transform: translateX(5px) rotate(.7deg); }
-        58% { opacity: 1; }
+      @keyframes handwritingPhrase {
+        0% { opacity: 0; clip-path: inset(0 0 0 100%); filter: blur(.65px); transform: translateX(6px) rotate(.35deg); }
+        8% { opacity: 1; }
         100% { opacity: 1; clip-path: inset(0); filter: blur(0); transform: translateX(0) rotate(0); }
       }
       @keyframes handwritingStroke {
         0% { opacity: 0; transform: scaleX(0); }
-        18% { opacity: .68; }
-        78% { opacity: .38; transform: scaleX(1); }
+        18% { opacity: .65; }
+        78% { opacity: .34; transform: scaleX(1); }
         100% { opacity: 0; transform: scaleX(1); }
       }
       @keyframes heroBookIn {
@@ -449,12 +430,11 @@
         .float-book::after { display: none; }
       }
       @media (prefers-reduced-motion: reduce) {
-        .hero-copy, .hero h1 .hero-lead, .hero h1 .handwritten-reveal,
-        .hero h1 .handwritten-reveal > span, .hero h1 .handwritten-reveal::after,
+        .hero-copy, .hero h1, .hero h1 em, .hero h1 em::after,
         .hero-intro, .hero-actions, .float-book, .orbit-one, .orbit-two {
           animation: none !important;
         }
-        .hero h1 .handwritten-reveal > span {
+        .hero h1 em {
           opacity: 1;
           clip-path: none;
           filter: none;
@@ -524,7 +504,7 @@
           <p class="kicker">
             <span></span> An independent visual publishing house
           </p>
-          <h1><span class="hero-lead">Stories you don’t just read.</span><em class="handwritten-reveal" aria-label="You enter."><span aria-hidden="true">Y</span><span aria-hidden="true">o</span><span aria-hidden="true">u</span><span class="letter-space" aria-hidden="true">&nbsp;</span><span aria-hidden="true">e</span><span aria-hidden="true">n</span><span aria-hidden="true">t</span><span aria-hidden="true">e</span><span aria-hidden="true">r</span><span aria-hidden="true">.</span></em></h1>
+          <h1>Stories you don’t just read. <em>You enter.</em></h1>
           <p class="hero-intro">
             Beautifully visual books created to inspire curiosity, faith and
             imagination.
