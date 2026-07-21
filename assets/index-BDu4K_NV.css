@@ -596,7 +596,7 @@ input {
 .hero-books {
   z-index: 3;
   perspective: 1500px;
-  pointer-events: none;
+  pointer-events: auto;
   width: 44vw;
   height: 66%;
   position: absolute;
@@ -625,6 +625,20 @@ input {
 .display-cover {
   aspect-ratio: 8.5 / 11;
   padding: 0 !important;
+}
+.float-book {
+  cursor: pointer;
+  transition: filter 0.25s ease, box-shadow 0.25s ease;
+}
+.float-book:hover,
+.float-book:focus-visible {
+  filter: brightness(1.08) saturate(1.04);
+  box-shadow: 0 38px 82px #0000008f;
+}
+.float-book:focus-visible,
+.book-card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 7px;
 }
 .float-book:before,
 .display-cover:before,
@@ -1126,6 +1140,14 @@ input {
   gap: 6vw;
   padding: 30px 5vw 35px;
   display: grid;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.book-card:hover {
+  box-shadow: 0 28px 70px #17202b26;
+  transform: translateY(-4px);
 }
 .display-cover {
   aspect-ratio: 8.5 / 11;
@@ -1176,14 +1198,14 @@ input {
   margin-top: 35px;
   display: flex;
 }
-.book-actions a {
+.book-actions span {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   border-bottom: 1px solid #856345;
   padding-bottom: 8px;
   font-size: 10px;
 }
-.book-actions a:last-child {
+.book-actions span:last-child {
   color: #8e482f;
 }
 .manifesto {

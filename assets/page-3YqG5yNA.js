@@ -37,6 +37,7 @@ var r = e(t(), 1),
       image: `/books/pompeii-cover.webp`,
       alt: `Pompeii: The Last Day book cover`,
       number: `01 / 03`,
+      href: `/books/pompeii-the-last-day.html`,
     },
     {
       title: `Women of the Bible for Today`,
@@ -46,6 +47,7 @@ var r = e(t(), 1),
       image: `/books/women-of-the-bible.webp`,
       alt: `Women of the Bible for Today book cover`,
       number: `02 / 03`,
+      href: `/books/women-of-the-bible-for-today.html`,
     },
     {
       title: `The Ultimate Romantasy Yearbook`,
@@ -55,6 +57,7 @@ var r = e(t(), 1),
       image: `/books/romantasy-yearbook.webp`,
       alt: `The Ultimate Romantasy Yearbook book cover`,
       number: `03 / 03`,
+      href: `/books/the-ultimate-romantasy-yearbook.html`,
     },
   ];
 function s() {
@@ -219,27 +222,33 @@ function s() {
             }),
             (0, i.jsxs)(`div`, {
               className: `hero-books`,
-              "aria-hidden": `true`,
+              "aria-label": `Featured books`,
               children: [
-                (0, i.jsx)(`div`, {
+                (0, i.jsx)(`a`, {
                   className: `float-book float-book-one cover-pompeii`,
+                  href: `/books/pompeii-the-last-day.html`,
+                  "aria-label": `Explore Pompeii: The Last Day`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/pompeii-cover.webp`,
-                    alt: ``,
+                    alt: `Pompeii: The Last Day book cover`,
                   }),
                 }),
-                (0, i.jsx)(`div`, {
+                (0, i.jsx)(`a`, {
                   className: `float-book float-book-two cover-women`,
+                  href: `/books/women-of-the-bible-for-today.html`,
+                  "aria-label": `Explore Women of the Bible for Today`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/women-of-the-bible.webp`,
-                    alt: ``,
+                    alt: `Women of the Bible for Today book cover`,
                   }),
                 }),
-                (0, i.jsx)(`div`, {
+                (0, i.jsx)(`a`, {
                   className: `float-book float-book-three cover-romantasy`,
+                  href: `/books/the-ultimate-romantasy-yearbook.html`,
+                  "aria-label": `Explore The Ultimate Romantasy Yearbook`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/romantasy-yearbook.webp`,
-                    alt: ``,
+                    alt: `The Ultimate Romantasy Yearbook book cover`,
                   }),
                 }),
               ],
@@ -437,9 +446,11 @@ function s() {
               className: `book-gallery`,
               children: o.map((e) =>
                 (0, i.jsxs)(
-                  `article`,
+                  `a`,
                   {
                     className: `book-card`,
+                    href: e.href,
+                    "aria-label": `Explore ${e.title}`,
                     children: [
                       (0, i.jsx)(`div`, {
                         className: `display-cover ${e.cover}`,
@@ -462,12 +473,10 @@ function s() {
                           (0, i.jsxs)(`div`, {
                             className: `book-actions`,
                             children: [
-                              (0, i.jsx)(`a`, {
-                                href: `#look-inside`,
-                                children: `Look inside`,
+                              (0, i.jsx)(`span`, {
+                                children: `Book details`,
                               }),
-                              (0, i.jsxs)(`a`, {
-                                href: `#newsletter`,
+                              (0, i.jsxs)(`span`, {
                                 children: [
                                   `Explore book `,
                                   (0, i.jsx)(`b`, { children: `↗` }),
