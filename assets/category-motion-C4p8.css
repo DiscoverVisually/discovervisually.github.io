@@ -1,0 +1,14 @@
+
+.portal{--glow-x:50%;--glow-y:42%}
+.portal:after{content:"";z-index:-1;pointer-events:none;opacity:.28;background:radial-gradient(circle at var(--glow-x) var(--glow-y),#f5ca7a52 0,#d39a4b1f 18%,transparent 48%);mix-blend-mode:screen;position:absolute;inset:0;transition:opacity .55s ease;animation:portal-glow 7s ease-in-out infinite alternate}
+.portal-image{--mx:0px;--my:0px;--zoom:1.025;filter:saturate(.82) brightness(.88);transform:translate3d(var(--mx),var(--my),0) scale(var(--zoom));will-change:transform,filter;inset:-5%;animation:portal-breathe 9s ease-in-out infinite alternate}
+.portal:hover .portal-image{--zoom:1.075;filter:saturate(1.04) brightness(.98)}
+.portal:hover:after{opacity:.52}
+.portal-christian .portal-image{background-position:50% 45%}
+.portal-children .portal-image{background-position:50% 48%}
+.portal-women .portal-image{background-position:50% 45%}
+.portal-educational .portal-image{filter:saturate(.82) brightness(.88);background-position:50% 47%}
+.portal-educational:hover .portal-image{filter:saturate(1.04) brightness(.98)}
+@keyframes portal-breathe{0%{background-position-y:45%}100%{background-position-y:49%}}
+@keyframes portal-glow{0%{filter:brightness(.86)}100%{filter:brightness(1.15)}}
+@media (prefers-reduced-motion:reduce){.portal:after,.portal-image{animation:none!important}.portal-image{transform:none!important}}
