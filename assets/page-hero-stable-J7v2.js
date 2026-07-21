@@ -37,7 +37,6 @@ var r = e(t(), 1),
       image: `/books/pompeii-cover.webp`,
       alt: `Pompeii: The Last Day book cover`,
       number: `01 / 03`,
-      href: `/books/pompeii-the-last-day.html`,
     },
     {
       title: `Women of the Bible for Today`,
@@ -47,7 +46,6 @@ var r = e(t(), 1),
       image: `/books/women-of-the-bible.webp`,
       alt: `Women of the Bible for Today book cover`,
       number: `02 / 03`,
-      href: `/books/women-of-the-bible-for-today.html`,
     },
     {
       title: `The Ultimate Romantasy Yearbook`,
@@ -57,7 +55,6 @@ var r = e(t(), 1),
       image: `/books/romantasy-yearbook.webp`,
       alt: `The Ultimate Romantasy Yearbook book cover`,
       number: `03 / 03`,
-      href: `/books/the-ultimate-romantasy-yearbook.html`,
     },
   ];
 function s() {
@@ -195,16 +192,16 @@ function s() {
                 }),
                 (0, i.jsx)(`p`, {
                   className: `hero-intro`,
-                  children: `Beautifully visual books created to inspire curiosity, faith and imagination.`,
+                  children: `Visually immersive books for curious young readers, women, families and lifelong explorers.`,
                 }),
                 (0, i.jsxs)(`div`, {
                   className: `hero-actions`,
                   children: [
                     (0, i.jsxs)(`a`, {
                       className: `button button-light`,
-                      href: `#featured`,
+                      href: `#worlds`,
                       children: [
-                        `Discover the books `,
+                        `Explore the catalogue `,
                         (0, i.jsx)(`span`, { children: `↘` }),
                       ],
                     }),
@@ -222,33 +219,27 @@ function s() {
             }),
             (0, i.jsxs)(`div`, {
               className: `hero-books`,
-              "aria-label": `Featured books`,
+              "aria-hidden": `true`,
               children: [
-                (0, i.jsx)(`a`, {
+                (0, i.jsx)(`div`, {
                   className: `float-book float-book-one cover-pompeii`,
-                  href: `/books/pompeii-the-last-day.html`,
-                  "aria-label": `Explore Pompeii: The Last Day`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/pompeii-cover.webp`,
-                    alt: `Pompeii: The Last Day book cover`,
+                    alt: ``,
                   }),
                 }),
-                (0, i.jsx)(`a`, {
+                (0, i.jsx)(`div`, {
                   className: `float-book float-book-two cover-women`,
-                  href: `/books/women-of-the-bible-for-today.html`,
-                  "aria-label": `Explore Women of the Bible for Today`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/women-of-the-bible.webp`,
-                    alt: `Women of the Bible for Today book cover`,
+                    alt: ``,
                   }),
                 }),
-                (0, i.jsx)(`a`, {
+                (0, i.jsx)(`div`, {
                   className: `float-book float-book-three cover-romantasy`,
-                  href: `/books/the-ultimate-romantasy-yearbook.html`,
-                  "aria-label": `Explore The Ultimate Romantasy Yearbook`,
                   children: (0, i.jsx)(`img`, {
                     src: `/books/romantasy-yearbook.webp`,
-                    alt: `The Ultimate Romantasy Yearbook book cover`,
+                    alt: ``,
                   }),
                 }),
               ],
@@ -348,27 +339,71 @@ function s() {
                   (0, i.jsx)(`div`, { className: `book-shadow` }),
                   (0, i.jsxs)(`div`, {
                     className: `book-page page-left`,
-                    children: [
-                      (0, i.jsx)(`span`, {
-                        className: `page-label`,
-                        children: `Discover`,
-                      }),
-                      (0, i.jsx)(`div`, { className: `page-sun` }),
-                      (0, i.jsx)(`div`, { className: `page-city` }),
-                    ],
+                    children: (0, i.jsxs)(`div`, {
+                      className: `inside-page inside-page-left`,
+                      children: [
+                        (0, i.jsx)(`span`, {
+                          className: `inside-eyebrow`,
+                          children: `Our point of view`,
+                        }),
+                        (0, i.jsxs)(`h4`, {
+                          children: [
+                            `We make the books`,
+                            (0, i.jsx)(`br`, {}),
+                            `we couldn’t find.`,
+                          ],
+                        }),
+                        (0, i.jsx)(`p`, {
+                          children: `Discover Visually is an independent publishing studio creating immersive, full-color books where story, research and illustration are designed together.`,
+                        }),
+                        (0, i.jsxs)(`em`, {
+                          children: [
+                            `Made to be explored.`,
+                            (0, i.jsx)(`br`, {}),
+                            `Made to be kept.`,
+                          ],
+                        }),
+                      ],
+                    }),
                   }),
                   (0, i.jsxs)(`div`, {
                     className: `book-page page-right`,
-                    children: [
-                      (0, i.jsx)(`span`, {
-                        className: `page-label`,
-                        children: `Visually`,
-                      }),
-                      (0, i.jsx)(`div`, { className: `page-map` }),
-                      (0, i.jsx)(`p`, {
-                        children: `Every spread is designed as a place to pause, notice and wonder.`,
-                      }),
-                    ],
+                    children: (0, i.jsxs)(`div`, {
+                      className: `inside-page inside-page-right`,
+                      children: [
+                        (0, i.jsxs)(`ol`, {
+                          className: `inside-pillars`,
+                          children: [
+                            [`01`, `Visual from the first idea`, `Every book begins with how the story could be seen.`],
+                            [`02`, `Made with heart`, `We create the books we genuinely care about—following the ideas that excite us.`],
+                            [`03`, `Independent by design`, `We follow curiosity and give every book its own visual world.`],
+                          ].map((e) =>
+                            (0, i.jsxs)(`li`, {
+                              children: [
+                                (0, i.jsx)(`span`, { children: e[0] }),
+                                (0, i.jsxs)(`div`, {
+                                  children: [
+                                    (0, i.jsx)(`strong`, { children: e[1] }),
+                                    (0, i.jsx)(`p`, { children: e[2] }),
+                                  ],
+                                }),
+                              ],
+                            }, e[0]),
+                          ),
+                        }),
+                        (0, i.jsx)(`div`, {
+                          className: `inside-proof`,
+                          children: `Full-color · Thoughtfully researched · Independently published`,
+                        }),
+                        (0, i.jsxs)(`a`, {
+                          href: `#featured`,
+                          children: [
+                            `Explore our books `,
+                            (0, i.jsx)(`b`, { children: `→` }),
+                          ],
+                        }),
+                      ],
+                    }),
                   }),
                   (0, i.jsxs)(`div`, {
                     className: `book-cover`,
@@ -446,11 +481,9 @@ function s() {
               className: `book-gallery`,
               children: o.map((e) =>
                 (0, i.jsxs)(
-                  `a`,
+                  `article`,
                   {
                     className: `book-card`,
-                    href: e.href,
-                    "aria-label": `Explore ${e.title}`,
                     children: [
                       (0, i.jsx)(`div`, {
                         className: `display-cover ${e.cover}`,
@@ -473,10 +506,12 @@ function s() {
                           (0, i.jsxs)(`div`, {
                             className: `book-actions`,
                             children: [
-                              (0, i.jsx)(`span`, {
-                                children: `Book details`,
+                              (0, i.jsx)(`a`, {
+                                href: `#look-inside`,
+                                children: `Look inside`,
                               }),
-                              (0, i.jsxs)(`span`, {
+                              (0, i.jsxs)(`a`, {
+                                href: `#newsletter`,
                                 children: [
                                   `Explore book `,
                                   (0, i.jsx)(`b`, { children: `↗` }),
