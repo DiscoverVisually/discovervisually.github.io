@@ -195,16 +195,16 @@ function s() {
                 }),
                 (0, i.jsx)(`p`, {
                   className: `hero-intro`,
-                  children: `Visually immersive books for curious young readers, women, families and lifelong explorers.`,
+                  children: `Beautifully visual books created to inspire curiosity, faith and imagination.`,
                 }),
                 (0, i.jsxs)(`div`, {
                   className: `hero-actions`,
                   children: [
                     (0, i.jsxs)(`a`, {
                       className: `button button-light`,
-                      href: `#worlds`,
+                      href: `#featured`,
                       children: [
-                        `Explore the catalogue `,
+                        `Discover the books `,
                         (0, i.jsx)(`span`, { children: `↘` }),
                       ],
                     }),
