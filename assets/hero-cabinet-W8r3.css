@@ -1,0 +1,119 @@
+/* Discover Visually — Cabinet of Worlds production hero */
+.hero {
+  background: #030912;
+}
+
+.hero-art-back {
+  inset: -6%;
+  opacity: .9;
+  background-image:
+    url("/assets/cabinet-of-worlds-hero.webp"),
+    radial-gradient(circle at 68% 42%, #3b4650, #06101b 68%);
+  background-position: 50% 50%;
+  background-size: cover;
+  filter: saturate(.9) contrast(1.045) brightness(.86);
+  will-change: transform;
+}
+
+.hero-art-back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 74% 48%, rgba(214, 171, 99, .13), transparent 25%),
+    linear-gradient(90deg, rgba(2, 7, 14, .36), transparent 50%, rgba(2, 7, 14, .08));
+  mix-blend-mode: screen;
+  opacity: .7;
+}
+
+.hero::after {
+  background:
+    linear-gradient(90deg, rgba(2, 7, 14, .96) 0%, rgba(2, 7, 14, .82) 30%, rgba(2, 7, 14, .24) 55%, rgba(2, 7, 14, .24) 100%),
+    linear-gradient(180deg, rgba(2, 7, 14, .38) 0%, transparent 35%, rgba(2, 7, 14, .68) 100%);
+}
+
+.hero-art-front {
+  z-index: -2;
+  width: 64%;
+  height: 58%;
+  inset: auto -7% -17% auto;
+  filter: blur(7px);
+  background:
+    radial-gradient(ellipse at 58% 78%, rgba(207, 173, 110, .13), transparent 39%),
+    radial-gradient(ellipse at bottom, rgba(1, 5, 10, .95), transparent 68%);
+  animation: cabinetLightBreath 10s ease-in-out infinite alternate;
+}
+
+.hero-books::before {
+  inset: -4% -4% -2%;
+  background:
+    radial-gradient(circle at 54% 43%, rgba(228, 195, 132, .22), transparent 33%),
+    radial-gradient(ellipse at 76% 56%, rgba(115, 159, 162, .14), transparent 30%),
+    radial-gradient(ellipse at 23% 65%, rgba(190, 95, 57, .13), transparent 28%);
+  filter: blur(19px);
+}
+
+.hero .float-book {
+  filter: saturate(1.06) contrast(1.025);
+  box-shadow:
+    0 36px 76px rgba(0, 0, 0, .58),
+    11px 13px 25px rgba(0, 0, 0, .34),
+    0 0 0 1px rgba(255, 244, 218, .14);
+}
+
+.hero .float-book:hover,
+.hero .float-book:focus-visible {
+  filter: brightness(1.08) saturate(1.09) contrast(1.025);
+  box-shadow:
+    0 48px 96px rgba(0, 0, 0, .66),
+    14px 17px 32px rgba(0, 0, 0, .36),
+    0 0 0 1px rgba(239, 207, 144, .34);
+}
+
+@keyframes cabinetLightBreath {
+  from { opacity: .74; transform: translate3d(-1%, 0, 0) scale(1); }
+  to { opacity: 1; transform: translate3d(1%, -1%, 0) scale(1.035); }
+}
+
+@media (width <= 760px) {
+  .hero {
+    background: #030912 !important;
+  }
+
+  .hero-art-back {
+    inset: -3%;
+    opacity: .82;
+    background-position: 78% 50%;
+    filter: saturate(.84) contrast(1.04) brightness(.76);
+    transform: translate3d(0, calc(var(--page-y, 0) * .022), 0) scale(1.035);
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(180deg, rgba(2, 7, 14, .94) 0%, rgba(2, 7, 14, .62) 34%, rgba(2, 7, 14, .18) 57%, rgba(2, 7, 14, .82) 100%),
+      linear-gradient(90deg, rgba(2, 7, 14, .58), transparent 72%);
+  }
+
+  .hero-art-front {
+    width: 112%;
+    height: 48%;
+    inset: auto -6% 4%;
+    opacity: .82;
+  }
+
+  .hero-books::before {
+    inset: -15% -2% -9%;
+    filter: blur(17px);
+  }
+
+  .hero .float-book {
+    filter: saturate(1.08) contrast(1.035);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art-front {
+    animation: none !important;
+  }
+}
