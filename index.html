@@ -808,10 +808,6 @@
         <span>© 2026 Discover Visually</span>
       </footer>
     </main>
-    <script id="_R_">
-      import("/assets/index-hero-stable-Q9m4.js");
-    </script>
-  
     <script id="hero-behavior-2026">
       (() => {
         const title = "Discover Visually — Books Made to Be Explored";
@@ -834,11 +830,50 @@
             cursor.classList.toggle("is-visible", Boolean(event.target.closest(".float-book")));
           }, { passive: true });
         };
+        const initPage = () => {
+          if (document.documentElement.dataset.dvFoundationReady) return;
+          document.documentElement.dataset.dvFoundationReady = "true";
+          const menuButton = document.querySelector(".menu-button");
+          const menu = document.querySelector("#primary-nav");
+          if (menuButton && menu && !menuButton.dataset.bound) {
+            menuButton.dataset.bound = "true";
+            const setMenu = (open) => {
+              menu.classList.toggle("nav-open", open);
+              menuButton.setAttribute("aria-expanded", String(open));
+              document.body.classList.toggle("mobile-menu-open", open);
+            };
+            menuButton.addEventListener("click", () => setMenu(!menu.classList.contains("nav-open")));
+            menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+            document.addEventListener("keydown", (event) => {
+              if (event.key === "Escape") setMenu(false);
+            });
+          }
+
+          const story = document.querySelector(".book-story");
+          let frame = 0;
+          const updateScrollEffects = () => {
+            frame = 0;
+            document.documentElement.style.setProperty("--page-y", `${window.scrollY}px`);
+            if (!story) return;
+            const rect = story.getBoundingClientRect();
+            const range = Math.max(1, story.offsetHeight - window.innerHeight);
+            const progress = Math.min(1, Math.max(0, -rect.top / range));
+            story.style.setProperty("--open", progress.toFixed(3));
+          };
+          const requestScrollUpdate = () => {
+            if (!frame) frame = requestAnimationFrame(updateScrollEffects);
+          };
+          updateScrollEffects();
+          addEventListener("scroll", requestScrollUpdate, { passive: true });
+          addEventListener("resize", requestScrollUpdate, { passive: true });
+        };
         applyMetadata();
+        initPage();
         addEventListener("load", () => {
           setTimeout(applyMetadata, 0);
           setTimeout(applyMetadata, 1200);
           setTimeout(initCursor, 800);
+          setTimeout(initPage, 0);
         }, { once: true });
       })();
     </script>
