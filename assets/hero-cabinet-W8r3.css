@@ -5,13 +5,13 @@
 
 .hero-art-back {
   inset: -6%;
-  opacity: .9;
+  opacity: 1;
   background-image:
     url("/assets/cabinet-of-worlds-hero.webp"),
     radial-gradient(circle at 68% 42%, #3b4650, #06101b 68%);
   background-position: 50% 50%;
   background-size: cover;
-  filter: saturate(.9) contrast(1.045) brightness(.86);
+  filter: saturate(1.06) contrast(1.025) brightness(1.22);
   will-change: transform;
 }
 
@@ -21,16 +21,16 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 74% 48%, rgba(214, 171, 99, .13), transparent 25%),
-    linear-gradient(90deg, rgba(2, 7, 14, .36), transparent 50%, rgba(2, 7, 14, .08));
+    radial-gradient(circle at 74% 48%, rgba(241, 202, 132, .28), transparent 29%),
+    linear-gradient(90deg, rgba(2, 7, 14, .16), transparent 44%, rgba(239, 195, 121, .06));
   mix-blend-mode: screen;
-  opacity: .7;
+  opacity: .9;
 }
 
 .hero::after {
   background:
-    linear-gradient(90deg, rgba(2, 7, 14, .96) 0%, rgba(2, 7, 14, .82) 30%, rgba(2, 7, 14, .24) 55%, rgba(2, 7, 14, .24) 100%),
-    linear-gradient(180deg, rgba(2, 7, 14, .38) 0%, transparent 35%, rgba(2, 7, 14, .68) 100%);
+    linear-gradient(90deg, rgba(2, 7, 14, .88) 0%, rgba(2, 7, 14, .67) 30%, rgba(2, 7, 14, .08) 55%, rgba(2, 7, 14, .04) 100%),
+    linear-gradient(180deg, rgba(2, 7, 14, .2) 0%, transparent 37%, rgba(2, 7, 14, .48) 100%);
 }
 
 .hero-art-front {
@@ -55,20 +55,46 @@
 }
 
 .hero .float-book {
-  filter: saturate(1.06) contrast(1.025);
+  box-sizing: content-box;
+  padding: 0 10px 7px 0 !important;
+  border: 0;
+  border-left: 3px solid rgba(19, 25, 31, .94);
+  border-radius: 3px 7px 8px 3px;
+  background:
+    repeating-linear-gradient(0deg, #eee7d9 0 1px, #c8bcaa 1px 2px) left bottom / calc(100% - 10px) 7px no-repeat,
+    repeating-linear-gradient(90deg, #f1eadc 0 1px, #c9beac 1px 2px) right top / 10px calc(100% - 7px) no-repeat,
+    #d8cfbf;
+  filter: saturate(1.12) contrast(1.045) brightness(1.04);
   box-shadow:
-    0 36px 76px rgba(0, 0, 0, .58),
-    11px 13px 25px rgba(0, 0, 0, .34),
-    0 0 0 1px rgba(255, 244, 218, .14);
+    0 42px 82px rgba(0, 0, 0, .62),
+    15px 18px 28px rgba(0, 0, 0, .4),
+    5px 6px 0 rgba(68, 57, 44, .58),
+    0 0 0 1px rgba(255, 244, 218, .32);
+  transform-style: preserve-3d;
+}
+
+.hero .float-book img {
+  z-index: 1;
+  position: relative;
+  border-radius: 1px 3px 3px 1px;
+  box-shadow: inset -8px 0 13px rgba(255, 255, 255, .12);
+}
+
+.hero .float-book::before {
+  z-index: 2;
+  right: 10px;
+  bottom: 7px;
+  border-radius: 1px 3px 3px 1px;
 }
 
 .hero .float-book:hover,
 .hero .float-book:focus-visible {
-  filter: brightness(1.08) saturate(1.09) contrast(1.025);
+  filter: brightness(1.1) saturate(1.14) contrast(1.045);
   box-shadow:
-    0 48px 96px rgba(0, 0, 0, .66),
-    14px 17px 32px rgba(0, 0, 0, .36),
-    0 0 0 1px rgba(239, 207, 144, .34);
+    0 54px 104px rgba(0, 0, 0, .68),
+    18px 20px 36px rgba(0, 0, 0, .42),
+    6px 7px 0 rgba(73, 60, 44, .62),
+    0 0 0 1px rgba(239, 207, 144, .52);
 }
 
 @keyframes cabinetLightBreath {
@@ -83,16 +109,16 @@
 
   .hero-art-back {
     inset: -3%;
-    opacity: .82;
+    opacity: .94;
     background-position: 78% 50%;
-    filter: saturate(.84) contrast(1.04) brightness(.76);
+    filter: saturate(1.02) contrast(1.02) brightness(1.04);
     transform: translate3d(0, calc(var(--page-y, 0) * .022), 0) scale(1.035);
   }
 
   .hero::after {
     background:
-      linear-gradient(180deg, rgba(2, 7, 14, .94) 0%, rgba(2, 7, 14, .62) 34%, rgba(2, 7, 14, .18) 57%, rgba(2, 7, 14, .82) 100%),
-      linear-gradient(90deg, rgba(2, 7, 14, .58), transparent 72%);
+      linear-gradient(180deg, rgba(2, 7, 14, .88) 0%, rgba(2, 7, 14, .49) 34%, rgba(2, 7, 14, .08) 57%, rgba(2, 7, 14, .68) 100%),
+      linear-gradient(90deg, rgba(2, 7, 14, .42), transparent 72%);
   }
 
   .hero-art-front {
@@ -108,7 +134,18 @@
   }
 
   .hero .float-book {
-    filter: saturate(1.08) contrast(1.035);
+    padding: 0 7px 5px 0 !important;
+    border-left-width: 2px;
+    filter: saturate(1.1) contrast(1.04) brightness(1.035);
+    background:
+      repeating-linear-gradient(0deg, #eee7d9 0 1px, #c8bcaa 1px 2px) left bottom / calc(100% - 7px) 5px no-repeat,
+      repeating-linear-gradient(90deg, #f1eadc 0 1px, #c9beac 1px 2px) right top / 7px calc(100% - 5px) no-repeat,
+      #d8cfbf;
+  }
+
+  .hero .float-book::before {
+    right: 7px;
+    bottom: 5px;
   }
 }
 
