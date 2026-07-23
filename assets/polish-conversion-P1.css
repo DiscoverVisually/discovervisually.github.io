@@ -1,0 +1,339 @@
+/* Discover Visually — final polish and conversion layer */
+.trust-strip {
+  color: #243544;
+  background: #f7f0e4;
+  border-block: 1px solid rgba(105, 79, 50, .14);
+  min-height: 68px;
+  padding: 17px clamp(22px, 6vw, 92px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  position: relative;
+  z-index: 7;
+}
+
+.trust-strip span {
+  min-height: 34px;
+  padding: 0 24px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font: 600 10px/1.35 var(--sans);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.trust-strip span + span {
+  border-left: 1px solid rgba(105, 79, 50, .18);
+}
+
+.book-story {
+  height: 168vh;
+  min-height: 1040px;
+}
+
+.chapter-nav {
+  right: 8px;
+  gap: 7px;
+}
+
+.chapter-nav button,
+.chapter-nav button.is-active {
+  width: 9px;
+  height: 31px;
+  min-width: 9px;
+  color: transparent;
+  background: rgba(7, 17, 30, .42);
+  border-color: rgba(255, 255, 255, .2);
+  border-radius: 99px 0 0 99px;
+  overflow: visible;
+  box-shadow: none;
+  position: relative;
+}
+
+.chapter-nav button span {
+  width: 8px;
+  opacity: 0;
+}
+
+.chapter-nav button b {
+  color: #172b3a;
+  background: #f7f0e4;
+  border: 1px solid rgba(207, 169, 107, .62);
+  border-radius: 999px;
+  padding: 0 13px;
+  display: block;
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  opacity: 0;
+  pointer-events: none;
+  line-height: 30px;
+  transform: translate(8px, -50%);
+  transition: opacity .18s ease, transform .22s ease;
+  box-shadow: 0 10px 28px rgba(7, 17, 30, .15);
+}
+
+.chapter-nav button:hover {
+  width: 9px;
+  background: var(--dv-gold);
+}
+
+.chapter-nav button:hover b,
+.chapter-nav button:focus-visible b {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.chapter-nav button.is-active {
+  background: var(--dv-gold);
+  border-color: #fff6df;
+}
+
+.book-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(16px, 2.1vw, 34px);
+  margin: 0;
+  padding: 18px 0 34px;
+  overflow: visible;
+}
+
+.book-card-shell {
+  width: auto;
+  min-width: 0;
+  flex: none;
+}
+
+.book-card-shell .book-card {
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: 0;
+  min-height: 100%;
+  padding: clamp(20px, 2.2vw, 32px);
+}
+
+.book-card-shell .display-cover {
+  width: min(78%, 250px);
+  margin: 0 auto clamp(26px, 3vw, 42px);
+  padding: 0;
+  display: block;
+}
+
+.book-card-shell .display-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+.book-card-shell .book-eyebrow {
+  margin: 18px 0 12px !important;
+}
+
+.book-card-shell .book-meta h3 {
+  min-height: 2.1em;
+  font-size: clamp(28px, 2.45vw, 42px);
+  line-height: 1.01;
+}
+
+.book-card-shell .book-meta > p {
+  min-height: 4.9em;
+  margin-top: 17px;
+}
+
+.book-facts {
+  color: #596872;
+  border-top: 1px solid rgba(62, 73, 80, .16);
+  margin: 22px 0 0;
+  padding: 14px 0 0;
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.book-facts li {
+  padding-left: 15px;
+  position: relative;
+}
+
+.book-facts li::before {
+  content: "";
+  background: #a76543;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  position: absolute;
+  top: .5em;
+  left: 0;
+}
+
+.book-actions {
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.book-actions a {
+  color: #5c4532;
+  border-bottom: 1px solid #856345;
+  padding-bottom: 7px;
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.book-actions a:last-child {
+  color: #8e482f;
+}
+
+.book-actions .amazon-cta {
+  color: #fff;
+  background: #91472f;
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 14px;
+  box-shadow: 0 9px 22px rgba(119, 57, 37, .18);
+}
+
+.preview-trigger {
+  right: 18px;
+  top: 17px;
+  bottom: auto;
+}
+
+.gallery-controls {
+  display: none;
+}
+
+.studio-statement {
+  color: #5f6d73 !important;
+  border-left: 2px solid #b6784f;
+  max-width: 550px;
+  margin-top: 27px !important;
+  padding: 3px 0 3px 21px;
+  font: italic 17px/1.55 var(--serif) !important;
+}
+
+@media (width <= 1040px) {
+  .book-card-shell .book-meta h3 {
+    font-size: 29px;
+  }
+
+  .book-card-shell .book-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .preview-trigger {
+    right: 13px;
+    top: 12px;
+    bottom: auto;
+  }
+}
+
+@media (width <= 760px) {
+  .trust-strip {
+    grid-template-columns: 1fr 1fr;
+    padding: 12px 18px;
+  }
+
+  .trust-strip span {
+    min-height: 45px;
+    padding: 7px 12px;
+    font-size: 8px;
+  }
+
+  .trust-strip span:nth-child(3) {
+    border-left: 0;
+  }
+
+  .trust-strip span:nth-child(n + 3) {
+    border-top: 1px solid rgba(105, 79, 50, .18);
+  }
+
+  .book-story {
+    height: 145vh;
+    min-height: 920px;
+  }
+
+  .book-gallery {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    grid-template-columns: none;
+    gap: 18px;
+    margin-inline: -22px;
+    padding: 14px 22px 26px;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .book-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .book-card-shell {
+    flex: 0 0 min(86vw, 420px);
+    scroll-snap-align: center;
+  }
+
+  .book-card-shell .book-card {
+    padding: 24px;
+  }
+
+  .book-card-shell .display-cover {
+    width: 62%;
+  }
+
+  .book-card-shell .book-meta h3,
+  .book-card-shell .book-meta > p {
+    min-height: 0;
+  }
+
+  .book-card-shell .book-actions {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .gallery-controls {
+    color: #5c4938;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    margin-top: 2px;
+    display: flex;
+    font-size: 9px;
+    letter-spacing: .14em;
+  }
+
+  .gallery-controls button {
+    color: #203443;
+    background: transparent;
+    border: 1px solid rgba(32, 52, 67, .28);
+    border-radius: 50%;
+    width: 39px;
+    height: 39px;
+    cursor: pointer;
+  }
+
+  .gallery-controls b {
+    color: #9a5438;
+  }
+
+  .studio-statement {
+    font-size: 16px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-nav button b,
+  .book-gallery {
+    scroll-behavior: auto !important;
+  }
+}

@@ -47,12 +47,8 @@
     back.className = "hero-cover-back";
     lid.append(back, cover);
 
-    const prompt = document.createElement("span");
-    prompt.className = "hero-book-prompt";
-    prompt.textContent = coarsePointer.matches ? "Tap again to explore" : "Click to explore";
-
     book.prepend(spread);
-    book.append(lid, prompt);
+    book.append(lid);
 
     book.addEventListener("click", (event) => {
       if (!coarsePointer.matches) return;
