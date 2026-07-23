@@ -193,7 +193,7 @@
   color: #8e482f;
 }
 
-.book-actions .amazon-cta {
+.book-actions a.amazon-cta:last-child {
   color: #fff;
   background: #91472f;
   border: 0;
