@@ -47,12 +47,8 @@
     back.className = "hero-cover-back";
     lid.append(back, cover);
 
-    const prompt = document.createElement("span");
-    prompt.className = "hero-book-prompt";
-    prompt.textContent = coarsePointer.matches ? "Tap again to explore" : "Click to explore";
-
     book.prepend(spread);
-    book.append(lid, prompt);
+    book.append(lid);
 
     book.addEventListener("click", (event) => {
       if (!coarsePointer.matches) return;
@@ -97,4 +93,22 @@
   } else {
     setTimeout(warmSpreads, 1400);
   }
+
+  const loadPolishLayer = () => {
+    if (!document.querySelector('link[data-dv-polish]')) {
+      const style = document.createElement("link");
+      style.rel = "stylesheet";
+      style.href = "/assets/polish-conversion-P1.css?v=20260723";
+      style.dataset.dvPolish = "true";
+      document.head.appendChild(style);
+    }
+    if (!document.querySelector('script[data-dv-polish]')) {
+      const script = document.createElement("script");
+      script.src = "/assets/polish-conversion-P1.js?v=20260723";
+      script.defer = true;
+      script.dataset.dvPolish = "true";
+      document.body.appendChild(script);
+    }
+  };
+  loadPolishLayer();
 })();
