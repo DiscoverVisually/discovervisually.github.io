@@ -1,0 +1,424 @@
+/* Discover Visually — polish and conversion layer */
+:root {
+  --pc-ink: #102334;
+  --pc-night: #07111e;
+  --pc-paper: #f5efe4;
+  --pc-gold: #cfa96b;
+  --pc-rust: #98533b;
+}
+
+/* Shorter, purposeful scroll chapter. */
+.book-story {
+  height: 176vh !important;
+}
+
+.book-sticky {
+  min-height: 100svh;
+}
+
+/* The supplied artwork is the only visible layer when a hero book opens. */
+.hero-book-prompt {
+  display: none !important;
+}
+
+.hero-book-spread {
+  z-index: 7 !important;
+  width: 218% !important;
+  left: -109% !important;
+}
+
+.hero .float-book.dv-openable.is-open .hero-cover-lid,
+.hero .float-book.dv-openable:focus-visible .hero-cover-lid {
+  z-index: 1 !important;
+  opacity: 0;
+  transform: rotateY(-176deg) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero .float-book.dv-openable:hover .hero-cover-lid {
+    z-index: 1 !important;
+    opacity: 0;
+    transform: rotateY(-176deg) !important;
+  }
+
+  .hero-books:has(.dv-openable:hover) .dv-openable:not(:hover) {
+    opacity: .46 !important;
+    filter: brightness(.72) saturate(.72);
+  }
+}
+
+/* Keep the OPEN cursor, but remove fixed-position overlays from the artwork. */
+.book-cursor {
+  width: 62px;
+  height: 62px;
+  background: rgba(7,17,30,.9);
+  border-color: rgba(207,173,110,.82);
+  box-shadow: 0 13px 36px rgba(0,0,0,.32);
+}
+
+/* Quiet trust signal between the first impression and catalogue. */
+.trust-strip {
+  position: relative;
+  z-index: 12;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  color: #344554;
+  background: #fbf7ef;
+  border-bottom: 1px solid rgba(16,35,52,.12);
+  box-shadow: 0 12px 32px rgba(39,30,20,.04);
+}
+
+.trust-strip span {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 24px;
+  border-right: 1px solid rgba(16,35,52,.1);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .13em;
+  line-height: 1.45;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.trust-strip span:last-child {
+  border-right: 0;
+}
+
+.trust-strip i {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--pc-gold);
+  box-shadow: 0 0 0 4px rgba(207,169,107,.13);
+}
+
+/* Chapter rail stays at the edge and reveals labels only on intent. */
+.chapter-nav {
+  right: 8px !important;
+  gap: 6px !important;
+}
+
+.chapter-nav button,
+.chapter-nav button.is-active {
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 32px !important;
+  color: rgba(255,255,255,.64);
+}
+
+.chapter-nav button b,
+.chapter-nav button.is-active b {
+  opacity: 0 !important;
+}
+
+.chapter-nav button.is-active {
+  color: var(--pc-night);
+  background: var(--pc-gold);
+  border-color: rgba(255,255,255,.55);
+}
+
+.chapter-nav button:hover,
+.chapter-nav button:focus-visible {
+  width: 116px !important;
+  color: var(--pc-night);
+  background: var(--pc-paper);
+  outline: 2px solid rgba(207,169,107,.38);
+  outline-offset: 2px;
+}
+
+.chapter-nav button:hover b,
+.chapter-nav button:focus-visible b {
+  opacity: 1 !important;
+}
+
+/* Three intentional desktop cards instead of accidental horizontal overflow. */
+@media (width > 980px) {
+  .featured {
+    overflow: hidden;
+  }
+
+  .book-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 2.2vw, 34px) !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 12px 0 22px !important;
+    scroll-snap-type: none !important;
+  }
+
+  .book-card-shell {
+    min-width: 0;
+    height: 100%;
+    flex: none !important;
+  }
+
+  .book-card-shell .book-card {
+    height: 100%;
+    min-height: 690px !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 0 !important;
+    padding: clamp(22px, 2.3vw, 34px) !important;
+  }
+
+  .book-card .display-cover {
+    width: min(72%, 245px) !important;
+    margin: 0 auto 30px;
+    padding: 0 !important;
+  }
+
+  .book-card .book-meta {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .book-card .book-eyebrow {
+    margin-top: 17px !important;
+  }
+
+  .book-card .book-meta h3 {
+    font-size: clamp(29px, 2.45vw, 42px) !important;
+  }
+
+  .book-card .book-meta > p:not(.book-eyebrow) {
+    margin-top: 15px;
+  }
+}
+
+.book-card {
+  position: relative;
+}
+
+.book-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.book-facts li {
+  color: #52616d;
+  background: rgba(255,255,255,.48);
+  border: 1px solid rgba(16,35,52,.12);
+  border-radius: 999px;
+  padding: 7px 9px;
+  font-size: 8px;
+  font-weight: 720;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.availability-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: #64707a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.availability-line::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9a7551;
+}
+
+.availability-line.is-live::before {
+  background: #5a8a65;
+  box-shadow: 0 0 0 4px rgba(90,138,101,.12);
+}
+
+.book-card .book-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px !important;
+  margin-top: auto !important;
+  padding-top: 26px;
+}
+
+.book-card .book-actions a {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px !important;
+  border: 1px solid rgba(16,35,52,.28) !important;
+  color: var(--pc-ink) !important;
+  font-size: 8px !important;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.book-card .book-actions a.primary-action {
+  color: white !important;
+  background: var(--pc-ink);
+  border-color: var(--pc-ink) !important;
+  box-shadow: 0 10px 24px rgba(16,35,52,.17);
+}
+
+.book-card .book-actions a.primary-action:hover,
+.book-card .book-actions a.primary-action:focus-visible {
+  color: var(--pc-ink) !important;
+  background: var(--pc-gold);
+  border-color: var(--pc-gold) !important;
+  transform: translateY(-2px);
+}
+
+.gallery-nav {
+  display: none;
+}
+
+/* A human, specific studio note without adding another heavy section. */
+.studio-note {
+  max-width: 520px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  margin: 28px 0 34px;
+  padding: 18px 20px;
+  color: #4f5e69;
+  background: rgba(255,255,255,.42);
+  border-left: 2px solid var(--pc-gold);
+}
+
+.studio-note-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: var(--pc-paper);
+  background: var(--pc-ink);
+  border-radius: 50%;
+  font: italic 15px/1 var(--serif);
+}
+
+.studio-note p {
+  margin: 0 !important;
+  color: inherit !important;
+  font: italic 16px/1.55 var(--serif) !important;
+}
+
+.studio-note small {
+  display: block;
+  margin-top: 6px;
+  color: #8a633f;
+  font: 700 8px/1.4 var(--font-geist-sans, sans-serif);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+@media (width <= 980px) {
+  .book-story {
+    height: 158vh !important;
+  }
+
+  .book-gallery {
+    scrollbar-width: none !important;
+  }
+
+  .book-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -30px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(16,35,52,.15);
+  }
+
+  .gallery-nav p {
+    margin: 0;
+    color: #766a5d;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  .gallery-nav div {
+    display: flex;
+    gap: 8px;
+  }
+
+  .gallery-nav button {
+    width: 42px;
+    height: 42px;
+    color: var(--pc-ink);
+    background: transparent;
+    border: 1px solid rgba(16,35,52,.24);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
+
+@media (width <= 760px) {
+  .book-story {
+    height: 145vh !important;
+  }
+
+  .hero-book-spread {
+    width: 228% !important;
+    left: -114% !important;
+  }
+
+  .trust-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trust-strip span {
+    min-height: 64px;
+    padding: 14px 10px;
+    font-size: 7px;
+  }
+
+  .trust-strip span:nth-child(2) {
+    border-right: 0;
+  }
+
+  .trust-strip span:nth-child(-n+2) {
+    border-bottom: 1px solid rgba(16,35,52,.1);
+  }
+
+  .book-card .book-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-note {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-story {
+    height: auto !important;
+  }
+
+  .hero-cover-lid {
+    transition: none !important;
+  }
+
+  .chapter-nav button,
+  .book-card .book-actions a {
+    transition: none !important;
+  }
+}
