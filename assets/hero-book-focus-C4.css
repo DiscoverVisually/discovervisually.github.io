@@ -10,10 +10,10 @@
   .hero .float-book.dv-openable {
     --open-scale: 1.03;
     transition:
-      translate .92s cubic-bezier(.18, .72, .16, 1),
-      scale .92s cubic-bezier(.18, .72, .16, 1),
-      filter .52s ease,
-      opacity .52s ease;
+      translate 1.16s cubic-bezier(.16, .72, .14, 1),
+      scale 1.04s cubic-bezier(.16, .72, .14, 1),
+      filter .62s ease,
+      opacity .62s ease;
     will-change: translate, scale, filter;
   }
 
@@ -41,24 +41,24 @@
     translate: var(--hero-focus-x, 0) -25px;
   }
 
-  /* Pull every title toward the optical centre of the book display.
-     The right-hand title needs the largest correction. */
+  /* Ease each open spread toward the centre of the full hero composition.
+     Individual offsets compensate for the books' asymmetric resting positions. */
   .hero .float-book-one.dv-openable:hover,
   .hero .float-book-one.dv-openable:focus-visible,
   .hero .float-book-one.dv-openable.is-open {
-    --hero-focus-x: 5vw;
+    --hero-focus-x: -5vw;
   }
 
   .hero .float-book-two.dv-openable:hover,
   .hero .float-book-two.dv-openable:focus-visible,
   .hero .float-book-two.dv-openable.is-open {
-    --hero-focus-x: -12vw;
+    --hero-focus-x: -20vw;
   }
 
   .hero .float-book-three.dv-openable:hover,
   .hero .float-book-three.dv-openable:focus-visible,
   .hero .float-book-three.dv-openable.is-open {
-    --hero-focus-x: 4vw;
+    --hero-focus-x: 2vw;
   }
 
   .hero-books:has(.dv-openable:hover) .dv-openable:not(:hover),
@@ -71,6 +71,26 @@
       opacity .58s ease,
       filter .58s ease,
       scale .76s cubic-bezier(.18, .72, .16, 1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (760px < width <= 1024px) {
+  .hero .float-book-one.dv-openable:hover,
+  .hero .float-book-one.dv-openable:focus-visible,
+  .hero .float-book-one.dv-openable.is-open {
+    --hero-focus-x: -5vw;
+  }
+
+  .hero .float-book-two.dv-openable:hover,
+  .hero .float-book-two.dv-openable:focus-visible,
+  .hero .float-book-two.dv-openable.is-open {
+    --hero-focus-x: -24vw;
+  }
+
+  .hero .float-book-three.dv-openable:hover,
+  .hero .float-book-three.dv-openable:focus-visible,
+  .hero .float-book-three.dv-openable.is-open {
+    --hero-focus-x: 10vw;
   }
 }
 
