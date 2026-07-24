@@ -1,0 +1,90 @@
+/* Discover Visually — readable hero spread focus
+   Keeps the opened spread large, calm and above the full hero composition. */
+
+@media (hover: hover) and (pointer: fine) and (width > 760px) {
+  .hero {
+    --hero-spread-width: clamp(560px, 48vw, 780px);
+    --hero-spread-left: clamp(-390px, -24vw, -280px);
+  }
+
+  .hero .float-book.dv-openable {
+    --open-scale: 1.03;
+    transition:
+      translate .92s cubic-bezier(.18, .72, .16, 1),
+      scale .92s cubic-bezier(.18, .72, .16, 1),
+      filter .52s ease,
+      opacity .52s ease;
+    will-change: translate, scale, filter;
+  }
+
+  .hero .float-book.dv-openable .hero-book-spread {
+    width: var(--hero-spread-width);
+    left: var(--hero-spread-left);
+    transition:
+      opacity .32s ease .08s,
+      transform .98s cubic-bezier(.18, .72, .16, 1),
+      box-shadow .72s ease;
+    will-change: transform, opacity;
+  }
+
+  .hero .float-book.dv-openable .hero-cover-lid {
+    transition:
+      transform .94s cubic-bezier(.18, .72, .16, 1),
+      box-shadow .72s ease;
+  }
+
+  .hero .float-book.dv-openable:hover,
+  .hero .float-book.dv-openable:focus-visible,
+  .hero .float-book.dv-openable.is-open {
+    --open-scale: 1.03;
+    z-index: 2147483647 !important;
+    translate: var(--hero-focus-x, 0) -25px;
+  }
+
+  /* Pull every title toward the optical centre of the book display.
+     The right-hand title needs the largest correction. */
+  .hero .float-book-one.dv-openable:hover,
+  .hero .float-book-one.dv-openable:focus-visible,
+  .hero .float-book-one.dv-openable.is-open {
+    --hero-focus-x: 5vw;
+  }
+
+  .hero .float-book-two.dv-openable:hover,
+  .hero .float-book-two.dv-openable:focus-visible,
+  .hero .float-book-two.dv-openable.is-open {
+    --hero-focus-x: -12vw;
+  }
+
+  .hero .float-book-three.dv-openable:hover,
+  .hero .float-book-three.dv-openable:focus-visible,
+  .hero .float-book-three.dv-openable.is-open {
+    --hero-focus-x: 4vw;
+  }
+
+  .hero-books:has(.dv-openable:hover) .dv-openable:not(:hover),
+  .hero-books:has(.dv-openable:focus-visible) .dv-openable:not(:focus-visible),
+  .hero-books:has(.dv-openable.is-open) .dv-openable:not(.is-open) {
+    opacity: .28;
+    filter: brightness(.48) saturate(.56);
+    scale: .94;
+    transition:
+      opacity .58s ease,
+      filter .58s ease,
+      scale .76s cubic-bezier(.18, .72, .16, 1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (width > 760px) and (max-height: 760px) {
+  .hero {
+    --hero-spread-width: clamp(520px, 43vw, 690px);
+    --hero-spread-left: clamp(-345px, -21.5vw, -260px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .float-book.dv-openable,
+  .hero .float-book.dv-openable .hero-book-spread,
+  .hero .float-book.dv-openable .hero-cover-lid {
+    transition-duration: .01ms !important;
+  }
+}
