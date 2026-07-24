@@ -19,30 +19,13 @@
 
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const stage = document.querySelector("[data-spotlight-stage]");
-  const books = [...document.querySelectorAll("[data-open-book]")];
+  const verdictTrigger = document.querySelector(".verdict-trigger");
+  const verdict = document.querySelector("#verdict-one");
 
-  const setOpen = (book, open) => {
-    book.classList.toggle("is-open", open);
-    book.closest(".spotlight-book")?.classList.toggle("is-active", open);
-    stage?.classList.toggle("has-active", books.some((item) => item.classList.contains("is-open")));
-  };
-
-  books.forEach((book) => {
-    let timer;
-    book.addEventListener("pointerenter", () => {
-      if (!finePointer.matches) return;
-      clearTimeout(timer);
-      books.forEach((item) => setOpen(item, item === book));
-    });
-    book.addEventListener("pointerleave", () => {
-      if (!finePointer.matches) return;
-      timer = setTimeout(() => setOpen(book, false), 130);
-    });
-    book.addEventListener("focus", () => {
-      books.forEach((item) => setOpen(item, item === book));
-    });
-    book.addEventListener("blur", () => setOpen(book, false));
+  verdictTrigger?.addEventListener("click", () => {
+    const open = verdictTrigger.getAttribute("aria-expanded") !== "true";
+    verdictTrigger.setAttribute("aria-expanded", String(open));
+    if (verdict) verdict.hidden = !open;
   });
 
   if (!reducedMotion.matches) {
