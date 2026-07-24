@@ -291,39 +291,80 @@
   finder.className = "dv-modal";
   finder.setAttribute("aria-hidden", "true");
   finder.innerHTML = `
-    <section class="dv-dialog finder-panel" role="dialog" aria-modal="true" aria-labelledby="finder-title">
+    <section class="dv-dialog finder-panel" role="dialog" aria-modal="true" aria-labelledby="finder-title" data-mood="welcome">
       <button class="dv-close" type="button" aria-label="Close book finder">×</button>
-      <div class="finder-content"></div>
+      <aside class="finder-story" aria-hidden="true">
+        <span class="finder-story-mark">DV</span>
+        <div class="finder-story-copy">
+          <small>Discover Visually</small>
+          <p>A book should feel chosen,<br>not simply found.</p>
+        </div>
+        <div class="finder-story-orbit"></div>
+        <span class="finder-story-step">01 <i></i> 02</span>
+      </aside>
+      <div class="finder-content" aria-live="polite"></div>
     </section>`;
   document.body.appendChild(finder);
 
   const finderSteps = [
     {
       title: "Who are you choosing for?",
-      options: [["A curious child", "child"], ["A woman of faith", "faith"], ["A history lover", "history"], ["A book-obsessed friend", "romantasy"]]
+      intro: "Start with the person. We’ll find the world that belongs in their hands.",
+      options: [
+        ["01", "A curious child", "Wonder, adventure and things worth discovering.", "child"],
+        ["02", "A woman of faith", "Reflection, courage and stories with meaning.", "faith"],
+        ["03", "A history lover", "Real places, evidence and the people who lived it.", "history"],
+        ["04", "A book-obsessed friend", "A beautiful keepsake for a life built around stories.", "romantasy"]
+      ]
     },
     {
-      title: "What should the book feel like?",
-      options: [["An adventure", "adventure"], ["A meaningful pause", "reflection"], ["A discovery", "discovery"], ["A beautiful keepsake", "keepsake"]]
+      title: "What should it leave behind?",
+      intro: "Choose the feeling they should carry after the last page.",
+      options: [
+        ["01", "A sense of adventure", "Something vivid enough to step inside.", "adventure"],
+        ["02", "A meaningful pause", "A quieter book that stays in the mind.", "reflection"],
+        ["03", "A new discovery", "The pleasure of finally seeing how it all connects.", "discovery"],
+        ["04", "A beautiful keepsake", "A book made to revisit, display and give.", "keepsake"]
+      ]
     }
   ];
+  const holyMisconceptions = {
+    key: "holy",
+    title: "Holy Misconceptions!",
+    url: "/books/holy-misconceptions.html",
+    cover: "/books/holy-misconceptions-cover.webp",
+    kicker: "Biblical myths · Visual investigation",
+    description: "A curious, case-file journey through the biblical stories we think we know."
+  };
   let finderStep = 0;
   let finderAnswers = [];
   const chooseRecommendation = () => {
-    const joined = finderAnswers.join(" ");
-    if (/faith|reflection/.test(joined)) return books[1];
-    if (/romantasy|keepsake/.test(joined)) return books[2];
+    const [reader, feeling] = finderAnswers;
+    if (reader === "faith" && feeling === "discovery") return holyMisconceptions;
+    if (reader === "faith" || feeling === "reflection") return books[1];
+    if (reader === "romantasy" || feeling === "keepsake") return books[2];
     return books[0];
   };
   const renderFinder = () => {
     const content = $(".finder-content", finder);
+    const panel = $(".finder-panel", finder);
     if (finderStep >= finderSteps.length) {
       const book = chooseRecommendation();
+      panel.dataset.mood = book.key;
+      $(".finder-story-step", finder).innerHTML = "YOUR <i></i> BOOK";
       content.innerHTML = `
-        <span class="finder-kicker">Your next world</span>
+        <div class="finder-result-head">
+          <span class="finder-kicker">Your next world</span>
+          <span class="finder-match">A thoughtful match</span>
+        </div>
         <div class="finder-result">
-          <img src="${book.cover}" alt="${book.title} book cover">
-          <div><h3>${book.title}</h3><p>${book.description}</p><a href="${book.url}">Explore this book →</a></div>
+          <div class="finder-result-cover"><img src="${book.cover}" alt="${book.title} book cover"></div>
+          <div class="finder-result-copy">
+            <small>${book.kicker}</small>
+            <h3>${book.title}</h3>
+            <p>${book.description}</p>
+            <a href="${book.url}">Explore this book <b>↗</b></a>
+          </div>
         </div>
         <button class="finder-back" type="button">← Start again</button>`;
       $(".finder-back", content).addEventListener("click", () => {
@@ -334,12 +375,18 @@
       return;
     }
     const step = finderSteps[finderStep];
+    panel.dataset.mood = finderStep ? (finderAnswers[0] || "welcome") : "welcome";
+    $(".finder-story-step", finder).innerHTML = `0${finderStep + 1} <i></i> 02`;
     content.innerHTML = `
-      <span class="finder-kicker">Find your next book · 0${finderStep + 1} / 02</span>
+      <span class="finder-kicker">A two-question book finder · 0${finderStep + 1} / 02</span>
       <h2 id="finder-title">${step.title}</h2>
-      <p>Two quick choices. One thoughtful recommendation.</p>
-      <div class="finder-progress" style="--finder-progress:${(finderStep + 1) / finderSteps.length * 100}%"><i></i></div>
-      <div class="finder-options">${step.options.map(([label, value]) => `<button type="button" data-value="${value}">${label}</button>`).join("")}</div>
+      <p>${step.intro}</p>
+      <div class="finder-options">${step.options.map(([number, label, description, value]) => `
+        <button type="button" data-value="${value}">
+          <span>${number}</span>
+          <span><b>${label}</b><small>${description}</small></span>
+          <i>↗</i>
+        </button>`).join("")}</div>
       ${finderStep ? '<button class="finder-back" type="button">← Previous question</button>' : ""}`;
     $$(".finder-options button", content).forEach((button) => button.addEventListener("click", () => {
       finderAnswers[finderStep] = button.dataset.value;
@@ -358,8 +405,7 @@
   });
 
   const finderLinks = [
-    $(".hero-actions .text-link"),
-    $(".site-header .nav-cta")
+    $(".hero-actions .text-link")
   ].filter(Boolean);
   finderLinks.forEach((link) => link.addEventListener("click", (event) => {
     event.preventDefault();
