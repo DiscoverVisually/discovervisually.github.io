@@ -256,3 +256,204 @@
     animation: none;
   }
 }
+
+
+/* C3: deterministic book layering and editorial reader-list invite */
+.hero-books {
+  perspective: none !important;
+  transform-style: flat !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+}
+
+.hero .float-book.dv-openable {
+  z-index: 1 !important;
+  isolation: auto !important;
+  transform-style: flat !important;
+}
+
+.hero .float-book.dv-openable:hover,
+.hero .float-book.dv-openable:focus-visible,
+.hero .float-book.dv-openable.is-open {
+  z-index: 2147483646 !important;
+  translate: var(--hero-open-x, 0px) -24px;
+}
+
+.hero .float-book-one.dv-openable:hover,
+.hero .float-book-one.dv-openable:focus-visible,
+.hero .float-book-one.dv-openable.is-open {
+  --hero-open-x: 1.5vw;
+}
+
+.hero .float-book-two.dv-openable:hover,
+.hero .float-book-two.dv-openable:focus-visible,
+.hero .float-book-two.dv-openable.is-open {
+  --hero-open-x: -6vw;
+}
+
+.hero .float-book-three.dv-openable:hover,
+.hero .float-book-three.dv-openable:focus-visible,
+.hero .float-book-three.dv-openable.is-open {
+  --hero-open-x: 6vw;
+}
+
+.hero-books:has(.dv-openable:hover) .dv-openable:not(:hover),
+.hero-books:has(.dv-openable:focus-visible) .dv-openable:not(:focus-visible),
+.hero-books:has(.dv-openable.is-open) .dv-openable:not(.is-open) {
+  z-index: 0 !important;
+  opacity: .42;
+  filter: brightness(.58) saturate(.62);
+}
+
+.hero .float-book.dv-openable .hero-book-spread {
+  z-index: 50 !important;
+}
+
+.hero .float-book.dv-openable .hero-cover-lid {
+  z-index: 5 !important;
+}
+
+/* Compact, editorial invitation instead of a competing card. */
+.hero-reader-list {
+  width: fit-content;
+  max-width: min(570px, 100%);
+  min-height: 0;
+  margin-top: 17px;
+  padding: 12px 0 0;
+  display: inline-flex;
+  grid-template-columns: none;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, .82);
+  background: none;
+  border: 0;
+  border-top: 1px solid rgba(236, 210, 162, .25);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-reader-list:hover,
+.hero-reader-list:focus-visible {
+  color: #fff;
+  background: none;
+  border-color: rgba(244, 214, 157, .58);
+  box-shadow: none;
+  transform: translateX(4px);
+}
+
+.hero-reader-list-mark {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  color: #e6c988;
+  background: rgba(217, 183, 119, .08);
+  border: 1px solid rgba(217, 183, 119, .42);
+  font-size: 9px;
+  box-shadow: none;
+}
+
+.hero-reader-list-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.hero-reader-list-copy b {
+  flex: 0 0 auto;
+  font-size: 14px;
+}
+
+.hero-reader-list-copy small {
+  max-width: 305px;
+  color: rgba(255, 255, 255, .55);
+  font-size: 9px;
+}
+
+.hero-reader-list-action {
+  gap: 6px;
+  padding-left: 10px;
+  color: #e8ca8b;
+  border-left-color: rgba(255, 255, 255, .13);
+  font-size: 8px;
+}
+
+.hero-reader-list-action i {
+  font-size: 13px;
+}
+
+@media (width <= 1120px) {
+  .hero-reader-list {
+    width: fit-content;
+    max-width: min(520px, 100%);
+  }
+
+  .hero-reader-list-copy small {
+    max-width: 250px;
+  }
+}
+
+@media (width <= 760px) {
+  .hero .float-book.dv-openable.is-open {
+    translate: var(--hero-open-mobile-x, 0px) -12px;
+  }
+
+  .hero .float-book-one.dv-openable.is-open {
+    --hero-open-mobile-x: 4vw;
+  }
+
+  .hero .float-book-two.dv-openable.is-open {
+    --hero-open-mobile-x: -11vw;
+  }
+
+  .hero .float-book-three.dv-openable.is-open {
+    --hero-open-mobile-x: 11vw;
+  }
+
+  .hero-reader-list {
+    width: min(440px, 100%);
+    min-height: 0;
+    margin-top: 16px;
+    padding: 11px 0 0;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    gap: 9px;
+  }
+
+  .hero-reader-list-mark {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hero-reader-list-copy {
+    display: grid;
+    gap: 3px;
+  }
+
+  .hero-reader-list-copy b {
+    font-size: 14px;
+  }
+
+  .hero-reader-list-copy small {
+    max-width: 240px;
+    font-size: 8px;
+  }
+
+  .hero-reader-list-action {
+    padding-left: 8px;
+    font-size: 7px;
+  }
+}
+
+@media (width <= 430px) {
+  .hero-reader-list {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .hero-reader-list-action {
+    grid-column: 2;
+    justify-self: start;
+    padding: 0;
+    border: 0;
+  }
+}
