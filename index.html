@@ -281,23 +281,23 @@
         max-width: 100%;
         white-space: nowrap;
         opacity: 0;
-        clip-path: inset(0 0 0 100%);
+        clip-path: inset(0 100% 0 0);
         filter: blur(.65px);
-        transform: translateX(6px) rotate(.35deg);
+        transform: translateX(-6px) rotate(-.35deg);
         animation: handwritingPhrase 1.12s steps(10, end) .88s both;
       }
       .hero h1 em::after {
         content: "";
         pointer-events: none;
         position: absolute;
-        right: -.02em;
+        left: -.02em;
         bottom: -.055em;
         width: 100%;
         height: 1px;
         opacity: 0;
-        background: linear-gradient(90deg, transparent, rgba(207,173,110,.76) 18%, rgba(207,173,110,.2));
+        background: linear-gradient(90deg, rgba(207,173,110,.76), rgba(207,173,110,.2) 82%, transparent);
         transform: scaleX(0);
-        transform-origin: right center;
+        transform-origin: left center;
         animation: handwritingStroke 1.08s cubic-bezier(.35,.04,.18,1) .86s both;
       }
       .hero-intro { max-width: 485px; animation: heroFadeIn .75s ease 1.26s both; }
@@ -398,7 +398,7 @@
         to { opacity: 1; translate: 0 0; }
       }
       @keyframes handwritingPhrase {
-        0% { opacity: 0; clip-path: inset(0 0 0 100%); filter: blur(.65px); transform: translateX(6px) rotate(.35deg); }
+        0% { opacity: 0; clip-path: inset(0 100% 0 0); filter: blur(.65px); transform: translateX(-6px) rotate(-.35deg); }
         8% { opacity: 1; }
         100% { opacity: 1; clip-path: inset(0); filter: blur(0); transform: translateX(0) rotate(0); }
       }
@@ -479,6 +479,7 @@
     <link rel="stylesheet" href="/assets/polish-conversion-P1.css?v=20260723b" />
     <link rel="stylesheet" href="/assets/hero-conversion-C2.css?v=20260724c3" />
     <link rel="stylesheet" href="/assets/hero-book-focus-C4.css?v=20260724c4" />
+    <link rel="stylesheet" href="/assets/premium-refinement-D5.css?v=20260724d5" />
   </head>
   <body
     class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
@@ -952,7 +953,7 @@
       })();
     </script>
     <script defer src="/assets/mobile-experience-M7v1.js"></script>
-    <script defer src="/assets/experience-suite-R1.js?v=20260723"></script>
+    <script defer src="/assets/experience-suite-R1.js?v=20260724d5"></script>
     <script defer src="/assets/hero-book-open-S2.js?v=20260723"></script>
     <script defer src="/assets/polish-conversion-P1.js?v=20260723"></script>
   </body>
