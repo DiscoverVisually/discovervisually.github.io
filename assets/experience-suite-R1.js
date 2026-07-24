@@ -152,7 +152,7 @@
       title: "Pompeii: The Last Day",
       url: "/books/pompeii-the-last-day.html",
       cover: "/books/pompeii-cover.webp",
-      visual: "/images/categories/arts-education-card.jpg",
+      visual: "/assets/spread-pompeii.webp",
       kicker: "History Hunters · Ages 8+",
       description: "A cinematic visual journey through the final hours of Pompeii.",
       spreads: [
@@ -166,7 +166,7 @@
       title: "Women of the Bible for Today",
       url: "/books/women-of-the-bible-for-today.html",
       cover: "/books/women-of-the-bible.webp",
-      visual: "/images/categories/spiritual-card.jpg",
+      visual: "/assets/spread-women-of-the-bible.webp",
       kicker: "Visual Bible study · For women",
       description: "Scripture, reflection and visual storytelling designed for modern life.",
       spreads: [
@@ -180,7 +180,7 @@
       title: "The Ultimate Romantasy Yearbook",
       url: "/books/the-ultimate-romantasy-yearbook.html",
       cover: "/books/romantasy-yearbook.webp",
-      visual: "/images/categories/romantasy-card.jpg",
+      visual: "/assets/spread-romantasy-yearbook.webp",
       kicker: "Romantasy · 2005–2026 edition",
       description: "A visual celebration of the books, tropes and obsessions readers share.",
       spreads: [

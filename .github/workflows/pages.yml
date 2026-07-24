@@ -26,6 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate static site
+        run: node scripts/validate-site.mjs
+
       - name: Prepare static site
         run: |
           mkdir _site
