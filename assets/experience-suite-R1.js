@@ -258,10 +258,6 @@
     shell.className = "book-card-shell";
     card.before(shell);
     shell.appendChild(card);
-    const slip = document.createElement("span");
-    slip.className = "preview-slip";
-    slip.setAttribute("aria-hidden", "true");
-    $(".display-cover", card)?.appendChild(slip);
     const trigger = document.createElement("button");
     trigger.type = "button";
     trigger.className = "preview-trigger";
