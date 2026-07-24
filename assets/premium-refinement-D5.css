@@ -1,0 +1,250 @@
+/* Discover Visually — premium hero balance and selected-book interaction */
+
+/* The cabinet should remain cinematic, but its detail should not disappear
+   under a full-width black overlay. Contrast is concentrated behind the copy. */
+.hero {
+  background:
+    radial-gradient(ellipse at 25% 43%, rgba(48, 72, 84, .34), transparent 48%),
+    radial-gradient(circle at 73% 38%, #334958 0, #122231 51%, #07111c 100%);
+}
+
+.hero-art-back {
+  filter: saturate(1.03) contrast(1.01) brightness(1.28);
+}
+
+.hero-art-back::after {
+  background:
+    radial-gradient(ellipse at 26% 45%, rgba(111, 144, 151, .19), transparent 39%),
+    radial-gradient(circle at 74% 48%, rgba(241, 202, 132, .27), transparent 29%),
+    linear-gradient(90deg, rgba(110, 136, 143, .06), transparent 48%, rgba(239, 195, 121, .055));
+  mix-blend-mode: screen;
+  opacity: .94;
+}
+
+.hero::after {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2, 7, 14, .46) 0%,
+      rgba(2, 7, 14, .27) 33%,
+      rgba(2, 7, 14, .035) 58%,
+      rgba(2, 7, 14, .12) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 7, 14, .14) 0%,
+      transparent 43%,
+      rgba(2, 7, 14, .5) 100%
+    );
+}
+
+.hero-copy {
+  isolation: isolate;
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, .42),
+    0 1px 2px rgba(0, 0, 0, .38);
+}
+
+.hero-copy::before {
+  content: "";
+  z-index: -1;
+  pointer-events: none;
+  position: absolute;
+  inset: -9% -11% -8% -5%;
+  background: radial-gradient(
+    ellipse at 34% 45%,
+    rgba(3, 10, 18, .5) 0%,
+    rgba(3, 10, 18, .34) 48%,
+    rgba(3, 10, 18, .13) 66%,
+    transparent 79%
+  );
+  filter: blur(18px);
+}
+
+.hero-intro {
+  color: rgba(255, 255, 255, .77);
+}
+
+.hero .kicker {
+  color: rgba(255, 255, 255, .7);
+}
+
+/* The old preview-slip looked like an unfinished blank page. The selected-book
+   hover now relies on physical depth, a restrained light sweep and clear CTA. */
+.preview-slip {
+  display: none !important;
+}
+
+.book-card-shell {
+  isolation: isolate;
+  perspective: 1200px;
+}
+
+.book-card-shell .book-card {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(110, 83, 55, .09);
+  box-shadow: 0 18px 44px rgba(25, 32, 38, .07);
+  transition:
+    transform .62s cubic-bezier(.18, .72, .16, 1),
+    box-shadow .62s cubic-bezier(.18, .72, .16, 1),
+    border-color .4s ease,
+    background-color .4s ease;
+}
+
+.book-card-shell .book-card::before {
+  content: "";
+  z-index: 0;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 23% 25%, rgba(255, 249, 231, .75), transparent 29%),
+    radial-gradient(circle at 21% 32%, rgba(201, 157, 93, .16), transparent 47%);
+  transition: opacity .5s ease;
+}
+
+.book-card-shell .display-cover,
+.book-card-shell .book-meta {
+  z-index: 1;
+  position: relative;
+}
+
+.book-card-shell .display-cover {
+  overflow: visible;
+  transform-origin: 50% 88%;
+  filter: drop-shadow(0 18px 20px rgba(25, 31, 37, .18));
+  transition:
+    transform .66s cubic-bezier(.18, .72, .16, 1),
+    filter .58s ease;
+}
+
+.book-card-shell .display-cover img {
+  position: relative;
+  z-index: 1;
+  border-radius: 1px 4px 5px 1px;
+  box-shadow:
+    0 0 0 1px rgba(255, 249, 233, .22),
+    inset -8px 0 12px rgba(255, 255, 255, .1);
+}
+
+.book-card-shell .display-cover::after {
+  z-index: 0;
+  top: 3%;
+  right: -7px;
+  bottom: -6px;
+  left: 6%;
+  border-radius: 0 4px 5px 0;
+  box-shadow:
+    8px 12px 20px rgba(24, 31, 38, .2),
+    0 0 0 1px rgba(112, 91, 64, .15);
+}
+
+.book-card-shell .display-cover::before {
+  content: "";
+  z-index: 3;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border-radius: 1px 4px 5px 1px;
+  background: linear-gradient(
+    112deg,
+    transparent 15%,
+    rgba(255, 248, 226, .04) 38%,
+    rgba(255, 248, 226, .42) 48%,
+    rgba(255, 248, 226, .06) 58%,
+    transparent 82%
+  );
+  transform: translateX(-115%);
+  transition:
+    transform .92s cubic-bezier(.2, .72, .16, 1),
+    opacity .25s ease;
+}
+
+.book-card-shell .preview-trigger {
+  opacity: .76;
+  color: #f9f2e5;
+  background: rgba(18, 39, 54, .92);
+  border-color: rgba(221, 188, 126, .45);
+  backdrop-filter: blur(9px);
+  box-shadow: 0 10px 26px rgba(13, 24, 32, .2);
+  transition:
+    opacity .3s ease,
+    color .3s ease,
+    background .3s ease,
+    border-color .3s ease,
+    transform .42s cubic-bezier(.18, .72, .16, 1),
+    box-shadow .3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .book-card-shell:hover .book-card {
+    transform: translateY(-7px);
+    background-color: #eee7dc;
+    border-color: rgba(151, 105, 62, .2);
+    box-shadow:
+      0 34px 74px rgba(25, 32, 38, .16),
+      0 2px 0 rgba(255, 255, 255, .55) inset;
+  }
+
+  .book-card-shell:hover .book-card::before {
+    opacity: 1;
+  }
+
+  .book-card-shell:hover .display-cover {
+    --lift: -13px;
+    transform:
+      perspective(1100px)
+      rotateX(var(--tilt-x))
+      rotateY(var(--tilt-y))
+      translateY(var(--lift))
+      scale(1.025);
+    filter: drop-shadow(0 31px 25px rgba(25, 31, 37, .28));
+  }
+
+  .book-card-shell:hover .display-cover::before {
+    opacity: .72;
+    transform: translateX(115%);
+  }
+
+  .book-card-shell:hover .preview-trigger,
+  .book-card-shell:focus-within .preview-trigger {
+    opacity: 1;
+    transform: translateY(-3px);
+    border-color: rgba(229, 194, 128, .72);
+    box-shadow: 0 15px 32px rgba(13, 24, 32, .27);
+  }
+}
+
+@media (width <= 760px) {
+  .hero-art-back {
+    filter: saturate(1.02) contrast(1.01) brightness(1.12);
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(180deg, rgba(2, 7, 14, .7) 0%, rgba(2, 7, 14, .38) 37%, rgba(2, 7, 14, .09) 63%, rgba(2, 7, 14, .56) 100%),
+      linear-gradient(90deg, rgba(2, 7, 14, .28), transparent 78%);
+  }
+
+  .hero-copy::before {
+    inset: -6% -7% -5%;
+    background: radial-gradient(ellipse at 38% 28%, rgba(3, 10, 18, .54), rgba(3, 10, 18, .22) 62%, transparent 80%);
+    filter: blur(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-card-shell .book-card,
+  .book-card-shell .display-cover,
+  .book-card-shell .display-cover::before,
+  .book-card-shell .preview-trigger {
+    transition-duration: .01ms !important;
+  }
+
+  .book-card-shell:hover .display-cover::before {
+    opacity: 0;
+  }
+}
