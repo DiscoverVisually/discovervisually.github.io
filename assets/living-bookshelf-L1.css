@@ -1,0 +1,415 @@
+/* Living Bookshelf — reader-first category navigation */
+.worlds {
+  --shelf-ink: #102432;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, .72), transparent 24%),
+    linear-gradient(180deg, #f5eee2 0%, #eee3d3 100%);
+}
+
+.worlds .section-heading {
+  align-items: center;
+  margin-bottom: clamp(42px, 5vw, 68px);
+}
+
+.worlds .section-heading h2 {
+  color: var(--shelf-ink);
+  text-wrap: balance;
+}
+
+.worlds .section-heading h2 em {
+  color: #a55238;
+}
+
+.portal-grid {
+  display: flex;
+  gap: 10px;
+  height: clamp(570px, 57vw, 700px);
+  min-height: 0;
+  overflow: visible;
+}
+
+.portal {
+  --portal-accent: #e2b764;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 5px;
+  padding: 26px;
+  box-shadow: 0 18px 45px rgba(31, 34, 30, .11);
+  transition:
+    flex-grow .9s cubic-bezier(.18, .74, .18, 1),
+    transform .8s cubic-bezier(.18, .74, .18, 1),
+    filter .65s ease,
+    box-shadow .65s ease;
+}
+
+.portal-christian {
+  --portal-accent: #e9bd65;
+}
+
+.portal-children {
+  --portal-accent: #f2a779;
+}
+
+.portal-women {
+  --portal-accent: #e5a9a5;
+}
+
+.portal-educational {
+  --portal-accent: #dfae58;
+}
+
+.portal::before {
+  z-index: 0;
+  background:
+    radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 42%), rgba(255, 235, 184, .17), transparent 27%),
+    linear-gradient(180deg, rgba(2, 9, 15, .08) 18%, rgba(3, 10, 16, .46) 55%, rgba(3, 9, 15, .96) 100%);
+}
+
+.portal::after {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(4, 12, 18, .23), transparent 46%),
+    linear-gradient(180deg, transparent 30%, rgba(3, 10, 17, .12) 49%, rgba(3, 10, 17, .9) 100%);
+  transition: opacity .6s ease;
+}
+
+.portal-image {
+  z-index: -1;
+  inset: -3%;
+  filter: saturate(.78) brightness(.83);
+  transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.025);
+  transition:
+    transform 1.15s cubic-bezier(.18, .74, .18, 1),
+    filter .8s ease;
+  will-change: transform;
+}
+
+.portal-grid:has(.portal:hover) .portal:not(:hover),
+.portal-grid:has(.portal:focus-visible) .portal:not(:focus-visible) {
+  flex-grow: .78;
+  filter: saturate(.7) brightness(.78);
+}
+
+.portal:hover,
+.portal:focus-visible {
+  z-index: 4;
+  flex-grow: 1.75;
+  transform: translateY(-10px);
+  box-shadow: 0 30px 72px rgba(17, 24, 27, .28);
+}
+
+.portal:hover .portal-image,
+.portal:focus-visible .portal-image {
+  filter: saturate(1.02) brightness(.96);
+  transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.075);
+}
+
+.portal:focus-visible {
+  outline: 3px solid var(--portal-accent);
+  outline-offset: 4px;
+}
+
+.portal-number {
+  z-index: 4;
+  position: relative;
+  color: rgba(255, 255, 255, .78);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.portal-number::after {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  margin: 0 0 3px 10px;
+  background: var(--portal-accent);
+  transform-origin: left;
+  transition: width .65s ease;
+}
+
+.portal:hover .portal-number::after,
+.portal:focus-visible .portal-number::after {
+  width: 58px;
+}
+
+.portal-copy {
+  z-index: 4;
+  bottom: 82px;
+  left: 26px;
+  right: 24px;
+  transition:
+    right .75s cubic-bezier(.18, .74, .18, 1),
+    transform .75s cubic-bezier(.18, .74, .18, 1);
+}
+
+.portal:hover .portal-copy,
+.portal:focus-visible .portal-copy {
+  right: 45%;
+  transform: translateY(-4px);
+}
+
+.portal-category {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--portal-accent);
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.portal-copy h3 {
+  max-width: 430px;
+  font-size: clamp(30px, 2.7vw, 46px);
+  line-height: .98;
+  text-wrap: balance;
+}
+
+.portal-copy p {
+  max-width: 280px;
+  max-height: 80px;
+  margin-top: 13px;
+  color: rgba(255, 255, 255, .76);
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: 1 !important;
+}
+
+.portal-open {
+  z-index: 5;
+  border-top-color: rgba(255, 255, 255, .3);
+  opacity: .9 !important;
+  transition:
+    border-color .4s ease,
+    color .4s ease;
+}
+
+.portal-open b {
+  color: var(--portal-accent);
+  transition: transform .45s cubic-bezier(.18, .74, .18, 1);
+}
+
+.portal:hover .portal-open,
+.portal:focus-visible .portal-open {
+  border-top-color: var(--portal-accent);
+  opacity: 1 !important;
+}
+
+.portal:hover .portal-open b,
+.portal:focus-visible .portal-open b {
+  transform: translate(3px, -3px);
+}
+
+.portal-books {
+  z-index: 3;
+  pointer-events: none;
+  position: absolute;
+  top: 18%;
+  right: 5%;
+  width: 39%;
+  height: 59%;
+  opacity: 0;
+  transform: translateX(22px) scale(.92);
+  transition:
+    opacity .45s ease .08s,
+    transform .85s cubic-bezier(.18, .74, .18, 1);
+}
+
+.portal:hover .portal-books,
+.portal:focus-visible .portal-books {
+  opacity: 1;
+  transform: none;
+}
+
+.portal-book {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  width: min(72%, 178px);
+  max-height: 100%;
+  border-radius: 2px 4px 4px 2px;
+  object-fit: contain;
+  box-shadow:
+    -5px 3px 0 rgba(247, 236, 210, .8),
+    16px 25px 38px rgba(0, 0, 0, .52);
+  transform: perspective(900px) rotateY(-7deg) rotateZ(2.5deg);
+  transform-origin: bottom center;
+  transition: transform .8s cubic-bezier(.18, .74, .18, 1);
+}
+
+.portal-book-secondary {
+  right: 32%;
+  bottom: 10%;
+  width: min(65%, 155px);
+  opacity: .82;
+  transform: perspective(900px) rotateY(-4deg) rotateZ(-7deg);
+}
+
+.portal:hover .portal-book-primary,
+.portal:focus-visible .portal-book-primary {
+  transform: perspective(900px) rotateY(-4deg) rotateZ(1deg) translateY(-7px);
+}
+
+.portal:hover .portal-book-secondary,
+.portal:focus-visible .portal-book-secondary {
+  transform: perspective(900px) rotateY(-2deg) rotateZ(-4deg) translate(-5px, -2px);
+}
+
+.portal-books-single .portal-book {
+  right: 11%;
+  width: min(88%, 188px);
+}
+
+.portal-themes {
+  display: none !important;
+}
+
+@media (max-width: 1080px) and (min-width: 761px) {
+  .portal-grid {
+    height: 620px;
+  }
+
+  .portal {
+    padding-inline: 20px;
+  }
+
+  .portal-copy {
+    left: 20px;
+    right: 18px;
+  }
+
+  .portal:hover .portal-copy,
+  .portal:focus-visible .portal-copy {
+    right: 43%;
+  }
+
+  .portal-copy h3 {
+    font-size: clamp(27px, 3.1vw, 38px);
+  }
+
+  .portal-open {
+    left: 20px;
+    right: 20px;
+  }
+
+  .portal-books {
+    right: 2%;
+    width: 41%;
+  }
+}
+
+@media (max-width: 760px) {
+  .worlds .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .worlds .section-heading h2 {
+    font-size: clamp(44px, 13vw, 58px);
+  }
+
+  .worlds .section-heading > p:last-child {
+    display: block;
+    max-width: 290px;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+
+  .portal-grid {
+    height: auto;
+    gap: 14px;
+    overflow-x: auto;
+  }
+
+  .portal {
+    flex: 0 0 84vw;
+    min-height: 440px;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .portal-grid:has(.portal:hover) .portal:not(:hover),
+  .portal-grid:has(.portal:focus-visible) .portal:not(:focus-visible),
+  .portal:hover,
+  .portal:focus-visible {
+    flex-grow: 0;
+    filter: none;
+  }
+
+  .portal-image {
+    filter: saturate(.92) brightness(.9);
+    transform: scale(1.035);
+  }
+
+  .portal-copy,
+  .portal:hover .portal-copy,
+  .portal:focus-visible .portal-copy {
+    right: 38%;
+    bottom: 80px;
+    transform: none;
+  }
+
+  .portal-copy h3 {
+    font-size: clamp(31px, 9vw, 39px);
+  }
+
+  .portal-copy p {
+    max-width: 230px;
+    font-size: 11px;
+  }
+
+  .portal-books,
+  .portal:hover .portal-books,
+  .portal:focus-visible .portal-books {
+    top: 23%;
+    right: 3%;
+    width: 37%;
+    height: 51%;
+    opacity: 1;
+    transform: none;
+  }
+
+  .portal-book {
+    width: min(78%, 124px);
+  }
+
+  .portal-book-secondary {
+    right: 27%;
+    width: min(70%, 104px);
+  }
+
+  .portal-books-single .portal-book {
+    width: min(95%, 136px);
+  }
+}
+
+@media (max-width: 430px) {
+  .portal-copy,
+  .portal:hover .portal-copy,
+  .portal:focus-visible .portal-copy {
+    right: 34%;
+  }
+
+  .portal-copy h3 {
+    font-size: clamp(29px, 8.5vw, 36px);
+  }
+
+  .portal-books {
+    right: 1%;
+    width: 35%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal,
+  .portal-image,
+  .portal-copy,
+  .portal-books,
+  .portal-book,
+  .portal-number::after,
+  .portal-open b {
+    transition: none !important;
+  }
+}
