@@ -612,50 +612,200 @@ html.dv-entered .hero-books {
 
 /* Book finder */
 .finder-panel {
-  min-height: 580px;
-  padding: clamp(34px, 6vw, 74px);
+  --finder-accent: #cfa96b;
+  width: min(1180px, 96vw);
+  min-height: min(720px, 90svh);
+  grid-template-columns: minmax(300px, .82fr) minmax(520px, 1.38fr);
   display: grid;
+  overflow: hidden;
+}
+
+.finder-panel[data-mood="child"],
+.finder-panel[data-mood="pompeii"] { --finder-accent: #e3a05f; }
+.finder-panel[data-mood="faith"],
+.finder-panel[data-mood="women"] { --finder-accent: #d6ae72; }
+.finder-panel[data-mood="romantasy"] { --finder-accent: #d59aa3; }
+.finder-panel[data-mood="holy"] { --finder-accent: #d8b34f; }
+
+.finder-story {
+  min-height: 100%;
+  padding: clamp(34px, 4vw, 54px);
+  border-right: 1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(180deg, rgba(4,12,20,.08), rgba(3,10,17,.82)),
+    url("/assets/cabinet-of-worlds-hero.webp") 59% center / cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.finder-story::after {
+  content: "";
+  background:
+    radial-gradient(circle at 68% 35%, color-mix(in srgb, var(--finder-accent) 42%, transparent), transparent 24%),
+    linear-gradient(145deg, transparent 44%, rgba(3,9,16,.7));
+  position: absolute;
+  inset: 0;
+  transition: background .5s ease;
+}
+
+.finder-story-mark,
+.finder-story-copy,
+.finder-story-step {
+  z-index: 2;
+  position: absolute;
+}
+
+.finder-story-mark {
+  top: 40px;
+  left: 42px;
+  color: var(--finder-accent);
+  font: 700 11px/1 var(--font-geist-sans, sans-serif);
+  letter-spacing: .22em;
+}
+
+.finder-story-copy {
+  left: clamp(34px, 4vw, 54px);
+  right: 34px;
+  bottom: 92px;
+}
+
+.finder-story-copy small {
+  color: var(--finder-accent);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.finder-story-copy p {
+  margin: 14px 0 0;
+  color: #fff8eb;
+  font: 400 clamp(31px, 3.2vw, 48px)/.98 var(--serif);
+  letter-spacing: -.035em;
+}
+
+.finder-story-step {
+  align-items: center;
+  gap: 11px;
+  left: clamp(34px, 4vw, 54px);
+  bottom: 36px;
+  color: rgba(255,255,255,.66);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  display: flex;
+}
+
+.finder-story-step i {
+  width: 44px;
+  height: 1px;
+  background: var(--finder-accent);
+}
+
+.finder-story-orbit {
+  z-index: 1;
+  width: min(30vw, 380px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--finder-accent) 50%, transparent);
+  border-radius: 50%;
+  position: absolute;
+  top: 17%;
+  right: -42%;
+}
+
+.finder-story-orbit::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--finder-accent);
+  box-shadow: 0 0 20px var(--finder-accent);
+  position: absolute;
+  top: 48%;
+  left: -4px;
+}
+
+.finder-content {
+  min-width: 0;
+  padding: clamp(76px, 7vw, 92px) clamp(38px, 6vw, 78px) 42px;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--finder-accent) 13%, transparent), transparent 35%),
+    #0b1927;
   align-content: center;
+  display: grid;
+  transition: background .45s ease;
 }
 
-.finder-progress {
-  background: rgba(255,255,255,.12);
-  width: 100%;
-  height: 2px;
-  margin: 28px 0 38px;
-}
-
-.finder-progress i {
-  background: var(--dv-gold);
-  width: var(--finder-progress, 33%);
-  height: 100%;
-  display: block;
-  transition: width .35s ease;
+.finder-content > p {
+  max-width: 520px;
+  margin: 0 0 30px;
+  color: rgba(255,255,255,.61);
+  font-size: 13px;
+  line-height: 1.65;
 }
 
 .finder-options {
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 10px;
   display: grid;
 }
 
 .finder-options button {
+  grid-template-columns: 34px minmax(0,1fr) 22px;
+  align-items: center;
+  gap: 14px;
   color: #f6efe3;
-  background: rgba(255,255,255,.055);
-  border: 1px solid rgba(255,255,255,.16);
-  min-height: 92px;
-  padding: 20px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.14);
+  min-height: 80px;
+  padding: 16px 4px;
   cursor: pointer;
   text-align: left;
-  font: 400 clamp(19px, 2vw, 27px)/1.1 var(--serif);
-  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  display: grid;
+  transition: border-color .3s ease, padding .35s ease, background .3s ease;
+}
+
+.finder-options button:last-child {
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.finder-options button > span:first-child {
+  color: var(--finder-accent);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.finder-options button b {
+  font: 400 clamp(20px, 2vw, 28px)/1.05 var(--serif);
+}
+
+.finder-options button small {
+  margin-top: 5px;
+  color: rgba(255,255,255,.5);
+  font-size: 10px;
+  line-height: 1.35;
+  display: block;
+}
+
+.finder-options button i {
+  color: var(--finder-accent);
+  font-style: normal;
+  opacity: .42;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
 .finder-options button:hover,
 .finder-options button:focus-visible {
-  background: rgba(207,169,107,.12);
-  border-color: var(--dv-gold);
-  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--finder-accent) 9%, transparent);
+  border-color: var(--finder-accent);
+  padding-inline: 14px;
+  outline: none;
+}
+
+.finder-options button:hover i,
+.finder-options button:focus-visible i {
+  opacity: 1;
+  transform: translate(3px, -3px);
 }
 
 .finder-back {
@@ -669,16 +819,43 @@ html.dv-entered .hero-books {
 }
 
 .finder-result {
-  grid-template-columns: minmax(140px, 240px) minmax(0,1fr);
-  gap: clamp(28px, 6vw, 70px);
+  grid-template-columns: minmax(150px, 220px) minmax(0,1fr);
+  gap: clamp(30px, 5vw, 62px);
   align-items: center;
   display: grid;
 }
 
-.finder-result img {
+.finder-result-head {
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 22px;
+  display: flex;
+}
+
+.finder-match {
+  color: rgba(255,255,255,.5);
+  font: italic 14px/1 var(--serif);
+}
+
+.finder-result-cover {
+  perspective: 900px;
+}
+
+.finder-result-cover img {
   width: 100%;
-  box-shadow: 18px 24px 50px rgba(0,0,0,.42);
-  transform: rotate(-2deg);
+  border-radius: 2px 5px 5px 2px;
+  box-shadow:
+    -5px 2px 0 rgba(244,236,216,.72),
+    20px 30px 54px rgba(0,0,0,.48);
+  transform: rotateY(-7deg) rotateZ(-1.5deg);
+}
+
+.finder-result-copy > small {
+  color: var(--finder-accent);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
 }
 
 .finder-result h3 {
@@ -690,6 +867,21 @@ html.dv-entered .hero-books {
   color: rgba(255,255,255,.66);
   margin: 0 0 30px;
   line-height: 1.65;
+}
+
+.finder-result a {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.finder-result a b {
+  font-size: 14px;
+  transition: transform .3s ease;
+}
+
+.finder-result a:hover b {
+  transform: translate(3px, -3px);
 }
 
 body.dv-modal-open {
@@ -800,32 +992,90 @@ body.dv-modal-open {
 
   .finder-panel {
     min-height: 100svh;
-    padding: 74px 20px 35px;
+    grid-template-columns: 1fr;
+    display: block;
+    overflow-y: auto;
+  }
+
+  .finder-story {
+    min-height: 185px;
+    padding: 28px 22px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    background-position: 54% 45%;
+  }
+
+  .finder-story-mark {
+    top: 25px;
+    left: 22px;
+  }
+
+  .finder-story-copy {
+    left: 22px;
+    bottom: 30px;
+  }
+
+  .finder-story-copy p {
+    margin-top: 8px;
+    font-size: 30px;
+  }
+
+  .finder-story-step,
+  .finder-story-orbit {
+    display: none;
+  }
+
+  .finder-content {
+    min-height: calc(100svh - 185px);
+    padding: 48px 20px 30px;
   }
 
   .finder-panel h2 {
-    font-size: 43px;
+    max-width: 310px;
+    font-size: 40px;
   }
 
-  .finder-options {
-    grid-template-columns: 1fr;
+  .finder-content > p {
+    margin-bottom: 22px;
   }
 
   .finder-options button {
-    min-height: 72px;
+    grid-template-columns: 27px minmax(0,1fr) 18px;
+    min-height: 70px;
+    padding-block: 13px;
+  }
+
+  .finder-options button b {
+    font-size: 21px;
+  }
+
+  .finder-options button small {
+    font-size: 9px;
+  }
+
+  .finder-result-head {
+    padding-bottom: 18px;
   }
 
   .finder-result {
-    grid-template-columns: 110px 1fr;
-    gap: 22px;
+    grid-template-columns: 105px minmax(0,1fr);
+    gap: 20px;
   }
 
   .finder-result h3 {
-    font-size: 31px;
+    margin: 7px 0 10px;
+    font-size: 29px;
   }
 
   .finder-result p {
     grid-column: 1 / -1;
+    margin-bottom: 20px;
+    font-size: 12px;
+  }
+
+  .finder-result a {
+    padding: 11px 13px;
+    font-size: 8px;
   }
 
   .book-story::before,
