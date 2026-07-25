@@ -1,0 +1,165 @@
+/* Discover Visually — compact homepage hero with a Christian editorial window */
+
+.hero {
+  height: clamp(680px, 82svh, 820px);
+  min-height: 680px;
+  padding-top: clamp(108px, 13vh, 126px);
+  padding-bottom: 48px;
+}
+
+.hero-copy {
+  margin-top: 0;
+}
+
+.hero h1 {
+  max-width: 610px;
+  font-size: clamp(56px, 5.8vw, 88px);
+}
+
+.hero-intro {
+  margin-top: 23px;
+}
+
+.hero-actions {
+  margin-top: 29px;
+}
+
+.hero-books {
+  width: min(46vw, 680px);
+  height: 69%;
+  top: 18%;
+}
+
+.hero-faith-window {
+  z-index: -2;
+  pointer-events: none;
+  position: absolute;
+  width: clamp(340px, 38vw, 590px);
+  height: 69%;
+  top: 14%;
+  right: 3.2vw;
+  overflow: hidden;
+  opacity: .46;
+  border: 1px solid rgba(225, 192, 128, .18);
+  border-radius: 48% 48% 5px 5px / 24% 24% 5px 5px;
+  background:
+    linear-gradient(90deg, rgba(5, 13, 21, .68), transparent 38%),
+    linear-gradient(180deg, rgba(5, 13, 21, .16), transparent 56%, rgba(5, 13, 21, .82)),
+    url("/assets/spread-women-of-the-bible.webp") 82% 50% / auto 112% no-repeat;
+  box-shadow:
+    0 0 0 12px rgba(216, 180, 111, .025),
+    0 22px 80px rgba(0, 0, 0, .4),
+    inset 0 0 70px rgba(4, 11, 18, .45);
+  filter: saturate(.84) contrast(1.03);
+  transform: translate3d(
+    calc(var(--mx) * -5px),
+    calc(var(--my) * -4px + var(--page-y) * .018),
+    0
+  );
+  transition: transform .2s linear;
+}
+
+.hero-faith-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 69% 43%, rgba(237, 193, 113, .19), transparent 31%),
+    linear-gradient(90deg, #07111c 0, transparent 25%, transparent 76%, rgba(7, 17, 28, .5));
+  mix-blend-mode: screen;
+}
+
+@media (width <= 1120px) {
+  .hero {
+    height: clamp(700px, 86svh, 800px);
+    min-height: 700px;
+  }
+
+  .hero-books {
+    width: 57vw;
+    right: -3vw;
+  }
+
+  .hero-faith-window {
+    width: 48vw;
+    right: 1vw;
+  }
+}
+
+@media (width <= 760px) {
+  .hero {
+    height: 810px;
+    min-height: min(810px, 100svh);
+    padding-top: 118px;
+    padding-bottom: 28px;
+  }
+
+  .hero-copy {
+    width: min(100%, 570px);
+  }
+
+  .hero h1 {
+    max-width: 520px;
+    font-size: clamp(47px, 12.4vw, 68px);
+  }
+
+  .hero-intro {
+    margin-top: 18px;
+  }
+
+  .hero-actions {
+    margin-top: 23px;
+  }
+
+  .hero-reader-list {
+    margin-top: 13px;
+  }
+
+  .hero-books {
+    width: 94vw;
+    height: 35%;
+    top: 61%;
+    right: -15vw;
+  }
+
+  .hero-faith-window {
+    width: 64vw;
+    height: 41%;
+    top: 51%;
+    right: -5vw;
+    opacity: .34;
+    background-position: 82% 50%;
+    border-radius: 42% 42% 4px 4px / 18% 18% 4px 4px;
+  }
+}
+
+@media (width <= 430px) {
+  .hero {
+    height: 780px;
+    min-height: 780px;
+    padding-top: 108px;
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 13.3vw, 58px);
+  }
+
+  .hero-actions::after {
+    display: none;
+  }
+
+  .hero-books {
+    top: 62%;
+  }
+
+  .hero-faith-window {
+    top: 53%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-faith-window {
+    transform: none;
+    transition: none;
+  }
+}
