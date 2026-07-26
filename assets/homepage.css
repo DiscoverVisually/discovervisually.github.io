@@ -714,21 +714,32 @@ h2 em {
 }
 
 .reader-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
   gap: 16px;
+  min-height: 500px;
 }
 
 .reader-card {
   position: relative;
-  min-height: 375px;
+  min-width: 0;
+  min-height: 500px;
   padding: 28px;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
   border: 1px solid var(--line-dark);
   isolation: isolate;
+  transition:
+    flex-grow 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 220ms ease;
+}
+
+.reader-card:hover,
+.reader-card:focus-visible {
+  flex-grow: 2;
+  border-color: rgba(229, 201, 141, 0.58);
 }
 
 .reader-art {
@@ -779,7 +790,7 @@ h2 em {
 }
 
 .reader-copy {
-  max-width: 440px;
+  width: min(350px, calc(100vw - 96px));
   display: flex;
   flex-direction: column;
 }
@@ -795,20 +806,44 @@ h2 em {
 
 .reader-copy strong {
   margin-bottom: 10px;
-  font: 500 32px / 1.08 var(--serif);
+  font: 500 clamp(25px, 2.3vw, 34px) / 1.08 var(--serif);
 }
 
 .reader-copy > span {
+  max-width: 290px;
   color: rgba(255, 255, 255, 0.7);
   font-size: 13px;
+  line-height: 1.55;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease 80ms,
+    transform 260ms ease 80ms;
+}
+
+.reader-card:hover .reader-copy > span,
+.reader-card:focus-visible .reader-copy > span {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .reader-action {
-  align-self: flex-end;
+  align-self: flex-start;
   padding: 12px 0 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.42);
   font-size: 11px;
   font-weight: 600;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease 120ms,
+    transform 260ms ease 120ms;
+}
+
+.reader-card:hover .reader-action,
+.reader-card:focus-visible .reader-action {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .reader-action b {
@@ -1076,6 +1111,22 @@ footer nav a:hover {
   .catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 58px;
+  }
+
+  .reader-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+
+  .reader-card {
+    min-height: 390px;
+  }
+
+  .reader-copy > span,
+  .reader-action {
+    opacity: 1;
+    transform: none;
   }
 
   .catalog-meta h3,
