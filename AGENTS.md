@@ -21,6 +21,8 @@ GitHub Pages site.
    outside the published roots.
 5. Preserve mobile, keyboard, and reduced-motion behavior.
 6. Run `npm run validate` and `git diff --check` before publishing.
+7. Keep the homepage on exactly one CSS and one JavaScript entrypoint; do not
+   add historical patch layers back into `index.html`.
 
 ## Design direction
 

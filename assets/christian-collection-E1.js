@@ -21,11 +21,24 @@
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const verdictTrigger = document.querySelector(".verdict-trigger");
   const verdict = document.querySelector("#verdict-one");
+  const heroVolumes = [...document.querySelectorAll(".hero-volume")];
 
   verdictTrigger?.addEventListener("click", () => {
     const open = verdictTrigger.getAttribute("aria-expanded") !== "true";
     verdictTrigger.setAttribute("aria-expanded", String(open));
     if (verdict) verdict.hidden = !open;
+  });
+
+  heroVolumes.forEach((book) => {
+    book.addEventListener("click", (event) => {
+      if (finePointer.matches || book.classList.contains("is-open")) return;
+      event.preventDefault();
+      heroVolumes.forEach((volume) => volume.classList.toggle("is-open", volume === book));
+    });
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (event.target.closest(".hero-volume")) return;
+    heroVolumes.forEach((book) => book.classList.remove("is-open"));
   });
 
   if (!reducedMotion.matches) {

@@ -19,7 +19,10 @@ The deployment publishes only:
 ## Key files
 
 - `index.html` — homepage and its active asset references
-- `assets/` — homepage styles, interactions, fonts, and editorial imagery
+- `assets/homepage.css` — the single active homepage style bundle
+- `assets/homepage.js` — the single active homepage interaction bundle
+- `assets/christian-collection-E1.css` / `.js` — isolated Christian category layer
+- `assets/` — shared editorial imagery
 - `books/` — public book detail pages and book covers
 - `collections/` — public category pages
 - `scripts/validate-site.mjs` — checks publish roots, local references, and

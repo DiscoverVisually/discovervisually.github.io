@@ -1,3 +1,208 @@
+      (() => {
+        const title = "Discover Visually — Books Made to Be Explored";
+        const description = "Beautifully visual books created to inspire curiosity, faith and imagination.";
+        const applyMetadata = () => {
+          document.title = title;
+          const meta = document.querySelector('meta[name="description"]');
+          if (meta) meta.setAttribute("content", description);
+        };
+        const initCursor = () => {
+          if (!matchMedia("(pointer: fine)").matches || document.querySelector(".book-cursor")) return;
+          const cursor = document.createElement("div");
+          cursor.className = "book-cursor";
+          cursor.setAttribute("aria-hidden", "true");
+          cursor.textContent = "OPEN";
+          document.body.appendChild(cursor);
+          document.addEventListener("pointermove", (event) => {
+            cursor.style.left = event.clientX + "px";
+            cursor.style.top = event.clientY + "px";
+            cursor.classList.toggle("is-visible", Boolean(event.target.closest(".float-book")));
+          }, { passive: true });
+        };
+        const initPage = () => {
+          if (document.documentElement.dataset.dvFoundationReady) return;
+          document.documentElement.dataset.dvFoundationReady = "true";
+          const menuButton = document.querySelector(".menu-button");
+          const menu = document.querySelector("#primary-nav");
+          if (menuButton && menu && !menuButton.dataset.bound) {
+            menuButton.dataset.bound = "true";
+            const setMenu = (open) => {
+              menu.classList.toggle("nav-open", open);
+              menuButton.setAttribute("aria-expanded", String(open));
+              document.body.classList.toggle("mobile-menu-open", open);
+            };
+            menuButton.addEventListener("click", () => setMenu(!menu.classList.contains("nav-open")));
+            menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+            document.addEventListener("keydown", (event) => {
+              if (event.key === "Escape") setMenu(false);
+            });
+          }
+
+          const story = document.querySelector(".book-story");
+          let frame = 0;
+          const updateScrollEffects = () => {
+            frame = 0;
+            document.documentElement.style.setProperty("--page-y", `${window.scrollY}px`);
+            if (!story) return;
+            const rect = story.getBoundingClientRect();
+            const range = Math.max(1, story.offsetHeight - window.innerHeight);
+            const progress = Math.min(1, Math.max(0, -rect.top / range));
+            story.style.setProperty("--open", progress.toFixed(3));
+          };
+          const requestScrollUpdate = () => {
+            if (!frame) frame = requestAnimationFrame(updateScrollEffects);
+          };
+          updateScrollEffects();
+          addEventListener("scroll", requestScrollUpdate, { passive: true });
+          addEventListener("resize", requestScrollUpdate, { passive: true });
+        };
+        applyMetadata();
+        initPage();
+        addEventListener("load", () => {
+          setTimeout(applyMetadata, 0);
+          setTimeout(applyMetadata, 1200);
+          setTimeout(initCursor, 800);
+          setTimeout(initPage, 0);
+        }, { once: true });
+      })();
+      (() => {
+        const start = () => setTimeout(() => {
+          const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+          document.querySelectorAll(".portal").forEach((portal) => {
+            if (portal.dataset.motionBound) return;
+            portal.dataset.motionBound = "true";
+            const image = portal.querySelector(".portal-image");
+            if (!image) return;
+            portal.addEventListener("pointermove", (event) => {
+              if (reducedMotion.matches || event.pointerType === "touch") return;
+              const rect = portal.getBoundingClientRect();
+              const x = (event.clientX - rect.left) / rect.width;
+              const y = (event.clientY - rect.top) / rect.height;
+              image.style.setProperty("--mx", `${(x - 0.5) * -12}px`);
+              image.style.setProperty("--my", `${(y - 0.5) * -10}px`);
+              portal.style.setProperty("--glow-x", `${x * 100}%`);
+              portal.style.setProperty("--glow-y", `${y * 100}%`);
+            });
+            portal.addEventListener("pointerleave", () => {
+              image.style.setProperty("--mx", "0px");
+              image.style.setProperty("--my", "0px");
+              portal.style.setProperty("--glow-x", "50%");
+              portal.style.setProperty("--glow-y", "42%");
+            });
+          });
+        }, 1200);
+        if (document.readyState === "complete") start();
+        else window.addEventListener("load", start, { once: true });
+      })();
+(() => {
+  const MOBILE = "(max-width: 760px)";
+  const ready = () => {
+    if (!matchMedia(MOBILE).matches || document.documentElement.dataset.dvMobileReady) return;
+    document.documentElement.dataset.dvMobileReady = "true";
+
+    const header = document.querySelector(".site-header");
+    const menu = header?.querySelector("nav");
+    const menuButton = header?.querySelector(".menu-button");
+    if (menu && menuButton) {
+      const syncMenu = () => document.body.classList.toggle("mobile-menu-open", menu.classList.contains("nav-open"));
+      menuButton.addEventListener("click", () => requestAnimationFrame(syncMenu));
+      menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => document.body.classList.remove("mobile-menu-open")));
+
+      if (!menu.querySelector(".mobile-menu-books")) {
+        const shelf = document.createElement("div");
+        shelf.className = "mobile-menu-books";
+        shelf.innerHTML = `
+          <a href="/books/pompeii-the-last-day.html" aria-label="Explore Pompeii"><img src="/books/pompeii-cover.webp" alt=""></a>
+          <a href="/books/women-of-the-bible-for-today.html" aria-label="Explore Women of the Bible"><img src="/books/women-of-the-bible.webp" alt=""></a>
+          <a href="/books/the-ultimate-romantasy-yearbook.html" aria-label="Explore Romantasy Yearbook"><img src="/books/romantasy-yearbook.webp" alt=""></a>
+          <span>Tap a cover</span>`;
+        menu.appendChild(shelf);
+      }
+    }
+
+    const hero = document.querySelector(".hero");
+    if (hero && !hero.querySelector(".mobile-tap-hint")) {
+      const hint = document.createElement("div");
+      hint.className = "mobile-tap-hint";
+      hint.textContent = "Tap a cover to explore";
+      hero.appendChild(hint);
+    }
+
+    const addCarousel = (scroller, total, label) => {
+      if (!scroller || scroller.nextElementSibling?.classList.contains("mobile-carousel-meta")) return;
+      const meta = document.createElement("div");
+      meta.className = "mobile-carousel-meta";
+      meta.innerHTML = `<span>${label}</span><span class="carousel-track"><i></i></span><b>01 / ${String(total).padStart(2, "0")}</b>`;
+      scroller.after(meta);
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const items = [...scroller.children];
+        const center = scroller.scrollLeft + scroller.clientWidth / 2;
+        let active = 0;
+        let distance = Infinity;
+        items.forEach((item, index) => {
+          const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+          if (Math.abs(itemCenter - center) < distance) { distance = Math.abs(itemCenter - center); active = index; }
+        });
+        meta.querySelector("b").textContent = `${String(active + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+        meta.style.setProperty("--carousel-progress", `${((active + 1) / total) * 100}%`);
+      };
+      scroller.addEventListener("scroll", () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+      update();
+    };
+    addCarousel(document.querySelector(".portal-grid"), 4, "Swipe worlds");
+    addCarousel(document.querySelector(".book-gallery"), 3, "Swipe books");
+
+    const story = document.querySelector(".book-story");
+    const sticky = story?.querySelector(".book-sticky");
+    if (story && sticky && !sticky.querySelector(".mobile-brand-pillars")) {
+      const source = story.querySelectorAll(".inside-pillars li");
+      const pillars = document.createElement("div");
+      pillars.className = "mobile-brand-pillars";
+      pillars.innerHTML = `<p>What makes us different</p>${[...source].map((item) => {
+        const number = item.querySelector(":scope > span")?.textContent || "";
+        const title = item.querySelector("strong")?.textContent || "";
+        const copy = item.querySelector("p")?.textContent || "";
+        return `<div class="mobile-brand-card"><span>${number}</span><div><strong>${title}</strong><p>${copy}</p></div></div>`;
+      }).join("")}<a class="mobile-brand-cta" href="#featured">Explore our books →</a>`;
+      sticky.appendChild(pillars);
+      const reveal = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) story.classList.add("mobile-open"); });
+      }, { threshold: .22 });
+      reveal.observe(story);
+    }
+
+    if (!document.querySelector(".mobile-conversion-bar")) {
+      const bar = document.createElement("a");
+      bar.className = "mobile-conversion-bar";
+      bar.href = "#featured";
+      bar.innerHTML = `<span>Explore the books</span><b>→</b>`;
+      document.body.appendChild(bar);
+      const sections = [
+        [document.querySelector("#worlds"), "Browse the collections", "#worlds"],
+        [story, "Explore our books", "#featured"],
+        [document.querySelector("#featured"), "View selected books", "#featured"],
+        [document.querySelector("#manifesto"), "Meet Discover Visually", "#manifesto"]
+      ].filter(([section]) => section);
+      const updateBar = () => {
+        const heroBottom = hero?.getBoundingClientRect().bottom ?? 1;
+        const newsletter = document.querySelector("#newsletter")?.getBoundingClientRect();
+        const visible = heroBottom < 0 && (!newsletter || newsletter.top > innerHeight * .72);
+        bar.classList.toggle("is-visible", visible);
+        let active = sections[0];
+        sections.forEach((entry) => { if (entry[0].getBoundingClientRect().top < innerHeight * .48) active = entry; });
+        if (active) { bar.querySelector("span").textContent = active[1]; bar.href = active[2]; }
+      };
+      addEventListener("scroll", updateBar, { passive: true });
+      updateBar();
+    }
+  };
+
+  const start = () => setTimeout(ready, 1350);
+  if (document.readyState === "complete") start();
+  else addEventListener("load", start, { once: true });
+})();
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -419,4 +624,143 @@
     if (event.key !== "Escape") return;
     $$(".dv-modal.is-open").forEach(closeModal);
   });
+})();
+(() => {
+  const spreads = {
+    "cover-pompeii": {
+      src: "/assets/spread-pompeii.webp",
+      alt: "Interior spread from Pompeii: The Last Day showing the eruption of Vesuvius"
+    },
+    "cover-women": {
+      src: "/assets/spread-women-of-the-bible.webp",
+      alt: "Interior spread from Women of the Bible for Today featuring Ruth"
+    },
+    "cover-romantasy": {
+      src: "/assets/spread-romantasy-yearbook.webp",
+      alt: "Interior spread from The Ultimate Romantasy Yearbook about war colleges and dragon bonds"
+    }
+  };
+
+  const coarsePointer = matchMedia("(hover: none), (pointer: coarse)");
+  const heroBooks = [...document.querySelectorAll(".hero .float-book")];
+  if (!heroBooks.length) return;
+
+  const closeBooks = (except = null) => {
+    heroBooks.forEach((book) => {
+      if (book === except) return;
+      book.classList.remove("is-open");
+      book.setAttribute("aria-expanded", "false");
+    });
+  };
+
+  heroBooks.forEach((book) => {
+    const key = Object.keys(spreads).find((className) => book.classList.contains(className));
+    const cover = book.querySelector(":scope > img");
+    if (!key || !cover || book.dataset.openBookReady) return;
+
+    book.dataset.openBookReady = "true";
+    book.classList.add("dv-openable");
+    book.setAttribute("aria-expanded", "false");
+
+    const spread = document.createElement("span");
+    spread.className = "hero-book-spread";
+    spread.setAttribute("aria-hidden", "true");
+    spread.innerHTML = `<img src="${spreads[key].src}" alt="${spreads[key].alt}" loading="lazy" decoding="async">`;
+
+    const lid = document.createElement("span");
+    lid.className = "hero-cover-lid";
+    lid.setAttribute("aria-hidden", "true");
+    const back = document.createElement("span");
+    back.className = "hero-cover-back";
+    lid.append(back, cover);
+
+    book.prepend(spread);
+    book.append(lid);
+
+    book.addEventListener("click", (event) => {
+      if (!coarsePointer.matches) return;
+      if (!book.classList.contains("is-open")) {
+        event.preventDefault();
+        closeBooks(book);
+        book.classList.add("is-open");
+        book.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    book.addEventListener("focus", () => {
+      if (coarsePointer.matches) return;
+      closeBooks(book);
+      book.classList.add("is-open");
+      book.setAttribute("aria-expanded", "true");
+    });
+
+    book.addEventListener("blur", () => {
+      if (coarsePointer.matches) return;
+      book.classList.remove("is-open");
+      book.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!coarsePointer.matches || event.target.closest(".hero .float-book")) return;
+    closeBooks();
+  }, { passive: true });
+
+  const hint = document.querySelector(".mobile-tap-hint");
+  if (hint) hint.textContent = "Tap to look inside · tap again to explore";
+
+  const warmSpreads = () => {
+    Object.values(spreads).forEach(({ src }) => {
+      const image = new Image();
+      image.src = src;
+    });
+  };
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(warmSpreads, { timeout: 2200 });
+  } else {
+    setTimeout(warmSpreads, 1400);
+  }
+})();
+(() => {
+  const gallery = document.querySelector(".book-gallery");
+  const controls = document.querySelector(".gallery-controls");
+  if (!gallery || !controls) return;
+
+  const cards = [...gallery.querySelectorAll(".book-card-shell")];
+  const current = controls.querySelector("b");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  const nearestCardIndex = () => {
+    const galleryCenter = gallery.scrollLeft + gallery.clientWidth / 2;
+    let nearest = 0;
+    let distance = Infinity;
+    cards.forEach((card, index) => {
+      const center = card.offsetLeft + card.offsetWidth / 2;
+      const nextDistance = Math.abs(center - galleryCenter);
+      if (nextDistance < distance) {
+        distance = nextDistance;
+        nearest = index;
+      }
+    });
+    return nearest;
+  };
+
+  const updateCount = () => {
+    if (current) current.textContent = String(nearestCardIndex() + 1).padStart(2, "0");
+  };
+
+  const move = (direction) => {
+    const next = Math.max(0, Math.min(cards.length - 1, nearestCardIndex() + direction));
+    cards[next]?.scrollIntoView({
+      behavior: reduced.matches ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center"
+    });
+  };
+
+  controls.querySelector(".gallery-prev")?.addEventListener("click", () => move(-1));
+  controls.querySelector(".gallery-next")?.addEventListener("click", () => move(1));
+  gallery.addEventListener("scroll", () => requestAnimationFrame(updateCount), { passive: true });
+  addEventListener("resize", updateCount, { passive: true });
+  updateCount();
 })();
