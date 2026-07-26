@@ -4116,7 +4116,7 @@ body.dv-modal-open {
 
 .book-gallery {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   gap: clamp(16px, 2.1vw, 34px);
   margin: 0;
@@ -4150,6 +4150,53 @@ body.dv-modal-open {
   height: 100%;
   object-fit: fill;
   display: block;
+}
+
+.book-card-shell .cover-visual-bible {
+  aspect-ratio: 1;
+  width: min(82%, 270px);
+  margin-top: clamp(16px, 2vw, 30px);
+  margin-bottom: clamp(28px, 3vw, 46px);
+}
+
+.homepage-visual-bible-cover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 8%;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background:
+    radial-gradient(circle at 68% 24%, rgba(216,181,107,.95) 0 1.5%, transparent 1.7%),
+    radial-gradient(circle at 34% 62%, rgba(216,181,107,.3), transparent 2%),
+    linear-gradient(145deg,#183d4a,#0d202d 62%,#2e4050);
+  border: 1px solid rgba(216,181,107,.45);
+  box-shadow: inset 7px 0 14px rgba(0,0,0,.32);
+}
+
+.homepage-visual-bible-cover::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border: 1px solid rgba(216,181,107,.42);
+}
+
+.homepage-visual-bible-cover small,
+.homepage-visual-bible-cover strong,
+.homepage-visual-bible-cover > i,
+.homepage-visual-bible-cover > b { position: relative; z-index: 1; }
+.homepage-visual-bible-cover small { font-size: clamp(5px,.42vw,8px); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.homepage-visual-bible-cover strong { margin: auto 0 6%; font: 400 clamp(26px,2.7vw,47px)/.79 var(--serif); letter-spacing: -.055em; }
+.homepage-visual-bible-cover strong em { color: #d6b26a; font-weight: 400; }
+.homepage-visual-bible-cover > i { width: 36%; height: 1px; background: #d6b26a; }
+.homepage-visual-bible-cover > b { margin-top: 8%; font-size: clamp(5px,.42vw,8px); letter-spacing: .18em; text-transform: uppercase; }
+
+.preview-page.visual-bible-infographic {
+  background:
+    radial-gradient(circle at 66% 33%, rgba(213,177,104,.9) 0 2%, transparent 2.2%),
+    repeating-radial-gradient(circle at 66% 33%, transparent 0 42px, rgba(213,177,104,.24) 43px, transparent 45px),
+    linear-gradient(145deg,#194553,#0b2230 70%);
 }
 
 .book-card-shell .book-eyebrow {

@@ -152,7 +152,7 @@
       update();
     };
     addCarousel(document.querySelector(".portal-grid"), 4, "Swipe worlds");
-    addCarousel(document.querySelector(".book-gallery"), 3, "Swipe books");
+    addCarousel(document.querySelector(".book-gallery"), 4, "Swipe books");
 
     const story = document.querySelector(".book-story");
     const sticky = story?.querySelector(".book-sticky");
@@ -393,6 +393,21 @@
         ["The tropes readers know", "Choose your obsession", "Enemies, fated mates and forbidden power become a playful field guide for readers.", "Name the trope. Remember the feeling."],
         ["A shelf through time", "The books that shaped it", "A year-by-year journey captures how romantasy grew into a global reading culture.", "A keepsake for the stories that stayed with us."]
       ]
+    },
+    {
+      key: "visual-bible",
+      title: "The Visual Bible",
+      url: "/books/visual-bible.html",
+      cover: "",
+      visual: "",
+      visualClass: "visual-bible-infographic",
+      kicker: "Visual Bible guide · Christian",
+      description: "A clear visual companion to the Bible and Christianity through infographics, timelines, maps and reconstructions.",
+      spreads: [
+        ["The story at a glance", "See the big picture", "A visual route through the structure, books and central story of Scripture.", "The whole Bible becomes easier to navigate when you can see how it connects."],
+        ["People and events in time", "Follow the timeline", "Biblical and church-history timelines turn scattered names and dates into a sequence.", "Give history a shape you can remember."],
+        ["Land, journeys and sacred spaces", "Step inside the context", "Maps and visual reconstructions add the places that are easy to lose in text alone.", "Where the story happens changes how you understand it."]
+      ]
     }
   ];
 
@@ -419,8 +434,10 @@
     $(".preview-head span", previewModal).textContent = activeBook.kicker;
     $("#preview-title", previewModal).textContent = activeBook.title;
     $(".preview-head p", previewModal).textContent = activeBook.description;
+    const visualClass = activeBook.visualClass || "";
+    const visualStyle = activeBook.visual ? ` style="background-image:url('${activeBook.visual}')"` : "";
     $(".preview-spread", previewModal).innerHTML = `
-      <div class="preview-page visual" style="background-image:url('${activeBook.visual}')"><strong>${spread[0]}</strong></div>
+      <div class="preview-page visual ${visualClass}"${visualStyle}><strong>${spread[0]}</strong></div>
       <div class="preview-page copy"><small>Look closer · ${String(activeSpread + 1).padStart(2, "0")}</small><h3>${spread[1]}</h3><p>${spread[2]}</p><i>${spread[3]}</i></div>`;
     $(".preview-dots", previewModal).innerHTML = activeBook.spreads.map((_, index) =>
       `<button type="button" class="${index === activeSpread ? "is-active" : ""}" aria-label="Show spread ${index + 1}"></button>`
