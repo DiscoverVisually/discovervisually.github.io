@@ -70,6 +70,29 @@ for (const relativePath of files) {
   }
 }
 
+const homepage = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const homepageAssets = [
+  homepage,
+  fs.readFileSync(path.join(root, "assets/homepage.css"), "utf8"),
+  fs.readFileSync(path.join(root, "assets/homepage.js"), "utf8")
+].join("\n");
+const homepageStyles = [...homepage.matchAll(/<link[^>]+rel=["']stylesheet["'][^>]*>/g)];
+const homepageScripts = [...homepage.matchAll(/<script[^>]+src=["'][^"']+["'][^>]*>/g)];
+const retiredHomepagePattern =
+  /(?:hero-faith-window|hero-art-(?:back|front)|hero-orbit|book-story|custom-cursor|chapter-rail)/;
+
+if (retiredHomepagePattern.test(homepageAssets)) {
+  failures.push("homepage: retired hero or scroll layer returned");
+}
+
+if (homepageStyles.length !== 1) {
+  failures.push(`index.html: expected one stylesheet entrypoint, found ${homepageStyles.length}`);
+}
+
+if (homepageScripts.length !== 1) {
+  failures.push(`index.html: expected one JavaScript entrypoint, found ${homepageScripts.length}`);
+}
+
 if (failures.length) {
   console.error("Site validation failed:");
   failures.forEach((failure) => console.error(`- ${failure}`));

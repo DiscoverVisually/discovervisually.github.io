@@ -4,397 +4,508 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Discover Visually — Books Made to Be Explored</title>
-    <meta name="description" content="Beautifully visual books created to inspire curiosity, faith and imagination." />
+    <meta
+      name="description"
+      content="Explore beautifully visual books created to inspire curiosity, faith and imagination."
+    />
+    <meta name="theme-color" content="#091621" />
     <link rel="canonical" href="https://discovervisually.github.io/" />
     <link rel="icon" href="/favicon.svg" />
-    <link rel="stylesheet" href="/assets/homepage.css?v=20260726r1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Discover Visually" />
+    <meta property="og:title" content="Discover Visually — Books Made to Be Explored" />
+    <meta
+      property="og:description"
+      content="Beautifully visual books created to inspire curiosity, faith and imagination."
+    />
+    <meta property="og:url" content="https://discovervisually.github.io/" />
+    <meta
+      property="og:image"
+      content="https://discovervisually.github.io/assets/cabinet-of-worlds-hero.webp"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/assets/homepage.css?v=20260726r2" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://discovervisually.github.io/#organization",
+            "name": "Discover Visually",
+            "url": "https://discovervisually.github.io/",
+            "description": "An independent publishing studio creating immersive, full-color visual books."
+          },
+          {
+            "@type": "ItemList",
+            "name": "Discover Visually books",
+            "numberOfItems": 4,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "url": "https://discovervisually.github.io/books/women-of-the-bible-for-today.html",
+                "item": {
+                  "@type": "Book",
+                  "name": "Women of the Bible for Today",
+                  "bookFormat": "https://schema.org/Paperback",
+                  "inLanguage": "en"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "url": "https://discovervisually.github.io/books/visual-bible.html",
+                "item": {
+                  "@type": "Book",
+                  "name": "The Visual Bible",
+                  "author": { "@type": "Person", "name": "B. B. Sterling" },
+                  "bookFormat": "https://schema.org/Paperback",
+                  "inLanguage": "en"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "url": "https://discovervisually.github.io/books/pompeii-the-last-day.html",
+                "item": {
+                  "@type": "Book",
+                  "name": "Pompeii: The Last Day",
+                  "inLanguage": "en"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "url": "https://discovervisually.github.io/books/the-ultimate-romantasy-yearbook.html",
+                "item": {
+                  "@type": "Book",
+                  "name": "The Ultimate Romantasy Yearbook",
+                  "inLanguage": "en"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
-  <body
-    class="__variable_geist_0tvmz3h __variable_geist_mono_1diim1n antialiased"
-  >
-    <main>
-      <header class="site-header">
-        <a href="#top" class="brand" aria-label="Discover Visually home"
-          ><span class="brand-mark" aria-hidden="true"><i></i><i></i></span
-          ><span>Discover <b>Visually</b></span></a
-        ><button
-          class="menu-button"
-          aria-expanded="false"
-          aria-controls="primary-nav"
-        >
-          <span></span><span></span
-          ><span class="sr-only">Toggle navigation</span>
-        </button>
-        <nav id="primary-nav" class="" aria-label="Primary navigation">
-          <a href="#worlds">Collections</a><a href="#featured">Books</a
-          ><a href="#manifesto">Our story</a
-          ><a href="#newsletter" class="nav-cta">Join the reader list <span>↗</span></a>
-        </nav>
-      </header>
-      <section id="top" class="hero">
-        <div class="hero-art hero-art-back"></div>
-        <div class="hero-art hero-art-front"></div>
-        <div class="hero-faith-window" aria-hidden="true"></div>
-        <div class="hero-orbit orbit-one"></div>
-        <div class="hero-orbit orbit-two"></div>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a href="#top" class="brand" aria-label="Discover Visually home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span>Discover <b>Visually</b></span>
+      </a>
+      <button
+        class="menu-button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        data-menu-button
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav id="primary-nav" aria-label="Primary navigation" data-navigation>
+        <a href="#catalog">Books</a>
+        <a href="#readers">Collections</a>
+        <a href="#approach">Our approach</a>
+        <a href="#reader-list" class="nav-cta">Reader list <span>↘</span></a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section id="top" class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="kicker">
-            <span></span> An independent visual publishing house
-          </p>
-          <h1>Stories you don’t just read. <em>You enter.</em></h1>
+          <p class="kicker"><span></span>An independent visual publishing house</p>
+          <h1 id="hero-title">Stories you don’t just read. <em>You enter.</em></h1>
           <p class="hero-intro">
             Beautifully visual books created to inspire curiosity, faith and
             imagination.
           </p>
           <div class="hero-actions">
-            <a class="button button-light" href="#featured"
-              >Discover the books <span>↘</span></a
-            ><a class="text-link" href="#worlds"
-              >Browse by reader <span>→</span></a
-            >
+            <a class="button button-light" href="#catalog">
+              Explore the books <span>↘</span>
+            </a>
+            <a class="text-link" href="#readers">
+              Browse by reader <span>→</span>
+            </a>
           </div>
-          <a class="hero-reader-list" href="#newsletter" aria-label="Join the Discover Visually reader mailing list">
-            <span class="hero-reader-list-mark" aria-hidden="true">✦</span>
-            <span class="hero-reader-list-copy">
-              <b>The reader’s list</b>
-              <small>Early previews, new releases and beautiful pages—only a few thoughtful emails a year.</small>
-            </span>
-            <span class="hero-reader-list-action">Join free <i>↘</i></span>
-          </a>
         </div>
-        <div class="hero-books" aria-label="Featured books">
-          <a href="/books/pompeii-the-last-day.html" class="float-book float-book-one cover-pompeii" aria-label="Explore Pompeii: The Last Day">
-            <img src="/books/pompeii-cover.webp" alt="Pompeii: The Last Day book cover" />
-          </a>
-          <a href="/books/women-of-the-bible-for-today.html" class="float-book float-book-two cover-women" aria-label="Explore Women of the Bible for Today">
-            <img src="/books/women-of-the-bible.webp" alt="Women of the Bible for Today book cover" />
-          </a>
-          <a href="/books/the-ultimate-romantasy-yearbook.html" class="float-book float-book-three cover-romantasy" aria-label="Explore The Ultimate Romantasy Yearbook">
-            <img src="/books/romantasy-yearbook.webp" alt="The Ultimate Romantasy Yearbook book cover" />
-          </a>
-        </div>
-        <div class="scroll-cue"><span>Scroll to discover</span><i></i></div>
-      </section>
-      <aside class="trust-strip" aria-label="What makes Discover Visually books special">
-        <span>Independently created</span>
-        <span>Full-color interiors</span>
-        <span>Thoughtfully researched</span>
-        <span>Made for gifting</span>
-      </aside>
-      <section id="worlds" class="worlds section-pad">
-        <div class="section-heading">
-          <p class="eyebrow">Browse by reader</p>
-          <h2>Who are you<br /><em>choosing for?</em></h2>
-          <p>
-            Find the visual world that feels as though it was made especially
-            for them.
-          </p>
-        </div>
-        <div class="portal-grid" aria-label="Browse books by reader">
-          <a href="/collections/christian/" class="portal portal-christian"
-            ><div class="portal-image"></div>
-            <span class="portal-number">01</span>
-            <div class="portal-copy">
-              <span class="portal-category">Christian</span>
-              <h3>For a faith-filled heart</h3>
-              <p>Faith, history and human stories made vivid.</p>
-            </div>
-            <span class="portal-open">Explore books <b>↗</b></span></a
-          ><a href="#featured" class="portal portal-children"
-            ><div class="portal-image"></div>
-            <span class="portal-number">02</span>
-            <div class="portal-copy">
-              <span class="portal-category">For Children</span>
-              <h3>For a curious child</h3>
-              <p>Big adventures for young readers to step inside.</p>
-            </div>
-            <span class="portal-open">Explore books <b>↗</b></span></a
-          ><a href="#featured" class="portal portal-women"
-            ><div class="portal-image"></div>
-            <span class="portal-number">03</span>
-            <div class="portal-copy">
-              <span class="portal-category">For Women</span>
-              <h3>For her next quiet moment</h3>
-              <p>Reflection, courage and connection, beautifully told.</p>
-            </div>
-            <span class="portal-open">Explore books <b>↗</b></span></a
-          ><a href="#featured" class="portal portal-educational"
-            ><div class="portal-image"></div>
-            <span class="portal-number">04</span>
-            <div class="portal-copy">
-              <span class="portal-category">Educational</span>
-              <h3>For an endlessly curious mind</h3>
-              <p>Knowledge made vivid, memorable and worth exploring.</p>
-            </div>
-            <span class="portal-open">Explore books <b>↗</b></span></a
+
+        <div class="hero-stage" aria-label="Three featured Discover Visually books">
+          <a
+            class="hero-book hero-book-pompeii"
+            href="/books/pompeii-the-last-day.html"
+            aria-label="Explore Pompeii: The Last Day"
           >
-        </div>
-      </section>
-      <section class="book-story">
-        <div class="book-sticky">
-          <div class="book-story-copy copy-left">
-            <span>More than decoration</span>
-            <h3>Made to be<br />looked into.</h3>
-          </div>
-          <div
-            class="opening-book"
-            aria-label="An illustrated book opening as you scroll"
+            <img
+              src="/books/pompeii-cover.webp"
+              alt="Pompeii: The Last Day book cover"
+            />
+            <span>Coming soon</span>
+          </a>
+          <a
+            class="hero-book hero-book-women"
+            href="/books/women-of-the-bible-for-today.html"
+            aria-label="Explore Women of the Bible for Today"
           >
-            <div class="book-shadow"></div>
-            <div class="book-page page-left">
-              <div class="inside-page inside-page-left">
-                <span class="inside-eyebrow">Our point of view</span>
-                <h4>We make the books<br />we couldn’t find.</h4>
-                <p>
-                  Discover Visually is an independent publishing studio creating
-                  immersive, full-color books where story, research and
-                  illustration are designed together.
-                </p>
-                <em>Made to be explored.<br />Made to be kept.</em>
-              </div>
-            </div>
-            <div class="book-page page-right">
-              <div class="inside-page inside-page-right">
-                <ol class="inside-pillars">
-                  <li>
-                    <span>01</span>
-                    <div>
-                      <strong>Visual from the first idea</strong>
-                      <p>Every book begins with how the story could be seen.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span>02</span>
-                    <div>
-                      <strong>Made with heart</strong>
-                      <p>We create the books we genuinely care about—following the ideas that excite us.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span>03</span>
-                    <div>
-                      <strong>Independent by design</strong>
-                      <p>We follow curiosity and give every book its own visual world.</p>
-                    </div>
-                  </li>
-                </ol>
-                <div class="inside-proof">
-                  Full-color · Thoughtfully researched · Independently published
-                </div>
-                <a href="#featured">Explore our books <b>→</b></a>
-              </div>
-            </div>
-            <div class="book-cover">
-              <small>DISCOVER VISUALLY</small><b>OPEN<br />A NEW<br />WORLD</b
-              ><i>VISUAL BOOKS TO EXPLORE</i>
-            </div>
-          </div>
-          <div class="book-story-copy copy-right">
-            <span>Designed with purpose</span>
-            <ul>
-              <li>Richly visual</li>
-              <li>Meaningful storytelling</li>
-              <li>Beautiful to give</li>
-            </ul>
-            <a href="#featured">Look inside our books <b>↗</b></a>
-          </div>
-          <div class="story-progress"><i></i></div>
+            <img
+              src="/books/women-of-the-bible.webp"
+              alt="Women of the Bible for Today book cover"
+            />
+            <span>Available now</span>
+          </a>
+          <a
+            class="hero-book hero-book-romantasy"
+            href="/books/the-ultimate-romantasy-yearbook.html"
+            aria-label="Explore The Ultimate Romantasy Yearbook"
+          >
+            <img
+              src="/books/romantasy-yearbook.webp"
+              alt="The Ultimate Romantasy Yearbook book cover"
+            />
+            <span>In development</span>
+          </a>
         </div>
       </section>
-      <section id="featured" class="featured section-pad">
-        <div class="featured-head">
+
+      <section id="catalog" class="catalog section-pad" aria-labelledby="catalog-title">
+        <div class="catalog-heading">
           <div>
-            <p class="eyebrow">Selected books</p>
-            <h2>Start with<br /><em>these worlds.</em></h2>
+            <p class="eyebrow">Explore our books</p>
+            <h2 id="catalog-title">Find your next<br /><em>visual world.</em></h2>
           </div>
-          <p>
-            Four very different books. One shared belief: the page should make
-            you want to look closer.
-          </p>
+          <div class="catalog-intro">
+            <p>
+              Four different ways to learn, reflect and escape—each designed as
+              a world worth looking into.
+            </p>
+            <ul class="trust-list" aria-label="What makes our books special">
+              <li>Independently created</li>
+              <li>Full-color interiors</li>
+              <li>Thoughtfully researched</li>
+              <li>Made for gifting</li>
+            </ul>
+          </div>
         </div>
-        <div class="book-gallery">
-          <article class="book-card">
-            <a class="display-cover cover-pompeii" href="/books/pompeii-the-last-day.html" aria-label="Explore Pompeii: The Last Day">
-              <img src="/books/pompeii-cover.webp" alt="Pompeii: The Last Day book cover" loading="lazy" />
+
+        <div class="catalog-grid">
+          <article class="catalog-card">
+            <a
+              class="catalog-cover"
+              href="/books/women-of-the-bible-for-today.html"
+              aria-label="Explore Women of the Bible for Today"
+            >
+              <img
+                src="/books/women-of-the-bible.webp"
+                alt="Women of the Bible for Today book cover"
+                loading="lazy"
+              />
+              <span class="status status-available">Available now</span>
             </a>
-            <div class="book-meta">
-              <span>01 / 04</span>
-              <p class="book-eyebrow">History Hunters · Ages 8+</p>
-              <h3>Pompeii: The Last Day</h3>
-              <p>Witness the last 24 hours through maps, science and cinematic visual history.</p>
-              <ul class="book-facts" aria-label="Book details">
-                <li>Ages 8–12</li>
-                <li>72 full-color pages</li>
-                <li>Maps · Infographics · Illustrated scenes</li>
-                <li>Coming soon</li>
-              </ul>
-              <div class="book-actions">
-                <a href="/books/pompeii-the-last-day.html">Book details</a>
-                <a href="#newsletter">Release updates <b>→</b></a>
-              </div>
-            </div>
-          </article>
-          <article class="book-card">
-            <a class="display-cover cover-women" href="/books/women-of-the-bible-for-today.html" aria-label="Explore Women of the Bible for Today">
-              <img src="/books/women-of-the-bible.webp" alt="Women of the Bible for Today book cover" loading="lazy" />
-            </a>
-            <div class="book-meta">
-              <span>02 / 04</span>
-              <p class="book-eyebrow">Visual Bible study · For women</p>
+            <div class="catalog-meta">
+              <p>Visual Bible study · For women</p>
               <h3>Women of the Bible for Today</h3>
-              <p>Meet the women of Scripture through a richly visual study created for modern life.</p>
-              <ul class="book-facts" aria-label="Book details">
-                <li>Full-color interior</li>
-                <li>12 biblical women</li>
-                <li>US Letter paperback</li>
-                <li>Available now</li>
-              </ul>
-              <div class="book-actions">
+              <span>12 biblical women · Full-color paperback</span>
+              <div class="card-actions">
                 <a href="/books/women-of-the-bible-for-today.html">Look inside</a>
-                <a class="amazon-cta" href="https://www.amazon.com/WOMEN-BIBLE-TODAY-Visual-Modern/dp/B0GY3ZJN8S" target="_blank" rel="noopener noreferrer">Buy on Amazon <b>↗</b></a>
+                <a
+                  class="amazon-link"
+                  href="https://www.amazon.com/WOMEN-BIBLE-TODAY-Visual-Modern/dp/B0GY3ZJN8S"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Buy on Amazon <b>↗</b></a>
               </div>
             </div>
           </article>
-          <article class="book-card">
-            <a class="display-cover cover-romantasy" href="/books/the-ultimate-romantasy-yearbook.html" aria-label="Explore The Ultimate Romantasy Yearbook">
-              <img src="/books/romantasy-yearbook.webp" alt="The Ultimate Romantasy Yearbook book cover" loading="lazy" />
-            </a>
-            <div class="book-meta">
-              <span>03 / 04</span>
-              <p class="book-eyebrow">Romantasy · 2005–2026 edition</p>
-              <h3>The Ultimate Romantasy Yearbook</h3>
-              <p>A visual guide to fantasy romance’s biggest books, tropes and reader obsessions.</p>
-              <ul class="book-facts" aria-label="Book details">
-                <li>Visual genre guide</li>
-                <li>2005–2026 edition</li>
-                <li>Books · Tropes · Reader culture</li>
-                <li>In development</li>
-              </ul>
-              <div class="book-actions">
-                <a href="/books/the-ultimate-romantasy-yearbook.html">Book details</a>
-                <a href="#newsletter">Release updates <b>→</b></a>
-              </div>
-            </div>
-          </article>
-          <article class="book-card book-card-visual-bible">
-            <a class="display-cover cover-visual-bible" href="/books/visual-bible.html" aria-label="Explore The Visual Bible">
-              <span class="homepage-visual-bible-cover" aria-hidden="true">
+
+          <article class="catalog-card">
+            <a
+              class="catalog-cover visual-bible-frame"
+              href="/books/visual-bible.html"
+              aria-label="Explore The Visual Bible"
+            >
+              <span class="visual-bible-cover" aria-hidden="true">
                 <small>An illustrated sacred infographic</small>
                 <strong>THE<br /><em>VISUAL</em><br />BIBLE</strong>
                 <i></i>
                 <b>B. B. Sterling</b>
               </span>
+              <span class="status status-available">Available now</span>
             </a>
-            <div class="book-meta">
-              <span>04 / 04</span>
-              <p class="book-eyebrow">Visual Bible guide · Christian</p>
+            <div class="catalog-meta">
+              <p>Visual guide · Christian</p>
               <h3>The Visual Bible</h3>
-              <p>A clear visual companion to the Bible and Christianity through infographics, timelines, maps and reconstructions.</p>
-              <ul class="book-facts" aria-label="Book details">
-                <li>50+ visual guides</li>
-                <li>55 full-color pages</li>
-                <li>8.5-inch square paperback</li>
-                <li>Available now</li>
-              </ul>
-              <div class="book-actions">
+              <span>50+ visual guides · 55 full-color pages</span>
+              <div class="card-actions">
                 <a href="/books/visual-bible.html">Explore the book</a>
-                <a class="amazon-cta" href="https://www.amazon.com/dp/B0GM1LLLQ7" target="_blank" rel="noopener noreferrer">Buy on Amazon <b>↗</b></a>
+                <a
+                  class="amazon-link"
+                  href="https://www.amazon.com/dp/B0GM1LLLQ7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Buy on Amazon <b>↗</b></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="catalog-card">
+            <a
+              class="catalog-cover"
+              href="/books/pompeii-the-last-day.html"
+              aria-label="Explore Pompeii: The Last Day"
+            >
+              <img
+                src="/books/pompeii-cover.webp"
+                alt="Pompeii: The Last Day book cover"
+                loading="lazy"
+              />
+              <span class="status">Coming soon</span>
+            </a>
+            <div class="catalog-meta">
+              <p>Visual history · Ages 8–12</p>
+              <h3>Pompeii: The Last Day</h3>
+              <span>72 full-color pages · Maps and infographics</span>
+              <div class="card-actions">
+                <a href="/books/pompeii-the-last-day.html">Book details</a>
+                <a href="#reader-list">Release updates <b>→</b></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="catalog-card">
+            <a
+              class="catalog-cover"
+              href="/books/the-ultimate-romantasy-yearbook.html"
+              aria-label="Explore The Ultimate Romantasy Yearbook"
+            >
+              <img
+                src="/books/romantasy-yearbook.webp"
+                alt="The Ultimate Romantasy Yearbook book cover"
+                loading="lazy"
+              />
+              <span class="status">In development</span>
+            </a>
+            <div class="catalog-meta">
+              <p>Romantasy · Visual genre guide</p>
+              <h3>The Ultimate Romantasy Yearbook</h3>
+              <span>Books, tropes and reader culture · 2005–2026</span>
+              <div class="card-actions">
+                <a href="/books/the-ultimate-romantasy-yearbook.html">Book details</a>
+                <a href="#reader-list">Release updates <b>→</b></a>
               </div>
             </div>
           </article>
         </div>
-        <div class="gallery-controls" aria-label="Selected books carousel controls">
-          <button type="button" class="gallery-prev" aria-label="Previous book">←</button>
-          <span><b>01</b> / 04</span>
-          <button type="button" class="gallery-next" aria-label="Next book">→</button>
+      </section>
+
+      <section id="readers" class="readers section-pad" aria-labelledby="readers-title">
+        <div class="section-heading">
+          <p class="eyebrow">Browse by reader</p>
+          <h2 id="readers-title">Who are you<br /><em>choosing for?</em></h2>
+          <p>
+            Start with the person, the curiosity or the feeling you want the
+            right book to create.
+          </p>
+        </div>
+
+        <div class="reader-grid">
+          <a class="reader-card reader-christian" href="/collections/christian/">
+            <span class="reader-art" aria-hidden="true"></span>
+            <span class="reader-number">01</span>
+            <span class="reader-copy">
+              <small>Christian</small>
+              <strong>For a faith-filled heart</strong>
+              <span>Faith, history and human stories made vivid.</span>
+            </span>
+            <span class="reader-action">Explore the collection <b>↗</b></span>
+          </a>
+
+          <a class="reader-card reader-children" href="#catalog">
+            <span class="reader-art" aria-hidden="true"></span>
+            <span class="reader-number">02</span>
+            <span class="reader-copy">
+              <small>For Children</small>
+              <strong>For a curious child</strong>
+              <span>Big adventures and history they can step inside.</span>
+            </span>
+            <span class="reader-action">Browse current titles <b>↓</b></span>
+            <span class="reader-note">Collection page coming soon</span>
+          </a>
+
+          <a class="reader-card reader-women" href="#catalog">
+            <span class="reader-art" aria-hidden="true"></span>
+            <span class="reader-number">03</span>
+            <span class="reader-copy">
+              <small>For Women</small>
+              <strong>For her next quiet moment</strong>
+              <span>Reflection, courage and unforgettable new worlds.</span>
+            </span>
+            <span class="reader-action">Browse current titles <b>↓</b></span>
+            <span class="reader-note">Collection page coming soon</span>
+          </a>
+
+          <a class="reader-card reader-educational" href="#catalog">
+            <span class="reader-art" aria-hidden="true"></span>
+            <span class="reader-number">04</span>
+            <span class="reader-copy">
+              <small>Educational</small>
+              <strong>For an endlessly curious mind</strong>
+              <span>Knowledge made visual, memorable and worth exploring.</span>
+            </span>
+            <span class="reader-action">Browse current titles <b>↓</b></span>
+            <span class="reader-note">Collection page coming soon</span>
+          </a>
         </div>
       </section>
-      <section id="manifesto" class="manifesto">
-        <div class="manifesto-image"></div>
-        <div class="manifesto-copy">
-          <p class="eyebrow">Why Discover Visually</p>
-          <h2>Some stories need<br /><em>more than words.</em></h2>
+
+      <section id="spotlight" class="spotlight section-pad" aria-labelledby="spotlight-title">
+        <div class="spotlight-heading">
+          <div>
+            <p class="eyebrow">Inside the books</p>
+            <h2 id="spotlight-title">A closer look<br /><em>between the covers.</em></h2>
+          </div>
           <p>
-            We make books that reward curiosity—where illustration, typography,
-            history and story work together to turn every page into a discovery.
+            Choose a title to open a real interior spread. Every book gets its
+            own visual language.
           </p>
-          <p class="studio-statement">
-            We’re a small independent studio creating the visual books we wish
-            existed—following ideas we care about and shaping every title as its
-            own world.
-          </p>
-          <a href="#newsletter" class="text-link dark-link"
-            >Meet the publishing house <span>→</span></a
-          >
         </div>
-        <div class="manifesto-note">
-          <span>Beautiful enough to give.</span
-          ><span>Interesting enough to keep.</span>
-        </div>
-      </section>
-      <section id="newsletter" class="newsletter section-pad">
-        <div class="newsletter-inner">
-          <p class="eyebrow">The next chapter</p>
-          <h2>Your next unforgettable<br />book <em>starts here.</em></h2>
-          <p>
-            Get thoughtful recommendations, visual previews and first access to
-            new releases. Choose the world you want to hear from.
-          </p>
-          <form>
-            <div class="interest-options" aria-label="Choose an interest">
-              <label
-                ><input
-                  type="radio"
-                  name="interest"
-                  checked=""
-                  value="Christian"
-                /><span>Christian</span></label
-              ><label
-                ><input
-                  type="radio"
-                  name="interest"
-                  value="For Children"
-                /><span>For Children</span></label
-              ><label
-                ><input type="radio" name="interest" value="For Women" /><span
-                  >For Women</span
-                ></label
-              ><label
-                ><input type="radio" name="interest" value="Educational" /><span
-                  >Educational</span
-                ></label
-              >
-            </div>
-            <div class="email-row">
-              <label
-                ><span class="sr-only">Email address</span
-                ><input
-                  required=""
-                  type="email"
-                  placeholder="Your email address" /></label
-              ><button type="submit">
-                Send me recommendations <span>↗</span>
-              </button>
-            </div>
-            <small
-              >Only meaningful updates. Unsubscribe whenever you like.</small
+
+        <div class="spotlight-layout">
+          <div class="spotlight-tabs" role="tablist" aria-label="Choose a book preview">
+            <button
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="spotlight-panel"
+              id="spotlight-tab-women"
+              data-spotlight="women"
             >
-          </form>
+              <span>01</span>
+              <span><small>Available now</small>Women of the Bible for Today</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="spotlight-panel"
+              id="spotlight-tab-pompeii"
+              tabindex="-1"
+              data-spotlight="pompeii"
+            >
+              <span>02</span>
+              <span><small>Coming soon</small>Pompeii: The Last Day</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="spotlight-panel"
+              id="spotlight-tab-romantasy"
+              tabindex="-1"
+              data-spotlight="romantasy"
+            >
+              <span>03</span>
+              <span><small>In development</small>The Ultimate Romantasy Yearbook</span>
+            </button>
+          </div>
+
+          <div
+            id="spotlight-panel"
+            class="spotlight-panel"
+            role="tabpanel"
+            aria-labelledby="spotlight-tab-women"
+            tabindex="0"
+          >
+            <div class="spread-frame">
+              <img
+                src="/assets/spread-women-of-the-bible.webp"
+                alt="Interior spread from Women of the Bible for Today"
+                data-spotlight-image
+                loading="lazy"
+              />
+              <span aria-hidden="true"></span>
+            </div>
+            <div class="spotlight-meta">
+              <div>
+                <small data-spotlight-kicker>Visual Bible study · For women</small>
+                <h3 data-spotlight-title>Stories of faith, seen differently.</h3>
+              </div>
+              <a
+                href="/books/women-of-the-bible-for-today.html"
+                data-spotlight-link
+              >Explore this book <b>↗</b></a>
+            </div>
+          </div>
         </div>
       </section>
-      <footer>
-        <a href="#top" class="brand footer-brand"
-          ><span class="brand-mark" aria-hidden="true"><i></i><i></i></span
-          ><span>Discover <b>Visually</b></span></a
-        >
-        <p>Books made to be seen, explored and remembered.</p>
-        <div>
-          <a href="#worlds">Collections</a><a href="#featured">Books</a
-          ><a href="#manifesto">About</a><a href="#newsletter">Contact</a>
+
+      <section id="approach" class="approach section-pad" aria-labelledby="approach-title">
+        <div class="approach-intro">
+          <p class="eyebrow">Our approach</p>
+          <h2 id="approach-title">We make the books<br /><em>we couldn’t find.</em></h2>
+          <p>
+            Discover Visually is an independent publishing studio where story,
+            research and illustration are designed together from the first idea.
+          </p>
         </div>
-        <span>© 2026 Discover Visually</span>
-      </footer>
+        <ol class="approach-pillars">
+          <li>
+            <span>01</span>
+            <h3>Visual storytelling</h3>
+            <p>Every title begins with how its ideas could be seen, not decorated later.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Thoughtful research</h3>
+            <p>Complex subjects become clear without losing the details that make them fascinating.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Made with heart</h3>
+            <p>We follow the ideas we genuinely care about and give each one its own visual world.</p>
+          </li>
+        </ol>
+        <p class="approach-signoff">
+          Beautiful enough to give. <em>Interesting enough to keep.</em>
+        </p>
+      </section>
+
+      <section id="reader-list" class="reader-list section-pad" aria-labelledby="reader-list-title">
+        <div>
+          <p class="eyebrow">The reader’s list</p>
+          <h2 id="reader-list-title">The next chapter<br /><em>is taking shape.</em></h2>
+        </div>
+        <div class="reader-list-copy">
+          <p>
+            Early previews, thoughtful recommendations and new-release news are
+            coming soon. The reader list is being prepared and will open shortly;
+            until then, explore the books already waiting for you.
+          </p>
+          <a class="button button-dark" href="#catalog">Explore available books <span>↑</span></a>
+        </div>
+      </section>
     </main>
-    <script defer src="/assets/homepage.js?v=20260726r1"></script>
+
+    <footer>
+      <a href="#top" class="brand footer-brand" aria-label="Back to the top">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span>Discover <b>Visually</b></span>
+      </a>
+      <p>Books made to be seen, explored and remembered.</p>
+      <nav aria-label="Footer navigation">
+        <a href="#catalog">Books</a>
+        <a href="#readers">Collections</a>
+        <a href="#approach">Our approach</a>
+        <a href="#reader-list">Reader list</a>
+      </nav>
+      <span>© 2026 Discover Visually</span>
+    </footer>
+
+    <script defer src="/assets/homepage.js?v=20260726r2"></script>
   </body>
 </html>
