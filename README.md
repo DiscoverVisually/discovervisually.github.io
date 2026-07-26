@@ -36,3 +36,12 @@ npm run validate
 ```
 
 The validator requires Node.js only; there are no package dependencies.
+
+## Local preview
+
+```bash
+npm run dev
+```
+
+The preview server also requires Node.js only and serves the static site on
+port 4173 by default.
