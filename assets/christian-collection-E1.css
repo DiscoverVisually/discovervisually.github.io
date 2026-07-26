@@ -1165,6 +1165,55 @@ footer > span { color: rgba(255, 255, 255, 0.3); }
 .catalogue-cover:focus-visible img { transform: scale(1.035); filter: brightness(.88); }
 .catalogue-cover:hover > span,
 .catalogue-cover:focus-visible > span { transform: none; }
+.catalogue-cover-visual-bible {
+  display: grid;
+  place-items: center;
+  padding: 8%;
+  background:
+    radial-gradient(circle at 68% 24%, rgba(220,188,116,.3), transparent 18%),
+    #d8cfbf;
+}
+.catalogue-visual-bible {
+  position: relative !important;
+  inset: auto !important;
+  width: 100%;
+  height: 100%;
+  padding: 9% !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start !important;
+  color: white;
+  background:
+    radial-gradient(circle at 70% 24%, rgba(216,181,107,.9) 0 1.5%, transparent 1.7%),
+    linear-gradient(145deg,#183d4a,#0d202d 62%,#2e4050) !important;
+  border: 1px solid rgba(216,181,107,.42);
+  box-shadow: 0 22px 38px rgba(15,28,37,.28);
+  transform: none !important;
+}
+.catalogue-visual-bible::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border: 1px solid rgba(216,181,107,.42);
+}
+.catalogue-visual-bible small {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(5px,.45vw,8px);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.catalogue-visual-bible strong {
+  position: relative;
+  z-index: 1;
+  margin: auto 0 6%;
+  font: 400 clamp(28px,3vw,48px)/.79 var(--serif);
+  letter-spacing: -.05em;
+}
+.catalogue-visual-bible strong em { color: #d6b26a; font-weight: 400; }
+.catalogue-visual-bible > i { position: relative; z-index: 1; width: 36%; height: 1px; background: #d6b26a; }
+.catalogue-visual-bible > b { position: relative; z-index: 1; margin-top: 8%; font-size: clamp(5px,.45vw,8px); letter-spacing: .18em; text-transform: uppercase; }
 .catalogue-card > p {
   margin: 18px 0 8px;
   color: #9a6945;
