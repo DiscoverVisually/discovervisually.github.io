@@ -26,6 +26,9 @@ publishRoots.forEach(collect);
 const failures = [];
 const localReferencePattern =
   /(?:href|src|content)=["'](\/(?:assets|books|collections)\/[^"'?#]+|\/favicon\.svg)["']|url\(["']?(\/(?:assets|books|collections)\/[^"')?#]+|\/favicon\.svg)/g;
+const anyRootReferencePattern = /url\(["']?(\/[^"')?#]+)|(?:href|src)=["'](\/[^"'?#]+)["']/g;
+const legacyAssetPattern =
+  /(?:index-BDu4K_NV|mobile-experience|experience-suite|hero-(?:cabinet|book-open|conversion|book-focus|compact-faith)|polish-conversion|premium-refinement|living-bookshelf|_vinext_fonts|data-rsc-css-href|vite-rsc)/;
 
 for (const relativePath of files) {
   if (!textExtensions.has(path.extname(relativePath))) continue;
@@ -37,12 +40,32 @@ for (const relativePath of files) {
   if (/__VINEXT_RSC_|codex-preview/.test(contents)) {
     failures.push(`${relativePath}: stale preview/runtime marker`);
   }
+  if (legacyAssetPattern.test(contents)) {
+    failures.push(`${relativePath}: legacy homepage layer or runtime marker`);
+  }
+
+  if (path.extname(relativePath) === ".html") {
+    const ids = [...contents.matchAll(/\sid=["']([^"']+)["']/g)].map((match) => match[1]);
+    const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+    for (const id of new Set(duplicates)) {
+      failures.push(`${relativePath}: duplicate id "${id}"`);
+    }
+  }
 
   for (const match of contents.matchAll(localReferencePattern)) {
     const reference = match[1] || match[2];
     const target = reference.slice(1);
     if (!fs.existsSync(path.join(root, target))) {
       failures.push(`${relativePath}: missing ${reference}`);
+    }
+  }
+
+  for (const match of contents.matchAll(anyRootReferencePattern)) {
+    const reference = match[1] || match[2];
+    if (!reference || reference === "/" || reference.startsWith("//")) continue;
+    const target = reference.slice(1);
+    if (!fs.existsSync(path.join(root, target))) {
+      failures.push(`${relativePath}: missing root reference ${reference}`);
     }
   }
 }
