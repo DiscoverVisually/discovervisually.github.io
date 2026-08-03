@@ -73,6 +73,20 @@
   let active = 0;
   let openProgress = 0;
   let hasOpened = false;
+  let hasCelebratedGallery = false;
+
+  const nudgeAmazon = () => {
+    if (hasCelebratedGallery) return;
+    hasCelebratedGallery = true;
+    const targets = document.querySelectorAll(
+      ".pm-header-amazon, .pm-desktop-buy, .pm-amazon-official",
+    );
+    targets.forEach((target) => target.classList.add("pm-cta-nudge"));
+    window.setTimeout(
+      () => targets.forEach((target) => target.classList.remove("pm-cta-nudge")),
+      1800,
+    );
+  };
 
   const showSpread = (index) => {
     active = (index + spreads.length) % spreads.length;
@@ -90,6 +104,7 @@
         ? dot.setAttribute("aria-current", "true")
         : dot.removeAttribute("aria-current"),
     );
+    if (active === spreads.length - 1) nudgeAmazon();
   };
 
   const reducedMotion = () =>
@@ -150,6 +165,38 @@
   );
 
   openingObserver.observe(inside);
+
+  const finalSection = document.querySelector(".pm-final");
+  let scrollTicking = false;
+  const updatePageChrome = () => {
+    scrollTicking = false;
+    const scrollable = Math.max(
+      1,
+      document.documentElement.scrollHeight - window.innerHeight,
+    );
+    const pageProgress = Math.min(1, Math.max(0, window.scrollY / scrollable));
+    document.documentElement.style.setProperty(
+      "--pm-page-progress",
+      pageProgress.toFixed(4),
+    );
+
+    const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+    const finalTop = finalSection?.getBoundingClientRect().top ?? Infinity;
+    document.body.classList.toggle("pm-past-hero", heroBottom < 120);
+    document.body.classList.toggle(
+      "pm-at-final",
+      finalTop < window.innerHeight * 0.82,
+    );
+  };
+  const requestPageChromeUpdate = () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(updatePageChrome);
+  };
+  window.addEventListener("scroll", requestPageChromeUpdate, { passive: true });
+  window.addEventListener("resize", requestPageChromeUpdate);
+
   showSpread(0);
   setProgress(0);
+  updatePageChrome();
 })();
