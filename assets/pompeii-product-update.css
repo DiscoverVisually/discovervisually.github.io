@@ -1,0 +1,159 @@
+/* August 2026 product-page refinement: compact hero, true interior gallery, combined FAQ/details. */
+.pm-hero-stage {
+  height: calc(72svh - 70px);
+  min-height: 500px;
+  max-height: 650px;
+  top: 82px;
+}
+
+.pm-hero-book {
+  height: min(60svh, 610px);
+  max-width: 41vw;
+  transition: transform 1.8s cubic-bezier(.16,.76,.18,1), filter 1.35s ease;
+}
+
+.pm-hero-book:hover,
+.pm-hero-book:focus-within {
+  transform: translate(calc(-7vw + var(--pm-x) * 10px), calc(6vh + var(--pm-y) * 6px)) rotateX(2deg) rotateY(-5deg) rotateZ(0deg) scale(1.42);
+}
+
+.pm-amazon.pm-amazon-official {
+  width: min(100%, 430px);
+  min-height: 88px;
+  gap: 17px;
+  padding: 10px 18px 10px 12px;
+  border-radius: 3px;
+  box-shadow: 0 16px 36px #00000029;
+}
+
+.pm-amazon-official .pm-amazon-badge {
+  width: 142px;
+  height: 66px;
+}
+
+.pm-amazon-official .pm-amazon-copy small {
+  font-size: 9px;
+  letter-spacing: .13em;
+}
+
+.pm-amazon-official .pm-amazon-copy strong {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.pm-amazon-official > b { font-size: 22px; }
+
+.pm-inside { padding-bottom: 105px; }
+
+.pm-open-book-shell {
+  height: min(61vw, 700px);
+  min-height: 520px;
+}
+
+.pm-open-book {
+  width: min(70vw, 1040px, 132vh);
+  aspect-ratio: 17 / 11;
+}
+
+.pm-spread-art {
+  inset: 2.15%;
+  display: block;
+  background: #17120e;
+  opacity: calc((var(--pm-open-progress) - .16) * 7);
+}
+
+.pm-spread-art img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.pm-spread-art::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 47%, #140b0666 49.6%, #fff1 50%, #140b0666 50.4%, transparent 53%);
+  mix-blend-mode: multiply;
+}
+
+.pm-gutter { display: none; }
+
+.pm-spread-controls {
+  margin-top: 8px;
+  min-height: 88px;
+}
+
+.pm-spread-controls > p {
+  max-width: 700px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.pm-open-back {
+  background: #6d3a2c;
+  clip-path: inset(0 0 0 calc(50% - var(--pm-open-progress) * 50%));
+}
+.pm-open-back .pm-spread-art { visibility: hidden; }
+.pm-inside.has-visible-pages .pm-open-back .pm-spread-art { visibility: visible; }
+
+.pm-combined {
+  background: var(--pm-paper);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr);
+  gap: 7vw;
+  align-items: start;
+  padding: 110px 4.7vw;
+  display: grid;
+}
+
+.pm-combined .pm-faq-list { border-top: 1px solid var(--pm-line); }
+.pm-combined details { border-bottom: 1px solid var(--pm-line); }
+.pm-combined summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 21px 0;
+  list-style: none;
+  font: 400 20px var(--pm-serif);
+}
+.pm-combined summary::-webkit-details-marker { display: none; }
+.pm-combined summary span { color: var(--pm-rust); font: 400 24px Arial, sans-serif; transition: transform .2s; }
+.pm-combined details[open] summary span { transform: rotate(45deg); }
+.pm-combined details p { color: #657079; margin: 0; padding: 0 38px 22px 0; font-size: 13px; line-height: 1.72; }
+
+.pm-craft-details {
+  background: #e9dfcf;
+  padding: 38px;
+  box-shadow: 0 22px 50px #412e1c1f;
+}
+.pm-craft-details h2 { font: 400 clamp(38px, 4vw, 60px)/.98 var(--pm-serif); letter-spacing: -.045em; margin: 0 0 22px; }
+.pm-craft-details h2 em { color: var(--pm-orange); font-weight: 400; }
+.pm-craft-details > p:not(.pm-eyebrow) { color: #657079; font-size: 13px; line-height: 1.72; margin: 0 0 26px; }
+.pm-craft-details table { width: 100%; border-collapse: collapse; }
+.pm-craft-details th,
+.pm-craft-details td { border-top: 1px solid #2a303421; padding: 11px 0; vertical-align: top; }
+.pm-craft-details th { width: 38%; color: #7c858a; text-align: left; text-transform: uppercase; letter-spacing: .1em; font-size: 8px; }
+.pm-craft-details td { font: italic 14px/1.45 var(--pm-serif); text-align: right; }
+
+@media (width <= 1020px) {
+  .pm-hero-book { height: min(57svh, 560px); }
+  .pm-hero-book:hover,
+  .pm-hero-book:focus-within { transform: translate(-3vw, 4vh) rotateX(2deg) rotateY(-4deg) scale(1.3); }
+  .pm-open-book-shell { min-height: 470px; }
+  .pm-combined { grid-template-columns: 1fr; }
+}
+
+@media (width <= 720px) {
+  .pm-hero-stage { min-height: 420px; }
+  .pm-hero-book { height: min(52svh, 465px); max-width: 78vw; }
+  .pm-open-book-shell { height: 67vw; min-height: 310px; }
+  .pm-open-book { width: 105vw; }
+  .pm-amazon.pm-amazon-official { min-height: 80px; }
+  .pm-amazon-official .pm-amazon-badge { width: 118px; height: 58px; }
+  .pm-combined { padding: 78px 6vw; }
+  .pm-craft-details { padding: 28px 23px; }
+}
