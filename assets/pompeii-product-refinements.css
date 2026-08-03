@@ -46,7 +46,7 @@
 .pm-wrap-front { background-position: 100% 0; }
 .pm-wrap-back { background-position: 0 0; }
 
-.pm-proof-quote footer {
+.pm-proof-author {
   font-size: 8px;
   line-height: 1.35;
   letter-spacing: .08em;
@@ -130,5 +130,4 @@
 @media (prefers-reduced-motion: reduce) {
   .pm-hero-book { transition-duration: .01ms; }
 }
-
 
