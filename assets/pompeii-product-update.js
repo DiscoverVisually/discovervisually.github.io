@@ -64,6 +64,8 @@
   const dots = Array.from(document.querySelectorAll('.pm-spread-controls button'));
   let active = 0;
   let ticking = false;
+  let openProgress = 0;
+  let touchY = null;
 
   const showSpread = (index) => {
     active = (index + spreads.length) % spreads.length;
@@ -78,23 +80,51 @@
     dots.forEach((dot, i) => i === active ? dot.setAttribute('aria-current', 'true') : dot.removeAttribute('aria-current'));
   };
 
+  const isDesktop = () => window.matchMedia('(min-width: 721px)').matches;
+  const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const setProgress = (value) => {
+    openProgress = Math.min(1, Math.max(0, value));
+    if (reducedMotion() && openProgress > .01) openProgress = 1;
+    inside.style.setProperty('--pm-open-progress', openProgress.toFixed(4));
+    inside.classList.toggle('has-visible-pages', openProgress > .015);
+    const rect = inside.getBoundingClientRect();
+    const pinned = Math.abs(rect.top) <= 3 && Math.abs(rect.bottom - window.innerHeight) <= 3;
+    inside.classList.toggle('is-scroll-locked', isDesktop() && pinned && openProgress < 1);
+  };
+
+  const pinSection = () => {
+    const rect = inside.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top, behavior: 'auto' });
+  };
+
+  const consumeOpeningScroll = (delta) => {
+    if (!isDesktop() || Math.abs(delta) < .5) return false;
+    const rect = inside.getBoundingClientRect();
+    const enteringFromAbove = delta > 0 && rect.top > 0 && rect.top <= Math.abs(delta) + 8;
+    const enteringFromBelow = delta < 0 && rect.top < 0 && -rect.top <= Math.abs(delta) + 8 && openProgress > 0;
+
+    if (enteringFromAbove || enteringFromBelow) pinSection();
+
+    const aligned = enteringFromAbove || enteringFromBelow || Math.abs(rect.top) <= 3;
+    if (!aligned) return false;
+    if ((delta > 0 && openProgress >= 1) || (delta < 0 && openProgress <= 0)) return false;
+
+    setProgress(openProgress + delta / Math.max(1100, window.innerHeight * 1.35));
+    return true;
+  };
+
   const updateOpening = () => {
     ticking = false;
-    const rect = shell.getBoundingClientRect();
-    const bookRect = book.getBoundingClientRect();
-    const fullyVisibleLine = window.innerHeight * .94;
-    const start = Math.max(0, bookRect.bottom - fullyVisibleLine);
-    const travel = Math.max(window.innerHeight * 1.35, 760);
-    let progress = Math.min(1, Math.max(0, (-rect.top - start + window.innerHeight * .1) / travel));
-
-    if (bookRect.top >= window.innerHeight * .03 && bookRect.bottom <= fullyVisibleLine) {
-      const visibleProgress = (window.innerHeight * .16 - rect.top) / travel;
-      progress = Math.max(progress, Math.min(1, Math.max(0, visibleProgress)));
+    if (isDesktop()) {
+      setProgress(openProgress);
+      return;
     }
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) progress = progress > .04 ? 1 : 0;
-    inside.style.setProperty('--pm-open-progress', progress.toFixed(4));
-    inside.classList.toggle('has-visible-pages', progress >= .16);
+    const rect = shell.getBoundingClientRect();
+    const start = window.innerHeight * .82;
+    const travel = Math.max(window.innerHeight * .75, 520);
+    setProgress((start - rect.top) / travel);
   };
 
   const requestUpdate = () => {
@@ -106,6 +136,23 @@
   document.querySelector('.pm-prev')?.addEventListener('click', () => showSpread(active - 1));
   document.querySelector('.pm-next')?.addEventListener('click', () => showSpread(active + 1));
   dots.forEach((dot, index) => dot.addEventListener('click', () => showSpread(index)));
+  window.addEventListener('wheel', (event) => {
+    if (consumeOpeningScroll(event.deltaY)) event.preventDefault();
+  }, { passive: false });
+  window.addEventListener('touchstart', (event) => {
+    touchY = event.touches[0]?.clientY ?? null;
+  }, { passive: true });
+  window.addEventListener('touchmove', (event) => {
+    const nextY = event.touches[0]?.clientY;
+    if (touchY === null || nextY === undefined) return;
+    const delta = touchY - nextY;
+    touchY = nextY;
+    if (consumeOpeningScroll(delta * 1.5)) event.preventDefault();
+  }, { passive: false });
+  window.addEventListener('keydown', (event) => {
+    const amount = event.key === 'ArrowDown' ? 80 : event.key === 'ArrowUp' ? -80 : event.key === 'PageDown' || event.key === ' ' ? 260 : event.key === 'PageUp' ? -260 : 0;
+    if (amount && consumeOpeningScroll(amount)) event.preventDefault();
+  });
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
   showSpread(0);
