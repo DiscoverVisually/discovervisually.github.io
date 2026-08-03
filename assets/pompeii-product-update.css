@@ -93,7 +93,10 @@
   line-height: 1.55;
 }
 
-.pm-open-back { background: #6d3a2c; }
+.pm-open-back {
+  background: #6d3a2c;
+  clip-path: inset(0 0 0 calc(50% - var(--pm-open-progress) * 50%));
+}
 .pm-open-back .pm-spread-art { visibility: hidden; }
 .pm-inside.has-visible-pages .pm-open-back .pm-spread-art { visibility: visible; }
 
