@@ -29,8 +29,25 @@
   const inside = document.querySelector(".pm-inside");
   const shell = document.querySelector(".pm-open-book-shell");
   const book = document.querySelector(".pm-open-book");
-  const artImage = document.querySelector(".pm-spread-art img");
-  if (!inside || !shell || !book || !artImage) return;
+  const leftPage = document.querySelector(".pm-book-page-left");
+  const rightPage = document.querySelector(".pm-book-page-right");
+  const leftImage = leftPage?.querySelector("img");
+  const rightImage = rightPage?.querySelector("img");
+  const turnSheet = document.querySelector(".pm-turn-sheet");
+  const turnFront = turnSheet?.querySelector(".pm-turn-front img");
+  const turnBack = turnSheet?.querySelector(".pm-turn-back img");
+
+  if (
+    !inside ||
+    !shell ||
+    !book ||
+    !leftImage ||
+    !rightImage ||
+    !turnSheet ||
+    !turnFront ||
+    !turnBack
+  )
+    return;
 
   const spreads = [
     {
@@ -67,13 +84,21 @@
 
   const counter = document.querySelector(".pm-spread-controls > span");
   const description = document.querySelector(".pm-spread-controls > p");
-  const dots = Array.from(
-    document.querySelectorAll(".pm-spread-controls button"),
+  const chapterButtons = Array.from(
+    document.querySelectorAll(".pm-chapter-nav button"),
   );
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let active = 0;
   let openProgress = 0;
   let hasOpened = false;
   let hasCelebratedGallery = false;
+  let isTurning = false;
+  let pointerStart = null;
+
+  spreads.forEach(({ src }) => {
+    const image = new Image();
+    image.src = src;
+  });
 
   const nudgeAmazon = () => {
     if (hasCelebratedGallery) return;
@@ -88,33 +113,72 @@
     );
   };
 
-  const showSpread = (index) => {
-    active = (index + spreads.length) % spreads.length;
-    const spread = spreads[active];
-    book.classList.remove("pm-flipping");
-    void book.offsetWidth;
-    book.classList.add("pm-flipping");
-    artImage.src = spread.src;
-    artImage.alt = spread.alt;
+  const updateControls = (index) => {
+    const spread = spreads[index];
     if (counter)
-      counter.textContent = `${String(active + 1).padStart(2, "0")} / ${String(spreads.length).padStart(2, "0")}`;
+      counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(spreads.length).padStart(2, "0")}`;
     if (description) description.textContent = spread.description;
-    dots.forEach((dot, i) =>
-      i === active
-        ? dot.setAttribute("aria-current", "true")
-        : dot.removeAttribute("aria-current"),
+    chapterButtons.forEach((button, i) =>
+      i === index
+        ? button.setAttribute("aria-current", "true")
+        : button.removeAttribute("aria-current"),
     );
-    if (active === spreads.length - 1) nudgeAmazon();
+    if (index === spreads.length - 1) nudgeAmazon();
   };
 
-  const reducedMotion = () =>
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const setBaseSpread = (index) => {
+    const spread = spreads[index];
+    leftImage.src = spread.src;
+    leftImage.alt = spread.alt;
+    rightImage.src = spread.src;
+    rightImage.alt = "";
+    active = index;
+  };
+
+  const showSpread = (requestedIndex) => {
+    const nextIndex = (requestedIndex + spreads.length) % spreads.length;
+    if (isTurning || nextIndex === active) return;
+
+    const direction =
+      (nextIndex > active && !(active === 0 && nextIndex === spreads.length - 1)) ||
+      (active === spreads.length - 1 && nextIndex === 0)
+        ? "forward"
+        : "reverse";
+    const current = spreads[active];
+    const next = spreads[nextIndex];
+    const duration = reducedMotion.matches ? 1 : 920;
+    isTurning = true;
+    shell.classList.add("is-turning");
+
+    if (direction === "forward") {
+      turnFront.src = current.src;
+      turnBack.src = next.src;
+      rightImage.src = next.src;
+      turnSheet.classList.add("is-forward");
+    } else {
+      turnFront.src = current.src;
+      turnBack.src = next.src;
+      leftImage.src = next.src;
+      turnSheet.classList.add("is-reverse");
+    }
+
+    window.setTimeout(() => updateControls(nextIndex), duration * 0.5);
+    window.setTimeout(() => {
+      setBaseSpread(nextIndex);
+      turnSheet.classList.remove("is-forward", "is-reverse");
+      shell.classList.remove("is-turning");
+      isTurning = false;
+    }, duration + 30);
+  };
 
   const setProgress = (value) => {
     openProgress = Math.min(1, Math.max(0, value));
-    if (reducedMotion() && openProgress > 0.01) openProgress = 1;
+    if (reducedMotion.matches && openProgress > 0.01) openProgress = 1;
+    const leftReveal = Math.min(1, Math.max(0, (openProgress - 0.18) / 0.58));
     inside.style.setProperty("--pm-open-progress", openProgress.toFixed(4));
-    inside.classList.toggle("has-visible-pages", openProgress > 0.015);
+    inside.style.setProperty("--pm-left-reveal", leftReveal.toFixed(4));
+    inside.classList.toggle("has-visible-pages", openProgress > 0.08);
+    inside.classList.toggle("is-cover-behind", openProgress > 0.56);
   };
 
   const openBook = () => {
@@ -122,21 +186,22 @@
     hasOpened = true;
     inside.classList.add("is-opening");
 
-    if (reducedMotion()) {
+    if (reducedMotion.matches) {
       setProgress(1);
       inside.classList.add("is-open");
       return;
     }
 
     const startedAt = performance.now();
-    const duration = 1750;
+    const duration = window.innerWidth <= 720 ? 1400 : 2200;
     const animate = (now) => {
       const elapsed = Math.min(1, (now - startedAt) / duration);
-      const eased = 1 - Math.pow(1 - elapsed, 4);
+      const eased = 1 - Math.pow(1 - elapsed, 3);
       setProgress(eased);
       if (elapsed < 1) {
         requestAnimationFrame(animate);
       } else {
+        setProgress(1);
         inside.classList.remove("is-opening");
         inside.classList.add("is-open");
       }
@@ -150,21 +215,39 @@
   document
     .querySelector(".pm-next")
     ?.addEventListener("click", () => showSpread(active + 1));
-  dots.forEach((dot, index) =>
-    dot.addEventListener("click", () => showSpread(index)),
+  chapterButtons.forEach((button, index) =>
+    button.addEventListener("click", () => showSpread(index)),
   );
+
+  shell.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    pointerStart = { x: event.clientX, y: event.clientY };
+    shell.classList.add("is-dragging");
+  });
+  shell.addEventListener("pointerup", (event) => {
+    if (!pointerStart) return;
+    const dx = event.clientX - pointerStart.x;
+    const dy = event.clientY - pointerStart.y;
+    pointerStart = null;
+    shell.classList.remove("is-dragging");
+    if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.25)
+      showSpread(active + (dx < 0 ? 1 : -1));
+  });
+  shell.addEventListener("pointercancel", () => {
+    pointerStart = null;
+    shell.classList.remove("is-dragging");
+  });
+
   const openingObserver = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.52) {
+    ([entry]) => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.82) {
         openBook();
         openingObserver.disconnect();
       }
     },
-    { threshold: [0, 0.25, 0.52, 0.75, 1] },
+    { threshold: [0, 0.5, 0.7, 0.82, 0.9, 1] },
   );
-
-  openingObserver.observe(inside);
+  openingObserver.observe(shell);
 
   const finalSection = document.querySelector(".pm-final");
   let scrollTicking = false;
@@ -179,7 +262,6 @@
       "--pm-page-progress",
       pageProgress.toFixed(4),
     );
-
     const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
     const finalTop = finalSection?.getBoundingClientRect().top ?? Infinity;
     document.body.classList.toggle("pm-past-hero", heroBottom < 120);
@@ -196,7 +278,8 @@
   window.addEventListener("scroll", requestPageChromeUpdate, { passive: true });
   window.addEventListener("resize", requestPageChromeUpdate);
 
-  showSpread(0);
+  setBaseSpread(0);
+  updateControls(0);
   setProgress(0);
   updatePageChrome();
 })();

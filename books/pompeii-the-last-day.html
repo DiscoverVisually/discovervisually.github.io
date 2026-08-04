@@ -39,6 +39,10 @@
       rel="stylesheet"
       href="../assets/pompeii-product-update.css?v=20260803g"
     />
+    <link
+      rel="stylesheet"
+      href="../assets/pompeii-book-viewer.css?v=20260804d"
+    />
   </head>
   <body>
     <main class="pompeii-page">
@@ -147,23 +151,38 @@
           </p>
         </div>
         <div class="pm-open-book-shell">
-          <div class="pm-open-shadow"></div>
-          <div class="pm-open-book">
-            <div class="pm-open-back">
-              <div class="pm-spread-art">
-                <img
-                  src="../assets/pompeii-interior-street.webp"
-                  alt="A Day in Pompeii — an immersive street-level view of the living Roman city"
-                /><i class="pm-gutter" aria-hidden="true"></i>
-              </div>
+          <div class="pm-book-light" aria-hidden="true"></div>
+          <div class="pm-book-shadow pm-book-shadow-ambient" aria-hidden="true"></div>
+          <div class="pm-book-shadow pm-book-shadow-contact" aria-hidden="true"></div>
+          <div class="pm-open-book" aria-live="polite">
+            <div class="pm-rear-cover" aria-hidden="true"></div>
+            <div class="pm-paper-block pm-paper-block-left" aria-hidden="true"></div>
+            <div class="pm-paper-block pm-paper-block-right" aria-hidden="true"></div>
+            <div class="pm-book-page pm-book-page-left">
+              <img
+                src="../assets/pompeii-interior-street.webp"
+                alt="A Day in Pompeii — an immersive street-level view of the living Roman city"
+              />
+              <span class="pm-page-lighting" aria-hidden="true"></span>
             </div>
-            <div class="pm-turning-cover">
-              <div class="pm-mini-cover">
-                <span
-                  class="pm-wrap-art pm-wrap-front"
-                  aria-hidden="true"
-                ></span>
+            <div class="pm-book-page pm-book-page-right" aria-hidden="true">
+              <img src="../assets/pompeii-interior-street.webp" alt="" />
+              <span class="pm-page-lighting" aria-hidden="true"></span>
+            </div>
+            <div class="pm-book-gutter" aria-hidden="true"></div>
+            <div class="pm-turn-sheet" aria-hidden="true">
+              <div class="pm-turn-face pm-turn-front"><img src="" alt="" /></div>
+              <div class="pm-turn-face pm-turn-back"><img src="" alt="" /></div>
+              <i class="pm-turn-shadow"></i>
+            </div>
+            <div class="pm-turning-cover" aria-hidden="true">
+              <div class="pm-cover-face pm-cover-front">
+                <span class="pm-wrap-art pm-wrap-front"></span>
               </div>
+              <div class="pm-cover-face pm-cover-inside">
+                <span class="pm-endpaper-mark"></span>
+              </div>
+              <i class="pm-cover-edge"></i>
             </div>
           </div>
           <button class="pm-page-arrow pm-prev" aria-label="Previous spread">
@@ -500,7 +519,7 @@
     </main>
     <script
       defer
-      src="../assets/pompeii-product-update.js?v=20260803f"
+      src="../assets/pompeii-product-update.js?v=20260804b"
     ></script>
   </body>
 </html>
