@@ -1,0 +1,238 @@
+/* Adaptive editorial canvas: full-bleed atmosphere, centered product UI. */
+.pompeii-page {
+  --pm-canvas-header: 1440px;
+  --pm-canvas-hero: 1400px;
+  --pm-canvas-book: 1500px;
+  --pm-canvas-content: 1200px;
+  --pm-canvas-reading: 1180px;
+}
+
+.pm-header {
+  width: min(92vw, var(--pm-canvas-header));
+  padding-inline: 0;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.pm-hero {
+  padding-inline: max(6vw, calc((100vw - var(--pm-canvas-hero)) / 2));
+}
+
+.pm-hero-copy { max-width: 620px; }
+
+.pm-hero-stage {
+  width: min(52vw, 780px);
+  right: max(2vw, calc((100vw - var(--pm-canvas-hero)) / 2 - 16px));
+}
+
+.pm-proof { display: block; }
+
+.pm-proof-inner {
+  width: min(100%, var(--pm-canvas-content));
+  min-height: 145px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: .85fr 2.15fr;
+  border-inline: 1px solid #38221220;
+}
+
+.pm-inside,
+.pm-why,
+.pm-reactions,
+.pm-combined,
+.pm-final {
+  position: relative;
+  isolation: isolate;
+}
+
+.pm-inside > :not(.pm-atmosphere),
+.pm-why > :not(.pm-atmosphere),
+.pm-reactions > :not(.pm-atmosphere),
+.pm-combined > :not(.pm-atmosphere),
+.pm-final > :not(.pm-atmosphere) {
+  z-index: 1;
+}
+
+.pm-inside .pm-section-head {
+  width: min(86vw, 1300px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pm-inside .pm-open-book-shell {
+  width: min(90vw, var(--pm-canvas-book));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pm-inside .pm-spread-controls {
+  width: min(86vw, 1120px);
+}
+
+.pm-why-lead,
+.pm-benefits,
+.pm-why-payoff,
+.pm-reactions-head,
+.pm-reaction-grid {
+  width: min(86vw, var(--pm-canvas-content));
+  margin-inline: auto;
+}
+
+.pm-benefits article { padding-inline: clamp(24px, 2.1vw, 34px); }
+
+.pm-combined {
+  display: block;
+  padding-inline: 0;
+}
+
+.pm-combined-inner {
+  width: min(86vw, var(--pm-canvas-reading));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr);
+  gap: clamp(54px, 6vw, 86px);
+  align-items: start;
+}
+
+.pm-final {
+  display: block;
+  padding-inline: 0;
+}
+
+.pm-final-inner {
+  width: min(86vw, var(--pm-canvas-content));
+  min-height: 550px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  align-items: center;
+}
+
+.pm-footer {
+  padding-inline: max(4.7vw, calc((100vw - var(--pm-canvas-header)) / 2));
+}
+
+.pm-atmosphere {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pm-atmosphere i {
+  --pm-side-shift: 0px;
+  position: absolute;
+  top: -8%;
+  bottom: -8%;
+  width: clamp(180px, 19vw, 430px);
+  opacity: .095;
+  background-position: center;
+  background-size: cover;
+  filter: saturate(.72) contrast(1.06);
+  transform: translate3d(0, var(--pm-side-shift), 0) scale(1.06);
+  will-change: transform;
+}
+
+.pm-atmosphere i:first-child {
+  left: 0;
+  -webkit-mask-image: linear-gradient(90deg, #000 20%, transparent 94%);
+  mask-image: linear-gradient(90deg, #000 20%, transparent 94%);
+}
+
+.pm-atmosphere i:last-child {
+  right: 0;
+  background-position: 78% 50%;
+  -webkit-mask-image: linear-gradient(270deg, #000 20%, transparent 94%);
+  mask-image: linear-gradient(270deg, #000 20%, transparent 94%);
+}
+
+.pm-hero .pm-atmosphere i,
+.pm-inside .pm-atmosphere i {
+  background-image: url("pompeii-interior-street.webp");
+}
+
+.pm-why .pm-atmosphere i {
+  background-image: url("pompeii-interior-home.webp");
+  opacity: .065;
+}
+
+.pm-reactions .pm-atmosphere i {
+  background-image: url("pompeii-interior-eruption.webp");
+  opacity: .075;
+}
+
+.pm-combined .pm-atmosphere i {
+  background-image: url("pompeii-interior-archaeology.webp");
+  opacity: .052;
+  mix-blend-mode: multiply;
+}
+
+.pm-final .pm-atmosphere i {
+  background-image: url("pompeii-interior-eruption.webp");
+  opacity: .07;
+}
+
+@media (width >= 1400px) {
+  .pm-atmosphere { display: block; }
+}
+
+@media (width <= 1020px) {
+  .pm-header { width: 90.6vw; }
+  .pm-hero { padding-inline: 4.7vw; }
+  .pm-hero-stage { width: 53vw; right: 1.4vw; }
+  .pm-proof-inner { grid-template-columns: 1fr 2fr; }
+  .pm-combined-inner { grid-template-columns: 1fr; }
+  .pm-final-inner { width: min(90.6vw, var(--pm-canvas-content)); }
+}
+
+@media (width <= 720px) {
+  .pm-header {
+    width: auto;
+    padding-inline: 20px;
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+  .pm-hero { padding-inline: 20px; }
+  .pm-hero-stage { width: 100%; right: 0; }
+  .pm-proof-inner {
+    width: 100%;
+    display: block;
+    border-inline: 0;
+  }
+  .pm-inside .pm-section-head,
+  .pm-inside .pm-open-book-shell,
+  .pm-inside .pm-spread-controls {
+    width: auto;
+    left: auto;
+    transform: none;
+  }
+  .pm-why-lead,
+  .pm-benefits,
+  .pm-why-payoff,
+  .pm-reactions-head,
+  .pm-reaction-grid,
+  .pm-combined-inner,
+  .pm-final-inner {
+    width: 100%;
+  }
+  .pm-combined { padding-inline: 20px; }
+  .pm-final { padding-inline: 22px; }
+  .pm-final-inner {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .pm-footer { padding-inline: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-atmosphere i {
+    transform: none !important;
+    will-change: auto;
+  }
+}

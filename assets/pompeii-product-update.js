@@ -250,6 +250,9 @@
   openingObserver.observe(shell);
 
   const finalSection = document.querySelector(".pm-final");
+  const atmosphereLayers = Array.from(
+    document.querySelectorAll(".pm-atmosphere"),
+  );
   let scrollTicking = false;
   const updatePageChrome = () => {
     scrollTicking = false;
@@ -269,6 +272,20 @@
       "pm-at-final",
       finalTop < window.innerHeight * 0.82,
     );
+    if (window.innerWidth >= 1400 && !reducedMotion.matches) {
+      atmosphereLayers.forEach((layer) => {
+        const rect = layer.getBoundingClientRect();
+        const centerOffset =
+          rect.top + rect.height / 2 - window.innerHeight / 2;
+        const shift = Math.max(-30, Math.min(30, centerOffset * -0.035));
+        const sides = layer.querySelectorAll("i");
+        sides[0]?.style.setProperty("--pm-side-shift", `${shift.toFixed(2)}px`);
+        sides[1]?.style.setProperty(
+          "--pm-side-shift",
+          `${(-shift * 0.72).toFixed(2)}px`,
+        );
+      });
+    }
   };
   const requestPageChromeUpdate = () => {
     if (scrollTicking) return;
