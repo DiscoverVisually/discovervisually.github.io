@@ -174,11 +174,15 @@
   const setProgress = (value) => {
     openProgress = Math.min(1, Math.max(0, value));
     if (reducedMotion.matches && openProgress > 0.01) openProgress = 1;
+    const coverProgress = Math.min(1, Math.max(0, (openProgress - 0.025) / 0.88));
+    const rearReveal = Math.min(1, Math.max(0, (openProgress - 0.075) / 0.5));
     const leftReveal = Math.min(1, Math.max(0, (openProgress - 0.18) / 0.58));
     inside.style.setProperty("--pm-open-progress", openProgress.toFixed(4));
+    inside.style.setProperty("--pm-cover-progress", coverProgress.toFixed(4));
+    inside.style.setProperty("--pm-rear-reveal", rearReveal.toFixed(4));
     inside.style.setProperty("--pm-left-reveal", leftReveal.toFixed(4));
     inside.classList.toggle("has-visible-pages", openProgress > 0.08);
-    inside.classList.toggle("is-cover-behind", openProgress > 0.56);
+    inside.classList.toggle("is-cover-behind", coverProgress > 0.535);
   };
 
   const openBook = () => {
@@ -196,7 +200,7 @@
     const duration = window.innerWidth <= 720 ? 1400 : 2200;
     const animate = (now) => {
       const elapsed = Math.min(1, (now - startedAt) / duration);
-      const eased = 1 - Math.pow(1 - elapsed, 3);
+      const eased = elapsed * elapsed * (3 - 2 * elapsed);
       setProgress(eased);
       if (elapsed < 1) {
         requestAnimationFrame(animate);
