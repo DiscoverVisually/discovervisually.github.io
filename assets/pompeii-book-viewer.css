@@ -216,7 +216,7 @@
   transform:
     translateZ(calc(13px - var(--pm-cover-progress) * 20px))
     rotateY(calc(var(--pm-cover-progress) * -166deg));
-  opacity: 1;
+  opacity: clamp(0, calc((.72 - var(--pm-cover-progress)) * 6), 1);
   will-change: transform;
 }
 .pm-inside.is-cover-behind .pm-turning-cover {
