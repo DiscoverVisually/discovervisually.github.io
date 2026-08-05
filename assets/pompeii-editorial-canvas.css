@@ -109,6 +109,137 @@
   align-items: center;
 }
 
+/* August 2026: compact desktop first viewport.
+   The mobile page has its own final composition in pompeii-mobile.css. */
+@media (width >= 1021px) {
+  .pm-header {
+    height: 74px;
+  }
+
+  .pm-header nav a {
+    opacity: .76;
+    transition: opacity .25s, color .25s;
+  }
+
+  .pm-header nav .pm-nav-primary {
+    color: #f0c46d;
+    opacity: 1;
+  }
+
+  .pm-hero {
+    height: 60svh;
+    min-height: 560px;
+    max-height: 650px;
+    padding-top: 88px;
+    padding-bottom: 28px;
+  }
+
+  .pm-deck {
+    max-width: 500px;
+    color: rgba(255, 255, 255, .76);
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  .pm-look-link {
+    min-height: 48px;
+    padding: 0 17px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .42);
+    transition: border-color .25s, background .25s, transform .25s;
+  }
+
+  .pm-look-link:hover,
+  .pm-look-link:focus-visible {
+    border-color: rgba(255, 255, 255, .8);
+    background: rgba(255, 255, 255, .08);
+    transform: translateY(-2px);
+  }
+
+  .pm-look-link span {
+    margin-left: 11px;
+    animation: pm-first-view-cue 1.8s ease-in-out infinite;
+  }
+
+  .pm-hero-stage {
+    top: 62px;
+    bottom: 0;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .pm-hero-book {
+    height: min(54svh, 520px);
+    max-height: calc(100% - 38px);
+    filter: drop-shadow(0 30px 28px rgba(0, 0, 0, .48));
+  }
+
+  .pm-hero-stage > p {
+    bottom: 0;
+    color: rgba(255, 255, 255, .42);
+  }
+
+  .pm-proof {
+    height: 120px;
+    min-height: 120px;
+  }
+
+  .pm-proof-inner {
+    height: 120px;
+    min-height: 120px;
+    grid-template-columns: .9fr 2.1fr;
+  }
+
+  .pm-proof-quote {
+    padding-block: 18px;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    column-gap: 15px;
+  }
+
+  .pm-proof-quote > span,
+  .pm-proof-quote blockquote {
+    grid-column: 1 / -1;
+  }
+
+  .pm-proof-quote blockquote {
+    margin: 6px 0 7px;
+    font-size: 18px;
+    line-height: 1.18;
+  }
+
+  .pm-proof-author {
+    margin: 0;
+    align-self: end;
+    opacity: .72;
+  }
+
+  .pm-proof-quote > a {
+    align-self: end;
+    justify-self: end;
+  }
+
+  .pm-proof-facts span {
+    padding-block: 19px;
+  }
+
+  .pm-proof-facts b {
+    font-size: 27px;
+  }
+}
+
+@keyframes pm-first-view-cue {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-look-link span { animation: none; }
+}
+
 .pm-footer {
   padding-inline: max(4.7vw, calc((100vw - var(--pm-canvas-header)) / 2));
 }
