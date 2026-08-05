@@ -224,7 +224,7 @@
     }
 
     const startedAt = performance.now();
-    const duration = window.innerWidth <= 720 ? 1400 : 2200;
+    const duration = window.innerWidth <= 720 ? 950 : 2200;
     const animate = (now) => {
       const elapsed = Math.min(1, (now - startedAt) / duration);
       const eased = elapsed * elapsed * (3 - 2 * elapsed);
@@ -293,14 +293,16 @@
   );
   preloadObserver.observe(inside);
 
+  const mobileOpening = window.matchMedia("(max-width: 720px)").matches;
+  const openingThreshold = mobileOpening ? 0.6 : 0.82;
   const openingObserver = new IntersectionObserver(
     ([entry]) => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.82) {
+      if (entry.isIntersecting && entry.intersectionRatio >= openingThreshold) {
         openBook();
         openingObserver.disconnect();
       }
     },
-    { threshold: [0, 0.5, 0.7, 0.82, 0.9, 1] },
+    { threshold: mobileOpening ? [0, 0.35, 0.6, 0.8, 1] : [0, 0.5, 0.7, 0.82, 0.9, 1] },
   );
   openingObserver.observe(shell);
 
@@ -317,6 +319,7 @@
   const modalPointers = new Map();
   let panOrigin = null;
   let pinchOrigin = null;
+  let modalOpener = null;
 
   const renderModalTransform = () => {
     if (!modalPan || !zoomLevel) return;
@@ -354,10 +357,12 @@
     renderModalSpread();
   };
 
-  document.querySelector(".pm-expand-spread")?.addEventListener("click", () => {
+  document.querySelector(".pm-expand-spread")?.addEventListener("click", (event) => {
     if (!modal) return;
+    modalOpener = event.currentTarget;
     renderModalSpread();
     modal.showModal();
+    document.body.classList.add("pm-modal-open");
     window.setTimeout(() => modalPan?.focus(), 0);
   });
   modal?.querySelector(".pm-modal-close")?.addEventListener("click", () => modal.close());
@@ -371,6 +376,9 @@
   modal?.addEventListener("close", () => {
     modalPointers.clear();
     setZoom(1);
+    document.body.classList.remove("pm-modal-open");
+    modalOpener?.focus();
+    modalOpener = null;
   });
   modal?.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
@@ -440,11 +448,57 @@
   stickyToggle?.addEventListener("click", () => {
     const open = stickyNav?.classList.toggle("is-menu-open") ?? false;
     stickyToggle.setAttribute("aria-expanded", String(open));
+    document.body.classList.toggle("pm-menu-open", open);
   });
   stickyLinks.forEach((link) => link.addEventListener("click", () => {
     stickyNav?.classList.remove("is-menu-open");
     stickyToggle?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("pm-menu-open");
   }));
+  document.addEventListener("pointerdown", (event) => {
+    if (!stickyNav?.classList.contains("is-menu-open")) return;
+    if (stickyNav.contains(event.target)) return;
+    stickyNav.classList.remove("is-menu-open");
+    stickyToggle?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("pm-menu-open");
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !stickyNav?.classList.contains("is-menu-open")) return;
+    stickyNav.classList.remove("is-menu-open");
+    stickyToggle?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("pm-menu-open");
+    stickyToggle?.focus();
+  });
+
+  const specificationPanel = document.querySelector(".pm-craft-details");
+  const specificationToggle = document.querySelector(".pm-spec-toggle");
+  specificationToggle?.addEventListener("click", () => {
+    const expanded = specificationToggle.getAttribute("aria-expanded") !== "true";
+    specificationToggle.setAttribute("aria-expanded", String(expanded));
+    specificationPanel?.classList.toggle("is-spec-expanded", expanded);
+  });
+
+  const reviewRail = document.querySelector(".pm-reaction-grid");
+  const reviewCards = Array.from(document.querySelectorAll(".pm-reaction-grid article"));
+  const reviewCount = document.querySelector(".pm-review-count");
+  const reviewDots = Array.from(document.querySelectorAll(".pm-review-dots i"));
+  let reviewTicking = false;
+  const updateReviewPagination = () => {
+    reviewTicking = false;
+    if (!reviewRail || !reviewCards.length) return;
+    const railLeft = reviewRail.getBoundingClientRect().left;
+    const activeReview = reviewCards.reduce((best, card, index) => {
+      const distance = Math.abs(card.getBoundingClientRect().left - railLeft);
+      return distance < best.distance ? { index, distance } : best;
+    }, { index: 0, distance: Infinity }).index;
+    if (reviewCount) reviewCount.textContent = `${activeReview + 1} / ${reviewCards.length}`;
+    reviewDots.forEach((dot, index) => dot.classList.toggle("is-active", index === activeReview));
+  };
+  reviewRail?.addEventListener("scroll", () => {
+    if (reviewTicking) return;
+    reviewTicking = true;
+    requestAnimationFrame(updateReviewPagination);
+  }, { passive: true });
 
   const sectionMap = stickyLinks
     .map((link) => [link, document.querySelector(link.getAttribute("href"))])
@@ -493,6 +547,7 @@
   const finalSection = document.querySelector(".pm-final");
   const atmosphereLayers = Array.from(document.querySelectorAll(".pm-atmosphere"));
   let scrollTicking = false;
+  let lastScrollY = window.scrollY;
   const updatePageChrome = () => {
     scrollTicking = false;
     const scrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -502,6 +557,15 @@
     const finalTop = finalSection?.getBoundingClientRect().top ?? Infinity;
     document.body.classList.toggle("pm-past-hero", heroBottom < 120);
     document.body.classList.toggle("pm-at-final", finalTop < window.innerHeight * 0.82);
+    if (window.innerWidth <= 720 && !stickyNav?.classList.contains("is-menu-open")) {
+      const movingDown = window.scrollY > lastScrollY + 8;
+      const movingUp = window.scrollY < lastScrollY - 8;
+      if (movingDown && window.scrollY > 160) document.body.classList.add("pm-nav-hidden");
+      else if (movingUp || window.scrollY < 120) document.body.classList.remove("pm-nav-hidden");
+    } else if (window.innerWidth > 720) {
+      document.body.classList.remove("pm-nav-hidden");
+    }
+    lastScrollY = window.scrollY;
     if (window.innerWidth >= 1400 && !reducedMotion.matches) {
       atmosphereLayers.forEach((layer) => {
         const rect = layer.getBoundingClientRect();
@@ -525,5 +589,6 @@
   updateControls(0);
   setProgress(0);
   renderModalTransform();
+  updateReviewPagination();
   updatePageChrome();
 })();
