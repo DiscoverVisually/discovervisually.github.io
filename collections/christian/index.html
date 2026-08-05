@@ -11,25 +11,14 @@
     <link rel="canonical" href="https://discovervisually.github.io/collections/christian/" />
     <link rel="icon" href="/favicon.svg" />
     <link rel="stylesheet" href="/assets/christian-collection-E1.css?v=20260726r1" />
+    <link rel="stylesheet" href="/assets/site-shell.css?v=20260805nav" />
+    <link rel="stylesheet" href="/assets/catalog.css?v=20260805nav" />
   </head>
   <body>
     <a class="skip-link" href="#books">Skip to books</a>
 
-    <header class="collection-header">
-      <a href="/" class="brand" aria-label="Discover Visually home">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-        <span>Discover <b>Visually</b></span>
-      </a>
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="collection-nav">
-        <span></span><span></span><span class="sr-only">Toggle navigation</span>
-      </button>
-      <nav id="collection-nav" aria-label="Primary navigation">
-        <a href="/#worlds">Collections</a>
-        <a href="#books">Books</a>
-        <a href="/#manifesto">Our story</a>
-        <a class="nav-cta" href="#reader-list">Join the reader list <span>↗</span></a>
-      </nav>
-    </header>
+    <header class="dv-site-header" data-dv-header><a class="dv-brand" href="/"><span class="dv-brand-mark" aria-hidden="true"><i></i><i></i></span><span>Discover <em>Visually</em></span></a><button class="dv-menu-button" type="button" aria-expanded="false" aria-controls="dv-primary-nav" data-dv-menu><span></span><span></span><span class="dv-sr-only">Toggle navigation</span></button><nav class="dv-primary-nav" id="dv-primary-nav" aria-label="Primary navigation" data-dv-nav><a href="/books/">Books</a><details class="dv-explore"><summary>Explore</summary><div class="dv-explore-panel"><div class="dv-explore-group"><small>For readers</small><a href="/collections/children/">For Children</a><a href="/collections/women/">For Women</a><a href="/collections/">All collections</a></div><div class="dv-explore-group"><small>By interest</small><a aria-current="page" href="/collections/christian/">Christian</a><a href="/collections/children/#history">History &amp; Ancient Worlds</a><a href="/collections/visual-learning/">Visual Learning</a></div></div></details><a href="/about/#approach">Our approach</a><a href="/about/">About</a><a class="dv-reader-link" href="/#reader-list">Reader list</a></nav></header>
+    <nav class="dv-breadcrumb" aria-label="Breadcrumb"><a class="dv-crumb-home" href="/">Home</a><i>/</i><a href="/collections/">Collections</a><i>/</i><span aria-current="page">Christian</span></nav>
 
     <main>
       <section class="collection-hero" aria-labelledby="collection-title">
@@ -82,42 +71,7 @@
             Every title brings Scripture, history or a difficult question into focus.
           </p>
         </div>
-        <div class="catalogue-grid" aria-label="Christian books">
-          <article class="catalogue-card catalogue-card-live">
-            <a class="catalogue-cover catalogue-cover-visual-bible" href="/books/visual-bible.html" aria-label="Explore The Visual Bible">
-              <span class="catalogue-visual-bible" aria-hidden="true">
-                <small>An illustrated sacred infographic</small>
-                <strong>THE<br /><em>VISUAL</em><br />BIBLE</strong>
-                <i></i>
-                <b>B. B. Sterling</b>
-              </span>
-              <span>Explore the visual guide <b>↗</b></span>
-            </a>
-            <p>Visual Bible guide · Available now</p>
-            <h3><a href="/books/visual-bible.html">The Visual Bible</a></h3>
-          </article>
-          <article class="catalogue-card catalogue-card-live">
-            <a class="catalogue-cover" href="/books/women-of-the-bible-for-today.html">
-              <img src="/books/women-of-the-bible.webp" alt="Women of the Bible for Today book cover" />
-              <span>Look inside <b>↗</b></span>
-            </a>
-            <p>For women · Available now</p>
-            <h3><a href="/books/women-of-the-bible-for-today.html">Women of the Bible for Today</a></h3>
-          </article>
-          <article class="catalogue-card catalogue-card-live">
-            <a class="catalogue-cover" href="/books/holy-misconceptions.html">
-              <img src="/books/holy-misconceptions-cover.webp" alt="Holy Misconceptions book cover" />
-              <span>Preview the case file <b>↗</b></span>
-            </a>
-            <p>Ages 8–12 · Coming soon</p>
-            <h3><a href="/books/holy-misconceptions.html">Holy Misconceptions!</a></h3>
-          </article>
-          <article class="catalogue-card catalogue-card-future"><div class="future-cover"><span>04</span><i></i></div><p>Future release</p><h3>Reserved for a future release</h3></article>
-          <article class="catalogue-card catalogue-card-future"><div class="future-cover"><span>05</span><i></i></div><p>Future release</p><h3>Reserved for a future release</h3></article>
-          <article class="catalogue-card catalogue-card-future"><div class="future-cover"><span>06</span><i></i></div><p>Future release</p><h3>Reserved for a future release</h3></article>
-          <article class="catalogue-card catalogue-card-future"><div class="future-cover"><span>07</span><i></i></div><p>Future release</p><h3>Reserved for a future release</h3></article>
-          <article class="catalogue-card catalogue-card-future"><div class="future-cover"><span>08</span><i></i></div><p>Future release</p><h3>Reserved for a future release</h3></article>
-        </div>
+        <div class="dv-catalog-grid" data-catalog-grid="christian" aria-label="Christian books"></div>
       </section>
 
       <section class="collection-manifesto" aria-labelledby="manifesto-title">
@@ -276,7 +230,7 @@
           <p class="eyebrow">The Christian reader list</p>
           <h2>The next visual faith book<br /><em>is already taking shape.</em></h2>
           <p>See early pages, new case files and upcoming Christian releases before anyone else.</p>
-          <a href="/#newsletter">Join the reader list <span>↗</span></a>
+          <a href="/#reader-list">Join the reader list <span>↗</span></a>
           <small>A few thoughtful emails a year. No noise.</small>
         </div>
       </section>
@@ -287,29 +241,22 @@
           <h2 id="other-worlds-title">Step into another world.</h2>
         </div>
         <div class="world-links">
-          <a class="world-children" href="/#worlds">
+          <a class="world-children" href="/collections/children/">
             <span>02 · For Children</span><strong>Wonder begins here.</strong><i>Explore ↗</i>
           </a>
-          <a class="world-women" href="/#worlds">
+          <a class="world-women" href="/collections/women/">
             <span>03 · For Women</span><strong>A quieter kind of discovery.</strong><i>Explore ↗</i>
           </a>
-          <a class="world-educational" href="/#worlds">
-            <span>04 · Educational</span><strong>Follow your curiosity.</strong><i>Explore ↗</i>
+          <a class="world-educational" href="/collections/visual-learning/">
+            <span>04 · Visual Learning</span><strong>Follow your curiosity.</strong><i>Explore ↗</i>
           </a>
         </div>
       </section>
     </main>
 
-    <footer>
-      <a href="/" class="brand footer-brand">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-        <span>Discover <b>Visually</b></span>
-      </a>
-      <p>Books made to be seen, explored and remembered.</p>
-      <div><a href="/#worlds">Collections</a><a href="#books">Books</a><a href="/#manifesto">About</a></div>
-      <span>© 2026 Discover Visually</span>
-    </footer>
+    <footer class="dv-footer"><div class="dv-footer-main"><div class="dv-footer-brand"><a class="dv-brand" href="/"><span class="dv-brand-mark" aria-hidden="true"><i></i><i></i></span><span>Discover <em>Visually</em></span></a><p class="dv-footer-note">Independent visual publishing studio creating researched, full-color books for curious readers.</p></div><nav class="dv-footer-group"><small>Explore</small><a href="/books/">All books</a><a href="/collections/">Collections</a><a href="/collections/children/">For Children</a><a href="/collections/women/">For Women</a></nav><nav class="dv-footer-group"><small>Studio</small><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a></nav></div><div class="dv-footer-bottom"><span>© 2026 Discover Visually</span><span>Research · Storytelling · Visual craft</span></div></footer>
 
     <script src="/assets/christian-collection-E1.js?v=20260726r1" defer></script>
+    <script src="/assets/catalog-data.js?v=20260805nav"></script><script src="/assets/catalog-pages.js?v=20260805nav"></script><script src="/assets/site-shell.js?v=20260805nav"></script>
   </body>
 </html>

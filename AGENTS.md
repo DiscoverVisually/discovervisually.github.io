@@ -8,8 +8,8 @@ GitHub Pages site.
 - The site is static HTML, CSS, and JavaScript.
 - Do not reintroduce React, Vite, Tailwind, Vinext, generated RSC payloads, or a
   second parallel homepage.
-- `index.html`, `assets/`, `books/`, and `collections/` are the only public site
-  surfaces.
+- `index.html`, `404.html`, `assets/`, `books/`, `collections/`, `about/`, and
+  `privacy/` are the public site surfaces.
 - `.github/workflows/pages.yml` defines exactly what reaches production.
 
 ## Working rules

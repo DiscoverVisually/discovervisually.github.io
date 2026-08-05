@@ -40,6 +40,11 @@ if (menuButton && navigation) {
   });
 }
 
+const navExplore = document.querySelector(".nav-explore");
+document.addEventListener("click", (event) => {
+  if (navExplore?.open && !navExplore.contains(event.target)) navExplore.open = false;
+});
+
 const spotlightData = {
   women: {
     image: "/assets/spread-women-of-the-bible.webp",

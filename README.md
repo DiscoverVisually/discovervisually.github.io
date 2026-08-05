@@ -15,6 +15,8 @@ The deployment publishes only:
 - `assets/`
 - `books/`
 - `collections/`
+- `about/` and `privacy/`
+- `404.html`
 
 ## Key files
 
@@ -25,6 +27,8 @@ The deployment publishes only:
 - `assets/` — shared editorial imagery
 - `books/` — public book detail pages and book covers
 - `collections/` — public category pages
+- `assets/catalog-data.js` — shared book, collection, status and audience data
+- `assets/site-shell.css` / `.js` — shared publishing-house navigation and footer
 - `scripts/validate-site.mjs` — checks publish roots, local references, and
   unresolved placeholders
 - `.github/workflows/pages.yml` — production deployment
