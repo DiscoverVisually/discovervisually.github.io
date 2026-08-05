@@ -47,6 +47,10 @@
       rel="stylesheet"
       href="../assets/pompeii-editorial-canvas.css?v=20260804a"
     />
+    <link
+      rel="stylesheet"
+      href="../assets/pompeii-mobile.css?v=20260805a"
+    />
   </head>
   <body>
     <main class="pompeii-page">
@@ -388,6 +392,10 @@
             </footer>
           </article>
         </div>
+        <div class="pm-review-pagination" aria-hidden="true">
+          <span class="pm-review-count">1 / 5</span>
+          <div class="pm-review-dots"><i class="is-active"></i><i></i><i></i><i></i><i></i></div>
+        </div>
       </section>
       <section class="pm-combined" id="details">
         <div class="pm-atmosphere" aria-hidden="true"><i></i><i></i></div>
@@ -451,7 +459,10 @@
             are translated into an immersive visual sequence young readers can
             follow—exciting, respectful and never sensationalized.
           </p>
-          <table>
+          <button class="pm-spec-toggle" type="button" aria-expanded="false" aria-controls="pm-spec-table">
+            <span>Book specifications</span><i aria-hidden="true">+</i>
+          </button>
+          <table id="pm-spec-table">
             <tbody>
               <tr>
                 <th>Research</th>
@@ -600,11 +611,12 @@
           </div>
           <button type="button" class="pm-modal-next" aria-label="Next spread">→</button>
         </div>
+        <p class="pm-rotate-hint">Rotate your phone for the largest view</p>
       </dialog>
     </main>
     <script
       defer
-      src="../assets/pompeii-product-update.js?v=20260804qol"
+      src="../assets/pompeii-product-update.js?v=20260805a"
     ></script>
   </body>
 </html>
