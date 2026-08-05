@@ -545,6 +545,25 @@
   });
 
   const finalSection = document.querySelector(".pm-final");
+  const finalBook = document.querySelector(".pm-final-book");
+  if (finalBook) {
+    finalBook.addEventListener("pointermove", (event) => {
+      if (reducedMotion.matches || event.pointerType === "touch") return;
+      const rect = finalBook.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2));
+      const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2));
+      finalBook.style.setProperty("--final-ry", `${(x * 9).toFixed(2)}deg`);
+      finalBook.style.setProperty("--final-rx", `${(-y * 5).toFixed(2)}deg`);
+      finalBook.style.setProperty("--final-lx", `${(50 + x * 18).toFixed(1)}%`);
+      finalBook.style.setProperty("--final-shadow-x", `${(-x * 12).toFixed(1)}px`);
+    });
+    finalBook.addEventListener("pointerleave", () => {
+      finalBook.style.setProperty("--final-ry", "0deg");
+      finalBook.style.setProperty("--final-rx", "0deg");
+      finalBook.style.setProperty("--final-lx", "50%");
+      finalBook.style.setProperty("--final-shadow-x", "0px");
+    });
+  }
   const atmosphereLayers = Array.from(document.querySelectorAll(".pm-atmosphere"));
   let scrollTicking = false;
   let lastScrollY = window.scrollY;
