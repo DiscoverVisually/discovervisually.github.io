@@ -17,7 +17,7 @@
     <meta property="og:title" content="Pompeii: The Last Day" />
     <meta
       property="og:description"
-      content="Enter Pompeii’s final 24 hours in a full-color visual history adventure for curious readers ages 8+."
+      content="Enter Pompeii’s final 24 hours in a full-color visual history adventure for curious readers ages 8–12."
     />
     <meta
       property="og:url"
@@ -30,14 +30,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="description"
-      content="A full-color visual history adventure through Pompeii’s final 24 hours, created for curious readers ages 8+."
+      content="A full-color visual history adventure through Pompeii’s final 24 hours, created for curious readers ages 8–12."
     />
     <link rel="shortcut icon" href="/favicon.svg" />
     <link rel="icon" href="/favicon.svg" />
 
     <link
       rel="stylesheet"
-      href="../assets/pompeii-product-update.css?v=20260803g"
+      href="../assets/pompeii-product-update.css?v=20260804qol"
     />
     <link
       rel="stylesheet"
@@ -69,6 +69,27 @@
           >View on Amazon <span>↗</span></a
         >
       </header>
+      <nav class="pm-sticky-nav" aria-label="Pompeii page sections">
+        <a class="pm-sticky-title" href="#top">Pompeii</a>
+        <button
+          class="pm-sticky-explore"
+          type="button"
+          aria-expanded="false"
+          aria-controls="pm-sticky-links"
+        >Explore <span aria-hidden="true">⌄</span></button>
+        <div class="pm-sticky-links" id="pm-sticky-links">
+          <a href="#inside">Inside</a>
+          <a href="#why">Why it works</a>
+          <a href="#reactions">Reviews</a>
+          <a href="#details">FAQ &amp; details</a>
+        </div>
+        <a
+          class="pm-sticky-buy"
+          href="https://www.amazon.com/dp/B0H6NMNL53"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Amazon <span aria-hidden="true">↗</span></a>
+      </nav>
       <section class="pm-hero" id="top">
         <div class="pm-atmosphere" aria-hidden="true"><i></i><i></i></div>
         <div class="pm-hero-copy">
@@ -139,7 +160,7 @@
           <a href="#reactions">More reviews ↓</a>
           </div>
           <div class="pm-proof-facts">
-          <span><b>8–16</b> Recommended age</span
+          <span><b>8–12</b> Recommended age</span
           ><span><b>No gore</b> Age-appropriate</span
           ><span><b>Full color</b> Visual nonfiction</span
           ><span><b>72</b> Illustrated pages</span>
@@ -158,7 +179,11 @@
             explore five real interior spreads.
           </p>
         </div>
-        <div class="pm-open-book-shell">
+        <div
+          class="pm-open-book-shell"
+          tabindex="0"
+          aria-label="Interactive sample spreads. Use the left and right arrow keys to turn pages."
+        >
           <div class="pm-book-light" aria-hidden="true"></div>
           <div class="pm-book-shadow pm-book-shadow-ambient" aria-hidden="true"></div>
           <div class="pm-book-shadow pm-book-shadow-contact" aria-hidden="true"></div>
@@ -170,11 +195,13 @@
               <img
                 src="../assets/pompeii-interior-street.webp"
                 alt="A Day in Pompeii — an immersive street-level view of the living Roman city"
+                fetchpriority="high"
+                decoding="async"
               />
               <span class="pm-page-lighting" aria-hidden="true"></span>
             </div>
             <div class="pm-book-page pm-book-page-right" aria-hidden="true">
-              <img src="../assets/pompeii-interior-street.webp" alt="" />
+              <img src="../assets/pompeii-interior-street.webp" alt="" decoding="async" />
               <span class="pm-page-lighting" aria-hidden="true"></span>
             </div>
             <div class="pm-book-gutter" aria-hidden="true"></div>
@@ -193,14 +220,28 @@
               <i class="pm-cover-edge"></i>
             </div>
           </div>
+          <button
+            class="pm-page-hotspot pm-page-hotspot-left"
+            type="button"
+            aria-label="Previous sample spread"
+          ><span aria-hidden="true">←</span></button>
+          <button
+            class="pm-page-hotspot pm-page-hotspot-right"
+            type="button"
+            aria-label="Next sample spread"
+          ><span aria-hidden="true">→</span></button>
           <button class="pm-page-arrow pm-prev" aria-label="Previous spread">
             ←</button
           ><button class="pm-page-arrow pm-next" aria-label="Next spread">
             →
           </button>
+          <button class="pm-expand-spread" type="button" aria-label="View current spread fullscreen">
+            <span aria-hidden="true">⛶</span> View full spread
+          </button>
+          <p class="pm-swipe-hint" role="status">Swipe to turn</p>
         </div>
         <div class="pm-spread-controls">
-          <span>01 / 05</span>
+          <div class="pm-spread-count"><span>01 / 05</span><small>5 sample spreads</small></div>
           <div class="pm-chapter-nav" aria-label="Interior spread chapters">
             <button
               aria-label="Show A Day in Pompeii"
@@ -220,6 +261,12 @@
             Experience ancient Pompeii through the first-person view of a time
             traveller.
           </p>
+          <div class="pm-gallery-end" hidden>
+            <span>You’ve reached the final sample.</span>
+            <button type="button" class="pm-gallery-restart">Start again</button>
+            <a href="https://www.amazon.com/dp/B0H6NMNL53" target="_blank" rel="noopener noreferrer">View on Amazon ↗</a>
+          </div>
+          <p class="sr-only pm-spread-status" aria-live="polite">Spread 1 of 5</p>
         </div>
       </section>
       <section class="pm-why" id="why">
@@ -280,7 +327,7 @@
         </div>
         <div class="pm-why-payoff">
           <strong>A book they’ll open without being asked.</strong>
-          <span>Ages 8–16 · Full color · 72 illustrated pages</span>
+          <span>Ages 8–12 · Full color · 72 illustrated pages</span>
         </div>
       </section>
       <section class="pm-reactions" id="reactions">
@@ -356,7 +403,7 @@
               <p>
                 No. The eruption is presented with real tension and historical
                 honesty, but there is no gore or graphic depiction of death. The
-                treatment is designed for readers ages 8+.
+                treatment is designed for readers ages 8–12.
               </p>
             </details>
             <details>
@@ -426,7 +473,7 @@
               </tr>
               <tr>
                 <th>Reading age</th>
-                <td>8–17 years</td>
+                <td>8–12 years</td>
               </tr>
               <tr>
                 <th>Print length</th>
@@ -482,7 +529,7 @@
             >
           </h2>
           <p>
-            A full-color visual history adventure for curious readers ages 8+.
+            A full-color visual history adventure for curious readers ages 8–12.
           </p>
           <a
             class="pm-amazon pm-amazon-dark pm-amazon-official"
@@ -497,6 +544,7 @@
               ><small>Paperback</small><strong>View on Amazon</strong></span
             ><b aria-hidden="true">↗</b></a
           ><small>You’ll continue securely on Amazon.</small>
+          <a class="pm-look-again" href="#inside">Look inside again ↑</a>
           </div>
         </div>
       </section>
@@ -529,13 +577,34 @@
         href="https://www.amazon.com/dp/B0H6NMNL53"
         target="_blank"
         rel="noopener noreferrer"
-        ><span><small>Pompeii · Ages 8+</small><b>View on Amazon</b></span
+        ><span><small>Pompeii · Ages 8–12</small><b>View on Amazon</b></span
         ><strong>↗</strong></a
       >
+      <dialog class="pm-spread-modal" aria-label="Fullscreen book spread viewer">
+        <div class="pm-modal-toolbar">
+          <div>
+            <strong>Pompeii: The Last Day</strong>
+            <span class="pm-modal-count">Spread 1 of 5</span>
+          </div>
+          <div class="pm-modal-tools">
+            <button type="button" class="pm-zoom-out" aria-label="Zoom out">−</button>
+            <output class="pm-zoom-level" aria-live="polite">100%</output>
+            <button type="button" class="pm-zoom-in" aria-label="Zoom in">+</button>
+            <button type="button" class="pm-modal-close" aria-label="Close fullscreen viewer">×</button>
+          </div>
+        </div>
+        <div class="pm-modal-stage">
+          <button type="button" class="pm-modal-prev" aria-label="Previous spread">←</button>
+          <div class="pm-modal-pan" tabindex="0" aria-label="Zoomable spread. Use mouse wheel or pinch to zoom and drag to pan.">
+            <img src="../assets/pompeii-interior-street.webp" alt="A Day in Pompeii — an immersive street-level view of the living Roman city" decoding="async" />
+          </div>
+          <button type="button" class="pm-modal-next" aria-label="Next spread">→</button>
+        </div>
+      </dialog>
     </main>
     <script
       defer
-      src="../assets/pompeii-product-update.js?v=20260804c"
+      src="../assets/pompeii-product-update.js?v=20260804qol"
     ></script>
   </body>
 </html>
