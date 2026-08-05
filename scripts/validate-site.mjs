@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const publishRoots = ["index.html", "favicon.svg", "assets", "books", "collections"];
+const publishRoots = ["index.html", "404.html", "favicon.svg", "assets", "books", "collections", "about", "privacy"];
 const textExtensions = new Set([".css", ".html", ".js", ".svg"]);
 const files = [];
 
@@ -25,7 +25,7 @@ publishRoots.forEach(collect);
 
 const failures = [];
 const localReferencePattern =
-  /(?:href|src|content)=["'](\/(?:assets|books|collections)\/[^"'?#]+|\/favicon\.svg)["']|url\(["']?(\/(?:assets|books|collections)\/[^"')?#]+|\/favicon\.svg)/g;
+  /(?:href|src|content)=["'](\/(?:assets|books|collections|about|privacy)\/[^"'?#]*|\/favicon\.svg)["']|url\(["']?(\/(?:assets|books|collections|about|privacy)\/[^"')?#]*|\/favicon\.svg)/g;
 const anyRootReferencePattern = /url\(["']?(\/[^"')?#]+)|(?:href|src)=["'](\/[^"'?#]+)["']/g;
 const legacyAssetPattern =
   /(?:index-BDu4K_NV|mobile-experience|experience-suite|hero-(?:cabinet|book-open|conversion|book-focus|compact-faith)|polish-conversion|premium-refinement|living-bookshelf|_vinext_fonts|data-rsc-css-href|vite-rsc)/;
@@ -49,6 +49,35 @@ for (const relativePath of files) {
     const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
     for (const id of new Set(duplicates)) {
       failures.push(`${relativePath}: duplicate id "${id}"`);
+    }
+
+    for (const match of contents.matchAll(/href=["']([^"']+)["']/g)) {
+      const href = match[1];
+      if (/^(?:https?:|mailto:|tel:|javascript:|\/\/)/.test(href)) continue;
+      const [hrefBase, fragment] = href.split("#");
+      const hrefPath = hrefBase.split("?")[0];
+      let target = hrefPath
+        ? hrefPath.startsWith("/")
+          ? hrefPath.slice(1)
+          : path.normalize(path.join(path.dirname(relativePath), hrefPath))
+        : relativePath;
+      if (!target) target = "index.html";
+      const absoluteTarget = path.join(root, target);
+      if (fs.existsSync(absoluteTarget) && fs.statSync(absoluteTarget).isDirectory()) {
+        target = path.join(target, "index.html");
+      }
+      const targetFile = path.join(root, target);
+      if (!fs.existsSync(targetFile)) {
+        failures.push(`${relativePath}: broken link ${href}`);
+        continue;
+      }
+      if (fragment && path.extname(targetFile) === ".html") {
+        const targetContents = fs.readFileSync(targetFile, "utf8");
+        const escaped = fragment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        if (!new RegExp(`\\sid=["']${escaped}["']`).test(targetContents)) {
+          failures.push(`${relativePath}: missing fragment #${fragment} in ${target}`);
+        }
+      }
     }
   }
 
