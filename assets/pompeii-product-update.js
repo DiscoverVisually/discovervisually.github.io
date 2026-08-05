@@ -526,7 +526,16 @@
     if (!target) return;
     event.preventDefault();
     const headerOffset = id === "#top" ? 0 : 66;
-    const destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+    const insideShell = id === "#inside" ? target.querySelector(".pm-open-book-shell") : null;
+    const insideControls = id === "#inside" ? target.querySelector(".pm-spread-controls") : null;
+    let destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+    if (insideShell && insideControls && window.innerWidth > 720) {
+      const shellTop = insideShell.getBoundingClientRect().top + window.scrollY;
+      const controlsBottom = insideControls.getBoundingClientRect().bottom + window.scrollY;
+      const availableHeight = window.innerHeight - headerOffset - 12;
+      const contentHeight = controlsBottom - shellTop;
+      destination = Math.max(0, shellTop - headerOffset - Math.max(0, (availableHeight - contentHeight) / 2));
+    }
     const start = window.scrollY;
     const distance = destination - start;
     const duration = reducedMotion.matches ? 0 : 700;
@@ -552,8 +561,8 @@
       const rect = finalBook.getBoundingClientRect();
       const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2));
       const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2));
-      finalBook.style.setProperty("--final-ry", `${(x * 9).toFixed(2)}deg`);
-      finalBook.style.setProperty("--final-rx", `${(-y * 5).toFixed(2)}deg`);
+      finalBook.style.setProperty("--final-ry", `${(x * 4).toFixed(2)}deg`);
+      finalBook.style.setProperty("--final-rx", `${(-y * 3).toFixed(2)}deg`);
       finalBook.style.setProperty("--final-lx", `${(50 + x * 18).toFixed(1)}%`);
       finalBook.style.setProperty("--final-shadow-x", `${(-x * 12).toFixed(1)}px`);
     });
