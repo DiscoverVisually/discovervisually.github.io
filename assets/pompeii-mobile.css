@@ -497,11 +497,27 @@
 
   .pm-why-lead {
     margin-bottom: 28px;
+    padding: 20px 18px;
+    border: 1px solid #efc7702e;
+    background: #030c1475;
   }
 
   .pm-why-lead h2 {
     margin: 10px 0 16px;
-    font-size: clamp(39px, 11.5vw, 48px);
+    color: #fff;
+    font-size: clamp(33px, 9.6vw, 41px);
+    line-height: 1.02;
+    text-shadow: 0 3px 18px #0009;
+  }
+
+  .pm-why-lead h2 em {
+    color: #f0c66d;
+  }
+
+  .pm-why-lead > p:last-child {
+    margin: 0;
+    padding-left: 13px;
+    font-size: 12px;
   }
 
   .pm-benefits article {
@@ -685,7 +701,33 @@
 
   .pm-final-book {
     width: min(46vw, 190px);
+    min-height: 300px;
     justify-self: center;
+  }
+
+  .pm-final-book::before {
+    width: 290px;
+    height: 390px;
+    top: -48px;
+  }
+
+  .pm-final-book::after {
+    width: 250px;
+    height: 62px;
+    bottom: 0;
+  }
+
+  .pm-final-cover,
+  .pm-final-pages {
+    width: 178px;
+  }
+
+  .pm-final-cover {
+    transform: translateY(-17px) rotateY(-7deg) rotateX(1deg);
+  }
+
+  .pm-final-pages {
+    transform: translate(calc(-50% + 7px), calc(-50% - 13px)) rotateY(-7deg);
   }
 
   .pm-final-copy h2 {
