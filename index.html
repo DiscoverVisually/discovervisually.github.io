@@ -491,15 +491,30 @@
       <section id="reader-list" class="reader-list section-pad" aria-labelledby="reader-list-title">
         <div>
           <p class="eyebrow">The reader’s list</p>
-          <h2 id="reader-list-title">The next chapter<br /><em>is taking shape.</em></h2>
+          <h2 id="reader-list-title">A quiet note<br /><em>when there’s something worth sharing.</em></h2>
         </div>
         <div class="reader-list-copy">
           <p>
-            Early previews, thoughtful recommendations and new-release news are
-            coming soon. The reader list is being prepared and will open shortly;
-            until then, explore the books already waiting for you.
+            We know how annoying it is to be spammed with emails you never asked
+            for—we don’t enjoy it either. So we’ll only write occasionally, with
+            new books, sample pages and genuinely useful reading news.
           </p>
-          <a class="button button-dark" href="/books/">Explore all books <span>→</span></a>
+          <form class="reader-list-form" action="https://formsubmit.co/hello@discovervisually.com" method="POST">
+            <input type="hidden" name="_subject" value="New Discover Visually Reader List signup" />
+            <input type="hidden" name="_next" value="https://discovervisually.github.io/reader-list/?joined=1" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="source" value="Homepage Reader List" />
+            <input class="reader-list-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <label for="reader-email">Email address</label>
+            <div class="reader-list-row">
+              <input id="reader-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required />
+              <button type="submit">Join the list <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+          <p class="reader-list-promise">
+            Just your email—no name, birthday or reader profile. Unsubscribe any
+            time using the link in every email. <a href="/privacy/">Privacy, plainly stated.</a>
+          </p>
         </div>
       </section>
     </main>
