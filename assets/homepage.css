@@ -1076,6 +1076,71 @@ h2 em {
   line-height: 1.7;
 }
 
+.reader-list-form {
+  max-width: 620px;
+}
+
+.reader-list-form > label {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(9, 22, 33, 0.72);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.reader-list-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-bottom: 1px solid rgba(9, 22, 33, 0.55);
+}
+
+.reader-list-row input,
+.reader-list-row button {
+  min-height: 56px;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+}
+
+.reader-list-row input {
+  min-width: 0;
+  padding: 0 16px 0 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 16px;
+}
+
+.reader-list-row input::placeholder { color: rgba(9, 22, 33, 0.42); }
+.reader-list-row input:focus { outline: 0; }
+.reader-list-row:focus-within { border-color: var(--rust); box-shadow: 0 2px 0 var(--rust); }
+
+.reader-list-row button {
+  padding: 0 20px;
+  color: var(--white);
+  background: var(--ink);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.reader-list-row button span { margin-left: 18px; color: var(--gold); font-size: 16px; }
+.reader-list-row button:hover { background: var(--rust); }
+.reader-list-honey { position: absolute !important; left: -10000px !important; }
+
+.reader-list-copy .reader-list-promise {
+  max-width: 620px;
+  margin: 15px 0 0;
+  color: rgba(9, 22, 33, 0.55);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.reader-list-promise a { color: var(--rust); text-decoration: underline; text-underline-offset: 3px; }
+
 footer {
   padding: 55px max(48px, calc((100vw - 1240px) / 2));
   display: grid;
@@ -1133,6 +1198,11 @@ footer nav a:hover {
   .reader-card {
     min-height: 390px;
   }
+
+  .reader-list-row { grid-template-columns: 1fr; border-bottom: 0; gap: 10px; }
+  .reader-list-row input { padding: 0 14px; border: 1px solid rgba(9, 22, 33, 0.35); }
+  .reader-list-row input:focus { border-color: var(--rust); outline: 2px solid transparent; }
+  .reader-list-row button { justify-content: space-between; display: flex; align-items: center; }
 
   .reader-copy > span,
   .reader-action {
