@@ -5,6 +5,10 @@
   const nav = header.querySelector("[data-dv-nav]");
   const explore = header.querySelector(".dv-explore");
 
+  document.querySelectorAll('a[href="/#reader-list"]').forEach((link) => {
+    link.setAttribute("href", "/reader-list/");
+  });
+
   const closeMenu = (restoreFocus = false) => {
     if (!button || !nav) return;
     button.setAttribute("aria-expanded", "false");
