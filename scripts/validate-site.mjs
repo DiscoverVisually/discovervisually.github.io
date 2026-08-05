@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const publishRoots = ["index.html", "404.html", "favicon.svg", "assets", "books", "collections", "about", "privacy"];
+const publishRoots = ["index.html", "404.html", "favicon.svg", "assets", "books", "collections", "about", "privacy", "reader-list"];
 const textExtensions = new Set([".css", ".html", ".js", ".svg"]);
 const files = [];
 
@@ -25,7 +25,7 @@ publishRoots.forEach(collect);
 
 const failures = [];
 const localReferencePattern =
-  /(?:href|src|content)=["'](\/(?:assets|books|collections|about|privacy)\/[^"'?#]*|\/favicon\.svg)["']|url\(["']?(\/(?:assets|books|collections|about|privacy)\/[^"')?#]*|\/favicon\.svg)/g;
+  /(?:href|src|content)=["'](\/(?:assets|books|collections|about|privacy|reader-list)\/[^"'?#]*|\/favicon\.svg)["']|url\(["']?(\/(?:assets|books|collections|about|privacy|reader-list)\/[^"')?#]*|\/favicon\.svg)/g;
 const anyRootReferencePattern = /url\(["']?(\/[^"')?#]+)|(?:href|src)=["'](\/[^"'?#]+)["']/g;
 const legacyAssetPattern =
   /(?:index-BDu4K_NV|mobile-experience|experience-suite|hero-(?:cabinet|book-open|conversion|book-focus|compact-faith)|polish-conversion|premium-refinement|living-bookshelf|_vinext_fonts|data-rsc-css-href|vite-rsc)/;
