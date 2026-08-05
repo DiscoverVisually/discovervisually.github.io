@@ -1077,7 +1077,8 @@ html {
 }
 
 .pm-open-book {
-  width: min(67vw, 1030px, 102svh);
+  --book-height: min(58svh, 650px, 37vw);
+  width: min(57vw, 930px, 94svh);
 }
 
 .pm-open-shadow {
@@ -1097,11 +1098,11 @@ html {
 .pm-spread-controls {
   width: min(90.6vw, 1120px);
   min-height: 0;
-  height: 18svh;
+  height: 8svh;
   margin: 0 auto;
   padding-top: 2.2svh;
   position: absolute;
-  top: 80svh;
+  top: 90svh;
   left: 50%;
   transform: translateX(-50%);
   align-content: start;
