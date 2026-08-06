@@ -97,6 +97,19 @@
     grid-template-rows: minmax(96px, 15svh) minmax(390px, 62svh) minmax(88px, 14svh);
   }
 
+  /*
+   * Keep the gallery metadata inside the section at every viewport height.
+   * The book canvas ends at 80svh, while the sticky product bar shortens this
+   * section by 58px. Anchoring the controls to 90svh therefore placed their
+   * final lines beyond the section boundary and underneath the next panel.
+   */
+  .pm-inside .pm-spread-controls {
+    top: auto;
+    bottom: clamp(12px, 1.8svh, 18px);
+    height: auto;
+    padding-top: 0;
+  }
+
   .pm-open-book-shell { height: 62svh; min-height: 390px; }
   .pm-open-book { --book-height: min(58svh, 650px, 38vw); }
 }
