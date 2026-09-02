@@ -66,6 +66,33 @@
   color: #4a3925;
 }
 
+.hindenburg-page .pm-hero-actions .pm-amazon.pm-amazon-official {
+  width: min(100%, 300px);
+  min-height: 64px;
+  gap: 10px;
+  padding: 6px 12px 6px 8px;
+}
+
+.hindenburg-page .pm-hero-actions .pm-amazon-badge {
+  width: 96px;
+  height: 48px;
+}
+
+.hindenburg-page .pm-hero-actions .pm-amazon-copy small {
+  font-size: 7px;
+}
+
+.hindenburg-page .pm-hero-actions .pm-amazon-copy strong {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.hindenburg-page .pm-hero-actions .pm-amazon-official > b {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+}
+
 .hindenburg-page .pm-inside {
   background:
     linear-gradient(rgba(244, 241, 234, .96), rgba(240, 236, 226, .98)),
@@ -82,6 +109,46 @@
   background:
     radial-gradient(circle at 8% 84%, rgba(216, 173, 89, .16), transparent 26%),
     #ebe7dc;
+}
+
+.hindenburg-page .pm-reactions-head h2 {
+  color: #102437;
+}
+
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) {
+  border-color: rgba(16, 36, 55, .16);
+  background: rgba(255, 255, 255, .34);
+}
+
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) blockquote {
+  color: #25394a;
+}
+
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) footer,
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) footer b {
+  color: #102437;
+}
+
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) footer small {
+  color: #5e6b75;
+}
+
+.hindenburg-page .pm-reaction-grid article:not(.pm-reaction-featured) .pm-review-source {
+  color: #8b5c25;
+}
+
+.hindenburg-page .pm-reaction-featured {
+  background: linear-gradient(145deg, #18394d, #673c35);
+}
+
+.hindenburg-page .pm-reaction-featured blockquote,
+.hindenburg-page .pm-reaction-featured footer,
+.hindenburg-page .pm-reaction-featured footer b {
+  color: #fff;
+}
+
+.hindenburg-page .pm-reaction-featured footer small {
+  color: rgba(255, 255, 255, .72);
 }
 
 .hindenburg-page .pm-combined {
@@ -129,5 +196,10 @@
 @media (width <= 720px) {
   .hindenburg-page .pm-hero h1 {
     font-size: clamp(50px, 15.5vw, 70px);
+  }
+
+  .hindenburg-page .pm-hero-actions .pm-amazon.pm-amazon-official {
+    width: 100%;
+    min-height: 58px;
   }
 }
