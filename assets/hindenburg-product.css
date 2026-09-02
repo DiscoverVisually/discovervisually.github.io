@@ -1,0 +1,133 @@
+/* Hindenburg visual identity layered over the shared History Hunters product page. */
+.hindenburg-page {
+  --pm-gold: #d8ad59;
+  --pm-rust: #df6d2f;
+  --pm-night: #06111d;
+  --pm-ink: #102437;
+  --pm-paper: #f0ece2;
+}
+
+.hindenburg-page .pm-hero {
+  background:
+    radial-gradient(ellipse at 75% 44%, rgba(180, 194, 202, .28), transparent 27%),
+    radial-gradient(circle at 76% 48%, #354654 0, #102535 37%, #06111d 72%);
+}
+
+.hindenburg-page .pm-hero::after {
+  background:
+    linear-gradient(90deg, rgba(3, 10, 18, .95), rgba(4, 13, 22, .74) 42%, rgba(4, 13, 22, .15) 72%, rgba(3, 9, 16, .58)),
+    linear-gradient(0deg, rgba(2, 8, 14, .72), transparent 45%);
+}
+
+.hindenburg-page .pm-hero h1 {
+  max-width: 700px;
+  font-size: clamp(54px, 6vw, 94px);
+}
+
+.hindenburg-page .pm-hero h1 em,
+.hindenburg-page .pm-section-head h2 em,
+.hindenburg-page .pm-why-lead h2 em,
+.hindenburg-page .pm-reactions-head h2 em,
+.hindenburg-page .pm-combined h2 em,
+.hindenburg-page .pm-final h2 em {
+  color: var(--pm-gold);
+}
+
+.hindenburg-page .pm-stage-ring {
+  border-color: rgba(216, 173, 89, .28);
+  box-shadow: inset 0 0 90px rgba(138, 164, 178, .08);
+}
+
+.hindenburg-page .pm-stage-ash {
+  opacity: .28;
+  filter: saturate(.45) hue-rotate(170deg);
+}
+
+.hindenburg-page .pm-wrap-art {
+  background-image: url("../books/hindenburg-cover.webp");
+  background-position: center;
+  background-size: cover;
+}
+
+.hindenburg-page .pm-wrap-back {
+  filter: brightness(.38) saturate(.7);
+}
+
+.hindenburg-page .pm-proof {
+  color: #172433;
+  background: linear-gradient(105deg, #d9b15f, #ead093 55%, #c99946);
+}
+
+.hindenburg-page .pm-proof-inner {
+  border-color: rgba(23, 36, 51, .14);
+}
+
+.hindenburg-page .pm-proof-author {
+  color: #4a3925;
+}
+
+.hindenburg-page .pm-inside {
+  background:
+    linear-gradient(rgba(244, 241, 234, .96), rgba(240, 236, 226, .98)),
+    url("hindenburg-interior-airships.webp") center / cover;
+}
+
+.hindenburg-page .pm-why {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(223, 109, 47, .18), transparent 28%),
+    linear-gradient(145deg, #10293c, #06131f 65%);
+}
+
+.hindenburg-page .pm-reactions {
+  background:
+    radial-gradient(circle at 8% 84%, rgba(216, 173, 89, .16), transparent 26%),
+    #ebe7dc;
+}
+
+.hindenburg-page .pm-combined {
+  background:
+    radial-gradient(circle at 86% 16%, rgba(154, 174, 184, .14), transparent 24%),
+    #f2eee5;
+}
+
+.hindenburg-page .pm-final {
+  background:
+    radial-gradient(ellipse at 29% 38%, rgba(222, 173, 75, .16), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(199, 86, 36, .12), transparent 22%),
+    linear-gradient(135deg, #071521, #102b3e 62%, #050e17);
+}
+
+.hindenburg-page .pm-hero .pm-atmosphere i,
+.hindenburg-page .pm-inside .pm-atmosphere i {
+  background-image: url("hindenburg-interior-airships.webp");
+}
+
+.hindenburg-page .pm-why .pm-atmosphere i {
+  background-image: url("hindenburg-interior-systems.webp");
+}
+
+.hindenburg-page .pm-reactions .pm-atmosphere i {
+  background-image: url("hindenburg-interior-fire.webp");
+}
+
+.hindenburg-page .pm-combined .pm-atmosphere i {
+  background-image: url("hindenburg-interior-navigation.webp");
+}
+
+.hindenburg-page .pm-final .pm-atmosphere i {
+  background-image: url("hindenburg-interior-fire.webp");
+}
+
+.hindenburg-page .pm-final-spine {
+  background: linear-gradient(90deg, #07131e, #153951 55%, #081521);
+}
+
+.hindenburg-page .pm-final-plaque {
+  background: linear-gradient(135deg, #3b321e, #111b22 58%, #49371c);
+}
+
+@media (width <= 720px) {
+  .hindenburg-page .pm-hero h1 {
+    font-size: clamp(50px, 15.5vw, 70px);
+  }
+}

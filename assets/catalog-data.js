@@ -15,6 +15,21 @@ window.DV_BOOKS = [
     series: "Time Traveler’s · Dangerous Destinations"
   },
   {
+    id: "hindenburg",
+    title: "Hindenburg: The Final Flight",
+    shortTitle: "Hindenburg",
+    url: "/books/hindenburg-the-final-flight.html",
+    cover: "/books/hindenburg-cover.webp",
+    status: "Available now",
+    format: "Immersive full-color aviation history",
+    audience: "Ages 10+",
+    description: "Board the giant Zeppelin, cross the Atlantic and follow the Lakehurst disaster second by second.",
+    primaryCollection: "children",
+    collections: ["children", "visual-learning"],
+    topic: "History & Ancient Worlds",
+    series: "History Hunters"
+  },
+  {
     id: "holy-misconceptions",
     title: "Holy Misconceptions!",
     shortTitle: "Holy Misconceptions!",
