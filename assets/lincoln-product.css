@@ -123,6 +123,35 @@
     grid-column: 1 / -1;
     grid-row: 3;
   }
+
+  /* The shared desktop canvas offsets the book shell downward while keeping
+     the controls in a fixed third row. On Lincoln that made the chapter
+     navigation overlap the bottom of the open spread. Let this section size
+     naturally so the viewer, controls and caption stay in document flow. */
+  .lincoln-page .pm-inside {
+    height: auto;
+    min-height: 100svh;
+    grid-template-rows: auto auto auto;
+    padding-bottom: clamp(34px, 4vw, 56px);
+    overflow: hidden;
+  }
+
+  .lincoln-page .pm-inside .pm-section-head {
+    height: auto;
+    min-height: 108px;
+  }
+
+  .lincoln-page .pm-inside .pm-open-book-shell {
+    top: 0;
+    height: min(65svh, 690px);
+    min-height: 430px;
+  }
+
+  .lincoln-page .pm-inside .pm-spread-controls {
+    margin-top: 22px;
+    position: relative;
+    z-index: 30;
+  }
 }
 
 .lincoln-page .pm-inside {
