@@ -6,14 +6,14 @@
     opacity 260ms ease;
 }
 
-.hero.hero-book-focus-active .hero-copy {
+.hero.hero-cinematic-active .hero-copy {
   opacity: .34;
   transform: translateX(-8px);
   filter: saturate(.72);
   transition: opacity 420ms ease, transform 620ms cubic-bezier(.16, 1, .3, 1), filter 420ms ease;
 }
 
-.hero-stage.hero-book-focus-active .hero-book:not(.hero-book-is-source) {
+.hero-stage.hero-cinematic-active .hero-book:not(.hero-book-is-source) {
   opacity: .38;
   filter: brightness(.58) saturate(.62);
 }
