@@ -12,7 +12,7 @@ window.DV_BOOKS = [
     primaryCollection: "children",
     collections: ["children", "visual-learning"],
     topic: "History & Ancient Worlds",
-    series: "Time Traveler’s · Dangerous Destinations"
+    series: "History Hunters"
   },
   {
     id: "hindenburg",
@@ -24,6 +24,21 @@ window.DV_BOOKS = [
     format: "Immersive full-color aviation history",
     audience: "Ages 10+",
     description: "Board the giant Zeppelin, cross the Atlantic and follow the Lakehurst disaster second by second.",
+    primaryCollection: "children",
+    collections: ["children", "visual-learning"],
+    topic: "History & Ancient Worlds",
+    series: "History Hunters"
+  },
+  {
+    id: "abraham-lincoln",
+    title: "I Worked for Abraham Lincoln",
+    shortTitle: "Abraham Lincoln",
+    url: "/books/i-worked-for-abraham-lincoln.html",
+    cover: "/books/lincoln-cover.webp",
+    status: "Available now",
+    format: "Immersive full-color Civil War history",
+    audience: "Ages 8+",
+    description: "Enter Lincoln’s wartime White House through the eyes of a young messenger and see how words, messages and decisions moved a nation.",
     primaryCollection: "children",
     collections: ["children", "visual-learning"],
     topic: "History & Ancient Worlds",

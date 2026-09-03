@@ -1,0 +1,158 @@
+/* Lincoln visual identity layered over the shared History Hunters product page. */
+.lincoln-page {
+  --pm-gold: #b58a3a;
+  --pm-rust: #8f352a;
+  --pm-night: #06162a;
+  --pm-ink: #102943;
+  --pm-paper: #eee7d8;
+}
+
+.lincoln-page .pm-hero {
+  background:
+    radial-gradient(ellipse at 77% 43%, rgba(203, 190, 157, .23), transparent 27%),
+    linear-gradient(115deg, #061425 8%, #0b2846 58%, #4a302c 125%);
+}
+
+.lincoln-page .pm-hero::after {
+  background:
+    repeating-linear-gradient(116deg, transparent 0 84px, rgba(222, 204, 164, .025) 85px 86px),
+    linear-gradient(90deg, rgba(3, 13, 26, .96), rgba(5, 21, 38, .75) 44%, rgba(6, 20, 35, .14) 73%, rgba(5, 13, 23, .6)),
+    linear-gradient(0deg, rgba(2, 9, 18, .72), transparent 48%);
+}
+
+.lincoln-page .pm-hero h1 {
+  max-width: 760px;
+  font-size: clamp(44px, 5.2vw, 82px);
+  letter-spacing: -.035em;
+}
+
+.lincoln-page .pm-hero h1 span {
+  display: block;
+  margin-bottom: .08em;
+  font-family: var(--pm-sans);
+  font-size: .24em;
+  line-height: 1;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+.lincoln-page .pm-hero h1 em,
+.lincoln-page .pm-section-head h2 em,
+.lincoln-page .pm-why-lead h2 em,
+.lincoln-page .pm-reactions-head h2 em,
+.lincoln-page .pm-combined h2 em,
+.lincoln-page .pm-final h2 em {
+  color: var(--pm-gold);
+}
+
+.lincoln-page .pm-stage-ring {
+  border-color: rgba(181, 138, 58, .32);
+  box-shadow: inset 0 0 100px rgba(204, 184, 143, .08);
+}
+
+.lincoln-page .pm-stage-ash {
+  opacity: .2;
+  filter: sepia(.35) saturate(.65) hue-rotate(335deg);
+}
+
+.lincoln-page .pm-wrap-art {
+  background-image: url("../books/lincoln-cover.webp");
+  background-position: center;
+  background-size: cover;
+}
+
+.lincoln-page .pm-wrap-back {
+  filter: brightness(.4) saturate(.6) sepia(.15);
+}
+
+.lincoln-page .pm-proof {
+  color: #132840;
+  background: linear-gradient(105deg, #c79d53, #e6cc95 55%, #b68335);
+}
+
+.lincoln-page .pm-proof-inner {
+  border-color: rgba(16, 41, 67, .16);
+}
+
+.lincoln-page .pm-proof-author { color: #493923; }
+
+.lincoln-page .pm-hero-actions .pm-amazon.pm-amazon-official {
+  width: min(100%, 300px);
+  min-height: 64px;
+  gap: 10px;
+  padding: 6px 12px 6px 8px;
+}
+
+.lincoln-page .pm-hero-actions .pm-amazon-badge { width: 96px; height: 48px; }
+.lincoln-page .pm-hero-actions .pm-amazon-copy small { font-size: 7px; }
+.lincoln-page .pm-hero-actions .pm-amazon-copy strong { font-size: 14px; white-space: nowrap; }
+.lincoln-page .pm-hero-actions .pm-amazon-official > b { width: 30px; height: 30px; font-size: 18px; }
+
+.lincoln-page .pm-inside {
+  background:
+    linear-gradient(rgba(243, 238, 226, .96), rgba(237, 230, 214, .98)),
+    url("lincoln-interior-first-day.webp") center / cover;
+}
+
+.lincoln-page .pm-why {
+  background:
+    radial-gradient(circle at 82% 10%, rgba(143, 53, 42, .2), transparent 28%),
+    linear-gradient(145deg, #153555, #07172b 67%);
+}
+
+.lincoln-page .pm-reactions {
+  background:
+    radial-gradient(circle at 8% 84%, rgba(181, 138, 58, .18), transparent 27%),
+    #ece5d6;
+}
+
+.lincoln-page .pm-reactions-head h2 { color: #102943; }
+
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) {
+  border-color: rgba(16, 41, 67, .18);
+  background: rgba(255, 255, 255, .5);
+}
+
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) blockquote { color: #203a52; }
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) footer,
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) footer b { color: #102943; }
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) footer small { color: #596875; }
+.lincoln-page .pm-reaction-grid article:not(.pm-reaction-featured) .pm-review-source { color: #79531e; }
+
+.lincoln-page .pm-reaction-featured {
+  background: linear-gradient(145deg, #163958, #612f30);
+}
+
+.lincoln-page .pm-reaction-featured blockquote,
+.lincoln-page .pm-reaction-featured footer,
+.lincoln-page .pm-reaction-featured footer b { color: #fff; }
+.lincoln-page .pm-reaction-featured footer small { color: rgba(255, 255, 255, .74); }
+
+.lincoln-page .pm-combined {
+  background:
+    radial-gradient(circle at 87% 16%, rgba(181, 138, 58, .12), transparent 24%),
+    #f1ebdf;
+}
+
+.lincoln-page .pm-final {
+  background:
+    radial-gradient(ellipse at 28% 38%, rgba(181, 138, 58, .18), transparent 29%),
+    radial-gradient(circle at 83% 18%, rgba(143, 53, 42, .14), transparent 23%),
+    linear-gradient(135deg, #07172a, #133a5b 62%, #060f1d);
+}
+
+.lincoln-page .pm-hero .pm-atmosphere i,
+.lincoln-page .pm-inside .pm-atmosphere i { background-image: url("lincoln-interior-first-day.webp"); }
+.lincoln-page .pm-why .pm-atmosphere i { background-image: url("lincoln-interior-gettysburg.webp"); }
+.lincoln-page .pm-reactions .pm-atmosphere i { background-image: url("lincoln-interior-272-words.webp"); }
+.lincoln-page .pm-combined .pm-atmosphere i { background-image: url("lincoln-interior-richmond.webp"); }
+.lincoln-page .pm-final .pm-atmosphere i { background-image: url("lincoln-interior-first-day.webp"); }
+
+.lincoln-page .pm-final-spine { background: linear-gradient(90deg, #07152a, #163b5e 55%, #081528); }
+.lincoln-page .pm-final-plaque { background: linear-gradient(135deg, #4b3a1d, #12253a 58%, #57301e); }
+
+@media (width <= 720px) {
+  .lincoln-page .pm-hero h1 { font-size: clamp(40px, 11.8vw, 58px); }
+  .lincoln-page .pm-hero h1 span { font-size: .28em; }
+  .lincoln-page .pm-hero-actions .pm-amazon.pm-amazon-official { width: 100%; min-height: 58px; }
+}
