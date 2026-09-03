@@ -91,27 +91,45 @@
 }
 
 @media (width > 720px) {
-  .pm-inside {
-    height: calc(100svh - 58px);
-    min-height: 640px;
-    grid-template-rows: minmax(96px, 15svh) minmax(390px, 62svh) minmax(88px, 14svh);
-  }
-
   /*
-   * Keep the gallery metadata inside the section at every viewport height.
-   * The book canvas ends at 80svh, while the sticky product bar shortens this
-   * section by 58px. Anchoring the controls to 90svh therefore placed their
-   * final lines beyond the section boundary and underneath the next panel.
+   * The viewer used to force the entire inside section into one shortened
+   * viewport. On shorter desktop windows the open book became taller than its
+   * grid row, so the chapter navigation was painted across the bottom of the
+   * spread. Let the section grow naturally and give the navigation its own
+   * row with a real gap below the physical book.
    */
-  .pm-inside .pm-spread-controls {
-    top: auto;
-    bottom: clamp(12px, 1.8svh, 18px);
+  .pm-inside {
     height: auto;
-    padding-top: 0;
+    min-height: calc(100svh - 58px);
+    grid-template-rows: minmax(96px, auto) minmax(390px, 62svh) auto;
+    row-gap: clamp(18px, 2.4svh, 30px);
+    padding-bottom: clamp(28px, 4svh, 48px);
+    overflow: hidden;
   }
 
-  .pm-open-book-shell { height: 62svh; min-height: 390px; }
-  .pm-open-book { --book-height: min(58svh, 650px, 38vw); }
+  .pm-inside .pm-open-book-shell {
+    height: 62svh;
+    min-height: 390px;
+    top: auto;
+    margin: 0 auto;
+  }
+
+  .pm-open-book {
+    --book-height: min(58svh, 650px, 38vw);
+  }
+
+  .pm-inside .pm-spread-controls {
+    position: relative;
+    z-index: 25;
+    top: auto;
+    bottom: auto;
+    align-self: start;
+    height: auto;
+    min-height: 88px;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: clamp(4px, .8svh, 10px);
+  }
 }
 
 @media (width <= 720px) {
