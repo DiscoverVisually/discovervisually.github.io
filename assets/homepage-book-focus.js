@@ -149,8 +149,8 @@
       settled: false
     };
 
-    hero.classList.add("hero-book-focus-active");
-    stage.classList.add("hero-book-focus-active");
+    hero.classList.add("hero-cinematic-active");
+    stage.classList.add("hero-cinematic-active");
     source.classList.add("hero-book-is-source");
 
     backdrop.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -212,8 +212,8 @@
     if (immediate) {
       current.layer.remove();
       current.source.classList.remove("hero-book-is-source");
-      hero.classList.remove("hero-book-focus-active");
-      stage.classList.remove("hero-book-focus-active");
+      hero.classList.remove("hero-cinematic-active");
+      stage.classList.remove("hero-cinematic-active");
       if (active === current) active = null;
       return;
     }
@@ -234,8 +234,8 @@
     window.setTimeout(() => current.source.classList.remove("hero-book-is-source"), 205);
     window.setTimeout(() => {
       current.layer.remove();
-      hero.classList.remove("hero-book-focus-active");
-      stage.classList.remove("hero-book-focus-active");
+      hero.classList.remove("hero-cinematic-active");
+      stage.classList.remove("hero-cinematic-active");
       if (active === current) active = null;
     }, 365);
   }
