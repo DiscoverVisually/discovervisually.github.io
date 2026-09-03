@@ -1,0 +1,243 @@
+/* Cinematic hover focus for the three homepage hero books. */
+.hero-book {
+  transition:
+    transform 260ms ease,
+    filter 320ms ease,
+    opacity 260ms ease;
+}
+
+.hero.hero-book-focus-active .hero-copy {
+  opacity: .34;
+  transform: translateX(-8px);
+  filter: saturate(.72);
+  transition: opacity 420ms ease, transform 620ms cubic-bezier(.16, 1, .3, 1), filter 420ms ease;
+}
+
+.hero-stage.hero-book-focus-active .hero-book:not(.hero-book-is-source) {
+  opacity: .38;
+  filter: brightness(.58) saturate(.62);
+}
+
+.hero-book.hero-book-is-source {
+  opacity: 0;
+}
+
+.hero-focus-layer {
+  position: fixed;
+  z-index: 180;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-focus-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 50% 47%, rgba(225, 190, 122, .16), transparent 25%),
+    linear-gradient(120deg, rgba(5, 15, 24, .72), rgba(6, 18, 29, .88));
+  -webkit-backdrop-filter: blur(2px) saturate(.78);
+  backdrop-filter: blur(2px) saturate(.78);
+}
+
+.hero-focus-card {
+  position: fixed;
+  z-index: 2;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.hero-focus-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 8% 1% -6%;
+  border-radius: 50%;
+  opacity: .8;
+  background: radial-gradient(ellipse, rgba(218, 172, 91, .28), rgba(4, 10, 16, .08) 48%, transparent 72%);
+  filter: blur(24px);
+  transform: translateY(8%);
+}
+
+.hero-focus-cover {
+  --focus-tilt-x: 0deg;
+  --focus-tilt-y: 0deg;
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: auto;
+  border-radius: 3px 9px 9px 3px;
+  background: #10202d;
+  box-shadow:
+    0 42px 80px rgba(0, 0, 0, .54),
+    0 15px 28px rgba(0, 0, 0, .34),
+    inset 0 0 0 1px rgba(255, 255, 255, .15);
+  transform: perspective(1200px) rotateX(var(--focus-tilt-x)) rotateY(var(--focus-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 120ms ease-out, box-shadow 240ms ease;
+}
+
+.hero-focus-cover::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0 auto 0 0;
+  width: 7px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255,255,255,.28), rgba(4,7,10,.26));
+  box-shadow: 2px 0 5px rgba(0,0,0,.18);
+}
+
+.hero-focus-cover::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: -16%;
+  bottom: -16%;
+  left: -62%;
+  width: 42%;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(105deg, transparent 0 24%, rgba(255,255,255,.06) 34%, rgba(255,247,221,.62) 48%, rgba(255,255,255,.12) 61%, transparent 76%);
+  filter: blur(.4px);
+  transform: skewX(-17deg);
+}
+
+.hero-focus-card.is-entering .hero-focus-cover::after {
+  animation: hero-focus-sheen 940ms cubic-bezier(.2, .75, .18, 1) 110ms both;
+}
+
+.hero-focus-cover:hover {
+  box-shadow:
+    0 48px 88px rgba(0, 0, 0, .58),
+    0 16px 32px rgba(0, 0, 0, .38),
+    0 0 34px rgba(222, 180, 100, .16),
+    inset 0 0 0 1px rgba(255, 255, 255, .2);
+}
+
+.hero-focus-cover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hero-focus-actions {
+  position: fixed;
+  z-index: 3;
+  min-width: 330px;
+  max-width: min(480px, calc(100vw - 40px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 11px 12px 11px 16px;
+  pointer-events: none;
+  opacity: 0;
+  color: #fffdf8;
+  background: rgba(8, 22, 33, .9);
+  border: 1px solid rgba(229, 201, 141, .26);
+  border-radius: 3px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.34);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transform: translate(-50%, 12px);
+  transition: opacity 220ms ease, transform 360ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.hero-focus-actions.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hero-focus-actions > span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.hero-focus-actions small {
+  color: rgba(255,253,248,.48);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.hero-focus-actions strong {
+  overflow: hidden;
+  color: #fffdf8;
+  font: 500 15px/1.2 var(--serif);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hero-focus-amazon {
+  min-height: 38px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #172431;
+  background: linear-gradient(135deg, #f0d38d, #d5a44c);
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px rgba(255,255,255,.55);
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.hero-focus-amazon:hover,
+.hero-focus-amazon:focus-visible {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+}
+
+.hero-focus-look-hint {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 14px;
+  padding: 7px 10px;
+  opacity: 0;
+  color: rgba(255,253,248,.88);
+  background: rgba(6, 16, 25, .72);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 2px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  transform: translate(-50%, 7px);
+  transition: opacity 220ms ease, transform 320ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.hero-focus-card.is-settled .hero-focus-look-hint {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes hero-focus-sheen {
+  0% { left: -62%; opacity: 0; }
+  14% { opacity: .82; }
+  62% { opacity: .62; }
+  100% { left: 122%; opacity: 0; }
+}
+
+@media (max-width: 900px), (hover: none), (pointer: coarse) {
+  .hero-focus-layer { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-focus-card.is-entering .hero-focus-cover::after { animation: none; }
+}
