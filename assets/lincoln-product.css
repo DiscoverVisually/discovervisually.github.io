@@ -88,6 +88,43 @@
 .lincoln-page .pm-hero-actions .pm-amazon-copy strong { font-size: 14px; white-space: nowrap; }
 .lincoln-page .pm-hero-actions .pm-amazon-official > b { width: 30px; height: 30px; font-size: 18px; }
 
+@media (width > 720px) {
+  .lincoln-page .pm-spread-controls {
+    grid-template-columns: 170px minmax(0, 1fr);
+    column-gap: 28px;
+    row-gap: 10px;
+  }
+
+  .lincoln-page .pm-spread-count {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .lincoln-page .pm-chapter-nav {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .lincoln-page .pm-spread-controls > p {
+    grid-column: 2;
+    grid-row: 2;
+    max-width: none;
+    margin: 0;
+    padding: 9px 14px;
+    border-left: 2px solid var(--pm-gold);
+    background: rgba(244, 238, 224, .94);
+    color: #20394f;
+    font-size: 14px;
+    line-height: 1.42;
+    text-shadow: none;
+  }
+
+  .lincoln-page .pm-gallery-end {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
 .lincoln-page .pm-inside {
   background:
     linear-gradient(rgba(243, 238, 226, .96), rgba(237, 230, 214, .98)),
