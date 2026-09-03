@@ -1,0 +1,279 @@
+/* Decisive homepage hero rebuild — visible backdrop + compact first viewport */
+
+.hero {
+  position: relative;
+  height: 490px;
+  min-height: 490px;
+  padding: calc(var(--header-height) + 14px) max(48px, calc((100vw - 1240px) / 2)) 22px;
+  display: grid;
+  grid-template-columns: minmax(390px, .92fr) minmax(500px, 1.08fr);
+  align-items: center;
+  gap: 38px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--white);
+  background: #07141e;
+}
+
+.hero-background-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 46%;
+  pointer-events: none;
+  opacity: .72;
+  filter: brightness(1.34) saturate(.88) contrast(1.02);
+  transform: scale(1.015);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  background:
+    linear-gradient(90deg,
+      rgba(5, 15, 23, .94) 0%,
+      rgba(5, 16, 25, .82) 31%,
+      rgba(6, 18, 28, .56) 50%,
+      rgba(6, 18, 28, .28) 72%,
+      rgba(5, 15, 23, .36) 100%),
+    linear-gradient(180deg, rgba(7, 18, 27, .10), rgba(7, 18, 27, .22));
+  background-size: auto;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 72%, rgba(5, 15, 23, .30) 100%),
+    radial-gradient(ellipse at 73% 78%, rgba(229, 201, 141, .10), transparent 30%);
+}
+
+.hero-copy,
+.hero-stage {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-copy {
+  align-self: center;
+  transform: translateY(-3px);
+}
+
+.hero .kicker {
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  max-width: 555px;
+  margin-bottom: 16px;
+  font: 500 clamp(46px, 4vw, 61px) / .96 var(--serif);
+  letter-spacing: -.043em;
+}
+
+.hero-intro {
+  max-width: 490px;
+  margin-bottom: 20px;
+  color: rgba(255, 253, 248, .82);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  gap: 20px;
+}
+
+.hero .button {
+  min-height: 45px;
+}
+
+.hero-stage {
+  height: 345px;
+  align-self: center;
+}
+
+.hero-stage::before {
+  left: 7%;
+  right: 6%;
+  bottom: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(229,201,141,.18), rgba(229,201,141,.68), rgba(229,201,141,.18), transparent);
+  box-shadow: 0 12px 24px rgba(201,154,80,.14);
+}
+
+.hero-stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 15%;
+  right: 11%;
+  bottom: 11px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(229,201,141,.13), transparent 68%);
+  filter: blur(8px);
+}
+
+.hero-book {
+  box-shadow:
+    0 25px 44px rgba(0,0,0,.40),
+    0 6px 13px rgba(0,0,0,.25),
+    0 0 0 1px rgba(255,255,255,.05);
+}
+
+.hero-book-pompeii {
+  left: 7%;
+  width: 145px;
+  filter: brightness(.93) saturate(.96);
+  transform: translateY(14px) rotate(-7deg);
+}
+
+.hero-book-women {
+  width: 190px;
+  transform: translateY(-7px);
+  box-shadow:
+    0 31px 56px rgba(0,0,0,.46),
+    0 0 38px rgba(201,154,80,.12),
+    0 0 0 1px rgba(255,255,255,.06);
+}
+
+.hero-book-romantasy {
+  right: 6%;
+  width: 152px;
+  filter: brightness(.94) saturate(.96);
+  transform: translateY(16px) rotate(7deg);
+}
+
+.hero-book-pompeii:hover { transform: translateY(4px) rotate(-3deg); }
+.hero-book-women:hover { transform: translateY(-15px) scale(1.012); }
+.hero-book-romantasy:hover { transform: translateY(5px) rotate(3deg); }
+
+.hero-book > span {
+  bottom: -24px;
+  color: rgba(255,253,248,.62);
+  font-size: 8px;
+}
+
+/* Old cue is intentionally suppressed; the cue now follows the full catalogue intro. */
+.hero-scroll-cue { display: none !important; }
+
+.readers.section-pad {
+  padding-top: 24px;
+}
+
+.readers .section-heading {
+  max-width: 720px;
+  margin-bottom: 22px;
+}
+
+.readers .section-heading .eyebrow {
+  margin-bottom: 10px;
+  font-size: 9px;
+}
+
+.readers .section-heading h2 {
+  margin-bottom: 0;
+  font: 500 clamp(38px, 3.15vw, 49px) / .98 var(--serif);
+  letter-spacing: -.035em;
+}
+
+.readers .section-heading .catalogue-intro-copy {
+  max-width: 610px;
+  margin: 10px 0 0;
+  color: rgba(255,253,248,.68);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.catalogue-scroll-cue {
+  width: 28px;
+  height: 25px;
+  margin-top: 9px;
+  display: block;
+  position: relative;
+  color: var(--gold-light);
+}
+
+.catalogue-scroll-cue::before,
+.catalogue-scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateX(-50%) rotate(45deg);
+  animation: catalogue-cue 1.9s ease-in-out infinite;
+}
+
+.catalogue-scroll-cue::before { top: 0; }
+.catalogue-scroll-cue::after { top: 8px; animation-delay: .18s; }
+
+@keyframes catalogue-cue {
+  0%,100% { opacity: .28; transform: translateX(-50%) translateY(-2px) rotate(45deg); }
+  45% { opacity: .95; }
+  72% { opacity: .48; transform: translateX(-50%) translateY(3px) rotate(45deg); }
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    height: 510px;
+    min-height: 510px;
+    grid-template-columns: minmax(340px,.95fr) minmax(430px,1.05fr);
+    gap: 24px;
+  }
+  .hero-stage { height: 330px; }
+  .hero-book-pompeii { width: 132px; left: 3%; }
+  .hero-book-women { width: 174px; }
+  .hero-book-romantasy { width: 140px; right: 2%; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    height: auto;
+    min-height: auto;
+    padding-top: calc(var(--header-height) + 34px);
+    padding-bottom: 38px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .hero-background-art { object-position: 62% center; opacity: .58; }
+  .hero::before {
+    background: linear-gradient(180deg, rgba(5,15,23,.89), rgba(5,15,23,.60));
+  }
+  .hero-copy { transform: none; }
+  .hero-stage { width: min(600px,100%); height: 330px; margin: 0 auto; }
+  .readers.section-pad { padding-top: 28px; }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-top: calc(var(--header-height) + 24px);
+    padding-bottom: 30px;
+  }
+  .hero h1 { font-size: clamp(41px, 11.5vw, 55px); }
+  .hero-intro { margin-bottom: 18px; }
+  .hero-stage { height: 285px; }
+  .hero-book-pompeii { width: 108px; left: 1%; }
+  .hero-book-women { width: 142px; }
+  .hero-book-romantasy { width: 114px; right: 0; }
+  .hero-book > span { display: none; }
+  .readers.section-pad { padding-top: 26px; }
+  .readers .section-heading h2 { font-size: clamp(36px,10vw,46px); }
+  .readers .section-heading { margin-bottom: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-scroll-cue::before,
+  .catalogue-scroll-cue::after { animation: none; opacity: .7; }
+}
