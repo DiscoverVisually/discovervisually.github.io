@@ -166,3 +166,16 @@ spotlightTabs.forEach((tab, index) => {
   });
 });
 if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
+
+(function loadHomepageBookFocus() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches || window.innerWidth < 901) return;
+  const stylesheet = document.createElement("link");
+  stylesheet.rel = "stylesheet";
+  stylesheet.href = "/assets/homepage-book-focus.css?v=20260903focus2";
+  document.head.appendChild(stylesheet);
+
+  const script = document.createElement("script");
+  script.src = "/assets/homepage-book-focus.js?v=20260903focus2";
+  script.defer = true;
+  document.body.appendChild(script);
+})();
