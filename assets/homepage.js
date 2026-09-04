@@ -49,24 +49,10 @@ function applyHomepageFocus() {
   const intro = document.querySelector(".hero-intro");
   if (intro) intro.textContent = "Immersive visual history books that turn real events into worlds young readers can enter.";
 
-  const heroStage = document.querySelector(".hero-stage");
-  if (heroStage) {
-    const heroOrder = [featuredBooks[2], featuredBooks[0], featuredBooks[1]];
-    const positionClasses = ["hero-book-pompeii", "hero-book-women", "hero-book-romantasy"];
-    heroStage.innerHTML = heroOrder.map((book, index) => `<a class="hero-book ${positionClasses[index]}" href="${book.url}" aria-label="Explore ${book.title}"><img src="${book.cover}" alt="${book.title} book cover"><span>Available now</span></a>`).join("");
-  }
-
   const readersTitle = document.querySelector("#readers-title");
   if (readersTitle) readersTitle.innerHTML = "Three ways in.<br><em>One visual shelf.</em>";
   const readersCopy = document.querySelector(".catalogue-intro-copy");
   if (readersCopy) readersCopy.textContent = "Browse the same three History Hunters books by reader, subject or learning style.";
-  const readerGrid = document.querySelector(".reader-grid");
-  if (readerGrid) {
-    readerGrid.innerHTML = `
-      <a class="reader-card reader-children" href="/collections/children/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">01</span><span class="reader-copy"><small>For Children</small><strong>Curiosity set free</strong></span><span class="reader-action">Explore the collection <b>↗</b></span></a>
-      <a class="reader-card reader-history" href="/collections/history/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">02</span><span class="reader-copy"><small>History</small><strong>The past made immediate</strong></span><span class="reader-action">Explore history <b>↗</b></span></a>
-      <a class="reader-card reader-romantasy" href="/collections/romantasy/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">03</span><span class="reader-note">First title coming soon</span><span class="reader-copy"><small>Romantasy</small><strong>New worlds are coming</strong></span><span class="reader-action">Explore romantasy <b>↗</b></span></a>`;
-  }
 
   const catalogIntro = document.querySelector(".catalog-intro > p");
   if (catalogIntro) catalogIntro.textContent = "Three immersive History Hunters books—each designed to make a real historical world feel understandable, immediate and worth exploring.";
@@ -82,17 +68,6 @@ function applyHomepageFocus() {
 
   const footerNav = document.querySelector("footer nav[aria-label='Footer navigation']");
   if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
-
-  const schema = document.querySelector('script[type="application/ld+json"]');
-  if (schema) {
-    schema.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": [
-        { "@type": "Organization", "@id": "https://discovervisually.github.io/#organization", "name": "Discover Visually", "url": "https://discovervisually.github.io/", "description": "An independent publishing studio creating immersive, full-color visual history books." },
-        { "@type": "ItemList", "name": "Discover Visually books", "numberOfItems": 3, "itemListElement": featuredBooks.map((book, index) => ({ "@type": "ListItem", "position": index + 1, "url": `https://discovervisually.github.io${book.url}`, "item": { "@type": "Book", "name": book.title, "author": { "@type": "Person", "name": "Cole Walker" }, "bookFormat": "https://schema.org/Paperback", "inLanguage": "en" } })) }
-      ]
-    });
-  }
 
   const style = document.createElement("style");
   style.textContent = `.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:1000px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.catalog-grid{grid-template-columns:1fr}}`;
@@ -167,15 +142,45 @@ spotlightTabs.forEach((tab, index) => {
 });
 if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
 
-(function loadHomepageBookFocus() {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches || window.innerWidth < 901) return;
-  const stylesheet = document.createElement("link");
-  stylesheet.rel = "stylesheet";
-  stylesheet.href = "/assets/homepage-book-focus.css?v=20260903focus2";
-  document.head.appendChild(stylesheet);
+(function initHeroParallax() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  let frame = 0;
 
-  const script = document.createElement("script");
-  script.src = "/assets/homepage-book-focus.js?v=20260903focus2";
-  script.defer = true;
-  document.body.appendChild(script);
+  function applyPointer(clientX, clientY) {
+    const rect = hero.getBoundingClientRect();
+    const nx = Math.max(-1, Math.min(1, ((clientX - rect.left) / rect.width - .5) * 2));
+    const ny = Math.max(-1, Math.min(1, ((clientY - rect.top) / rect.height - .5) * 2));
+    hero.style.setProperty("--stage-x", `${(nx * 3).toFixed(2)}px`);
+    hero.style.setProperty("--stage-y", `${(ny * 2).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-x", `${(nx * 8).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-y", `${(ny * 5).toFixed(2)}px`);
+  }
+
+  if (finePointer.matches && !reduced.matches) {
+    hero.addEventListener("pointermove", (event) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => applyPointer(event.clientX, event.clientY));
+    }, { passive: true });
+    hero.addEventListener("pointerleave", () => {
+      hero.style.setProperty("--stage-x", "0px");
+      hero.style.setProperty("--stage-y", "0px");
+      hero.style.setProperty("--smoke-x", "0px");
+      hero.style.setProperty("--smoke-y", "0px");
+    });
+  }
+
+  function updateScroll() {
+    if (reduced.matches) return;
+    const rect = hero.getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height)));
+    hero.style.setProperty("--copy-scroll", `${(-progress * 7).toFixed(2)}px`);
+    hero.style.setProperty("--stage-scroll", `${(-progress * 11).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-scroll", `${(-progress * 18).toFixed(2)}px`);
+  }
+
+  updateScroll();
+  window.addEventListener("scroll", updateScroll, { passive: true });
 })();
