@@ -1,3 +1,8 @@
+const heroFixStylesheet = document.createElement("link");
+heroFixStylesheet.rel = "stylesheet";
+heroFixStylesheet.href = "/assets/homepage-hero-fixpass.css?v=20260904fixpass1";
+document.head.appendChild(heroFixStylesheet);
+
 const featuredBooks = [
   {
     key: "lincoln",
@@ -43,7 +48,7 @@ const featuredBooks = [
 function applyHomepageFocus() {
   const navPanel = document.querySelector(".nav-explore-panel");
   if (navPanel) {
-    navPanel.innerHTML = `<div><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/">All collections</a></div><div><small>History Hunters</small><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
+    navPanel.innerHTML = `<div><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/collections/">All collections</a></div><div><small>History Hunters</small><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
   }
 
   const intro = document.querySelector(".hero-intro");
@@ -53,6 +58,14 @@ function applyHomepageFocus() {
   if (readersTitle) readersTitle.innerHTML = "Three ways in.<br><em>One visual shelf.</em>";
   const readersCopy = document.querySelector(".catalogue-intro-copy");
   if (readersCopy) readersCopy.textContent = "Browse the same three History Hunters books by reader, subject or learning style.";
+
+  const readerGrid = document.querySelector("#reader-cards");
+  if (readerGrid) {
+    readerGrid.innerHTML = `
+      <a class="reader-card reader-children" href="/collections/children/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">01</span><span class="reader-copy"><small>For Children</small><strong>Curiosity set free</strong></span><span class="reader-action">Explore the collection <b>↗</b></span></a>
+      <a class="reader-card reader-history" href="/collections/history/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">02</span><span class="reader-copy"><small>History</small><strong>The past made immediate</strong></span><span class="reader-action">Explore history <b>↗</b></span></a>
+      <a class="reader-card reader-educational" href="/collections/visual-learning/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">03</span><span class="reader-copy"><small>Visual Learning</small><strong>Ideas made visible</strong></span><span class="reader-action">Explore visual learning <b>↗</b></span></a>`;
+  }
 
   const catalogIntro = document.querySelector(".catalog-intro > p");
   if (catalogIntro) catalogIntro.textContent = "Three immersive History Hunters books—each designed to make a real historical world feel understandable, immediate and worth exploring.";
@@ -67,7 +80,7 @@ function applyHomepageFocus() {
   }
 
   const footerNav = document.querySelector("footer nav[aria-label='Footer navigation']");
-  if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
+  if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
 
   const style = document.createElement("style");
   style.textContent = `.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:1000px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.catalog-grid{grid-template-columns:1fr}}`;
@@ -149,14 +162,23 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   let frame = 0;
 
+  function resetDepth() {
+    ["--stage-x","--stage-y","--smoke-main-x","--smoke-main-y","--smoke-warm-x","--smoke-warm-y","--haze-x","--haze-y"].forEach((name) => hero.style.setProperty(name, "0px"));
+  }
+
   function applyPointer(clientX, clientY) {
     const rect = hero.getBoundingClientRect();
     const nx = Math.max(-1, Math.min(1, ((clientX - rect.left) / rect.width - .5) * 2));
     const ny = Math.max(-1, Math.min(1, ((clientY - rect.top) / rect.height - .5) * 2));
-    hero.style.setProperty("--stage-x", `${(nx * 3).toFixed(2)}px`);
-    hero.style.setProperty("--stage-y", `${(ny * 2).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-x", `${(nx * 8).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-y", `${(ny * 5).toFixed(2)}px`);
+
+    hero.style.setProperty("--stage-x", `${(nx * 6).toFixed(2)}px`);
+    hero.style.setProperty("--stage-y", `${(ny * 4).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-main-x", `${(nx * 14).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-main-y", `${(ny * 9).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-warm-x", `${(nx * -22).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-warm-y", `${(ny * -13).toFixed(2)}px`);
+    hero.style.setProperty("--haze-x", `${(nx * 7).toFixed(2)}px`);
+    hero.style.setProperty("--haze-y", `${(ny * 5).toFixed(2)}px`);
   }
 
   if (finePointer.matches && !reduced.matches) {
@@ -164,21 +186,16 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => applyPointer(event.clientX, event.clientY));
     }, { passive: true });
-    hero.addEventListener("pointerleave", () => {
-      hero.style.setProperty("--stage-x", "0px");
-      hero.style.setProperty("--stage-y", "0px");
-      hero.style.setProperty("--smoke-x", "0px");
-      hero.style.setProperty("--smoke-y", "0px");
-    });
+    hero.addEventListener("pointerleave", resetDepth);
   }
 
   function updateScroll() {
     if (reduced.matches) return;
     const rect = hero.getBoundingClientRect();
     const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height)));
-    hero.style.setProperty("--copy-scroll", `${(-progress * 7).toFixed(2)}px`);
-    hero.style.setProperty("--stage-scroll", `${(-progress * 11).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-scroll", `${(-progress * 18).toFixed(2)}px`);
+    hero.style.setProperty("--copy-scroll", `${(-progress * 8).toFixed(2)}px`);
+    hero.style.setProperty("--stage-scroll", `${(-progress * 15).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-scroll", `${(-progress * 29).toFixed(2)}px`);
   }
 
   updateScroll();
