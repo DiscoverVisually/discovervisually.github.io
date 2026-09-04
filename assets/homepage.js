@@ -106,6 +106,201 @@ spotlightTabs.forEach((tab, index) => {
 });
 if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
 
+(function initHeroBookFocus() {
+  const books = [...document.querySelectorAll(".hero-book[data-amazon]")];
+  const card = document.querySelector("[data-book-focus-card]");
+  const scrim = document.querySelector("[data-book-focus-scrim]");
+  const coverLink = document.querySelector("[data-book-focus-cover]");
+  const focusImage = document.querySelector("[data-book-focus-image]");
+  const amazonLink = document.querySelector("[data-book-focus-amazon]");
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (!books.length || !card || !scrim || !coverLink || !focusImage || !amazonLink || reduced.matches) return;
+
+  let activeBook = null;
+  let activationMode = "pointer";
+  let sourceFrame = null;
+  let targetFrame = null;
+  let openTimer = 0;
+  let arrivalTimer = 0;
+  let closeTimer = 0;
+  let engagedCard = false;
+  let focusAmazonOnArrival = false;
+  let returning = false;
+
+  function setFrame(frame) {
+    card.style.left = `${frame.left}px`;
+    card.style.top = `${frame.top}px`;
+    card.style.width = `${frame.width}px`;
+    card.style.height = `${frame.height}px`;
+  }
+
+  function getTargetFrame(origin) {
+    const aspect = origin.width / origin.height;
+    const maxBookHeight = window.innerHeight * .8;
+    const maxBookWidth = window.innerWidth * .54;
+    const height = Math.min(maxBookHeight, maxBookWidth / aspect);
+    const width = height * aspect;
+    const buttonRoom = 72;
+    return {
+      width,
+      height,
+      left: (window.innerWidth - width) / 2,
+      top: Math.max(20, (window.innerHeight - height - buttonRoom) / 2)
+    };
+  }
+
+  function clearTimers() {
+    window.clearTimeout(openTimer);
+    window.clearTimeout(arrivalTimer);
+    window.clearTimeout(closeTimer);
+  }
+
+  function openBook(book, mode = "pointer") {
+    if (!book || returning || activeBook) return;
+
+    clearTimers();
+    activeBook = book;
+    activationMode = mode;
+    engagedCard = false;
+    sourceFrame = book.getBoundingClientRect();
+    targetFrame = getTargetFrame(sourceFrame);
+
+    const sourceImage = book.querySelector("img");
+    focusImage.src = sourceImage.currentSrc || sourceImage.src;
+    focusImage.alt = sourceImage.alt;
+    coverLink.href = book.href;
+    coverLink.setAttribute("aria-label", book.getAttribute("aria-label") || `Explore ${book.dataset.bookTitle}`);
+    amazonLink.href = book.dataset.amazon;
+    amazonLink.setAttribute("aria-label", `See ${book.dataset.bookTitle} on Amazon (opens in a new tab)`);
+
+    card.classList.remove("is-returning", "is-arrived");
+    card.setAttribute("aria-hidden", "false");
+    scrim.setAttribute("aria-hidden", "false");
+    setFrame(sourceFrame);
+    card.classList.add("is-visible");
+    book.classList.add("is-focus-source");
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      scrim.classList.add("is-visible");
+      setFrame(targetFrame);
+    }));
+
+    arrivalTimer = window.setTimeout(() => {
+      if (activeBook !== book || returning) return;
+      card.classList.add("is-arrived");
+      amazonLink.tabIndex = 0;
+      if (focusAmazonOnArrival) {
+        focusAmazonOnArrival = false;
+        amazonLink.focus({ preventScroll: true });
+      }
+    }, 790);
+  }
+
+  function finishClose() {
+    if (activeBook) activeBook.classList.remove("is-focus-source");
+    activeBook = null;
+    sourceFrame = null;
+    targetFrame = null;
+    engagedCard = false;
+    focusAmazonOnArrival = false;
+    returning = false;
+    card.classList.remove("is-visible", "is-returning", "is-arrived");
+    card.setAttribute("aria-hidden", "true");
+    scrim.setAttribute("aria-hidden", "true");
+    amazonLink.tabIndex = -1;
+    focusImage.src = "";
+  }
+
+  function closeBook({ restoreFocus = false, immediate = false } = {}) {
+    if (!activeBook || returning) return;
+    const bookToRestore = activeBook;
+    clearTimers();
+    returning = true;
+    card.classList.remove("is-arrived");
+    amazonLink.tabIndex = -1;
+    scrim.classList.remove("is-visible");
+
+    if (immediate || !bookToRestore.isConnected) {
+      finishClose();
+    } else {
+      card.classList.add("is-returning");
+      setFrame(bookToRestore.getBoundingClientRect());
+      window.setTimeout(finishClose, 610);
+    }
+
+    if (restoreFocus) bookToRestore.focus({ preventScroll: true });
+  }
+
+  function inside(rect, x, y, margin = 0, bottomExtra = margin) {
+    return x >= rect.left - margin && x <= rect.left + rect.width + margin && y >= rect.top - margin && y <= rect.top + rect.height + bottomExtra;
+  }
+
+  function pointerIsInFocusZone(x, y) {
+    if (!sourceFrame || !targetFrame) return false;
+    if (engagedCard) return inside(targetFrame, x, y, 48, 104);
+    const left = Math.min(sourceFrame.left, targetFrame.left) - 42;
+    const right = Math.max(sourceFrame.right, targetFrame.left + targetFrame.width) + 42;
+    const top = Math.min(sourceFrame.top, targetFrame.top) - 42;
+    const bottom = Math.max(sourceFrame.bottom, targetFrame.top + targetFrame.height + 82) + 42;
+    return x >= left && x <= right && y >= top && y <= bottom;
+  }
+
+  books.forEach((book) => {
+    book.addEventListener("pointerenter", () => {
+      if (!canHover.matches || activeBook || returning) return;
+      window.clearTimeout(openTimer);
+      openTimer = window.setTimeout(() => openBook(book, "pointer"), 150);
+    });
+
+    book.addEventListener("pointerleave", () => {
+      if (!activeBook) window.clearTimeout(openTimer);
+    });
+
+    book.addEventListener("focus", () => { if (canHover.matches) openBook(book, "keyboard"); });
+    book.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && activeBook === book) {
+        event.preventDefault();
+        closeBook({ restoreFocus: true });
+      }
+      if (event.key === "Tab" && !event.shiftKey && activeBook === book) {
+        event.preventDefault();
+        if (card.classList.contains("is-arrived")) amazonLink.focus({ preventScroll: true });
+        else focusAmazonOnArrival = true;
+      }
+    });
+    book.addEventListener("blur", (event) => {
+      if (activationMode === "keyboard" && activeBook === book && event.relatedTarget !== amazonLink) closeBook({ immediate: true });
+    });
+  });
+
+  card.addEventListener("pointerenter", () => {
+    if (card.classList.contains("is-arrived")) engagedCard = true;
+  });
+  amazonLink.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeBook({ restoreFocus: true });
+    }
+  });
+  amazonLink.addEventListener("blur", (event) => {
+    if (activationMode === "keyboard" && activeBook && event.relatedTarget !== activeBook) closeBook();
+  });
+
+  document.addEventListener("pointermove", (event) => {
+    if (!activeBook || returning || activationMode !== "pointer" || !card.classList.contains("is-arrived")) return;
+    window.clearTimeout(closeTimer);
+    if (!pointerIsInFocusZone(event.clientX, event.clientY)) closeTimer = window.setTimeout(() => closeBook(), 90);
+  }, { passive: true });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && activeBook) closeBook({ restoreFocus: activationMode === "keyboard" });
+  });
+  window.addEventListener("scroll", () => closeBook({ immediate: true }), { passive: true });
+  window.addEventListener("resize", () => closeBook({ immediate: true }));
+})();
+
 (function initHeroParallax() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
