@@ -10,7 +10,7 @@ window.DV_BOOKS = [
     audience: "Ages 8+",
     description: "Enter Lincoln’s wartime White House through the eyes of a young messenger and see how words, messages and decisions moved a nation.",
     primaryCollection: "history",
-    collections: ["history", "children", "visual-learning"],
+    collections: ["history", "children"],
     topic: "Civil War & American History",
     series: "History Hunters"
   },
@@ -25,7 +25,7 @@ window.DV_BOOKS = [
     audience: "Ages 10+",
     description: "Board the giant Zeppelin, cross the Atlantic and follow the Lakehurst disaster second by second.",
     primaryCollection: "history",
-    collections: ["history", "children", "visual-learning"],
+    collections: ["history", "children"],
     topic: "Aviation & Modern History",
     series: "History Hunters"
   },
@@ -40,7 +40,7 @@ window.DV_BOOKS = [
     audience: "Ages 8–12",
     description: "Enter the living city, follow its final hours and understand the eruption through maps, scenes and visual storytelling.",
     primaryCollection: "history",
-    collections: ["history", "children", "visual-learning"],
+    collections: ["history", "children"],
     topic: "Ancient History",
     series: "History Hunters"
   }
@@ -49,5 +49,5 @@ window.DV_BOOKS = [
 window.DV_COLLECTIONS = {
   children: { name: "For Children", url: "/collections/children/", label: "Curiosity without limits" },
   history: { name: "History", url: "/collections/history/", label: "The past made immediate" },
-  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Big ideas made visible" }
+  romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "New worlds are coming" }
 };
