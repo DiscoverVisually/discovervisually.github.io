@@ -1,15 +1,16 @@
-/* Decisive homepage hero rebuild — visible backdrop + compact first viewport */
+/* Homepage first-viewport composition — September 2026 */
 
 .hero {
   position: relative;
-  height: 490px;
-  min-height: 490px;
-  padding: calc(var(--header-height) + 14px) max(48px, calc((100vw - 1240px) / 2)) 22px;
+  z-index: 2;
+  height: 470px;
+  min-height: 470px;
+  padding: calc(var(--header-height) + 12px) max(48px, calc((100vw - 1240px) / 2)) 18px;
   display: grid;
   grid-template-columns: minmax(390px, .92fr) minmax(500px, 1.08fr);
   align-items: center;
-  gap: 38px;
-  overflow: hidden;
+  gap: 34px;
+  overflow: visible;
   isolation: isolate;
   color: var(--white);
   background: #07141e;
@@ -26,7 +27,7 @@
   pointer-events: none;
   opacity: .72;
   filter: brightness(1.34) saturate(.88) contrast(1.02);
-  transform: scale(1.015);
+  transform: scale(1.01);
 }
 
 .hero::before {
@@ -35,16 +36,14 @@
   z-index: 1;
   inset: 0;
   pointer-events: none;
-  opacity: 1;
   background:
     linear-gradient(90deg,
-      rgba(5, 15, 23, .94) 0%,
-      rgba(5, 16, 25, .82) 31%,
-      rgba(6, 18, 28, .56) 50%,
-      rgba(6, 18, 28, .28) 72%,
-      rgba(5, 15, 23, .36) 100%),
-    linear-gradient(180deg, rgba(7, 18, 27, .10), rgba(7, 18, 27, .22));
-  background-size: auto;
+      rgba(5,15,23,.94) 0%,
+      rgba(5,16,25,.82) 31%,
+      rgba(6,18,28,.56) 50%,
+      rgba(6,18,28,.28) 72%,
+      rgba(5,15,23,.36) 100%),
+    linear-gradient(180deg, rgba(7,18,27,.10), rgba(7,18,27,.22));
 }
 
 .hero::after {
@@ -54,14 +53,14 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 72%, rgba(5, 15, 23, .30) 100%),
-    radial-gradient(ellipse at 73% 78%, rgba(229, 201, 141, .10), transparent 30%);
+    linear-gradient(180deg, transparent 72%, rgba(5,15,23,.30) 100%),
+    radial-gradient(ellipse at 73% 78%, rgba(229,201,141,.10), transparent 30%);
 }
 
 .hero-copy,
 .hero-stage {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero-copy {
@@ -70,41 +69,37 @@
 }
 
 .hero .kicker {
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .hero h1 {
   max-width: 555px;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
   font: 500 clamp(46px, 4vw, 61px) / .96 var(--serif);
   letter-spacing: -.043em;
 }
 
 .hero-intro {
   max-width: 490px;
-  margin-bottom: 20px;
-  color: rgba(255, 253, 248, .82);
+  margin-bottom: 18px;
+  color: rgba(255,253,248,.82);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.48;
 }
 
-.hero-actions {
-  gap: 20px;
-}
-
-.hero .button {
-  min-height: 45px;
-}
+.hero-actions { gap: 20px; }
+.hero .button { min-height: 44px; }
 
 .hero-stage {
-  height: 345px;
+  height: 355px;
   align-self: center;
+  transform: translateY(16px);
 }
 
 .hero-stage::before {
-  left: 7%;
-  right: 6%;
-  bottom: 26px;
+  left: 2%;
+  right: 1%;
+  bottom: 12px;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(229,201,141,.18), rgba(229,201,141,.68), rgba(229,201,141,.18), transparent);
   box-shadow: 0 12px 24px rgba(201,154,80,.14);
@@ -114,128 +109,225 @@
   content: "";
   position: absolute;
   z-index: -1;
-  left: 15%;
-  right: 11%;
-  bottom: 11px;
-  height: 86px;
+  left: 8%;
+  right: 5%;
+  bottom: -5px;
+  height: 105px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(229,201,141,.13), transparent 68%);
+  background: radial-gradient(ellipse, rgba(229,201,141,.14), transparent 68%);
   filter: blur(8px);
 }
 
 .hero-book {
+  z-index: 4;
   box-shadow:
-    0 25px 44px rgba(0,0,0,.40),
-    0 6px 13px rgba(0,0,0,.25),
+    0 30px 54px rgba(0,0,0,.44),
+    0 8px 17px rgba(0,0,0,.27),
     0 0 0 1px rgba(255,255,255,.05);
 }
 
 .hero-book-pompeii {
-  left: 7%;
-  width: 145px;
-  filter: brightness(.93) saturate(.96);
-  transform: translateY(14px) rotate(-7deg);
+  left: 0;
+  width: 218px;
+  filter: brightness(.95) saturate(.98);
+  transform: translateY(38px) rotate(-7deg);
 }
 
 .hero-book-women {
-  width: 190px;
-  transform: translateY(-7px);
+  width: 285px;
+  transform: translateY(6px);
   box-shadow:
-    0 31px 56px rgba(0,0,0,.46),
-    0 0 38px rgba(201,154,80,.12),
+    0 38px 68px rgba(0,0,0,.50),
+    0 0 48px rgba(201,154,80,.14),
     0 0 0 1px rgba(255,255,255,.06);
 }
 
 .hero-book-romantasy {
-  right: 6%;
-  width: 152px;
-  filter: brightness(.94) saturate(.96);
-  transform: translateY(16px) rotate(7deg);
+  right: -1%;
+  width: 228px;
+  filter: brightness(.96) saturate(.98);
+  transform: translateY(41px) rotate(7deg);
 }
 
-.hero-book-pompeii:hover { transform: translateY(4px) rotate(-3deg); }
-.hero-book-women:hover { transform: translateY(-15px) scale(1.012); }
-.hero-book-romantasy:hover { transform: translateY(5px) rotate(3deg); }
+.hero-book-pompeii:hover { transform: translateY(25px) rotate(-3deg); }
+.hero-book-women:hover { transform: translateY(-7px) scale(1.012); }
+.hero-book-romantasy:hover { transform: translateY(27px) rotate(3deg); }
 
 .hero-book > span {
-  bottom: -24px;
+  bottom: -23px;
   color: rgba(255,253,248,.62);
   font-size: 8px;
 }
 
-/* Old cue is intentionally suppressed; the cue now follows the full catalogue intro. */
 .hero-scroll-cue { display: none !important; }
 
+.readers {
+  position: relative;
+  z-index: 1;
+}
+
 .readers.section-pad {
-  padding-top: 24px;
+  padding-top: 22px;
+  padding-bottom: 16px;
 }
 
 .readers .section-heading {
-  max-width: 720px;
-  margin-bottom: 22px;
+  max-width: 760px;
+  margin-bottom: 15px;
 }
 
 .readers .section-heading .eyebrow {
-  margin-bottom: 10px;
-  font-size: 9px;
+  margin-bottom: 8px;
+  font-size: 8px;
 }
 
 .readers .section-heading h2 {
   margin-bottom: 0;
-  font: 500 clamp(38px, 3.15vw, 49px) / .98 var(--serif);
+  font: 500 clamp(35px, 2.8vw, 44px) / .96 var(--serif);
   letter-spacing: -.035em;
 }
 
 .readers .section-heading .catalogue-intro-copy {
-  max-width: 610px;
-  margin: 10px 0 0;
-  color: rgba(255,253,248,.68);
-  font-size: 13px;
-  line-height: 1.45;
+  max-width: 640px;
+  margin: 8px 0 0;
+  color: rgba(255,253,248,.70);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.reader-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px;
+  min-height: 0 !important;
+}
+
+.reader-card {
+  min-height: 175px !important;
+  height: 175px;
+  padding: 16px 18px;
+  flex: none;
+}
+
+.reader-card:hover,
+.reader-card:focus-visible {
+  flex-grow: 1;
+}
+
+.reader-art {
+  background-size: cover;
+  transition: transform 500ms cubic-bezier(.2,.7,.2,1), filter 240ms ease;
+}
+
+.reader-card::before {
+  background: linear-gradient(180deg, rgba(5,13,20,.12) 0%, rgba(5,13,20,.44) 45%, rgba(5,13,20,.91) 100%);
+}
+
+.reader-children .reader-art {
+  background-image: url("/assets/spread-pompeii.webp");
+  background-position: 50% 48%;
+}
+
+.reader-history .reader-art {
+  background-image: url("/assets/lincoln-interior-gettysburg.webp");
+  background-position: 52% 45%;
+}
+
+.reader-romantasy .reader-art {
+  background-image: url("/assets/cabinet-of-worlds-hero.webp");
+  background-position: 82% 48%;
+  filter: saturate(.82) brightness(.86);
+}
+
+.reader-number {
+  font-size: 9px;
+}
+
+.reader-copy {
+  width: min(290px, 88%);
+}
+
+.reader-copy small {
+  margin-bottom: 5px;
+  font-size: 8px;
+}
+
+.reader-copy strong {
+  margin-bottom: 0;
+  font-size: clamp(22px, 1.75vw, 28px);
+  line-height: 1.02;
+}
+
+.reader-copy > span {
+  display: none;
+}
+
+.reader-action {
+  position: absolute;
+  right: 17px;
+  bottom: 13px;
+  padding: 5px 0 3px;
+  font-size: 9px;
+  opacity: 0;
+}
+
+.reader-card:hover .reader-action,
+.reader-card:focus-visible .reader-action {
+  opacity: 1;
+}
+
+.reader-note {
+  top: 14px;
+  right: 16px;
+  font-size: 8px;
 }
 
 .catalogue-scroll-cue {
-  width: 28px;
-  height: 25px;
-  margin-top: 9px;
-  display: block;
-  position: relative;
+  width: 34px;
+  height: 34px;
+  margin: 9px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
   color: var(--gold-light);
 }
 
-.catalogue-scroll-cue::before,
-.catalogue-scroll-cue::after {
-  content: "";
-  position: absolute;
-  left: 50%;
+.catalogue-scroll-cue i {
   width: 8px;
   height: 8px;
+  display: block;
   border-right: 1px solid currentColor;
   border-bottom: 1px solid currentColor;
-  transform: translateX(-50%) rotate(45deg);
-  animation: catalogue-cue 1.9s ease-in-out infinite;
+  transform: rotate(45deg);
+  animation: catalogue-cue 1.8s ease-in-out infinite;
 }
 
-.catalogue-scroll-cue::before { top: 0; }
-.catalogue-scroll-cue::after { top: 8px; animation-delay: .18s; }
+.catalogue-scroll-cue i:nth-child(2) { animation-delay: .14s; }
+.catalogue-scroll-cue i:nth-child(3) { animation-delay: .28s; }
 
 @keyframes catalogue-cue {
-  0%,100% { opacity: .28; transform: translateX(-50%) translateY(-2px) rotate(45deg); }
-  45% { opacity: .95; }
-  72% { opacity: .48; transform: translateX(-50%) translateY(3px) rotate(45deg); }
+  0%,100% { opacity: .22; transform: translateY(-2px) rotate(45deg); }
+  48% { opacity: .95; }
+  74% { opacity: .44; transform: translateY(2px) rotate(45deg); }
+}
+
+@media (max-width: 1300px) {
+  .hero-book-pompeii { left: 2%; width: 195px; }
+  .hero-book-women { width: 255px; }
+  .hero-book-romantasy { right: 1%; width: 205px; }
 }
 
 @media (max-width: 1100px) {
   .hero {
-    height: 510px;
-    min-height: 510px;
+    height: 485px;
+    min-height: 485px;
     grid-template-columns: minmax(340px,.95fr) minmax(430px,1.05fr);
-    gap: 24px;
+    gap: 20px;
   }
-  .hero-stage { height: 330px; }
-  .hero-book-pompeii { width: 132px; left: 3%; }
-  .hero-book-women { width: 174px; }
-  .hero-book-romantasy { width: 140px; right: 2%; }
+  .hero-stage { height: 340px; transform: translateY(12px) scale(.92); transform-origin: right center; }
+  .reader-card { height: 165px; min-height: 165px !important; }
 }
 
 @media (max-width: 900px) {
@@ -243,37 +335,37 @@
     height: auto;
     min-height: auto;
     padding-top: calc(var(--header-height) + 34px);
-    padding-bottom: 38px;
+    padding-bottom: 36px;
     grid-template-columns: 1fr;
     gap: 20px;
+    overflow: hidden;
   }
   .hero-background-art { object-position: 62% center; opacity: .58; }
-  .hero::before {
-    background: linear-gradient(180deg, rgba(5,15,23,.89), rgba(5,15,23,.60));
-  }
+  .hero::before { background: linear-gradient(180deg, rgba(5,15,23,.89), rgba(5,15,23,.60)); }
   .hero-copy { transform: none; }
-  .hero-stage { width: min(600px,100%); height: 330px; margin: 0 auto; }
+  .hero-stage { width: min(600px,100%); height: 350px; margin: 0 auto; transform: none; }
+  .hero-book-pompeii { width: 160px; left: 2%; transform: translateY(28px) rotate(-6deg); }
+  .hero-book-women { width: 210px; transform: translateY(3px); }
+  .hero-book-romantasy { width: 168px; right: 1%; transform: translateY(30px) rotate(6deg); }
   .readers.section-pad { padding-top: 28px; }
+  .reader-grid { grid-template-columns: 1fr !important; }
+  .reader-card { height: 180px; min-height: 180px !important; }
 }
 
 @media (max-width: 700px) {
-  .hero {
-    padding-top: calc(var(--header-height) + 24px);
-    padding-bottom: 30px;
-  }
-  .hero h1 { font-size: clamp(41px, 11.5vw, 55px); }
+  .hero { padding-top: calc(var(--header-height) + 24px); padding-bottom: 28px; }
+  .hero h1 { font-size: clamp(41px,11.5vw,55px); }
   .hero-intro { margin-bottom: 18px; }
-  .hero-stage { height: 285px; }
-  .hero-book-pompeii { width: 108px; left: 1%; }
-  .hero-book-women { width: 142px; }
-  .hero-book-romantasy { width: 114px; right: 0; }
+  .hero-stage { height: 290px; }
+  .hero-book-pompeii { width: 112px; left: 1%; transform: translateY(16px) rotate(-6deg); }
+  .hero-book-women { width: 148px; }
+  .hero-book-romantasy { width: 118px; right: 0; transform: translateY(18px) rotate(6deg); }
   .hero-book > span { display: none; }
-  .readers.section-pad { padding-top: 26px; }
-  .readers .section-heading h2 { font-size: clamp(36px,10vw,46px); }
-  .readers .section-heading { margin-bottom: 20px; }
+  .readers.section-pad { padding-top: 24px; }
+  .readers .section-heading h2 { font-size: clamp(34px,9.5vw,44px); }
+  .reader-card { height: 165px; min-height: 165px !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .catalogue-scroll-cue::before,
-  .catalogue-scroll-cue::after { animation: none; opacity: .7; }
+  .catalogue-scroll-cue i { animation: none; opacity: .7; }
 }
