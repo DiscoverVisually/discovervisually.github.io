@@ -1,8 +1,3 @@
-const heroFixStylesheet = document.createElement("link");
-heroFixStylesheet.rel = "stylesheet";
-heroFixStylesheet.href = "/assets/homepage-hero-fixpass.css?v=20260904fixpass1";
-document.head.appendChild(heroFixStylesheet);
-
 const featuredBooks = [
   {
     key: "lincoln",
@@ -44,50 +39,6 @@ const featuredBooks = [
     spread: "/assets/spread-pompeii.webp"
   }
 ];
-
-function applyHomepageFocus() {
-  const navPanel = document.querySelector(".nav-explore-panel");
-  if (navPanel) {
-    navPanel.innerHTML = `<div><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/collections/">All collections</a></div><div><small>History Hunters</small><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
-  }
-
-  const intro = document.querySelector(".hero-intro");
-  if (intro) intro.textContent = "Immersive visual history books that turn real events into worlds young readers can enter.";
-
-  const readersTitle = document.querySelector("#readers-title");
-  if (readersTitle) readersTitle.innerHTML = "Three ways in.<br><em>One visual shelf.</em>";
-  const readersCopy = document.querySelector(".catalogue-intro-copy");
-  if (readersCopy) readersCopy.textContent = "Browse the same three History Hunters books by reader, subject or learning style.";
-
-  const readerGrid = document.querySelector("#reader-cards");
-  if (readerGrid) {
-    readerGrid.innerHTML = `
-      <a class="reader-card reader-children" href="/collections/children/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">01</span><span class="reader-copy"><small>For Children</small><strong>Curiosity set free</strong></span><span class="reader-action">Explore the collection <b>↗</b></span></a>
-      <a class="reader-card reader-history" href="/collections/history/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">02</span><span class="reader-copy"><small>History</small><strong>The past made immediate</strong></span><span class="reader-action">Explore history <b>↗</b></span></a>
-      <a class="reader-card reader-educational" href="/collections/visual-learning/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">03</span><span class="reader-copy"><small>Visual Learning</small><strong>Ideas made visible</strong></span><span class="reader-action">Explore visual learning <b>↗</b></span></a>`;
-  }
-
-  const catalogIntro = document.querySelector(".catalog-intro > p");
-  if (catalogIntro) catalogIntro.textContent = "Three immersive History Hunters books—each designed to make a real historical world feel understandable, immediate and worth exploring.";
-  const catalogGrid = document.querySelector(".catalog-grid");
-  if (catalogGrid) {
-    catalogGrid.innerHTML = featuredBooks.map((book) => `<article class="catalog-card"><a class="catalog-cover" href="${book.url}" aria-label="Explore ${book.title}"><img src="${book.cover}" alt="${book.title} book cover" loading="lazy"><span class="status status-available">Available now</span></a><div class="catalog-meta"><p>History Hunters · ${book.audience}</p><h3>${book.title}</h3><span>${book.meta}</span><div class="card-actions"><a href="${book.url}">Look inside</a><a class="amazon-link" href="${book.amazon}" target="_blank" rel="noopener noreferrer">View on Amazon <b>↗</b></a></div></div></article>`).join("");
-  }
-
-  const spotlightTabs = document.querySelector(".spotlight-tabs");
-  if (spotlightTabs) {
-    spotlightTabs.innerHTML = featuredBooks.map((book, index) => `<button type="button" role="tab" aria-selected="${index === 0}" aria-controls="spotlight-panel" id="spotlight-tab-${book.key}" ${index ? 'tabindex="-1"' : ""} data-spotlight="${book.key}"><span>0${index + 1}</span><span><small>Available now</small>${book.title}</span></button>`).join("");
-  }
-
-  const footerNav = document.querySelector("footer nav[aria-label='Footer navigation']");
-  if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
-
-  const style = document.createElement("style");
-  style.textContent = `.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:1000px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.catalog-grid{grid-template-columns:1fr}}`;
-  document.head.appendChild(style);
-}
-
-applyHomepageFocus();
 
 const menuButton = document.querySelector("[data-menu-button]");
 const navigation = document.querySelector("[data-navigation]");
@@ -163,7 +114,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
   let frame = 0;
 
   function resetDepth() {
-    ["--stage-x","--stage-y","--smoke-main-x","--smoke-main-y","--smoke-warm-x","--smoke-warm-y","--haze-x","--haze-y"].forEach((name) => hero.style.setProperty(name, "0px"));
+    ["--stage-x","--stage-y","--archive-x","--archive-y","--archive-front-x","--archive-front-y","--smoke-main-x","--smoke-main-y","--smoke-warm-x","--smoke-warm-y","--haze-x","--haze-y"].forEach((name) => hero.style.setProperty(name, "0px"));
   }
 
   function applyPointer(clientX, clientY) {
@@ -173,12 +124,16 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
 
     hero.style.setProperty("--stage-x", `${(nx * 6).toFixed(2)}px`);
     hero.style.setProperty("--stage-y", `${(ny * 4).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-main-x", `${(nx * 14).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-main-y", `${(ny * 9).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-warm-x", `${(nx * -22).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-warm-y", `${(ny * -13).toFixed(2)}px`);
+    hero.style.setProperty("--archive-x", `${(nx * 3).toFixed(2)}px`);
+    hero.style.setProperty("--archive-y", `${(ny * 2).toFixed(2)}px`);
+    hero.style.setProperty("--archive-front-x", `${(nx * -5).toFixed(2)}px`);
+    hero.style.setProperty("--archive-front-y", `${(ny * -3).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-main-x", `${(nx * 12).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-main-y", `${(ny * 8).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-warm-x", `${(nx * -18).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-warm-y", `${(ny * -11).toFixed(2)}px`);
     hero.style.setProperty("--haze-x", `${(nx * 7).toFixed(2)}px`);
-    hero.style.setProperty("--haze-y", `${(ny * 5).toFixed(2)}px`);
+    hero.style.setProperty("--haze-y", `${(ny * 4).toFixed(2)}px`);
   }
 
   if (finePointer.matches && !reduced.matches) {
@@ -194,10 +149,18 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     const rect = hero.getBoundingClientRect();
     const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height)));
     hero.style.setProperty("--copy-scroll", `${(-progress * 8).toFixed(2)}px`);
-    hero.style.setProperty("--stage-scroll", `${(-progress * 15).toFixed(2)}px`);
-    hero.style.setProperty("--smoke-scroll", `${(-progress * 29).toFixed(2)}px`);
+    hero.style.setProperty("--stage-scroll", `${(-progress * 14).toFixed(2)}px`);
+    hero.style.setProperty("--archive-scroll", `${(-progress * 8).toFixed(2)}px`);
+    hero.style.setProperty("--smoke-scroll", `${(-progress * 22).toFixed(2)}px`);
   }
 
   updateScroll();
   window.addEventListener("scroll", updateScroll, { passive: true });
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(([entry]) => {
+      hero.classList.toggle("hero-paused", !entry.isIntersecting);
+    }, { threshold: 0.01 });
+    observer.observe(hero);
+  }
 })();
