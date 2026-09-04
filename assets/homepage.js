@@ -138,8 +138,8 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
 
   function getTargetFrame(origin) {
     const aspect = origin.width / origin.height;
-    const maxBookHeight = window.innerHeight * .8;
-    const maxBookWidth = window.innerWidth * .54;
+    const maxBookHeight = window.innerHeight * .68;
+    const maxBookWidth = window.innerWidth * .46;
     const height = Math.min(maxBookHeight, maxBookWidth / aspect);
     const width = height * aspect;
     const buttonRoom = 72;
@@ -195,7 +195,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
         focusAmazonOnArrival = false;
         amazonLink.focus({ preventScroll: true });
       }
-    }, 790);
+    }, 1430);
   }
 
   function finishClose() {
@@ -227,7 +227,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     } else {
       card.classList.add("is-returning");
       setFrame(bookToRestore.getBoundingClientRect());
-      window.setTimeout(finishClose, 610);
+      window.setTimeout(finishClose, 1010);
     }
 
     if (restoreFocus) bookToRestore.focus({ preventScroll: true });
@@ -251,7 +251,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     book.addEventListener("pointerenter", () => {
       if (!canHover.matches || activeBook || returning) return;
       window.clearTimeout(openTimer);
-      openTimer = window.setTimeout(() => openBook(book, "pointer"), 150);
+      openTimer = window.setTimeout(() => openBook(book, "pointer"), 180);
     });
 
     book.addEventListener("pointerleave", () => {

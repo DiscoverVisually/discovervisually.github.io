@@ -1872,7 +1872,7 @@ footer nav a:hover {
   background: radial-gradient(circle at 50% 46%, rgba(66, 38, 71, .19), transparent 38%), rgba(3, 9, 15, .76);
   opacity: 0;
   backdrop-filter: blur(0);
-  transition: opacity 360ms ease, backdrop-filter 520ms ease;
+  transition: opacity 620ms ease, backdrop-filter 900ms ease;
 }
 
 .book-focus-scrim.is-visible {
@@ -1891,7 +1891,7 @@ footer nav a:hover {
   visibility: hidden;
   opacity: 0;
   transform: translateZ(0);
-  transition: left 820ms cubic-bezier(.18, .78, .16, 1), top 820ms cubic-bezier(.18, .78, .16, 1), width 820ms cubic-bezier(.18, .78, .16, 1), height 820ms cubic-bezier(.18, .78, .16, 1), opacity 140ms ease;
+  transition: left 1400ms cubic-bezier(.2, .72, .16, 1), top 1400ms cubic-bezier(.2, .72, .16, 1), width 1400ms cubic-bezier(.2, .72, .16, 1), height 1400ms cubic-bezier(.2, .72, .16, 1), opacity 220ms ease;
   will-change: left, top, width, height;
 }
 
@@ -1901,8 +1901,8 @@ footer nav a:hover {
 }
 
 .book-focus-card.is-returning {
-  transition-duration: 580ms;
-  transition-timing-function: cubic-bezier(.4, 0, .25, 1);
+  transition-duration: 980ms;
+  transition-timing-function: cubic-bezier(.34, 0, .2, 1);
 }
 
 .book-focus-cover {
@@ -1913,7 +1913,7 @@ footer nav a:hover {
   border-radius: 3px 10px 10px 3px;
   background: #e9e1d2;
   box-shadow: 0 54px 110px rgba(0, 0, 0, .72), 0 14px 42px rgba(0, 0, 0, .45), 0 0 72px rgba(193, 128, 168, .19), 0 0 0 1px rgba(255, 255, 255, .13);
-  transition: box-shadow 500ms ease;
+  transition: box-shadow 760ms ease;
 }
 
 .book-focus-cover::before {
@@ -1964,7 +1964,7 @@ footer nav a:hover {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, 9px);
-  transition: opacity 260ms ease, transform 360ms cubic-bezier(.16,1,.3,1), box-shadow 300ms ease;
+  transition: opacity 360ms ease, transform 480ms cubic-bezier(.16,1,.3,1), box-shadow 420ms ease;
 }
 
 .book-focus-amazon::before {
