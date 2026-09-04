@@ -2111,17 +2111,75 @@ footer nav a:hover {
 }
 
 .reader-grid {
+  --panorama-focus-x: 50%;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 0;
   min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(229, 201, 141, .19);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, .22);
+}
+
+.reader-panorama {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  pointer-events: none;
+  transform: scale(1);
+  transform-origin: var(--panorama-focus-x) 50%;
+  filter: saturate(.94) brightness(.91);
+  transition:
+    transform 1150ms cubic-bezier(.22, .61, .36, 1),
+    filter 700ms ease;
+  will-change: transform, filter;
+}
+
+.reader-panorama i {
+  display: block;
+  min-width: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.reader-panorama-children {
+  background-image: url("/assets/category-panorama-children.webp");
+}
+
+.reader-panorama-romantasy {
+  background-image: url("/assets/category-panorama-romantasy.webp");
+}
+
+.reader-panorama-learning {
+  background-image: url("/assets/category-panorama-visual-learning.webp");
+}
+
+.reader-grid:has(.reader-children:is(:hover, :focus-visible)) { --panorama-focus-x: 17%; }
+.reader-grid:has(.reader-romantasy:is(:hover, :focus-visible)) { --panorama-focus-x: 50%; }
+.reader-grid:has(.reader-educational:is(:hover, :focus-visible)) { --panorama-focus-x: 83%; }
+
+.reader-grid:is(:hover, :focus-within) .reader-panorama {
+  transform: scale(1.035);
+  filter: saturate(1.06) brightness(1.04);
+  transition-duration: 1750ms, 950ms;
 }
 
 .reader-card {
+  z-index: 1;
   min-height: 168px;
   height: 168px;
   padding: 16px 18px;
   flex: none;
+  border: 0;
+  background: transparent;
+  transition: box-shadow 750ms ease, border-color 750ms ease;
+}
+
+.reader-card + .reader-card {
+  border-left: 1px solid rgba(255, 255, 255, .18);
 }
 
 .reader-card:hover,
@@ -2130,18 +2188,37 @@ footer nav a:hover {
 }
 
 .reader-card::before {
-  background: linear-gradient(180deg, rgba(5,13,20,.12), rgba(5,13,20,.44) 45%, rgba(5,13,20,.91));
+  background: linear-gradient(180deg, rgba(5,13,20,.06), rgba(5,13,20,.30) 46%, rgba(5,13,20,.82));
+  transition: background 850ms ease;
 }
 
-.reader-history .reader-art {
-  background-image: url("/assets/lincoln-interior-gettysburg.webp");
-  background-position: 52% 45%;
+.reader-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 50% 78%, rgba(231, 196, 122, .28), transparent 58%),
+    linear-gradient(180deg, rgba(255, 232, 184, .08), transparent 42%);
+  box-shadow:
+    inset 0 0 0 1px rgba(242, 211, 146, .68),
+    inset 0 0 42px rgba(226, 185, 105, .16),
+    0 0 34px rgba(220, 174, 88, .20);
+  transition: opacity 900ms ease;
 }
 
-.reader-educational .reader-art {
-  background-image: url("/assets/hindenburg-interior-navigation.webp");
-  background-position: 70% 48%;
-  filter: saturate(.72) brightness(.72);
+.reader-card:is(:hover, :focus-visible)::before {
+  background: linear-gradient(180deg, rgba(5,13,20,0), rgba(5,13,20,.16) 48%, rgba(5,13,20,.68));
+}
+
+.reader-card:is(:hover, :focus-visible)::after {
+  opacity: 1;
+}
+
+.reader-grid:is(:hover, :focus-within) .reader-card:not(:is(:hover, :focus-visible))::before {
+  background: linear-gradient(180deg, rgba(5,13,20,.14), rgba(5,13,20,.38) 46%, rgba(5,13,20,.88));
 }
 
 .reader-number {
@@ -2161,6 +2238,13 @@ footer nav a:hover {
   margin-bottom: 0;
   font-size: clamp(22px, 1.75vw, 28px);
   line-height: 1.02;
+  transition: color 650ms ease, text-shadow 650ms ease, transform 950ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.reader-card:is(:hover, :focus-visible) .reader-copy strong {
+  color: #fffdf8;
+  text-shadow: 0 2px 18px rgba(255, 226, 167, .24);
+  transform: translateY(-3px);
 }
 
 .reader-copy > span {
@@ -2276,6 +2360,9 @@ footer nav a:hover {
   .hero-book-lincoln { width: 198px; transform: translate(-50%, 0); }
   .hero-book-hindenburg { width: 160px; right: 6%; transform: translateY(34px) rotate(6deg); }
   .reader-grid { grid-template-columns: 1fr; }
+  .reader-panorama { grid-template-columns: 1fr; grid-template-rows: repeat(3, 180px); }
+  .reader-card + .reader-card { border-left: 0; border-top: 1px solid rgba(255,255,255,.18); }
+  .reader-action { opacity: 1; transform: none; }
   .reader-card { height: 180px; min-height: 180px; }
 }
 
@@ -2304,6 +2391,7 @@ footer nav a:hover {
   .hero-floor-haze { bottom: 24px; height: 70px; opacity: .10; }
   .readers.section-pad { padding-top: 24px; }
   .readers .section-heading h2 { font-size: clamp(34px, 9.5vw, 44px); }
+  .reader-panorama { grid-template-rows: repeat(3, 165px); }
   .reader-card { height: 165px; min-height: 165px; }
   .catalog-grid { grid-template-columns: 1fr; }
 }
@@ -2311,6 +2399,11 @@ footer nav a:hover {
 @media (hover: none), (pointer: coarse) {
   .book-focus-scrim,
   .book-focus-card { display: none; }
+
+  .reader-grid .reader-panorama {
+    transform: none;
+    filter: saturate(1) brightness(.98);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2342,6 +2435,16 @@ footer nav a:hover {
 
   .book-focus-scrim,
   .book-focus-card { display: none; }
+
+  .reader-panorama,
+  .reader-card,
+  .reader-card::before,
+  .reader-card::after,
+  .reader-copy strong {
+    transition: none;
+  }
+
+  .reader-grid:is(:hover, :focus-within) .reader-panorama { transform: none; }
 
   .catalogue-scroll-cue i { opacity: .7; }
 }
