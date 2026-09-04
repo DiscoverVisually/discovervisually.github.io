@@ -1,5 +1,20 @@
 window.DV_BOOKS = [
   {
+    id: "romantasy-yearbook",
+    title: "The Ultimate Romantasy Yearbook",
+    shortTitle: "Romantasy Yearbook",
+    url: "/books/the-ultimate-romantasy-yearbook.html",
+    cover: "/books/romantasy-yearbook.webp",
+    status: "Available now",
+    format: "100-page full-color visual guide",
+    audience: "Romantasy readers",
+    description: "Map the fantasy romance boom through its books, tropes, BookTok moments, dragons, fae courts and reader obsessions.",
+    primaryCollection: "romantasy",
+    collections: ["romantasy"],
+    topic: "Fantasy Romance & BookTok",
+    series: "Visual Yearbook"
+  },
+  {
     id: "abraham-lincoln",
     title: "I Worked for Abraham Lincoln",
     shortTitle: "Abraham Lincoln",
@@ -49,5 +64,5 @@ window.DV_BOOKS = [
 window.DV_COLLECTIONS = {
   children: { name: "For Children", url: "/collections/children/", label: "Curiosity without limits" },
   history: { name: "History", url: "/collections/history/", label: "The past made immediate" },
-  romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "New worlds are coming" }
+  romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "Fantasy romance, beautifully mapped" }
 };
