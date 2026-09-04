@@ -43,7 +43,7 @@ const featuredBooks = [
 function applyHomepageFocus() {
   const navPanel = document.querySelector(".nav-explore-panel");
   if (navPanel) {
-    navPanel.innerHTML = `<div><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/collections/">All collections</a></div><div><small>History Hunters</small><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
+    navPanel.innerHTML = `<div><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/">All collections</a></div><div><small>History Hunters</small><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
   }
 
   const intro = document.querySelector(".hero-intro");
@@ -58,14 +58,14 @@ function applyHomepageFocus() {
 
   const readersTitle = document.querySelector("#readers-title");
   if (readersTitle) readersTitle.innerHTML = "Three ways in.<br><em>One visual shelf.</em>";
-  const readersCopy = document.querySelector(".readers .section-heading > p:last-child");
+  const readersCopy = document.querySelector(".catalogue-intro-copy");
   if (readersCopy) readersCopy.textContent = "Browse the same three History Hunters books by reader, subject or learning style.";
   const readerGrid = document.querySelector(".reader-grid");
   if (readerGrid) {
     readerGrid.innerHTML = `
-      <a class="reader-card reader-children" href="/collections/children/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">01</span><span class="reader-copy"><small>For Children</small><strong>Curiosity set free</strong><span>Immersive history for young readers who want to understand how things really happened.</span></span><span class="reader-action">Explore the collection <b>↗</b></span></a>
-      <a class="reader-card reader-christian" href="/collections/history/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">02</span><span class="reader-copy"><small>History</small><strong>The past made immediate</strong><span>Ancient cities, aviation disasters and the Civil War brought close through visual storytelling.</span></span><span class="reader-action">Explore history <b>↗</b></span></a>
-      <a class="reader-card reader-educational" href="/collections/visual-learning/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">03</span><span class="reader-copy"><small>Visual Learning</small><strong>Ideas made visible</strong><span>Maps, cutaways, timelines and scenes built to make complex history easier to understand.</span></span><span class="reader-action">Explore visual learning <b>↗</b></span></a>`;
+      <a class="reader-card reader-children" href="/collections/children/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">01</span><span class="reader-copy"><small>For Children</small><strong>Curiosity set free</strong></span><span class="reader-action">Explore the collection <b>↗</b></span></a>
+      <a class="reader-card reader-history" href="/collections/history/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">02</span><span class="reader-copy"><small>History</small><strong>The past made immediate</strong></span><span class="reader-action">Explore history <b>↗</b></span></a>
+      <a class="reader-card reader-romantasy" href="/collections/romantasy/"><span class="reader-art" aria-hidden="true"></span><span class="reader-number">03</span><span class="reader-note">First title coming soon</span><span class="reader-copy"><small>Romantasy</small><strong>New worlds are coming</strong></span><span class="reader-action">Explore romantasy <b>↗</b></span></a>`;
   }
 
   const catalogIntro = document.querySelector(".catalog-intro > p");
@@ -81,7 +81,7 @@ function applyHomepageFocus() {
   }
 
   const footerNav = document.querySelector("footer nav[aria-label='Footer navigation']");
-  if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
+  if (footerNav) footerNav.innerHTML = `<a href="/books/">Books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/about/#approach">Our approach</a><a href="/about/">About the studio</a><a href="mailto:hello@discovervisually.com">Contact</a><a href="/privacy/">Privacy</a>`;
 
   const schema = document.querySelector('script[type="application/ld+json"]');
   if (schema) {
@@ -95,7 +95,7 @@ function applyHomepageFocus() {
   }
 
   const style = document.createElement("style");
-  style.textContent = `.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.reader-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-height:0}.reader-card{min-height:430px}@media(max-width:1000px){.catalog-grid,.reader-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.catalog-grid,.reader-grid{grid-template-columns:1fr}}`;
+  style.textContent = `.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:1000px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.catalog-grid{grid-template-columns:1fr}}`;
   document.head.appendChild(style);
 }
 
