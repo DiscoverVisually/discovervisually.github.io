@@ -519,16 +519,12 @@
     const target = document.querySelector(id);
     if (!target) return;
     event.preventDefault();
-    const headerOffset = id === "#top" ? 0 : 66;
-    const insideShell = id === "#inside" ? target.querySelector(".pm-open-book-shell") : null;
-    const insideControls = id === "#inside" ? target.querySelector(".pm-spread-controls") : null;
+    const headerOffset = id === "#top" ? 0 : (window.innerWidth <= 720 ? 58 : 66);
     let destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
-    if (insideShell && insideControls && window.innerWidth > 720) {
-      const shellTop = insideShell.getBoundingClientRect().top + window.scrollY;
-      const controlsBottom = insideControls.getBoundingClientRect().bottom + window.scrollY;
-      const availableHeight = window.innerHeight - headerOffset - 12;
-      const contentHeight = controlsBottom - shellTop;
-      destination = Math.max(0, shellTop - headerOffset - Math.max(0, (availableHeight - contentHeight) / 2));
+    if (id === "#inside") {
+      const heading = target.querySelector(".pm-section-head");
+      const anchor = heading || target;
+      destination = Math.max(0, anchor.getBoundingClientRect().top + window.scrollY - headerOffset - 8);
     }
     const start = window.scrollY;
     const distance = destination - start;
