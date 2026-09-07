@@ -52,13 +52,15 @@
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
     const twoDigits = (value) => String(value).padStart(2, "0");
-    const visualDefaults = { accent:"#d4b06c", spine:"#14293a", glow:"rgba(190,139,67,.36)" };
+    const visualDefaults = { accent:"#d4b06c", spine:"#14293a", spineInk:"#f8e6ae", glow:"rgba(190,139,67,.36)" };
     const bookVisuals = {
-      "romantasy-yearbook": { accent:"#e3a9c9", spine:"#44203a", glow:"rgba(198,82,155,.34)" },
-      "abraham-lincoln": { accent:"#d9b568", spine:"#142940", glow:"rgba(194,148,71,.34)" },
-      "hindenburg": { accent:"#dca34c", spine:"#172b3a", glow:"rgba(206,111,45,.34)" },
-      "pompeii": { accent:"#e37950", spine:"#40231d", glow:"rgba(206,76,43,.36)" }
+      "romantasy-yearbook": { accent:"#e3a9c9", spine:"#44203a", spineInk:"#fae8f3", glow:"rgba(198,82,155,.34)" },
+      "abraham-lincoln": { accent:"#d9b568", spine:"#142940", spineInk:"#f4d486", glow:"rgba(194,148,71,.34)" },
+      "hindenburg": { accent:"#dca34c", spine:"#172b3a", spineInk:"#f5d28e", glow:"rgba(206,111,45,.34)" },
+      "pompeii": { accent:"#e37950", spine:"#40231d", spineInk:"#fff0d6", glow:"rgba(206,76,43,.36)" }
     };
+
+    shelf.classList.toggle("has-archive-fillers", books.length < 8);
 
     let activeIndex = defaultIndex;
     try {
@@ -82,7 +84,7 @@
       return `
         <a class="shelf-book" href="${escapeHTML(book.url)}" data-shelf-index="${index}"
           aria-label="Explore ${escapeHTML(book.title)}, book ${index + 1} of ${books.length}"
-          draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-glow:${visual.glow}">
+          draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-glow:${visual.glow}">
           <span class="shelf-book-object" aria-hidden="true">
             <span class="shelf-book-face shelf-book-front">${front}</span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-left"><span>${name}</span></span>
@@ -116,40 +118,89 @@
 
     const slotGeometry = (distance) => {
       const mobile = narrowScreen.matches;
-      const slots = mobile
-        ? [
-            { x:0, y:-4, z:80, rotate:0, scale:1, opacity:1, saturation:1, brightness:1, spine:0 },
-            { x:.385, y:8, z:-65, rotate:58, scale:.78, opacity:.72, saturation:.78, brightness:.78, spine:.12 },
-            { x:.59, y:17, z:-190, rotate:82, scale:.61, opacity:.22, saturation:.5, brightness:.62, spine:1 },
-            { x:.68, y:22, z:-270, rotate:88, scale:.5, opacity:0, saturation:.4, brightness:.52, spine:1 }
-          ]
-        : [
-            { x:0, y:-7, z:105, rotate:0, scale:1, opacity:1, saturation:1, brightness:1, spine:0 },
-            { x:.195, y:2, z:-4, rotate:13, scale:.88, opacity:.91, saturation:.9, brightness:.9, spine:0 },
-            { x:.345, y:13, z:-125, rotate:46, scale:.74, opacity:.69, saturation:.68, brightness:.77, spine:.12 },
-            { x:.465, y:23, z:-235, rotate:86, scale:.61, opacity:.44, saturation:.48, brightness:.61, spine:1 },
-            { x:.53, y:29, z:-310, rotate:88, scale:.5, opacity:0, saturation:.4, brightness:.52, spine:1 }
-          ];
       const absolute = Math.abs(distance);
-      const lowerIndex = Math.min(Math.floor(absolute), slots.length - 1);
-      const upperIndex = Math.min(lowerIndex + 1, slots.length - 1);
-      const progress = clamp(absolute - lowerIndex, 0, 1);
-      const lower = slots[lowerIndex];
-      const upper = slots[upperIndex];
-      const width = Math.min(stage.clientWidth || window.innerWidth, mobile ? 760 : 1600);
       const direction = Math.sign(distance) || 1;
-      return {
-        x:mix(lower.x, upper.x, progress) * width * direction,
-        y:mix(lower.y, upper.y, progress),
-        z:mix(lower.z, upper.z, progress),
-        rotate:mix(lower.rotate, upper.rotate, progress) * direction * -1,
-        scale:mix(lower.scale, upper.scale, progress),
-        opacity:mix(lower.opacity, upper.opacity, progress),
-        saturation:mix(lower.saturation, upper.saturation, progress),
-        brightness:mix(lower.brightness, upper.brightness, progress),
-        spine:mix(lower.spine, upper.spine, progress),
-        distance:absolute
+      const viewportWidth = stage.clientWidth || window.innerWidth;
+      const layoutWidth = Math.min(viewportWidth, mobile ? 760 : 1600);
+      const easeOutCubic = (value) => 1 - Math.pow(1 - clamp(value, 0, 1), 3);
+      const smoothstep = (value) => {
+        const progress = clamp(value, 0, 1);
+        return progress * progress * (3 - 2 * progress);
       };
+      const sideX = mobile
+        ? Math.min(layoutWidth * .39, 165)
+        : clamp(layoutWidth * .205, 220, 328);
+      const spineBase = mobile
+        ? Math.min(layoutWidth * .47, 205)
+        : clamp(layoutWidth * .325, 330, 520);
+      const spinePitch = mobile
+        ? clamp(layoutWidth * .055, 18, 24)
+        : clamp(layoutWidth * .024, 27, 39);
+      let geometry;
+
+      if (absolute <= 1) {
+        const progress = smoothstep(absolute);
+        geometry = {
+          x:mix(0, sideX, progress),
+          y:mix(mobile ? -4 : -6, mobile ? 8 : 7, progress),
+          z:mix(mobile ? 80 : 105, mobile ? -28 : 0, progress),
+          rotate:mix(0, mobile ? 56 : 12, progress),
+          scale:mix(1, mobile ? .82 : .89, progress),
+          opacity:mix(1, mobile ? .78 : .95, progress),
+          saturation:mix(1, mobile ? .82 : .94, progress),
+          brightness:mix(1, mobile ? .84 : .94, progress),
+          spine:0
+        };
+      } else if (absolute < 2) {
+        const progress = absolute - 1;
+        const turn = easeOutCubic(progress);
+        geometry = {
+          x:mix(sideX, spineBase, progress),
+          y:mix(mobile ? 8 : 7, mobile ? 18 : 18, progress),
+          z:mix(mobile ? -28 : 0, mobile ? -86 : -70, progress),
+          rotate:mix(mobile ? 56 : 12, mobile ? 88 : 88, turn),
+          scale:mix(mobile ? .82 : .89, mobile ? .76 : .88, progress),
+          opacity:mix(mobile ? .78 : .95, mobile ? .58 : .9, progress),
+          saturation:mix(mobile ? .82 : .94, mobile ? .68 : .82, progress),
+          brightness:mix(mobile ? .84 : .94, mobile ? .7 : .82, progress),
+          spine:smoothstep((turn - .42) / .45)
+        };
+      } else {
+        const x = spineBase + (absolute - 2) * spinePitch;
+        const fadeStart = Math.max(spineBase, viewportWidth / 2 - (mobile ? 28 : 110));
+        const fadeEnd = viewportWidth / 2 + (mobile ? 34 : 52);
+        const edgeVisibility = 1 - smoothstep((x - fadeStart) / Math.max(fadeEnd - fadeStart, 1));
+        geometry = {
+          x,
+          y:mobile ? 18 : 18,
+          z:(mobile ? -86 : -70) - Math.min(absolute - 2, 8) * 3,
+          rotate:mobile ? 88.5 : 88.8,
+          scale:mobile ? .76 : .88,
+          opacity:(mobile ? .58 : .9) * edgeVisibility,
+          saturation:mobile ? .68 : .82,
+          brightness:mobile ? .7 : .82,
+          spine:1
+        };
+      }
+
+      return {
+        ...geometry,
+        x:geometry.x * direction,
+        rotate:geometry.rotate * direction * -1,
+        distance:absolute,
+        interactive:geometry.opacity > .12
+      };
+    };
+
+    const prepareMotion = (fromPosition, toPosition) => {
+      bookElements.forEach((element, index) => {
+        const fromDistance = Math.abs(index - fromPosition);
+        const toDistance = Math.abs(index - toPosition);
+        const arrivingFromSpine = toDistance < fromDistance && fromDistance > 1.15;
+        const leavingForSpine = toDistance > fromDistance && toDistance > 1.15;
+        element.style.setProperty("--shelf-rotation-delay", arrivingFromSpine ? "340ms" : "0ms");
+        element.style.setProperty("--shelf-spine-delay", arrivingFromSpine ? "280ms" : leavingForSpine ? "150ms" : "0ms");
+      });
     };
 
     const renderPosition = (position) => {
@@ -160,16 +211,17 @@
         element.style.setProperty("--shelf-y", `${geometry.y.toFixed(2)}px`);
         element.style.setProperty("--shelf-z", `${geometry.z.toFixed(2)}px`);
         element.style.setProperty("--shelf-rotate", `${geometry.rotate.toFixed(2)}deg`);
-        element.style.setProperty("--shelf-inverse-rotate", `${(geometry.rotate * -1).toFixed(2)}deg`);
         element.style.setProperty("--shelf-scale", geometry.scale.toFixed(4));
-        element.style.setProperty("--shelf-inverse-scale", (1 / geometry.scale).toFixed(4));
         element.style.setProperty("--shelf-opacity", geometry.opacity.toFixed(4));
         element.style.setProperty("--shelf-saturation", geometry.saturation.toFixed(4));
         element.style.setProperty("--shelf-brightness", geometry.brightness.toFixed(4));
         element.style.setProperty("--shelf-spine-opacity", geometry.spine.toFixed(4));
-        element.style.zIndex = String(Math.round(100 - geometry.distance * 12));
-        element.style.pointerEvents = geometry.distance > 3.1 ? "none" : "";
-        element.setAttribute("aria-hidden", geometry.distance > 3.1 ? "true" : "false");
+        element.dataset.shelfView = geometry.distance < .55 ? "front" : geometry.spine > .72 ? "spine" : "cover";
+        element.classList.toggle("is-shelf-visible", geometry.interactive);
+        element.style.zIndex = String(Math.round(100 - geometry.distance * 7));
+        element.style.pointerEvents = geometry.interactive ? "" : "none";
+        if (geometry.interactive) element.removeAttribute("aria-hidden");
+        else element.setAttribute("aria-hidden", "true");
       });
     };
 
@@ -231,7 +283,7 @@
         applyBookDetails(activeIndex, announce);
       } else {
         shelf.classList.add("is-copy-changing");
-        detailTimer = window.setTimeout(() => applyBookDetails(activeIndex, announce), 260);
+        detailTimer = window.setTimeout(() => applyBookDetails(activeIndex, announce), 620);
       }
       rememberBook(books[activeIndex]);
     };
@@ -239,15 +291,22 @@
     const goTo = (requestedIndex, options = {}) => {
       const index = clamp(Math.round(requestedIndex), 0, books.length - 1);
       const changed = index !== activeIndex;
+      const previousPosition = visualPosition;
       activeIndex = index;
-      visualPosition = index;
       shelf.classList.remove("is-dragging");
       if (!reducedMotion.matches) shelf.classList.add("is-animating");
+      prepareMotion(previousPosition, index);
       renderPosition(index);
       updateActiveState(options.announce !== false, !changed);
       if (options.dismissHint !== false) dismissHint();
       clearTimeout(animationTimer);
-      animationTimer = window.setTimeout(() => shelf.classList.remove("is-animating"), reducedMotion.matches ? 0 : 1400);
+      animationTimer = window.setTimeout(() => {
+        shelf.classList.remove("is-animating");
+        bookElements.forEach((element) => {
+          element.style.removeProperty("--shelf-rotation-delay");
+          element.style.removeProperty("--shelf-spine-delay");
+        });
+      }, reducedMotion.matches ? 0 : 1400);
     };
 
     const clearEdgeMovement = () => {
