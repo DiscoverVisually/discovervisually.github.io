@@ -387,6 +387,7 @@
     stage.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || event.target.closest("button,[data-shelf-link],.living-shelf-collections")) return;
       clearEdgeMovement();
+      const startedOnBook = Boolean(event.target.closest(".shelf-book"));
       drag = {
         pointerId:event.pointerId,
         startX:event.clientX,
@@ -397,7 +398,7 @@
         startIndex:activeIndex,
         horizontal:null
       };
-      if (event.pointerType === "mouse") stage.setPointerCapture?.(event.pointerId);
+      if (event.pointerType === "mouse" && !startedOnBook) stage.setPointerCapture?.(event.pointerId);
     });
 
     stage.addEventListener("pointermove", (event) => {
