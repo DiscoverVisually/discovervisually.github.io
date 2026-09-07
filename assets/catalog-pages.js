@@ -52,12 +52,12 @@
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
     const twoDigits = (value) => String(value).padStart(2, "0");
-    const visualDefaults = { accent:"#d4b06c", spine:"#14293a", spineInk:"#f8e6ae", glow:"rgba(190,139,67,.36)" };
+    const visualDefaults = { accent:"#d4b06c", spine:"#1c3a50", spineInk:"#fff1bd", glow:"rgba(190,139,67,.36)" };
     const bookVisuals = {
-      "romantasy-yearbook": { accent:"#e3a9c9", spine:"#44203a", spineInk:"#fae8f3", glow:"rgba(198,82,155,.34)" },
-      "abraham-lincoln": { accent:"#d9b568", spine:"#142940", spineInk:"#f4d486", glow:"rgba(194,148,71,.34)" },
-      "hindenburg": { accent:"#dca34c", spine:"#172b3a", spineInk:"#f5d28e", glow:"rgba(206,111,45,.34)" },
-      "pompeii": { accent:"#e37950", spine:"#40231d", spineInk:"#fff0d6", glow:"rgba(206,76,43,.36)" }
+      "romantasy-yearbook": { accent:"#e3a9c9", spine:"#702b5d", spineInk:"#fff5fb", glow:"rgba(198,82,155,.34)" },
+      "abraham-lincoln": { accent:"#d9b568", spine:"#173e68", spineInk:"#ffe7a3", glow:"rgba(194,148,71,.34)" },
+      "hindenburg": { accent:"#dca34c", spine:"#28536a", spineInk:"#ffe3a4", glow:"rgba(206,111,45,.34)" },
+      "pompeii": { accent:"#e37950", spine:"#713124", spineInk:"#fff3dc", glow:"rgba(206,76,43,.36)" }
     };
 
     shelf.classList.toggle("has-archive-fillers", books.length < 8);
@@ -134,8 +134,8 @@
         ? Math.min(layoutWidth * .47, 205)
         : clamp(layoutWidth * .325, 330, 520);
       const spinePitch = mobile
-        ? clamp(layoutWidth * .055, 18, 24)
-        : clamp(layoutWidth * .024, 27, 39);
+        ? clamp(layoutWidth * .064, 23, 29)
+        : clamp(layoutWidth * .028, 35, 44);
       let geometry;
 
       if (absolute <= 1) {
@@ -176,9 +176,9 @@
           z:(mobile ? -24 : -12) - Math.min(absolute - 2, 8) * 1.5,
           rotate:mobile ? 88.5 : 88.8,
           scale:mobile ? .76 : .88,
-          opacity:(mobile ? .58 : .9) * edgeVisibility,
-          saturation:mobile ? .68 : .82,
-          brightness:mobile ? .7 : .82,
+          opacity:(mobile ? .68 : .96) * edgeVisibility,
+          saturation:mobile ? .82 : .96,
+          brightness:mobile ? .84 : .96,
           spine:1
         };
       }
@@ -198,8 +198,12 @@
         const toDistance = Math.abs(index - toPosition);
         const arrivingFromSpine = toDistance < fromDistance && fromDistance > 1.15;
         const leavingForSpine = toDistance > fromDistance && toDistance > 1.15;
-        element.style.setProperty("--shelf-rotation-delay", arrivingFromSpine ? "340ms" : "0ms");
-        element.style.setProperty("--shelf-spine-delay", arrivingFromSpine ? "280ms" : leavingForSpine ? "150ms" : "0ms");
+        element.classList.toggle("is-unfolding", arrivingFromSpine && !reducedMotion.matches);
+        element.classList.toggle("is-folding", leavingForSpine && !reducedMotion.matches);
+        element.style.setProperty("--shelf-rotation-delay", arrivingFromSpine ? "120ms" : "0ms");
+        element.style.setProperty("--shelf-rotation-duration", arrivingFromSpine ? "1080ms" : leavingForSpine ? "720ms" : "850ms");
+        element.style.setProperty("--shelf-spine-delay", arrivingFromSpine ? "210ms" : leavingForSpine ? "145ms" : "0ms");
+        element.style.setProperty("--shelf-spine-duration", arrivingFromSpine ? "420ms" : "280ms");
       });
     };
 
@@ -308,8 +312,11 @@
         bookElements.forEach((element) => {
           element.style.removeProperty("--shelf-rotation-delay");
           element.style.removeProperty("--shelf-spine-delay");
+          element.style.removeProperty("--shelf-rotation-duration");
+          element.style.removeProperty("--shelf-spine-duration");
+          element.classList.remove("is-unfolding", "is-folding");
         });
-      }, reducedMotion.matches ? 0 : 1400);
+      }, reducedMotion.matches ? 0 : 1450);
     };
 
     const clearEdgeMovement = () => {
