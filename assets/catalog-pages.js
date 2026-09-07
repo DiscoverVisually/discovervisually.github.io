@@ -209,10 +209,22 @@
 
     const renderPosition = (position) => {
       visualPosition = position;
+      const shelfStyles = getComputedStyle(shelf);
+      const readPixelVariable = (name, fallback) => {
+        const value = Number.parseFloat(shelfStyles.getPropertyValue(name));
+        return Number.isFinite(value) ? value : fallback;
+      };
+      const baseY = readPixelVariable("--shelf-base-y", narrowScreen.matches ? -4 : -6);
+      const restDrop = readPixelVariable("--shelf-rest-drop", narrowScreen.matches ? 8 : 12);
       bookElements.forEach((element, index) => {
         const geometry = slotGeometry(index - position);
+        const bookHeight = Number.parseFloat(getComputedStyle(element).height) || 0;
+        // The outer book is scaled around its centre. Compensate for that
+        // scale so every visible spine, side cover and front cover shares
+        // one physical resting line on the wooden shelf.
+        const baselineY = baseY + restDrop + (1 - geometry.scale) * bookHeight / 2;
         element.style.setProperty("--shelf-x", `${geometry.x.toFixed(2)}px`);
-        element.style.setProperty("--shelf-y", `${geometry.y.toFixed(2)}px`);
+        element.style.setProperty("--shelf-y", `${baselineY.toFixed(2)}px`);
         element.style.setProperty("--shelf-z", `${geometry.z.toFixed(2)}px`);
         element.style.setProperty("--shelf-rotate", `${geometry.rotate.toFixed(2)}deg`);
         element.style.setProperty("--shelf-scale", geometry.scale.toFixed(4));
