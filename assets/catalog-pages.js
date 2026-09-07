@@ -126,8 +126,8 @@
         : [
             { x:0, y:-7, z:105, rotate:0, scale:1, opacity:1, saturation:1, brightness:1, spine:0 },
             { x:.195, y:2, z:-4, rotate:13, scale:.88, opacity:.91, saturation:.9, brightness:.9, spine:0 },
-            { x:.345, y:13, z:-125, rotate:46, scale:.74, opacity:.69, saturation:.68, brightness:.77, spine:.42 },
-            { x:.465, y:23, z:-235, rotate:82, scale:.61, opacity:.4, saturation:.48, brightness:.61, spine:1 },
+            { x:.345, y:13, z:-125, rotate:46, scale:.74, opacity:.69, saturation:.68, brightness:.77, spine:.12 },
+            { x:.465, y:23, z:-235, rotate:86, scale:.61, opacity:.44, saturation:.48, brightness:.61, spine:1 },
             { x:.53, y:29, z:-310, rotate:88, scale:.5, opacity:0, saturation:.4, brightness:.52, spine:1 }
           ];
       const absolute = Math.abs(distance);
@@ -162,6 +162,7 @@
         element.style.setProperty("--shelf-rotate", `${geometry.rotate.toFixed(2)}deg`);
         element.style.setProperty("--shelf-inverse-rotate", `${(geometry.rotate * -1).toFixed(2)}deg`);
         element.style.setProperty("--shelf-scale", geometry.scale.toFixed(4));
+        element.style.setProperty("--shelf-inverse-scale", (1 / geometry.scale).toFixed(4));
         element.style.setProperty("--shelf-opacity", geometry.opacity.toFixed(4));
         element.style.setProperty("--shelf-saturation", geometry.saturation.toFixed(4));
         element.style.setProperty("--shelf-brightness", geometry.brightness.toFixed(4));

@@ -194,6 +194,7 @@ a { color:inherit; text-decoration:none; }
   --shelf-rotate:0deg;
   --shelf-inverse-rotate:0deg;
   --shelf-scale:1;
+  --shelf-inverse-scale:1;
   --shelf-opacity:1;
   --shelf-spine-opacity:0;
   position:absolute;
@@ -328,7 +329,7 @@ a { color:inherit; text-decoration:none; }
   letter-spacing:.08em;
   text-align:center;
   text-transform:uppercase;
-  transform:translate(-50%,-50%) translateZ(42px) rotateY(var(--shelf-inverse-rotate));
+  transform:translate(-50%,-50%) translateZ(42px) rotateY(var(--shelf-inverse-rotate)) scale(var(--shelf-inverse-scale));
   transition:opacity .7s;
   backface-visibility:hidden;
 }
@@ -371,14 +372,14 @@ a { color:inherit; text-decoration:none; }
   letter-spacing:.11em;
   text-transform:uppercase;
   pointer-events:none;
-  transform:translateX(-50%) translateZ(65px) rotateY(var(--shelf-inverse-rotate)) translateY(5px);
+  transform:translateX(-50%) translateZ(65px) rotateY(var(--shelf-inverse-rotate)) scale(var(--shelf-inverse-scale)) translateY(5px);
   transition:opacity .28s,transform .45s;
 }
 .shelf-book-quick b { color:var(--book-accent); font-size:12px; }
 .shelf-book:hover .shelf-book-quick,
 .shelf-book:focus-visible .shelf-book-quick {
   opacity:1;
-  transform:translateX(-50%) translateZ(65px) rotateY(var(--shelf-inverse-rotate)) translateY(0);
+  transform:translateX(-50%) translateZ(65px) rotateY(var(--shelf-inverse-rotate)) scale(var(--shelf-inverse-scale)) translateY(0);
 }
 .shelf-edge-cue {
   position:absolute;
