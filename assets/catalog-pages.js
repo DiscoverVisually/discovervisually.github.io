@@ -218,7 +218,10 @@
         element.style.setProperty("--shelf-spine-opacity", geometry.spine.toFixed(4));
         element.dataset.shelfView = geometry.distance < .55 ? "front" : geometry.spine > .72 ? "spine" : "cover";
         element.classList.toggle("is-shelf-visible", geometry.interactive);
-        element.style.zIndex = String(Math.round(100 - geometry.distance * 7));
+        const layer = geometry.spine > .72
+          ? 94 - Math.max(geometry.distance - 2, 0) * 2
+          : 100 - geometry.distance * 7;
+        element.style.zIndex = String(Math.round(layer));
         element.style.pointerEvents = geometry.interactive ? "" : "none";
         if (geometry.interactive) element.removeAttribute("aria-hidden");
         else element.setAttribute("aria-hidden", "true");
