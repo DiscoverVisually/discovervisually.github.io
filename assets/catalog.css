@@ -178,6 +178,7 @@ a { color:inherit; text-decoration:none; }
   z-index:2;
   inset:0;
   transform-style:preserve-3d;
+  pointer-events:none;
 }
 .shelf-library-rail {
   position:absolute;
@@ -281,6 +282,7 @@ a { color:inherit; text-decoration:none; }
   display:block;
   opacity:var(--shelf-opacity);
   outline:none;
+  pointer-events:auto;
   transform-style:preserve-3d;
   transform:translate(-50%,-50%) translate3d(var(--shelf-x),var(--shelf-y),var(--shelf-z)) scale(var(--shelf-scale));
   filter:saturate(var(--shelf-saturation,1)) brightness(var(--shelf-brightness,1));
