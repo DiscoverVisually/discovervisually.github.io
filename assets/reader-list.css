@@ -14,6 +14,9 @@ body { margin: 0; color: var(--rl-ink); background: var(--rl-cream); font-family
 .rl-card-copy > span { color: var(--rl-gold); font-size: 9px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
 .rl-card-copy h2 { max-width: 520px; margin: 24px 0; font: 400 clamp(31px,3.2vw,48px)/1.02 Georgia,serif; letter-spacing: -.035em; }
 .rl-card-copy p { max-width: 520px; margin: 0; color: rgba(255,255,255,.62); font-size: 13px; line-height: 1.8; }
+.rl-benefits { max-width: 520px; margin: 24px 0 0; padding: 18px 0 0; display: grid; gap: 10px; border-top: 1px solid rgba(255,255,255,.14); list-style: none; }
+.rl-benefits li { color: rgba(255,255,255,.78); font-size: 11px; line-height: 1.45; }
+.rl-benefits li::before { content: "✦"; margin-right: 10px; color: var(--rl-gold); }
 .rl-form { align-self: center; }
 .rl-form > label { display: block; margin-bottom: 11px; color: rgba(255,255,255,.62); font-size: 9px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
 .rl-email-row { display: grid; grid-template-columns: minmax(0,1fr) auto; border-bottom: 1px solid rgba(255,255,255,.55); }

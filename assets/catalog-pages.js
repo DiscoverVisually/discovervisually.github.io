@@ -8,19 +8,19 @@
 
   const card = (book) => `
     <article class="dv-catalog-card" data-status="${book.status.toLowerCase().replaceAll(" ", "-")}">
-      <a class="dv-catalog-image" href="${book.url}">${cover(book)}<span>Explore the book <b>↗</b></span></a>
+      <a class="dv-catalog-image" href="${book.url}" aria-label="Explore ${book.title}">${cover(book)}<span>Explore the book <b>↗</b></span></a>
       <div class="dv-catalog-copy">
         <p>${book.audience} · ${book.status}</p>
         <h2><a href="${book.url}">${book.title}</a></h2>
         <span>${book.description}</span>
-        <div class="dv-catalog-tags">${book.collections.map(id => `<a href="${collections[id].url}">${collections[id].name}</a>`).join("")}</div>
+        <div class="dv-catalog-tags" aria-label="Collections">${book.collections.map(id => collections[id] ? `<a href="${collections[id].url}">${collections[id].name}</a>` : "").join("")}</div>
       </div>
     </article>`;
 
   document.querySelectorAll("[data-catalog-grid]").forEach((grid) => {
     const collection = grid.dataset.catalogGrid;
     const shown = collection === "all" ? books : books.filter(book => book.collections.includes(collection));
-    grid.innerHTML = shown.map(card).join("");
+    grid.innerHTML = shown.length ? shown.map(card).join("") : `<div class="catalog-empty"><p class="catalog-kicker">The next shelf is taking shape</p><h2>Visual Learning.<em>Coming soon.</em></h2><p>We are developing visual guides that make complex ideas easier to see, explore and remember.</p><a href="/books/">Browse the current books <b>→</b></a></div>`;
     const count = document.querySelector("[data-catalog-count]");
     if (count) count.textContent = `${shown.length} ${shown.length === 1 ? "title" : "titles"}`;
   });

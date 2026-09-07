@@ -314,6 +314,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
   let animationFrame = 0;
   let animating = false;
   let locked = false;
+  let animationDirection = 0;
   let previousScrollBehavior = "";
 
   function isEditableTarget(event) {
@@ -353,6 +354,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     cancelAnimationFrame(animationFrame);
     animating = false;
     locked = false;
+    animationDirection = 0;
     window.clearTimeout(unlockTimer);
     document.documentElement.style.scrollBehavior = previousScrollBehavior;
   }
@@ -372,6 +374,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
 
     animating = true;
     locked = true;
+    animationDirection = direction;
     previousScrollBehavior = document.documentElement.style.scrollBehavior;
     document.documentElement.style.scrollBehavior = "auto";
 
@@ -387,6 +390,7 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
       }
 
       animating = false;
+      animationDirection = 0;
       document.documentElement.style.scrollBehavior = previousScrollBehavior;
       unlockTimer = window.setTimeout(() => {
         locked = false;
@@ -403,14 +407,29 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     const delta = normaliseWheelDelta(event);
     if (!delta) return;
 
+    const direction = delta > 0 ? 1 : -1;
     if (animating || locked) {
+      if (animationDirection && direction !== animationDirection) {
+        clearAnimation();
+        wheelDelta = 0;
+        return;
+      }
       event.preventDefault();
       return;
     }
 
-    const direction = delta > 0 ? 1 : -1;
     const current = currentSectionIndex();
     if (current + direction < 0 || current + direction >= sections.length) return;
+
+    const activeSection = sections[current];
+    const activeTop = sectionTop(activeSection);
+    const activeBottom = activeTop + activeSection.offsetHeight;
+    const edgeDistance = direction > 0
+      ? activeBottom - (window.scrollY + window.innerHeight)
+      : window.scrollY - activeTop;
+    const openingHero = current === 0 && direction > 0 && window.scrollY <= activeTop + 120;
+    const nearEdge = edgeDistance <= Math.min(150, window.innerHeight * 0.18);
+    if (!openingHero && !nearEdge) return;
 
     event.preventDefault();
     if (wheelDelta && Math.sign(wheelDelta) !== Math.sign(delta)) wheelDelta = 0;
@@ -432,6 +451,9 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) clearAnimation();
   });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && animating) clearAnimation();
+  });
 
   const cancelOnPreferenceChange = () => {
     wheelDelta = 0;
@@ -439,6 +461,26 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
   };
   if (typeof desktopPointer.addEventListener === "function") desktopPointer.addEventListener("change", cancelOnPreferenceChange);
   if (typeof reducedMotion.addEventListener === "function") reducedMotion.addEventListener("change", cancelOnPreferenceChange);
+})();
+
+(function initSectionRail() {
+  const rail = document.querySelector("[data-section-rail]");
+  const links = [...document.querySelectorAll("[data-section-link]")];
+  if (!rail || !links.length || !("IntersectionObserver" in window)) return;
+  const sections = links
+    .map((link) => [link, document.getElementById(link.dataset.sectionLink)])
+    .filter(([, section]) => section);
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    sections.forEach(([link, section]) => {
+      if (section === visible.target) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+  }, { rootMargin: "-18% 0px -62%", threshold: [0.05, 0.2, 0.45] });
+  sections.forEach(([, section]) => observer.observe(section));
 })();
 
 (function initHeroParallax() {

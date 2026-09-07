@@ -4,8 +4,7 @@
     ["/books/visual-bible.html", "/books/"],
     ["/books/women-of-the-bible-for-today.html", "/books/"],
     ["/collections/christian/", "/collections/"],
-    ["/collections/women/", "/collections/"],
-    ["/collections/visual-learning/", "/collections/"]
+    ["/collections/women/", "/collections/"]
   ]);
 
   document.querySelectorAll("a[href]").forEach((link) => {
@@ -18,9 +17,9 @@
   });
 
   const bookTitles = {
-    "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History", url: "/collections/history/" },
-    "/books/hindenburg-the-final-flight.html": { title: "Hindenburg", collection: "History", url: "/collections/history/" },
-    "/books/i-worked-for-abraham-lincoln.html": { title: "Abraham Lincoln", collection: "History", url: "/collections/history/" },
+    "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History Hunters", url: "/collections/history/" },
+    "/books/hindenburg-the-final-flight.html": { title: "Hindenburg", collection: "History Hunters", url: "/collections/history/" },
+    "/books/i-worked-for-abraham-lincoln.html": { title: "Abraham Lincoln", collection: "History Hunters", url: "/collections/history/" },
     "/books/the-ultimate-romantasy-yearbook.html": { title: "Romantasy Yearbook", collection: "Romantasy", url: "/collections/romantasy/" }
   };
   if (bookTitles[location.pathname]) {
@@ -32,12 +31,12 @@
   const header = document.querySelector("[data-dv-header]");
   if (header) {
     const panel = header.querySelector(".dv-explore-panel");
-    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/children/">For Children</a><a href="/collections/history/">History</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/">All collections</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
+    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/history/">History Hunters</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a class="dv-coming-link" href="/collections/visual-learning/"><span>Visual Learning</span><small>Coming soon</small></a><a href="/books/">All books</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
   }
 
   document.querySelectorAll(".dv-footer-group").forEach((group) => {
     const label = group.querySelector("small")?.textContent.trim().toLowerCase();
-    if (label === "explore") group.innerHTML = `<small>Explore</small><a href="/books/">All books</a><a href="/collections/history/">History</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a>`;
+    if (label === "explore") group.innerHTML = `<small>Explore</small><a href="/books/">All books</a><a href="/collections/history/">History Hunters</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning <em class="dv-footer-status">Coming soon</em></a>`;
   });
 
   if (!header) return;

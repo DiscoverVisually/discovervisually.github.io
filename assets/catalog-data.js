@@ -63,6 +63,7 @@ window.DV_BOOKS = [
 
 window.DV_COLLECTIONS = {
   children: { name: "For Children", url: "/collections/children/", label: "Curiosity without limits" },
-  history: { name: "History", url: "/collections/history/", label: "The past made immediate" },
-  romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "Fantasy romance, beautifully mapped" }
+  history: { name: "History Hunters", url: "/collections/history/", label: "The past made immediate" },
+  romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "Fantasy romance, beautifully mapped" },
+  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible", status: "Coming soon", isComingSoon: true }
 };
