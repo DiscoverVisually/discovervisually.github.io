@@ -157,7 +157,7 @@
         geometry = {
           x:mix(sideX, spineBase, progress),
           y:mix(mobile ? 8 : 7, mobile ? 18 : 18, progress),
-          z:mix(mobile ? -28 : 0, mobile ? -86 : -70, progress),
+          z:mix(mobile ? -28 : 0, mobile ? -24 : -12, progress),
           rotate:mix(mobile ? 56 : 12, mobile ? 88 : 88, turn),
           scale:mix(mobile ? .82 : .89, mobile ? .76 : .88, progress),
           opacity:mix(mobile ? .78 : .95, mobile ? .58 : .9, progress),
@@ -173,7 +173,7 @@
         geometry = {
           x,
           y:mobile ? 18 : 18,
-          z:(mobile ? -86 : -70) - Math.min(absolute - 2, 8) * 3,
+          z:(mobile ? -24 : -12) - Math.min(absolute - 2, 8) * 1.5,
           rotate:mobile ? 88.5 : 88.8,
           scale:mobile ? .76 : .88,
           opacity:(mobile ? .58 : .9) * edgeVisibility,
