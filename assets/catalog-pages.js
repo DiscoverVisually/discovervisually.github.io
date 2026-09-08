@@ -100,6 +100,7 @@
           </span>
           <span class="shelf-book-spine-card" aria-hidden="true"><span>${name}</span></span>
           <span class="shelf-book-spine-label" aria-hidden="true">${name}<b aria-hidden="true">↗</b></span>
+          <span class="shelf-book-light-pool" aria-hidden="true"></span>
           ${reflection}
           <span class="shelf-book-quick" aria-hidden="true"><span>Explore ${name}</span><b>↗</b></span>
         </a>`;
@@ -126,6 +127,16 @@
     const prefetched = new Set();
     let spotlightFrame = 0;
     let currentSpotlight = null;
+    let spotlightMotionFrame = 0;
+    let momentumFrame = 0;
+    const spotlightPointer = {
+      currentX:50,
+      currentY:42,
+      currentOpacity:.72,
+      targetX:50,
+      targetY:42,
+      targetOpacity:.72
+    };
 
     const setShelfDensity = () => {
       const mobile = narrowScreen.matches;
@@ -185,6 +196,56 @@
         }
       };
       spotlightFrame = requestAnimationFrame(tick);
+    };
+
+    const applySpotlightPointer = () => {
+      shelf.style.setProperty("--shelf-spotlight-x", `${spotlightPointer.currentX.toFixed(2)}%`);
+      shelf.style.setProperty("--shelf-spotlight-y", `${spotlightPointer.currentY.toFixed(2)}%`);
+      shelf.style.setProperty("--shelf-spotlight-opacity", spotlightPointer.currentOpacity.toFixed(3));
+    };
+
+    const animateSpotlightPointer = () => {
+      const ease = reducedMotion.matches ? 1 : .105;
+      spotlightPointer.currentX = mix(spotlightPointer.currentX, spotlightPointer.targetX, ease);
+      spotlightPointer.currentY = mix(spotlightPointer.currentY, spotlightPointer.targetY, ease);
+      spotlightPointer.currentOpacity = mix(spotlightPointer.currentOpacity, spotlightPointer.targetOpacity, ease);
+      applySpotlightPointer();
+      const moving = Math.abs(spotlightPointer.currentX - spotlightPointer.targetX) > .03
+        || Math.abs(spotlightPointer.currentY - spotlightPointer.targetY) > .03
+        || Math.abs(spotlightPointer.currentOpacity - spotlightPointer.targetOpacity) > .002;
+      if (!reducedMotion.matches && moving) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
+      else spotlightMotionFrame = 0;
+    };
+
+    const setSpotlightPointerTarget = (event) => {
+      if (!finePointer.matches || reducedMotion.matches || event.pointerType !== "mouse") return;
+      const bounds = stage.getBoundingClientRect();
+      spotlightPointer.targetX = clamp(((event.clientX - bounds.left) / Math.max(bounds.width, 1)) * 100, 18, 82);
+      spotlightPointer.targetY = clamp(((event.clientY - bounds.top) / Math.max(bounds.height, 1)) * 100, 15, 76);
+      spotlightPointer.targetOpacity = event.target.closest?.(".shelf-book") ? .86 : .72;
+      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
+    };
+
+    const setSpotlightIntensity = (opacity) => {
+      if (!finePointer.matches || reducedMotion.matches) return;
+      spotlightPointer.targetOpacity = opacity;
+      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
+    };
+
+    const resetSpotlightPointer = () => {
+      spotlightPointer.targetX = 50;
+      spotlightPointer.targetY = 42;
+      spotlightPointer.targetOpacity = .72;
+      if (reducedMotion.matches) {
+        if (spotlightMotionFrame) cancelAnimationFrame(spotlightMotionFrame);
+        spotlightMotionFrame = 0;
+        spotlightPointer.currentX = 50;
+        spotlightPointer.currentY = 42;
+        spotlightPointer.currentOpacity = .72;
+        applySpotlightPointer();
+        return;
+      }
+      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
     };
 
     setShelfDensity();
@@ -380,10 +441,41 @@
       rememberBook(books[activeIndex]);
     };
 
+    const cancelMomentum = () => {
+      if (momentumFrame) cancelAnimationFrame(momentumFrame);
+      momentumFrame = 0;
+      shelf.classList.remove("is-settling");
+    };
+
+    const settleAfterDrag = (fromPosition, target) => {
+      cancelMomentum();
+      if (reducedMotion.matches || Math.abs(fromPosition - target) < .001) {
+        goTo(target, { announce:true });
+        return;
+      }
+      shelf.classList.add("is-settling");
+      const startedAt = performance.now();
+      const duration = 360;
+      const easeOutQuint = (value) => 1 - Math.pow(1 - value, 5);
+      const tick = (now) => {
+        const progress = clamp((now - startedAt) / duration, 0, 1);
+        renderPosition(mix(fromPosition, target, easeOutQuint(progress)));
+        if (progress < 1) {
+          momentumFrame = requestAnimationFrame(tick);
+          return;
+        }
+        momentumFrame = 0;
+        shelf.classList.remove("is-settling");
+        goTo(target, { announce:true });
+      };
+      momentumFrame = requestAnimationFrame(tick);
+    };
+
     const goTo = (requestedIndex, options = {}) => {
       const index = clamp(Math.round(requestedIndex), 0, books.length - 1);
       const changed = index !== activeIndex;
       const previousPosition = visualPosition;
+      cancelMomentum();
       activeIndex = index;
       shelf.classList.remove("is-dragging");
       if (!reducedMotion.matches) shelf.classList.add("is-animating");
@@ -468,19 +560,24 @@
         return;
       }
       const distance = snapshot.lastX - snapshot.startX;
+      const flick = Math.abs(snapshot.velocity) > (narrowScreen.matches ? .42 : .5);
       let target = Math.round(visualPosition);
       if (narrowScreen.matches) {
         target = snapshot.startIndex;
         if (Math.abs(distance) > 36 || Math.abs(snapshot.velocity) > .42) target += distance < 0 ? 1 : -1;
-      } else if (Math.abs(distance) > 42 && target === snapshot.startIndex) {
-        target += distance < 0 ? 1 : -1;
+        if (flick && target === snapshot.startIndex) target += snapshot.velocity < 0 ? 1 : -1;
+      } else {
+        if (Math.abs(distance) > 42 && target === snapshot.startIndex) target += distance < 0 ? 1 : -1;
+        if (flick && target === snapshot.startIndex) target += snapshot.velocity < 0 ? 1 : -1;
       }
+      target = clamp(target, 0, books.length - 1);
       suppressClicksUntil = Date.now() + 420;
-      goTo(target, { announce:true });
+      settleAfterDrag(visualPosition, target);
     };
 
     stage.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || event.target.closest("button,[data-shelf-link],.living-shelf-collections")) return;
+      cancelMomentum();
       clearEdgeMovement();
       const startedOnBook = Boolean(event.target.closest(".shelf-book"));
       drag = {
@@ -497,6 +594,7 @@
     });
 
     stage.addEventListener("pointermove", (event) => {
+      setSpotlightPointerTarget(event);
       if (!drag || event.pointerId !== drag.pointerId) {
         onPassivePointerMove(event);
         return;
@@ -530,6 +628,7 @@
     stage.addEventListener("pointercancel", (event) => finishDrag(event, true));
     stage.addEventListener("pointerleave", (event) => {
       clearEdgeMovement();
+      resetSpotlightPointer();
       if (drag && event.pointerType === "mouse" && !stage.hasPointerCapture?.(event.pointerId)) finishDrag(event);
     });
     stage.addEventListener("dragstart", (event) => event.preventDefault());
@@ -555,10 +654,14 @@
     bookElements.forEach((element, index) => {
       element.addEventListener("pointerenter", () => {
         clearEdgeMovement();
+        setSpotlightIntensity(.86);
         clearTimeout(prefetchTimer);
         prefetchTimer = window.setTimeout(() => prefetchBook(books[index]), 360);
       });
-      element.addEventListener("pointerleave", () => clearTimeout(prefetchTimer));
+      element.addEventListener("pointerleave", () => {
+        setSpotlightIntensity(.72);
+        clearTimeout(prefetchTimer);
+      });
     });
 
     previous.addEventListener("click", () => {
@@ -603,9 +706,13 @@
     });
     exploreLink.addEventListener("click", () => rememberBook(books[activeIndex]));
     stage.addEventListener("pointerleave", clearEdgeMovement);
-    window.addEventListener("blur", clearEdgeMovement);
+    window.addEventListener("blur", () => {
+      clearEdgeMovement();
+      resetSpotlightPointer();
+    });
     reducedMotion.addEventListener?.("change", () => {
       clearEdgeMovement();
+      resetSpotlightPointer();
       if (!reducedMotion.matches || !spotlightFrame) return;
       cancelAnimationFrame(spotlightFrame);
       spotlightFrame = 0;
