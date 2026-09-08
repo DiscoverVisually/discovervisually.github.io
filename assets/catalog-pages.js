@@ -75,7 +75,10 @@
       const savedId = sessionStorage.getItem(storageKey);
       const savedIndex = books.findIndex((book) => book.id === savedId);
       if (savedIndex >= 0) activeIndex = savedIndex;
-      if (sessionStorage.getItem(hintKey) === "true") hint?.classList.add("is-dismissed");
+      if (sessionStorage.getItem(hintKey) === "true") {
+        hint?.classList.add("is-dismissed");
+        hint?.setAttribute("aria-hidden", "true");
+      }
     } catch (_) {
       // Storage is an enhancement; the shelf works without it.
     }
@@ -386,7 +389,20 @@
     const dismissHint = () => {
       if (!hint || hint.classList.contains("is-dismissed")) return;
       hint.classList.add("is-dismissed");
+      hint.setAttribute("aria-hidden", "true");
       try { sessionStorage.setItem(hintKey, "true"); } catch (_) {}
+    };
+
+    const updateInteractionCopy = () => {
+      const touchLayout = narrowScreen.matches || !finePointer.matches;
+      if (hint) {
+        hint.innerHTML = touchLayout
+          ? '<span class="shelf-hint-icon" aria-hidden="true">↔</span> Swipe to browse · tap a cover to bring it forward'
+          : '<span class="shelf-hint-icon" aria-hidden="true">↔</span> Drag to explore the shelf';
+      }
+      camera.setAttribute("aria-label", touchLayout
+        ? "Book carousel. Swipe to browse, or tap a book to bring it forward. Tap the centered book or Explore the book to open its details."
+        : "Book carousel. Use the left and right arrow keys, drag, or swipe to browse.");
     };
 
     const prefetchBook = (book) => {
@@ -419,10 +435,15 @@
     };
 
     const updateActiveState = (announce = true, immediate = false) => {
+      const touchLayout = narrowScreen.matches || !finePointer.matches;
       bookElements.forEach((element, index) => {
         const active = index === activeIndex;
+        const book = books[index];
         element.classList.toggle("is-active", active);
         element.tabIndex = active ? 0 : -1;
+        element.setAttribute("aria-label", active || !touchLayout
+          ? `Explore ${book.title}, book ${index + 1} of ${books.length}`
+          : `Bring ${book.title} to the centre; tap again to explore`);
         if (active) element.setAttribute("aria-current", "true");
         else element.removeAttribute("aria-current");
       });
@@ -649,7 +670,18 @@
         return;
       }
       const bookElement = event.target.closest("[data-shelf-index]");
-      if (bookElement) rememberBook(books[Number(bookElement.dataset.shelfIndex)]);
+      if (bookElement) {
+        const index = Number(bookElement.dataset.shelfIndex);
+        const touchLayout = narrowScreen.matches || !finePointer.matches;
+        if (touchLayout && index !== activeIndex) {
+          event.preventDefault();
+          event.stopPropagation();
+          clearEdgeMovement();
+          goTo(index, { announce:true });
+          return;
+        }
+        rememberBook(books[index]);
+      }
     }, true);
 
     bookElements.forEach((element, index) => {
@@ -726,10 +758,29 @@
       resizeFrame = window.requestAnimationFrame(() => {
         setShelfDensity();
         renderPosition(visualPosition);
+        updateInteractionCopy();
+        updateActiveState(false, true);
       });
     }, { passive:true });
 
-    if (!finePointer.matches && hint) hint.innerHTML = '<span aria-hidden="true">↔</span> Swipe or drag to browse';
+    const setAmbientMotionState = (visible) => {
+      shelf.classList.toggle("is-shelf-offscreen", !visible);
+    };
+    if ("IntersectionObserver" in window) {
+      const shelfObserver = new IntersectionObserver(([entry]) => {
+        setAmbientMotionState(entry.isIntersecting);
+      }, { rootMargin:"160px 0px" });
+      shelfObserver.observe(shelf);
+    }
+    document.addEventListener("visibilitychange", () => {
+      shelf.classList.toggle("is-page-hidden", document.hidden);
+      if (document.hidden && spotlightMotionFrame) {
+        cancelAnimationFrame(spotlightMotionFrame);
+        spotlightMotionFrame = 0;
+      }
+    });
+
+    updateInteractionCopy();
     renderPosition(activeIndex);
     updateActiveState(false, true);
     prefetchBook(books[activeIndex]);

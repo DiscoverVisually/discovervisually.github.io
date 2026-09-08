@@ -113,7 +113,9 @@
   .dv-primary-nav {
     position: absolute; top: 100%; left: 0; right: 0; height: auto; padding: 18px 20px 28px;
     display: none; align-items: stretch; gap: 0; flex-direction: column; background: #081724;
-    border-top: 1px solid var(--dv-line-light); box-shadow: 0 24px 48px rgba(0,0,0,.32);
+    max-height: calc(100svh - 68px); overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; border-top: 1px solid var(--dv-line-light);
+    box-shadow: 0 24px 48px rgba(0,0,0,.32);
   }
   .dv-primary-nav[data-open="true"] { display: flex; }
   .dv-primary-nav > a, .dv-explore > summary { min-height: 48px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,.1); }

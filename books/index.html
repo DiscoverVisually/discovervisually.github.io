@@ -7,8 +7,8 @@
     <meta name="description" content="Browse every immersive visual book from Discover Visually on the Living Shelf, including the Romantasy Yearbook and the History Hunters series.">
     <link rel="canonical" href="https://discovervisually.github.io/books/">
     <link rel="icon" href="/favicon.svg">
-    <link rel="stylesheet" href="/assets/site-shell.css?v=20260907shelf2">
-    <link rel="stylesheet" href="/assets/catalog.css?v=20260908shelf19">
+    <link rel="stylesheet" href="/assets/site-shell.css?v=20260908mobile1">
+    <link rel="stylesheet" href="/assets/catalog.css?v=20260908mobile1">
   </head>
   <body class="books-catalog-page">
     <a class="dv-skip" href="#living-shelf">Skip to the book carousel</a>
@@ -63,7 +63,7 @@
           <div class="shelf-stage-beam" aria-hidden="true"></div>
           <div class="shelf-edge-cue shelf-edge-cue-left" aria-hidden="true"><span>Browse</span><b>←</b></div>
           <div class="shelf-edge-cue shelf-edge-cue-right" aria-hidden="true"><span>Browse</span><b>→</b></div>
-          <div class="living-shelf-camera" data-shelf-camera tabindex="0" aria-label="Book carousel. Use the left and right arrow keys, drag, or swipe to browse.">
+          <div class="living-shelf-camera" data-shelf-camera tabindex="0" aria-describedby="shelf-interaction-hint" aria-label="Book carousel. Use the left and right arrow keys, drag, or swipe to browse.">
             <div class="shelf-wood-shelf-wrap" aria-hidden="true">
               <img class="shelf-wood-shelf" src="/assets/living-shelf-walnut.webp?v=20260908shelf16" alt="" draggable="false" decoding="async">
             </div>
@@ -87,7 +87,7 @@
               </div>
             </noscript>
           </div>
-          <p class="living-shelf-hint" data-shelf-hint><span aria-hidden="true">↔</span> Drag to explore the shelf</p>
+          <p class="living-shelf-hint" id="shelf-interaction-hint" data-shelf-hint><span class="shelf-hint-icon" aria-hidden="true">↔</span> Drag to explore the shelf</p>
         </div>
 
         <div class="living-shelf-console">
@@ -133,7 +133,7 @@
     </footer>
 
     <script src="/assets/catalog-data.js?v=20260907shelf2"></script>
-    <script src="/assets/catalog-pages.js?v=20260908shelf12"></script>
+    <script src="/assets/catalog-pages.js?v=20260908mobile1"></script>
     <script src="/assets/site-shell.js?v=20260907shelf2"></script>
   </body>
 </html>
