@@ -94,6 +94,7 @@
           aria-label="Explore ${escapeHTML(book.title)}, book ${index + 1} of ${books.length}"
           draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-spine-rail:${visual.spineRail || visualDefaults.spineRail};--book-spine-foil:${visual.spineFoil || visualDefaults.spineFoil};--book-glow:${visual.glow}">
           <span class="shelf-book-object" aria-hidden="true">
+            <span class="shelf-book-paper-block"></span>
             <span class="shelf-book-face shelf-book-front">${front}</span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-left"><span>${name}</span></span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-right"><span>${name}</span></span>
