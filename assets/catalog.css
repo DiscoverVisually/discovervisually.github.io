@@ -15,9 +15,9 @@ a { color:inherit; text-decoration:none; }
   --shelf-book-height:clamp(300px,46svh,510px);
   --shelf-book-width:clamp(225px,34.5svh,382.5px);
   --shelf-book-half-width:clamp(112.5px,17.25svh,191.25px);
-  --shelf-book-depth:clamp(19px,1.65vw,28px);
-  --shelf-book-half-depth:clamp(9.5px,.825vw,14px);
-  --shelf-spine-width:clamp(31px,2.15vw,37px);
+  --shelf-book-depth:clamp(22px,1.9vw,32px);
+  --shelf-book-half-depth:clamp(11px,.95vw,16px);
+  --shelf-spine-width:clamp(44px,2.8vw,54px);
   position:relative;
   z-index:1;
   min-height:calc(100svh - 76px);
@@ -214,6 +214,22 @@ a { color:inherit; text-decoration:none; }
   transform:scale(1.02);
   transition:opacity .9s,background .9s,filter .9s;
   animation:shelf-color-drift 18s ease-in-out infinite alternate;
+}
+.shelf-stage-spectrum {
+  position:absolute;
+  z-index:0;
+  inset:-18% -14%;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 42% 36% at 50% 40%,rgba(255,62,211,.16),transparent 70%),
+    radial-gradient(ellipse 58% 32% at 50% 76%,rgba(35,201,255,.13),transparent 77%),
+    radial-gradient(circle at 50% 30%,rgba(151,103,255,.12),transparent 45%);
+  opacity:.58;
+  filter:blur(38px) saturate(1.48) hue-rotate(-18deg);
+  mix-blend-mode:screen;
+  transform:scale(1.03);
+  will-change:filter,opacity,transform;
+  animation:shelf-spectrum-cycle 72s ease-in-out infinite;
 }
 .shelf-stage-beam {
   position:absolute;
@@ -535,12 +551,21 @@ a { color:inherit; text-decoration:none; }
 .shelf-book-spine-card span {
   position:relative;
   z-index:2;
-  max-height:84%;
-  padding:10px 4px;
+  width:82%;
+  height:88%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  max-height:88%;
+  padding:9px 6px;
   overflow:hidden;
+  color:var(--book-spine-ink,#f8e6ae);
+  background:linear-gradient(90deg,var(--book-spine-rail,rgba(2,9,16,.62)),rgba(2,9,16,.18) 50%,var(--book-spine-rail,rgba(2,9,16,.62)));
+  border-inline:1px solid var(--book-spine-foil,rgba(255,255,255,.48));
+  border-radius:2px;
   writing-mode:vertical-rl;
   transform:rotate(180deg);
-  text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 7px rgba(0,0,0,.55);
+  text-shadow:0 1px 2px rgba(0,0,0,.98),0 0 5px rgba(0,0,0,.72);
 }
 .shelf-book-edge span { display:none; }
 .shelf-book-edge-left { transform:translate(-50%,-50%) rotateY(-90deg) translateZ(var(--shelf-book-half-width)); }
@@ -560,15 +585,16 @@ a { color:inherit; text-decoration:none; }
   opacity:var(--shelf-spine-opacity);
   color:var(--book-spine-ink,#f8e6ae);
   background:
-    linear-gradient(90deg,rgba(0,0,0,.52),rgba(255,255,255,.08) 23%,rgba(255,255,255,.2) 49%,rgba(255,255,255,.07) 66%,rgba(0,0,0,.48)),
+    linear-gradient(90deg,rgba(0,0,0,.64),rgba(255,255,255,.06) 23%,rgba(255,255,255,.13) 49%,rgba(255,255,255,.05) 66%,rgba(0,0,0,.58)),
     linear-gradient(180deg,rgba(255,255,255,.13),transparent 12%,transparent 88%,rgba(0,0,0,.28)),
     var(--book-spine);
-  border:1px solid rgba(255,255,255,.34);
-  border-block-color:color-mix(in srgb,var(--book-accent) 72%,white 28%);
-  box-shadow:inset 1px 0 rgba(255,255,255,.2),inset -2px 0 5px rgba(0,0,0,.38),8px 22px 35px rgba(0,0,0,.42);
-  font-size:clamp(8px,.68vw,10px);
+  border:1px solid var(--book-spine-foil,rgba(255,255,255,.48));
+  border-block-color:var(--book-spine-foil,rgba(255,255,255,.48));
+  box-shadow:inset 1px 0 rgba(255,255,255,.24),inset -2px 0 6px rgba(0,0,0,.46),8px 22px 35px rgba(0,0,0,.48);
+  font-size:clamp(9px,.78vw,12px);
   font-weight:900;
-  letter-spacing:.105em;
+  letter-spacing:.075em;
+  line-height:1.02;
   text-align:center;
   text-transform:uppercase;
   transform:translate(-50%,-50%) translateZ(42px);
@@ -580,10 +606,10 @@ a { color:inherit; text-decoration:none; }
   content:"";
   position:absolute;
   z-index:1;
-  inset:9px 3px;
-  border-block:1px solid color-mix(in srgb,var(--book-accent) 68%,white 32%);
-  background:linear-gradient(90deg,rgba(0,0,0,.24),rgba(0,0,0,.04) 48%,rgba(0,0,0,.2));
-  box-shadow:0 -1px rgba(0,0,0,.38),0 1px rgba(255,255,255,.12);
+  inset:7px 4px;
+  border-block:1px solid var(--book-spine-foil,rgba(255,255,255,.48));
+  background:linear-gradient(90deg,var(--book-spine-rail,rgba(0,0,0,.42)),transparent 48%,var(--book-spine-rail,rgba(0,0,0,.42)));
+  box-shadow:0 -1px rgba(0,0,0,.42),0 1px rgba(255,255,255,.14);
   pointer-events:none;
 }
 .shelf-book-spine-card::after {
@@ -602,10 +628,53 @@ a { color:inherit; text-decoration:none; }
 }
 .shelf-book[data-shelf-view="spine"] { width:var(--shelf-spine-width); }
 .shelf-book[data-shelf-view="spine"].is-shelf-visible .shelf-book-spine-card { pointer-events:auto; }
+.shelf-book[data-shelf-view="spine"] .shelf-book-quick { display:none; }
 .shelf-book[data-shelf-view="spine"]:hover .shelf-book-spine-card,
 .shelf-book[data-shelf-view="spine"]:focus-visible .shelf-book-spine-card {
-  filter:brightness(1.16);
+  filter:brightness(1.22) drop-shadow(0 9px 14px rgba(0,0,0,.28));
   transform:translate(-50%,-50%) translateY(-7px) translateZ(48px);
+}
+.shelf-book-spine-label {
+  position:absolute;
+  z-index:12;
+  left:50%;
+  top:-31px;
+  min-width:max-content;
+  padding:7px 9px 6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  opacity:0;
+  color:#fffaf0;
+  background:rgba(4,11,18,.94);
+  border:1px solid color-mix(in srgb,var(--book-accent) 66%,white 34%);
+  box-shadow:0 12px 24px rgba(0,0,0,.32),0 0 18px color-mix(in srgb,var(--book-glow) 72%,transparent);
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  transform:translate(-50%,8px) translateZ(75px);
+  transition:opacity .28s,transform .45s cubic-bezier(.2,.72,.2,1);
+  pointer-events:none;
+  white-space:nowrap;
+}
+.shelf-book-spine-label::after {
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-4px;
+  width:7px;
+  height:7px;
+  background:rgba(4,11,18,.94);
+  border-right:1px solid color-mix(in srgb,var(--book-accent) 66%,white 34%);
+  border-bottom:1px solid color-mix(in srgb,var(--book-accent) 66%,white 34%);
+  transform:translateX(-50%) rotate(45deg);
+}
+.shelf-book-spine-label b { color:var(--book-accent); font-size:11px; }
+.shelf-book[data-shelf-view="spine"]:hover .shelf-book-spine-label,
+.shelf-book[data-shelf-view="spine"]:focus-visible .shelf-book-spine-label {
+  opacity:1;
+  transform:translate(-50%,0) translateZ(75px);
 }
 
 @keyframes shelf-spine-glint {
@@ -635,6 +704,13 @@ a { color:inherit; text-decoration:none; }
   0% { opacity:.56; transform:translate3d(-1%,0,0) scale(1.01); filter:blur(30px) saturate(1.16) hue-rotate(-6deg); }
   50% { opacity:.78; }
   100% { opacity:.68; transform:translate3d(1%,-.6%,0) scale(1.05); filter:blur(34px) saturate(1.36) hue-rotate(7deg); }
+}
+@keyframes shelf-spectrum-cycle {
+  0%,100% { opacity:.42; filter:blur(38px) saturate(1.3) hue-rotate(-18deg); transform:translate3d(-.6%,0,0) scale(1.02); }
+  20% { opacity:.58; filter:blur(40px) saturate(1.5) hue-rotate(18deg); transform:translate3d(.4%,-.4%,0) scale(1.04); }
+  42% { opacity:.5; filter:blur(42px) saturate(1.58) hue-rotate(72deg); transform:translate3d(1%,.3%,0) scale(1.06); }
+  64% { opacity:.62; filter:blur(39px) saturate(1.46) hue-rotate(121deg); transform:translate3d(-.4%,.8%,0) scale(1.04); }
+  84% { opacity:.48; filter:blur(41px) saturate(1.52) hue-rotate(163deg); transform:translate3d(-1%,-.2%,0) scale(1.05); }
 }
 @keyframes shelf-beam-float {
   0% { transform:translateX(-.7%) scale(1,.98); opacity:.48; }
@@ -1033,7 +1109,7 @@ a { color:inherit; text-decoration:none; }
     --shelf-book-height:clamp(290px,43svh,445px);
     --shelf-book-width:clamp(217.5px,32.25svh,333.75px);
     --shelf-book-half-width:clamp(108.75px,16.125svh,166.875px);
-    --shelf-spine-width:clamp(29px,2.8vw,34px);
+    --shelf-spine-width:clamp(38px,3.8vw,46px);
   }
   .living-shelf-head { grid-template-columns:minmax(0,1fr) minmax(350px,.95fr); gap:38px; }
   .living-shelf-heading h1 { font-size:clamp(41px,5.5vw,61px); }
@@ -1075,7 +1151,7 @@ a { color:inherit; text-decoration:none; }
     --shelf-book-height:clamp(270px,40svh,350px);
     --shelf-book-width:clamp(202.5px,30svh,262.5px);
     --shelf-book-half-width:clamp(101.25px,15svh,131.25px);
-    --shelf-spine-width:25px;
+    --shelf-spine-width:clamp(32px,8.5vw,38px);
     min-height:calc(100svh - 68px);
     grid-template-rows:auto minmax(305px,1fr) auto;
     gap:10px;
@@ -1103,6 +1179,11 @@ a { color:inherit; text-decoration:none; }
   }
   .shelf-stage-color-wash {
     inset:-6% -22%;
+  }
+  .shelf-stage-spectrum {
+    inset:-8% -28%;
+    opacity:.46;
+    filter:blur(32px) saturate(1.32) hue-rotate(-18deg);
   }
   .shelf-stage-beam {
     width:82vw;

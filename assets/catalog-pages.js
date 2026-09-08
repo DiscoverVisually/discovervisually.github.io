@@ -52,12 +52,20 @@
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
     const twoDigits = (value) => String(value).padStart(2, "0");
-    const visualDefaults = { accent:"#d4b06c", spine:"#1c3a50", spineInk:"#fff1bd", glow:"rgba(190,139,67,.36)" };
+    const visualDefaults = {
+      accent:"#d4b06c",
+      spine:"#182d42",
+      spineInk:"#fff3c8",
+      spineRail:"rgba(2,9,16,.62)",
+      spineFoil:"rgba(255,241,189,.7)",
+      glow:"rgba(190,139,67,.36)",
+      spotlight:{hue:38,saturation:78,lightness:58,alpha:.32}
+    };
     const bookVisuals = {
-      "romantasy-yearbook": { accent:"#e3a9c9", spine:"#702b5d", spineInk:"#fff5fb", glow:"rgba(198,82,155,.34)" },
-      "abraham-lincoln": { accent:"#d9b568", spine:"#173e68", spineInk:"#ffe7a3", glow:"rgba(194,148,71,.34)" },
-      "hindenburg": { accent:"#dca34c", spine:"#28536a", spineInk:"#ffe3a4", glow:"rgba(206,111,45,.34)" },
-      "pompeii": { accent:"#e37950", spine:"#713124", spineInk:"#fff3dc", glow:"rgba(206,76,43,.36)" }
+      "romantasy-yearbook": { accent:"#f0b2d8", spine:"#5a1d55", spineInk:"#fff7fb", spineRail:"rgba(24,5,26,.64)", spineFoil:"rgba(255,214,247,.92)", glow:"rgba(198,82,155,.34)", spotlight:{hue:318,saturation:76,lightness:58,alpha:.3} },
+      "abraham-lincoln": { accent:"#e2bd70", spine:"#10345d", spineInk:"#fff0bc", spineRail:"rgba(2,14,31,.66)", spineFoil:"rgba(255,228,155,.88)", glow:"rgba(194,148,71,.34)", spotlight:{hue:212,saturation:76,lightness:56,alpha:.29} },
+      "hindenburg": { accent:"#e7b35e", spine:"#1c5268", spineInk:"#fff1c1", spineRail:"rgba(2,19,29,.64)", spineFoil:"rgba(188,244,255,.9)", glow:"rgba(206,111,45,.34)", spotlight:{hue:190,saturation:78,lightness:54,alpha:.3} },
+      "pompeii": { accent:"#ef8c67", spine:"#67251f", spineInk:"#fff6e3", spineRail:"rgba(29,5,5,.66)", spineFoil:"rgba(255,218,175,.9)", glow:"rgba(206,76,43,.36)", spotlight:{hue:18,saturation:82,lightness:55,alpha:.32} }
     };
 
     shelf.classList.toggle("has-archive-fillers", books.length < 8);
@@ -84,13 +92,14 @@
       return `
         <a class="shelf-book" href="${escapeHTML(book.url)}" data-shelf-index="${index}"
           aria-label="Explore ${escapeHTML(book.title)}, book ${index + 1} of ${books.length}"
-          draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-glow:${visual.glow}">
+          draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-spine-rail:${visual.spineRail || visualDefaults.spineRail};--book-spine-foil:${visual.spineFoil || visualDefaults.spineFoil};--book-glow:${visual.glow}">
           <span class="shelf-book-object" aria-hidden="true">
             <span class="shelf-book-face shelf-book-front">${front}</span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-left"><span>${name}</span></span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-right"><span>${name}</span></span>
           </span>
           <span class="shelf-book-spine-card" aria-hidden="true"><span>${name}</span></span>
+          <span class="shelf-book-spine-label" aria-hidden="true">${name}<b aria-hidden="true">↗</b></span>
           ${reflection}
           <span class="shelf-book-quick" aria-hidden="true"><span>Explore ${name}</span><b>↗</b></span>
         </a>`;
@@ -115,6 +124,70 @@
     let drag = null;
     let suppressClicksUntil = 0;
     const prefetched = new Set();
+    let spotlightFrame = 0;
+    let currentSpotlight = null;
+
+    const setShelfDensity = () => {
+      const mobile = narrowScreen.matches;
+      const density = books.length > 14 ? "tight" : books.length > 8 ? "compact" : "roomy";
+      const widths = mobile
+        ? { roomy:"clamp(32px,8.5vw,38px)", compact:"clamp(30px,7.5vw,35px)", tight:"clamp(28px,6.8vw,32px)" }
+        : { roomy:"clamp(44px,2.8vw,54px)", compact:"clamp(38px,2.45vw,47px)", tight:"clamp(34px,2.2vw,42px)" };
+      shelf.style.setProperty("--shelf-spine-width", widths[density]);
+      shelf.dataset.shelfDensity = density;
+    };
+
+    const formatSpotlight = ({ hue, saturation, lightness, alpha }) =>
+      `hsl(${((hue % 360) + 360) % 360} ${saturation.toFixed(1)}% ${lightness.toFixed(1)}% / ${alpha.toFixed(3)})`;
+
+    const applySpotlightColor = (color) => {
+      shelf.style.setProperty("--shelf-glow", formatSpotlight(color));
+      shelf.style.setProperty("--shelf-spotlight-hue", `${color.hue.toFixed(1)}deg`);
+    };
+
+    const setSpotlight = (visual, immediate = false) => {
+      const target = { ...(visual.spotlight || visualDefaults.spotlight) };
+      const same = currentSpotlight && ["hue", "saturation", "lightness", "alpha"]
+        .every((key) => Math.abs(currentSpotlight[key] - target[key]) < .01);
+      cancelAnimationFrame(spotlightFrame);
+      spotlightFrame = 0;
+      if (same) {
+        applySpotlightColor(currentSpotlight);
+        return;
+      }
+      if (!currentSpotlight || immediate || reducedMotion.matches) {
+        currentSpotlight = target;
+        applySpotlightColor(currentSpotlight);
+        return;
+      }
+      const start = { ...currentSpotlight };
+      const hueDelta = ((target.hue - start.hue + 540) % 360) - 180;
+      const startedAt = performance.now();
+      const duration = 2400;
+      const easeInOut = (value) => value < .5
+        ? 2 * value * value
+        : 1 - Math.pow(-2 * value + 2, 2) / 2;
+      const tick = (now) => {
+        const progress = clamp((now - startedAt) / duration, 0, 1);
+        const eased = easeInOut(progress);
+        currentSpotlight = {
+          hue:start.hue + hueDelta * eased,
+          saturation:mix(start.saturation, target.saturation, eased),
+          lightness:mix(start.lightness, target.lightness, eased),
+          alpha:mix(start.alpha, target.alpha, eased)
+        };
+        applySpotlightColor(currentSpotlight);
+        if (progress < 1) spotlightFrame = requestAnimationFrame(tick);
+        else {
+          currentSpotlight = target;
+          applySpotlightColor(currentSpotlight);
+          spotlightFrame = 0;
+        }
+      };
+      spotlightFrame = requestAnimationFrame(tick);
+    };
+
+    setShelfDensity();
 
     const slotGeometry = (distance) => {
       const mobile = narrowScreen.matches;
@@ -134,8 +207,8 @@
         ? Math.min(layoutWidth * .47, 205)
         : clamp(layoutWidth * .325, 330, 520);
       const spinePitch = mobile
-        ? clamp(layoutWidth * .064, 23, 29)
-        : clamp(layoutWidth * .028, 35, 44);
+        ? clamp(layoutWidth * (books.length > 12 ? .058 : .064), 23, 31)
+        : clamp(layoutWidth * (books.length > 12 ? .03 : .032), 38, 50);
       let geometry;
 
       if (absolute <= 1) {
@@ -277,7 +350,7 @@
         .map((id) => collections[id] ? `<a href="${collections[id].url}">${collections[id].name}</a>` : "")
         .join("");
       shelf.style.setProperty("--shelf-accent", visual.accent);
-      shelf.style.setProperty("--shelf-glow", visual.glow);
+      setSpotlight(visual, !currentSpotlight);
       shelf.dataset.activeBook = book.id;
       if (announce) live.textContent = `${book.title}. Book ${index + 1} of ${books.length}.`;
       window.requestAnimationFrame(() => shelf.classList.remove("is-copy-changing"));
@@ -531,10 +604,21 @@
     exploreLink.addEventListener("click", () => rememberBook(books[activeIndex]));
     stage.addEventListener("pointerleave", clearEdgeMovement);
     window.addEventListener("blur", clearEdgeMovement);
-    reducedMotion.addEventListener?.("change", clearEdgeMovement);
+    reducedMotion.addEventListener?.("change", () => {
+      clearEdgeMovement();
+      if (!reducedMotion.matches || !spotlightFrame) return;
+      cancelAnimationFrame(spotlightFrame);
+      spotlightFrame = 0;
+      const visual = bookVisuals[books[activeIndex].id] || visualDefaults;
+      currentSpotlight = { ...(visual.spotlight || visualDefaults.spotlight) };
+      applySpotlightColor(currentSpotlight);
+    });
     window.addEventListener("resize", () => {
       cancelAnimationFrame(resizeFrame);
-      resizeFrame = window.requestAnimationFrame(() => renderPosition(visualPosition));
+      resizeFrame = window.requestAnimationFrame(() => {
+        setShelfDensity();
+        renderPosition(visualPosition);
+      });
     }, { passive:true });
 
     if (!finePointer.matches && hint) hint.innerHTML = '<span aria-hidden="true">↔</span> Swipe or drag to browse';
