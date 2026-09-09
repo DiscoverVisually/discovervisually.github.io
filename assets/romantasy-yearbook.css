@@ -146,21 +146,32 @@ button { color: inherit; }
   --ry-tilt-x: 0;
   --ry-tilt-y: 0;
   position: relative;
-  width: min(350px, 100%);
+  width: min(350px, 48svh, 100%);
   justify-self: center;
   perspective: 1200px;
 }
-.ry-cover-stage img {
+.ry-cover-art {
   position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  transform: rotateY(calc(-4deg + var(--ry-tilt-x) * 2deg)) rotateX(calc(var(--ry-tilt-y) * -1.5deg)) rotateZ(.8deg);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 520ms cubic-bezier(.2,.7,.2,1);
+}
+.ry-cover-stage img {
+  position: absolute;
+  inset: 0;
   z-index: 2;
   width: 100%;
-  aspect-ratio: 767 / 1024;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 2px 7px 7px 2px;
   box-shadow: 32px 38px 75px rgba(0,0,0,.56), -2px 0 0 rgba(255,255,255,.18);
-  transform: rotateY(calc(-8deg + var(--ry-tilt-x) * 3deg)) rotateX(calc(var(--ry-tilt-y) * -2deg)) rotateZ(1.2deg);
-  transform-origin: center;
-  transition: transform 260ms ease-out, filter 500ms ease;
+  transition: filter 500ms ease;
 }
 .ry-cover-stage:hover img { filter: brightness(1.04); }
 .ry-cover-pages {
@@ -172,11 +183,10 @@ button { color: inherit; }
   width: 18px;
   border-radius: 0 6px 6px 0;
   background: repeating-linear-gradient(90deg, #d7cfbf 0 1px, #fbf4e6 1px 3px);
-  transform: rotateZ(1.2deg);
   box-shadow: 18px 20px 38px rgba(0,0,0,.35);
 }
 .ry-cover-glow { position: absolute; inset: 12% -22% 2%; background: rgba(23,123,92,.34); filter: blur(58px); border-radius: 50%; }
-.ry-cover-stage > small { display: block; margin-top: 24px; color: rgba(255,255,255,.42); text-align: center; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+.ry-cover-stage > small { display: block; margin-top: 20px; color: rgba(255,255,255,.42); text-align: center; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 
 .ry-facts { color: #173028; background: linear-gradient(105deg, #d8b365, #f0da9f 52%, #c99648); }
 .ry-facts .ry-shell { display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -319,7 +329,7 @@ button { color: inherit; }
   .ry-hero { min-height: auto; }
   .ry-hero-grid { grid-template-columns: 1fr .62fr; gap: 38px; padding-block: 64px; }
   .ry-hero h1 { font-size: clamp(54px, 8.5vw, 82px); }
-  .ry-cover-stage { width: min(310px, 100%); }
+  .ry-cover-stage { width: min(310px, 48svh, 100%); }
   .ry-section-head { grid-template-columns: 1fr; gap: 25px; }
   .ry-feature-grid { grid-template-columns: 1fr; }
   .ry-feature-grid article { min-height: auto; }
@@ -336,7 +346,7 @@ button { color: inherit; }
   .ry-book-nav-title strong { font-size: 14px; }
   .ry-book-nav-buy { min-height: 34px; padding-inline: 11px; }
   .ry-hero-grid { grid-template-columns: 1fr; padding: 44px 0 62px; }
-  .ry-cover-stage { order: -1; width: min(62vw, 270px); }
+  .ry-cover-stage { order: -1; width: min(62vw, 270px, 42svh); }
   .ry-cover-stage > small { display: none; }
   .ry-hero-copy { text-align: center; }
   .ry-eyebrow { justify-content: center; }
@@ -375,7 +385,7 @@ button { color: inherit; }
 }
 
 @media (hover: none), (pointer: coarse) {
-  .ry-cover-stage img { transform: rotateY(-6deg) rotateZ(1deg); }
+  .ry-cover-art { transform: rotateY(-4deg) rotateZ(.8deg); }
   .ry-cover-stage > small { display: none; }
 }
 
@@ -524,7 +534,7 @@ button { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .ry-page *, .ry-page *::before, .ry-page *::after { transition: none !important; }
-  .ry-cover-stage img { transform: rotateY(-6deg) rotateZ(1deg); }
+  .ry-cover-art { transform: rotateY(-4deg) rotateZ(.8deg); }
 }
 
 /* September 2026: final viewport-fit audit for the Romantasy viewer. */
