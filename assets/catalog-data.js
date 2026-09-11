@@ -58,6 +58,22 @@ window.DV_BOOKS = [
     collections: ["history", "children"],
     topic: "Ancient History",
     series: "History Hunters"
+  },
+  {
+    id: "alcatraz",
+    title: "I Worked at Alcatraz",
+    shortTitle: "Alcatraz",
+    url: "/books/i-worked-at-alcatraz.html",
+    cover: "/books/alcatraz-cover.webp",
+    status: "Available now",
+    format: "Immersive full-color prison history",
+    audience: "Ages 10+",
+    description: "Step inside America’s most famous prison, reconstruct the 1962 escape and examine the clues behind its unsolved mystery.",
+    primaryCollection: "history",
+    collections: ["history", "children"],
+    carouselOnly: true,
+    topic: "Alcatraz & Unsolved History",
+    series: "History Hunters"
   }
 ];
 

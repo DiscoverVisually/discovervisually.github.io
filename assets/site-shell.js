@@ -20,6 +20,7 @@
     "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History Hunters", url: "/collections/history/" },
     "/books/hindenburg-the-final-flight.html": { title: "Hindenburg", collection: "History Hunters", url: "/collections/history/" },
     "/books/i-worked-for-abraham-lincoln.html": { title: "Abraham Lincoln", collection: "History Hunters", url: "/collections/history/" },
+    "/books/i-worked-at-alcatraz.html": { title: "Alcatraz", collection: "History Hunters", url: "/collections/history/" },
     "/books/the-ultimate-romantasy-yearbook.html": { title: "Romantasy Yearbook", collection: "Romantasy", url: "/collections/romantasy/" }
   };
   if (bookTitles[location.pathname]) {

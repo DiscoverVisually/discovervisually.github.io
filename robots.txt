@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://discovervisually.github.io/sitemap.xml

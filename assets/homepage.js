@@ -37,7 +37,7 @@ const featuredBooks = [
     kicker: "Ancient history · Ages 8–12",
     spotlightTitle: "The ancient world, made immediate.",
     spread: "/assets/spread-pompeii.webp"
-  }
+  },
 ];
 
 const menuButton = document.querySelector("[data-menu-button]");

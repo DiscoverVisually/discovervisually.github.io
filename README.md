@@ -12,6 +12,7 @@ The deployment publishes only:
 
 - `index.html`
 - `favicon.svg`
+- `robots.txt` and `sitemap.xml`
 - `assets/`
 - `books/`
 - `collections/`

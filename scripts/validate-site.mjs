@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const publishRoots = ["index.html", "404.html", "favicon.svg", "assets", "books", "collections", "about", "privacy", "reader-list"];
-const textExtensions = new Set([".css", ".html", ".js", ".svg"]);
+const publishRoots = ["index.html", "404.html", "favicon.svg", "robots.txt", "sitemap.xml", "assets", "books", "collections", "about", "privacy", "reader-list"];
+const textExtensions = new Set([".css", ".html", ".js", ".svg", ".txt", ".xml"]);
 const files = [];
 
 function collect(relativePath) {

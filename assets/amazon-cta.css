@@ -1,0 +1,77 @@
+/* One hero purchase treatment for every book page. The book identity stays in
+   each page's palette; the buying action stays recognisable. */
+.dv-amazon-hero {
+  width: min(100%, 340px);
+  min-height: 64px;
+  padding: 6px 12px 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #18212a !important;
+  background: #f3c765;
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .25);
+  transition: transform .25s, background .25s, box-shadow .25s;
+}
+
+.dv-amazon-hero:hover {
+  background: #ffd67d;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .32);
+}
+
+.dv-amazon-hero:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+
+.dv-amazon-hero .pm-amazon-badge {
+  width: 94px;
+  height: 47px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.dv-amazon-hero .pm-amazon-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.dv-amazon-hero .pm-amazon-copy small {
+  opacity: .62;
+  margin: 0;
+  color: inherit;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.dv-amazon-hero .pm-amazon-copy strong {
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.dv-amazon-hero > b {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(24, 33, 42, .28);
+  color: inherit;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+@media (max-width: 720px) {
+  .dv-amazon-hero {
+    width: 100%;
+    min-height: 58px;
+  }
+}
