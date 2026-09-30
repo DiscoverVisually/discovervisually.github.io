@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>All Books — Discover Visually</title>
-    <meta name="description" content="Browse every immersive visual book from Discover Visually on the Living Shelf, including the Romantasy Yearbook and the History Hunters series.">
+    <meta name="description" content="Browse every immersive visual book from Discover Visually on the Living Shelf, including CUT OPEN!, New York City Through Time, Romantasy and all four History Hunters books.">
     <link rel="canonical" href="https://discovervisually.github.io/books/">
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/assets/site-shell.css?v=20260930ui2">
-    <link rel="stylesheet" href="/assets/catalog.css?v=20260930ui2">
+    <link rel="stylesheet" href="/assets/catalog.css?v=20260930shelf1">
+    <link rel="stylesheet" href="/assets/amazon-cta.css?v=20260930shelf1">
   </head>
   <body class="books-catalog-page">
     <a class="dv-skip" href="#living-shelf">Skip to the book carousel</a>
@@ -31,18 +32,19 @@
     </header>
 
     <main id="catalog">
-      <section class="living-shelf" id="living-shelf" data-living-shelf role="region" aria-labelledby="living-shelf-title" aria-roledescription="carousel">
+      <section class="living-shelf shelf-cinematic" id="living-shelf" data-living-shelf role="region" aria-labelledby="living-shelf-title" aria-roledescription="carousel">
+        <div class="shelf-worlds" data-shelf-worlds aria-hidden="true"></div>
         <div class="living-shelf-grain" aria-hidden="true"></div>
         <div class="living-shelf-orbit living-shelf-orbit-one" aria-hidden="true"></div>
         <div class="living-shelf-orbit living-shelf-orbit-two" aria-hidden="true"></div>
 
         <header class="living-shelf-head">
           <div class="living-shelf-heading">
-            <p class="catalog-kicker">The Discover Visually catalogue</p><nav class="catalog-view-links" aria-label="Catalogue views"><a href="#living-shelf">Shelf</a><a href="#book-grid">Grid</a></nav>
+            <p class="catalog-kicker">Seven books. Worlds worth entering.</p><nav class="catalog-view-links" aria-label="Catalogue views"><a href="#book-grid">Browse the grid ↗</a></nav>
             <h1 id="living-shelf-title">Meet the <em>Living Shelf.</em></h1>
           </div>
           <div class="living-shelf-intro">
-            <p>Move through every current visual book. Bring a world to the centre, then enter it.</p>
+            <p>Find the book that sparks their curiosity—or yours. Explore real pages, then make it part of your shelf.</p>
             <nav class="living-shelf-collections" aria-label="Browse by collection">
               <a aria-current="page" href="/books/">All books</a>
               <a href="/collections/children/">For Children</a>
@@ -68,16 +70,6 @@
             <div class="shelf-wood-shelf-wrap" aria-hidden="true">
               <img class="shelf-wood-shelf" src="/assets/living-shelf-walnut.webp?v=20260908shelf16" alt="" draggable="false" decoding="async">
             </div>
-            <div class="shelf-archive-wing shelf-archive-wing-left" aria-hidden="true">
-              <span style="--archive-color:#132a3c;--archive-height:84%"></span>
-              <span style="--archive-color:#493044;--archive-height:91%"></span>
-              <span style="--archive-color:#6f4a32;--archive-height:79%"></span>
-            </div>
-            <div class="shelf-archive-wing shelf-archive-wing-right" aria-hidden="true">
-              <span style="--archive-color:#5a2b31;--archive-height:82%"></span>
-              <span style="--archive-color:#20384b;--archive-height:89%"></span>
-              <span style="--archive-color:#72502f;--archive-height:76%"></span>
-            </div>
             <div class="living-shelf-track" data-shelf-track></div>
             <noscript>
               <div class="shelf-noscript" aria-label="All Discover Visually books">
@@ -94,23 +86,24 @@
           <p class="living-shelf-hint" id="shelf-interaction-hint" data-shelf-hint><span class="shelf-hint-icon" aria-hidden="true">↔</span> Drag to explore the shelf</p>
         </div>
 
+        <div class="shelf-navigation" role="group" aria-label="Carousel controls">
+          <button class="shelf-arrow shelf-arrow-previous" type="button" data-shelf-previous aria-label="Previous book"><span aria-hidden="true">←</span></button>
+          <div class="shelf-pagination" data-shelf-pagination role="group" aria-label="Choose from all seven books"></div>
+          <button class="shelf-arrow shelf-arrow-next" type="button" data-shelf-next aria-label="Next book"><span aria-hidden="true">→</span></button>
+        </div>
         <div class="living-shelf-console">
-          <div class="shelf-active-book" data-shelf-copy>
-            <p class="shelf-counter"><small><i class="shelf-focus-dot" aria-hidden="true"></i>Current volume</small><span data-shelf-current>02</span><i>/</i><span data-shelf-total>07</span></p>
-            <h2 data-shelf-title>Abraham Lincoln</h2>
+          <div class="shelf-active-book">
+            <p class="shelf-counter"><small>Selected book</small><span data-shelf-current>01</span><i>/</i><span data-shelf-total>07</span><span class="shelf-available">Available now</span></p>
+            <h2 data-shelf-title data-shelf-copy>Romantasy Yearbook</h2>
             <div class="shelf-collection-tags" data-shelf-collections aria-label="Book collections"></div>
           </div>
-
-          <div class="shelf-navigation" role="group" aria-label="Carousel controls">
-            <button class="shelf-arrow shelf-arrow-previous" type="button" data-shelf-previous aria-label="Previous book"><span aria-hidden="true">←</span></button>
-            <div class="shelf-pagination" data-shelf-pagination role="group" aria-label="Choose a book"></div>
-            <button class="shelf-arrow shelf-arrow-next" type="button" data-shelf-next aria-label="Next book"><span aria-hidden="true">→</span></button>
+          <div class="shelf-book-summary">
+            <p data-shelf-description data-shelf-copy>Map the books, tropes and reader obsessions behind fantasy romance.</p>
+            <div class="shelf-book-meta"><span data-shelf-audience>Romantasy readers</span><i></i><span data-shelf-format>100 illustrated pages</span></div>
           </div>
-
-          <div class="shelf-book-summary" data-shelf-copy>
-            <p data-shelf-description>Enter Lincoln’s wartime White House through the eyes of a young messenger.</p>
-            <div class="shelf-book-meta"><span data-shelf-audience>Ages 8+</span><i></i><span data-shelf-format>Immersive full-color Civil War history</span></div>
-            <a class="shelf-explore-book" data-shelf-link href="/books/i-worked-for-abraham-lincoln.html">Explore the book <span aria-hidden="true">→</span></a>
+          <div class="shelf-actions">
+            <a class="dv-amazon-hero" data-shelf-amazon href="https://www.amazon.com/dp/B0H517L61P" target="_blank" rel="noopener noreferrer"><img class="pm-amazon-badge" src="https://images-na.ssl-images-amazon.com/images/G/01/rainier/available_at_amazon_1200x600_Nvz5h2M.png" alt="Available at Amazon"><span class="pm-amazon-copy"><small>Full-color paperback</small><strong>View on Amazon</strong></span><b aria-hidden="true">↗</b></a>
+            <a class="shelf-explore-book" data-shelf-link href="/books/the-ultimate-romantasy-yearbook.html#inside">See inside <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <p class="dv-sr-only" data-shelf-live aria-live="polite"></p>
@@ -131,8 +124,8 @@
       <div class="dv-footer-bottom"><span>© 2026 Discover Visually</span><span>Research · Storytelling · Visual craft</span></div>
     </footer>
 
-    <script src="/assets/catalog-data.js?v=20260930ui2"></script>
-    <script src="/assets/catalog-pages.js?v=20260930ui2"></script>
+    <script src="/assets/catalog-data.js?v=20260930shelf1"></script>
+    <script src="/assets/catalog-pages.js?v=20260930shelf1"></script>
     <script src="/assets/site-shell.js?v=20260930ui2"></script>
   </body>
 </html>

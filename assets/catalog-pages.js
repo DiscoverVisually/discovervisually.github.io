@@ -41,8 +41,6 @@
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const narrowScreen = window.matchMedia("(max-width: 700px)");
     const storageKey = "dv-living-shelf-book";
-    const hintKey = "dv-living-shelf-hint-seen";
-    const defaultIndex = Math.min(1, books.length - 1);
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
     const mix = (start, end, progress) => start + (end - start) * progress;
     const escapeHTML = (value) => String(value)
@@ -71,26 +69,21 @@
       "alcatraz": { accent:"#ef604d", spine:"#17384f", spineInk:"#fff1cf", spineRail:"rgba(2,13,24,.7)", spineFoil:"rgba(240,210,140,.9)", glow:"rgba(210,63,52,.38)", spotlight:{hue:8,saturation:78,lightness:55,alpha:.32} }
     };
 
-    shelf.classList.toggle("has-archive-fillers", books.length < 8);
-
-    let activeIndex = defaultIndex;
+    const amazonLink = shelf.querySelector('[data-shelf-amazon]');
+    const worlds = shelf.querySelector('[data-shelf-worlds]');
+    let activeIndex = 0;
+    const hashId = new URLSearchParams(location.hash.slice(1)).get('book');
     try {
-      const savedId = sessionStorage.getItem(storageKey);
-      const savedIndex = books.findIndex((book) => book.id === savedId);
-      if (savedIndex >= 0) activeIndex = savedIndex;
-      if (sessionStorage.getItem(hintKey) === "true") {
-        hint?.classList.add("is-dismissed");
-        hint?.setAttribute("aria-hidden", "true");
-      }
-    } catch (_) {
-      // Storage is an enhancement; the shelf works without it.
-    }
+      const id = hashId || sessionStorage.getItem(storageKey);
+      const saved = books.findIndex(book => book.id === id);
+      if (saved >= 0) activeIndex = saved;
+    } catch (_) {}
 
     const bookMarkup = (book, index) => {
       const visual = bookVisuals[book.id] || visualDefaults;
       const name = escapeHTML(book.shortTitle || book.title);
       const front = book.cover
-        ? `<img src="${escapeHTML(book.cover)}" alt="" draggable="false" loading="${Math.abs(index - activeIndex) <= 1 ? "eager" : "lazy"}">`
+        ? `<img src="${escapeHTML(book.cover)}" alt="" draggable="false" loading="eager" decoding="async">`
         : `<span class="dv-catalog-cover-fallback"><small>Discover Visually</small><strong>${name}</strong></span>`;
       const reflection = book.cover
         ? `<span class="shelf-book-reflection" aria-hidden="true"><img src="${escapeHTML(book.cover)}" alt="" draggable="false"></span>`
@@ -98,7 +91,7 @@
       return `
         <a class="shelf-book" href="${escapeHTML(book.url)}" data-shelf-index="${index}"
           aria-label="Explore ${escapeHTML(book.title)}, book ${index + 1} of ${books.length}"
-          draggable="false" style="--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-spine-rail:${visual.spineRail || visualDefaults.spineRail};--book-spine-foil:${visual.spineFoil || visualDefaults.spineFoil};--book-glow:${visual.glow}">
+          draggable="false" style="--shelf-book-width:calc(var(--shelf-book-height) * ${book.coverRatio || .75});--shelf-book-half-width:calc(var(--shelf-book-height) * ${(book.coverRatio || .75)/2});--book-accent:${visual.accent};--book-spine:${visual.spine};--book-spine-ink:${visual.spineInk || visualDefaults.spineInk};--book-spine-rail:${visual.spineRail || visualDefaults.spineRail};--book-spine-foil:${visual.spineFoil || visualDefaults.spineFoil};--book-glow:${visual.glow}">
           <span class="shelf-book-object" aria-hidden="true">
             <span class="shelf-book-paper-block"></span>
             <span class="shelf-book-face shelf-book-front">${front}</span>
@@ -113,680 +106,216 @@
         </a>`;
     };
 
-    track.innerHTML = books.map(bookMarkup).join("");
-    pagination.innerHTML = books.map((book, index) =>
-      `<button type="button" data-shelf-page="${index}" aria-label="Show ${escapeHTML(book.title)}">${index + 1}</button>`
-    ).join("");
 
-    const bookElements = [...track.querySelectorAll("[data-shelf-index]")];
-    const pageButtons = [...pagination.querySelectorAll("[data-shelf-page]")];
-    let visualPosition = activeIndex;
-    let detailTimer = 0;
-    let animationTimer = 0;
-    let resizeFrame = 0;
-    let edgeTimer = 0;
-    let edgeDirection = 0;
-    let edgeIntensity = 0;
-    let prefetchTimer = 0;
-    let wheelTimer = 0;
-    let drag = null;
-    let suppressClicksUntil = 0;
+
+    track.innerHTML = books.map(bookMarkup).join('');
+    pagination.innerHTML = books.map((book, index) => `<button type="button" data-shelf-page="${index}" aria-label="Show ${escapeHTML(book.title)}" aria-pressed="false"><img src="${escapeHTML(book.cover)}" alt="" draggable="false" decoding="async"><span>${escapeHTML(book.shortTitle || book.title)}</span></button>`).join('');
+    const bookElements = [...track.querySelectorAll('[data-shelf-index]')];
+    const pageButtons = [...pagination.querySelectorAll('[data-shelf-page]')];
+    const copy = [...shelf.querySelectorAll('[data-shelf-copy]')];
+    let position = activeIndex, velocity = 0, frame = 0, previousTime = null;
+    let layout = {}, drag = null, suppressClick = 0, wheelTotal = 0, wheelTimer = 0;
+    let sceneVersion = 0, sceneTimer = 0;
     const prefetched = new Set();
-    let spotlightFrame = 0;
-    let currentSpotlight = null;
-    let spotlightMotionFrame = 0;
-    let momentumFrame = 0;
-    const spotlightPointer = {
-      currentX:50,
-      currentY:42,
-      currentOpacity:.72,
-      targetX:50,
-      targetY:42,
-      targetOpacity:.72
-    };
+    const smooth = value => { const x = clamp(value, 0, 1); return x*x*x*(x*(x*6-15)+10); };
 
-    const setShelfDensity = () => {
-      const mobile = narrowScreen.matches;
-      const density = books.length > 14 ? "tight" : books.length > 8 ? "compact" : "roomy";
-      const widths = mobile
-        ? { roomy:"clamp(32px,8.5vw,38px)", compact:"clamp(30px,7.5vw,35px)", tight:"clamp(28px,6.8vw,32px)" }
-        : { roomy:"clamp(44px,2.8vw,54px)", compact:"clamp(38px,2.45vw,47px)", tight:"clamp(34px,2.2vw,42px)" };
-      shelf.style.setProperty("--shelf-spine-width", widths[density]);
-      shelf.dataset.shelfDensity = density;
-    };
-
-    const formatSpotlight = ({ hue, saturation, lightness, alpha }) =>
-      `hsl(${((hue % 360) + 360) % 360} ${saturation.toFixed(1)}% ${lightness.toFixed(1)}% / ${alpha.toFixed(3)})`;
-
-    const applySpotlightColor = (color) => {
-      shelf.style.setProperty("--shelf-glow", formatSpotlight(color));
-      shelf.style.setProperty("--shelf-spotlight-hue", `${color.hue.toFixed(1)}deg`);
-    };
-
-    const setSpotlight = (visual, immediate = false) => {
-      const target = { ...(visual.spotlight || visualDefaults.spotlight) };
-      const same = currentSpotlight && ["hue", "saturation", "lightness", "alpha"]
-        .every((key) => Math.abs(currentSpotlight[key] - target[key]) < .01);
-      cancelAnimationFrame(spotlightFrame);
-      spotlightFrame = 0;
-      if (same) {
-        applySpotlightColor(currentSpotlight);
-        return;
-      }
-      if (!currentSpotlight || immediate || reducedMotion.matches) {
-        currentSpotlight = target;
-        applySpotlightColor(currentSpotlight);
-        return;
-      }
-      const start = { ...currentSpotlight };
-      const hueDelta = ((target.hue - start.hue + 540) % 360) - 180;
-      const startedAt = performance.now();
-      const duration = 2400;
-      const easeInOut = (value) => value < .5
-        ? 2 * value * value
-        : 1 - Math.pow(-2 * value + 2, 2) / 2;
-      const tick = (now) => {
-        const progress = clamp((now - startedAt) / duration, 0, 1);
-        const eased = easeInOut(progress);
-        currentSpotlight = {
-          hue:start.hue + hueDelta * eased,
-          saturation:mix(start.saturation, target.saturation, eased),
-          lightness:mix(start.lightness, target.lightness, eased),
-          alpha:mix(start.alpha, target.alpha, eased)
-        };
-        applySpotlightColor(currentSpotlight);
-        if (progress < 1) spotlightFrame = requestAnimationFrame(tick);
-        else {
-          currentSpotlight = target;
-          applySpotlightColor(currentSpotlight);
-          spotlightFrame = 0;
-        }
-      };
-      spotlightFrame = requestAnimationFrame(tick);
-    };
-
-    const applySpotlightPointer = () => {
-      shelf.style.setProperty("--shelf-spotlight-x", `${spotlightPointer.currentX.toFixed(2)}%`);
-      shelf.style.setProperty("--shelf-spotlight-y", `${spotlightPointer.currentY.toFixed(2)}%`);
-      shelf.style.setProperty("--shelf-spotlight-opacity", spotlightPointer.currentOpacity.toFixed(3));
-    };
-
-    const animateSpotlightPointer = () => {
-      const ease = reducedMotion.matches ? 1 : .105;
-      spotlightPointer.currentX = mix(spotlightPointer.currentX, spotlightPointer.targetX, ease);
-      spotlightPointer.currentY = mix(spotlightPointer.currentY, spotlightPointer.targetY, ease);
-      spotlightPointer.currentOpacity = mix(spotlightPointer.currentOpacity, spotlightPointer.targetOpacity, ease);
-      applySpotlightPointer();
-      const moving = Math.abs(spotlightPointer.currentX - spotlightPointer.targetX) > .03
-        || Math.abs(spotlightPointer.currentY - spotlightPointer.targetY) > .03
-        || Math.abs(spotlightPointer.currentOpacity - spotlightPointer.targetOpacity) > .002;
-      if (!reducedMotion.matches && moving) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
-      else spotlightMotionFrame = 0;
-    };
-
-    const setSpotlightPointerTarget = (event) => {
-      if (!finePointer.matches || reducedMotion.matches || event.pointerType !== "mouse") return;
-      const bounds = stage.getBoundingClientRect();
-      spotlightPointer.targetX = clamp(((event.clientX - bounds.left) / Math.max(bounds.width, 1)) * 100, 18, 82);
-      spotlightPointer.targetY = clamp(((event.clientY - bounds.top) / Math.max(bounds.height, 1)) * 100, 15, 76);
-      spotlightPointer.targetOpacity = event.target.closest?.(".shelf-book") ? .86 : .72;
-      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
-    };
-
-    const setSpotlightIntensity = (opacity) => {
-      if (!finePointer.matches || reducedMotion.matches) return;
-      spotlightPointer.targetOpacity = opacity;
-      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
-    };
-
-    const resetSpotlightPointer = () => {
-      spotlightPointer.targetX = 50;
-      spotlightPointer.targetY = 42;
-      spotlightPointer.targetOpacity = .72;
-      if (reducedMotion.matches) {
-        if (spotlightMotionFrame) cancelAnimationFrame(spotlightMotionFrame);
-        spotlightMotionFrame = 0;
-        spotlightPointer.currentX = 50;
-        spotlightPointer.currentY = 42;
-        spotlightPointer.currentOpacity = .72;
-        applySpotlightPointer();
-        return;
-      }
-      if (!spotlightMotionFrame) spotlightMotionFrame = requestAnimationFrame(animateSpotlightPointer);
-    };
-
-    setShelfDensity();
-
-    const slotGeometry = (distance) => {
-      const mobile = narrowScreen.matches;
-      const absolute = Math.abs(distance);
-      const direction = Math.sign(distance) || 1;
-      const viewportWidth = stage.clientWidth || window.innerWidth;
-      const layoutWidth = Math.min(viewportWidth, mobile ? 760 : 1600);
-      const easeOutCubic = (value) => 1 - Math.pow(1 - clamp(value, 0, 1), 3);
-      const smoothstep = (value) => {
-        const progress = clamp(value, 0, 1);
-        return progress * progress * (3 - 2 * progress);
-      };
-      const sideX = mobile
-        ? Math.min(layoutWidth * .39, 165)
-        : clamp(layoutWidth * .205, 220, 328);
-      const spineBase = mobile
-        ? Math.min(layoutWidth * .47, 205)
-        : clamp(layoutWidth * .325, 330, 520);
-      const spinePitch = mobile
-        ? clamp(layoutWidth * (books.length > 12 ? .058 : .064), 23, 31)
-        : clamp(layoutWidth * (books.length > 12 ? .03 : .032), 38, 50);
-      let geometry;
-
-      if (absolute <= 1) {
-        const progress = smoothstep(absolute);
-        geometry = {
-          x:mix(0, sideX, progress),
-          y:mix(mobile ? -4 : -6, mobile ? 8 : 7, progress),
-          z:mix(mobile ? 80 : 105, mobile ? -28 : 0, progress),
-          rotate:mix(0, mobile ? 56 : 12, progress),
-          scale:mix(1, mobile ? .82 : .89, progress),
-          opacity:mix(1, mobile ? .78 : .95, progress),
-          saturation:mix(1, mobile ? .82 : .94, progress),
-          brightness:mix(1, mobile ? .84 : .94, progress),
-          spine:0
-        };
-      } else if (absolute < 2) {
-        const progress = absolute - 1;
-        const turn = easeOutCubic(progress);
-        geometry = {
-          x:mix(sideX, spineBase, progress),
-          y:mix(mobile ? 8 : 7, mobile ? 18 : 18, progress),
-          z:mix(mobile ? -28 : 0, mobile ? -24 : -12, progress),
-          rotate:mix(mobile ? 56 : 12, mobile ? 88 : 88, turn),
-          scale:mix(mobile ? .82 : .89, mobile ? .76 : .88, progress),
-          opacity:mix(mobile ? .78 : .95, mobile ? .58 : .9, progress),
-          saturation:mix(mobile ? .82 : .94, mobile ? .68 : .82, progress),
-          brightness:mix(mobile ? .84 : .94, mobile ? .7 : .82, progress),
-          spine:smoothstep((turn - .42) / .45)
-        };
-      } else {
-        const x = spineBase + (absolute - 2) * spinePitch;
-        const fadeStart = Math.max(spineBase, viewportWidth / 2 - (mobile ? 28 : 110));
-        const fadeEnd = viewportWidth / 2 + (mobile ? 34 : 52);
-        const edgeVisibility = 1 - smoothstep((x - fadeStart) / Math.max(fadeEnd - fadeStart, 1));
-        geometry = {
-          x,
-          y:mobile ? 18 : 18,
-          z:(mobile ? -24 : -12) - Math.min(absolute - 2, 8) * 1.5,
-          rotate:mobile ? 88.5 : 88.8,
-          scale:mobile ? .76 : .88,
-          opacity:(mobile ? .68 : .96) * edgeVisibility,
-          saturation:mobile ? .82 : .96,
-          brightness:mobile ? .84 : .96,
-          spine:1
-        };
-      }
-
-      return {
-        ...geometry,
-        x:geometry.x * direction,
-        rotate:geometry.rotate * direction * -1,
-        distance:absolute,
-        interactive:geometry.opacity > .12
-      };
-    };
-
-    const prepareMotion = (fromPosition, toPosition) => {
-      bookElements.forEach((element, index) => {
-        const fromDistance = Math.abs(index - fromPosition);
-        const toDistance = Math.abs(index - toPosition);
-        const arrivingFromSpine = toDistance < fromDistance && fromDistance > 1.15;
-        const leavingForSpine = toDistance > fromDistance && toDistance > 1.15;
-        element.classList.toggle("is-unfolding", arrivingFromSpine && !reducedMotion.matches);
-        element.classList.toggle("is-folding", leavingForSpine && !reducedMotion.matches);
-        element.style.setProperty("--shelf-rotation-delay", arrivingFromSpine ? "120ms" : "0ms");
-        element.style.setProperty("--shelf-rotation-duration", arrivingFromSpine ? "1080ms" : leavingForSpine ? "720ms" : "850ms");
-        element.style.setProperty("--shelf-spine-delay", arrivingFromSpine ? "210ms" : leavingForSpine ? "145ms" : "0ms");
-        element.style.setProperty("--shelf-spine-duration", arrivingFromSpine ? "420ms" : "280ms");
-      });
-    };
-
-    const renderPosition = (position) => {
-      visualPosition = position;
-      const shelfStyles = getComputedStyle(shelf);
-      const readPixelVariable = (name, fallback) => {
-        const value = Number.parseFloat(shelfStyles.getPropertyValue(name));
-        return Number.isFinite(value) ? value : fallback;
-      };
-      const baseY = readPixelVariable("--shelf-base-y", narrowScreen.matches ? -4 : -6);
-      const restDrop = readPixelVariable("--shelf-rest-drop", narrowScreen.matches ? 8 : 12);
-      bookElements.forEach((element, index) => {
-        const geometry = slotGeometry(index - position);
-        const bookHeight = Number.parseFloat(getComputedStyle(element).height) || 0;
-        // The outer book is scaled around its centre. Compensate for that
-        // scale so every visible spine, side cover and front cover shares
-        // one physical resting line on the wooden shelf.
-        const baselineY = baseY + restDrop + (1 - geometry.scale) * bookHeight / 2;
-        element.style.setProperty("--shelf-x", `${geometry.x.toFixed(2)}px`);
-        element.style.setProperty("--shelf-y", `${baselineY.toFixed(2)}px`);
-        element.style.setProperty("--shelf-z", `${geometry.z.toFixed(2)}px`);
-        element.style.setProperty("--shelf-rotate", `${geometry.rotate.toFixed(2)}deg`);
-        element.style.setProperty("--shelf-scale", geometry.scale.toFixed(4));
-        element.style.setProperty("--shelf-opacity", geometry.opacity.toFixed(4));
-        element.style.setProperty("--shelf-saturation", geometry.saturation.toFixed(4));
-        element.style.setProperty("--shelf-brightness", geometry.brightness.toFixed(4));
-        element.style.setProperty("--shelf-spine-opacity", geometry.spine.toFixed(4));
-        element.dataset.shelfView = geometry.distance < .55 ? "front" : geometry.spine > .72 ? "spine" : "cover";
-        element.classList.toggle("is-shelf-visible", geometry.interactive);
-        const layer = geometry.spine > .72
-          ? 94 - Math.max(geometry.distance - 2, 0) * 2
-          : 100 - geometry.distance * 7;
-        element.style.zIndex = String(Math.round(layer));
-        element.style.pointerEvents = geometry.interactive ? "" : "none";
-        if (geometry.interactive) element.removeAttribute("aria-hidden");
-        else element.setAttribute("aria-hidden", "true");
-      });
-    };
-
-    const rememberBook = (book) => {
-      try { sessionStorage.setItem(storageKey, book.id); } catch (_) {}
-    };
-
-    const dismissHint = () => {
-      if (!hint || hint.classList.contains("is-dismissed")) return;
-      hint.classList.add("is-dismissed");
-      hint.setAttribute("aria-hidden", "true");
-      try { sessionStorage.setItem(hintKey, "true"); } catch (_) {}
-    };
-
-    const updateInteractionCopy = () => {
-      const touchLayout = narrowScreen.matches || !finePointer.matches;
-      if (hint) {
-        hint.innerHTML = touchLayout
-          ? '<span class="shelf-hint-icon" aria-hidden="true">↔</span> Swipe to browse · tap a cover to bring it forward'
-          : '<span class="shelf-hint-icon" aria-hidden="true">↔</span> Drag to explore the shelf';
-      }
-      camera.setAttribute("aria-label", touchLayout
-        ? "Book carousel. Swipe to browse, or tap a book to bring it forward. Tap the centered book or Explore the book to open its details."
-        : "Book carousel. Use the left and right arrow keys, drag, or swipe to browse.");
-    };
-
-    const prefetchBook = (book) => {
-      if (!book || prefetched.has(book.url)) return;
-      prefetched.add(book.url);
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.href = book.url;
-      document.head.append(link);
-    };
-
-    const applyBookDetails = (index, announce) => {
-      const book = books[index];
-      const visual = bookVisuals[book.id] || visualDefaults;
-      currentLabel.textContent = twoDigits(index + 1);
-      totalLabel.textContent = twoDigits(books.length);
-      title.textContent = book.shortTitle || book.title;
-      description.textContent = book.description;
-      audience.textContent = book.audience;
-      format.textContent = book.format;
-      exploreLink.href = book.url;
-      collectionTags.innerHTML = book.collections
-        .map((id) => collections[id] ? `<a href="${collections[id].url}">${collections[id].name}</a>` : "")
-        .join("");
-      shelf.style.setProperty("--shelf-accent", visual.accent);
-      setSpotlight(visual, !currentSpotlight);
-      shelf.dataset.activeBook = book.id;
-      if (announce) live.textContent = `${book.title}. Book ${index + 1} of ${books.length}.`;
-      window.requestAnimationFrame(() => shelf.classList.remove("is-copy-changing"));
-    };
-
-    const updateActiveState = (announce = true, immediate = false) => {
-      const touchLayout = narrowScreen.matches || !finePointer.matches;
-      bookElements.forEach((element, index) => {
-        const active = index === activeIndex;
-        const book = books[index];
-        element.classList.toggle("is-active", active);
-        element.tabIndex = active ? 0 : -1;
-        element.setAttribute("aria-label", active || !touchLayout
-          ? `Explore ${book.title}, book ${index + 1} of ${books.length}`
-          : `Bring ${book.title} to the centre; tap again to explore`);
-        if (active) element.setAttribute("aria-current", "true");
-        else element.removeAttribute("aria-current");
-      });
-      pageButtons.forEach((button, index) => {
-        if (index === activeIndex) button.setAttribute("aria-current", "true");
-        else button.removeAttribute("aria-current");
-      });
-      previous.disabled = activeIndex === 0;
-      next.disabled = activeIndex === books.length - 1;
-      clearTimeout(detailTimer);
-      if (immediate || reducedMotion.matches) {
-        applyBookDetails(activeIndex, announce);
-      } else {
-        shelf.classList.add("is-copy-changing");
-        detailTimer = window.setTimeout(() => applyBookDetails(activeIndex, announce), 620);
-      }
-      rememberBook(books[activeIndex]);
-    };
-
-    const cancelMomentum = () => {
-      if (momentumFrame) cancelAnimationFrame(momentumFrame);
-      momentumFrame = 0;
-      shelf.classList.remove("is-settling");
-    };
-
-    const settleAfterDrag = (fromPosition, target) => {
-      cancelMomentum();
-      if (reducedMotion.matches || Math.abs(fromPosition - target) < .001) {
-        goTo(target, { announce:true });
-        return;
-      }
-      shelf.classList.add("is-settling");
-      const startedAt = performance.now();
-      const duration = 360;
-      const easeOutQuint = (value) => 1 - Math.pow(1 - value, 5);
-      const tick = (now) => {
-        const progress = clamp((now - startedAt) / duration, 0, 1);
-        renderPosition(mix(fromPosition, target, easeOutQuint(progress)));
-        if (progress < 1) {
-          momentumFrame = requestAnimationFrame(tick);
-          return;
-        }
-        momentumFrame = 0;
-        shelf.classList.remove("is-settling");
-        goTo(target, { announce:true });
-      };
-      momentumFrame = requestAnimationFrame(tick);
-    };
-
-    const goTo = (requestedIndex, options = {}) => {
-      const index = clamp(Math.round(requestedIndex), 0, books.length - 1);
-      const changed = index !== activeIndex;
-      const previousPosition = visualPosition;
-      cancelMomentum();
-      activeIndex = index;
-      shelf.classList.remove("is-dragging");
-      if (!reducedMotion.matches) shelf.classList.add("is-animating");
-      prepareMotion(previousPosition, index);
-      renderPosition(index);
-      updateActiveState(options.announce !== false, !changed);
-      if (options.dismissHint !== false) dismissHint();
-      clearTimeout(animationTimer);
-      animationTimer = window.setTimeout(() => {
-        shelf.classList.remove("is-animating");
-        bookElements.forEach((element) => {
-          element.style.removeProperty("--shelf-rotation-delay");
-          element.style.removeProperty("--shelf-spine-delay");
-          element.style.removeProperty("--shelf-rotation-duration");
-          element.style.removeProperty("--shelf-spine-duration");
-          element.classList.remove("is-unfolding", "is-folding");
-        });
-      }, reducedMotion.matches ? 0 : 1450);
-    };
-
-    const clearEdgeMovement = () => {
-      clearTimeout(edgeTimer);
-      edgeTimer = 0;
-      edgeDirection = 0;
-      edgeIntensity = 0;
-      shelf.removeAttribute("data-edge-direction");
-    };
-
-    const continueEdgeMovement = () => {
-      if (!edgeDirection || drag) return;
-      const target = activeIndex + edgeDirection;
-      if (target < 0 || target >= books.length) {
-        clearTimeout(edgeTimer);
-        edgeTimer = 0;
-        return;
-      }
-      goTo(target, { announce:true });
-      const pause = 1450 + (1 - edgeIntensity) * 360;
-      edgeTimer = window.setTimeout(continueEdgeMovement, pause);
-    };
-
-    const setEdgeMovement = (direction, intensity) => {
-      if (!finePointer.matches || reducedMotion.matches) return;
-      if (direction === edgeDirection) {
-        edgeIntensity = intensity;
-        return;
-      }
-      clearEdgeMovement();
-      if (!direction) return;
-      edgeDirection = direction;
-      edgeIntensity = intensity;
-      shelf.dataset.edgeDirection = direction < 0 ? "left" : "right";
-      const intentDelay = 180 + (1 - intensity) * 220;
-      edgeTimer = window.setTimeout(continueEdgeMovement, intentDelay);
-    };
-
-    const onPassivePointerMove = (event) => {
-      if (drag || event.pointerType !== "mouse" || event.target.closest(".shelf-book,.shelf-navigation")) {
-        clearEdgeMovement();
-        return;
-      }
-      const bounds = stage.getBoundingClientRect();
-      const normalized = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-      const absolute = Math.abs(normalized);
-      if (absolute < .36) {
-        setEdgeMovement(0, 0);
-        return;
-      }
-      const direction = normalized < 0 ? -1 : 1;
-      const intensity = clamp((absolute - .36) / .64, 0, 1);
-      setEdgeMovement(direction, intensity);
-    };
-
-    const finishDrag = (event, cancelled = false) => {
-      if (!drag || (event && event.pointerId !== drag.pointerId)) return;
-      const snapshot = drag;
-      drag = null;
-      if (stage.hasPointerCapture?.(snapshot.pointerId)) stage.releasePointerCapture(snapshot.pointerId);
-      shelf.classList.remove("is-dragging");
-      if (cancelled || !snapshot.horizontal) {
-        renderPosition(activeIndex);
-        return;
-      }
-      const distance = snapshot.lastX - snapshot.startX;
-      const flick = Math.abs(snapshot.velocity) > (narrowScreen.matches ? .42 : .5);
-      let target = Math.round(visualPosition);
-      if (narrowScreen.matches) {
-        target = snapshot.startIndex;
-        if (Math.abs(distance) > 36 || Math.abs(snapshot.velocity) > .42) target += distance < 0 ? 1 : -1;
-        if (flick && target === snapshot.startIndex) target += snapshot.velocity < 0 ? 1 : -1;
-      } else {
-        if (Math.abs(distance) > 42 && target === snapshot.startIndex) target += distance < 0 ? 1 : -1;
-        if (flick && target === snapshot.startIndex) target += snapshot.velocity < 0 ? 1 : -1;
-      }
-      target = clamp(target, 0, books.length - 1);
-      suppressClicksUntil = Date.now() + 420;
-      settleAfterDrag(visualPosition, target);
-    };
-
-    stage.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0 || event.target.closest("button,[data-shelf-link],.living-shelf-collections")) return;
-      cancelMomentum();
-      clearEdgeMovement();
-      const startedOnBook = Boolean(event.target.closest(".shelf-book"));
-      drag = {
-        pointerId:event.pointerId,
-        startX:event.clientX,
-        startY:event.clientY,
-        lastX:event.clientX,
-        lastTime:performance.now(),
-        velocity:0,
-        startIndex:activeIndex,
-        horizontal:null
-      };
-      if (event.pointerType === "mouse" && !startedOnBook) stage.setPointerCapture?.(event.pointerId);
-    });
-
-    stage.addEventListener("pointermove", (event) => {
-      setSpotlightPointerTarget(event);
-      if (!drag || event.pointerId !== drag.pointerId) {
-        onPassivePointerMove(event);
-        return;
-      }
-      const totalX = event.clientX - drag.startX;
-      const totalY = event.clientY - drag.startY;
-      if (drag.horizontal === null) {
-        if (Math.hypot(totalX, totalY) < 7) return;
-        if (Math.abs(totalY) > Math.abs(totalX) * 1.15) {
-          drag.horizontal = false;
-          return;
-        }
-        drag.horizontal = true;
-        stage.setPointerCapture?.(event.pointerId);
-        shelf.classList.add("is-dragging");
-        dismissHint();
-      }
-      if (!drag.horizontal) return;
-      event.preventDefault();
-      const now = performance.now();
-      const elapsed = Math.max(now - drag.lastTime, 1);
-      drag.velocity = (event.clientX - drag.lastX) / elapsed;
-      drag.lastX = event.clientX;
-      drag.lastTime = now;
-      const stepWidth = clamp(stage.clientWidth * (narrowScreen.matches ? .42 : .24), 150, 340);
-      const position = clamp(drag.startIndex - totalX / stepWidth, 0, books.length - 1);
-      renderPosition(position);
-    });
-
-    stage.addEventListener("pointerup", (event) => finishDrag(event));
-    stage.addEventListener("pointercancel", (event) => finishDrag(event, true));
-    stage.addEventListener("pointerleave", (event) => {
-      clearEdgeMovement();
-      resetSpotlightPointer();
-      if (drag && event.pointerType === "mouse" && !stage.hasPointerCapture?.(event.pointerId)) finishDrag(event);
-    });
-    stage.addEventListener("dragstart", (event) => event.preventDefault());
-    stage.addEventListener("wheel", (event) => {
-      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) * 1.2 || Math.abs(event.deltaX) < 18) return;
-      event.preventDefault();
-      if (wheelTimer) return;
-      clearEdgeMovement();
-      goTo(activeIndex + (event.deltaX > 0 ? 1 : -1), { announce:true });
-      wheelTimer = window.setTimeout(() => { wheelTimer = 0; }, reducedMotion.matches ? 120 : 950);
-    }, { passive:false });
-
-    track.addEventListener("click", (event) => {
-      if (Date.now() < suppressClicksUntil) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-      const bookElement = event.target.closest("[data-shelf-index]");
-      if (bookElement) {
-        const index = Number(bookElement.dataset.shelfIndex);
-        const touchLayout = narrowScreen.matches || !finePointer.matches;
-        if (touchLayout && index !== activeIndex) {
-          event.preventDefault();
-          event.stopPropagation();
-          clearEdgeMovement();
-          goTo(index, { announce:true });
-          return;
-        }
-        rememberBook(books[index]);
-      }
-    }, true);
-
-    bookElements.forEach((element, index) => {
-      element.addEventListener("pointerenter", () => {
-        clearEdgeMovement();
-        setSpotlightIntensity(.86);
-        clearTimeout(prefetchTimer);
-        prefetchTimer = window.setTimeout(() => prefetchBook(books[index]), 360);
-      });
-      element.addEventListener("pointerleave", () => {
-        setSpotlightIntensity(.72);
-        clearTimeout(prefetchTimer);
-      });
-    });
-
-    previous.addEventListener("click", () => {
-      clearEdgeMovement();
-      goTo(activeIndex - 1, { announce:true });
-    });
-    next.addEventListener("click", () => {
-      clearEdgeMovement();
-      goTo(activeIndex + 1, { announce:true });
-    });
-    pageButtons.forEach((button) => button.addEventListener("click", () => {
-      clearEdgeMovement();
-      goTo(Number(button.dataset.shelfPage), { announce:true });
-    }));
-
-    shelf.addEventListener("keydown", (event) => {
-      const carouselControl = event.target === camera || event.target.closest(".shelf-book,.shelf-navigation");
-      if (!carouselControl) return;
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        clearEdgeMovement();
-        goTo(activeIndex - 1, { announce:true });
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        clearEdgeMovement();
-        goTo(activeIndex + 1, { announce:true });
-      } else if (event.key === "Home") {
-        event.preventDefault();
-        goTo(0, { announce:true });
-      } else if (event.key === "End") {
-        event.preventDefault();
-        goTo(books.length - 1, { announce:true });
-      } else if (event.key === "Enter" && event.target === camera) {
-        rememberBook(books[activeIndex]);
-        window.location.href = books[activeIndex].url;
-      }
-    });
-
-    exploreLink.addEventListener("pointerenter", () => {
-      clearTimeout(prefetchTimer);
-      prefetchTimer = window.setTimeout(() => prefetchBook(books[activeIndex]), 240);
-    });
-    exploreLink.addEventListener("click", () => rememberBook(books[activeIndex]));
-    stage.addEventListener("pointerleave", clearEdgeMovement);
-    window.addEventListener("blur", () => {
-      clearEdgeMovement();
-      resetSpotlightPointer();
-    });
-    reducedMotion.addEventListener?.("change", () => {
-      clearEdgeMovement();
-      resetSpotlightPointer();
-      if (!reducedMotion.matches || !spotlightFrame) return;
-      cancelAnimationFrame(spotlightFrame);
-      spotlightFrame = 0;
-      const visual = bookVisuals[books[activeIndex].id] || visualDefaults;
-      currentSpotlight = { ...(visual.spotlight || visualDefaults.spotlight) };
-      applySpotlightColor(currentSpotlight);
-    });
-    window.addEventListener("resize", () => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = window.requestAnimationFrame(() => {
-        setShelfDensity();
-        renderPosition(visualPosition);
-        updateInteractionCopy();
-        updateActiveState(false, true);
-      });
-    }, { passive:true });
-
-    const setAmbientMotionState = (visible) => {
-      shelf.classList.toggle("is-shelf-offscreen", !visible);
-    };
-    if ("IntersectionObserver" in window) {
-      const shelfObserver = new IntersectionObserver(([entry]) => {
-        setAmbientMotionState(entry.isIntersecting);
-      }, { rootMargin:"160px 0px" });
-      shelfObserver.observe(shelf);
+    // Read layout only on resize, never in the animation loop.
+    function measure() {
+      const width = stage.clientWidth;
+      const height = bookElements[0].getBoundingClientRect().height || parseFloat(getComputedStyle(bookElements[0]).height);
+      layout = { width, height:parseFloat(getComputedStyle(bookElements[0]).height) || height, mobile:narrowScreen.matches };
     }
-    document.addEventListener("visibilitychange", () => {
-      shelf.classList.toggle("is-page-hidden", document.hidden);
-      if (document.hidden && spotlightMotionFrame) {
-        cancelAnimationFrame(spotlightMotionFrame);
-        spotlightMotionFrame = 0;
+    function geometry(distance) {
+      const a = Math.abs(distance), side = Math.sign(distance), mobile = layout.mobile;
+      const neighbour = mobile ? layout.width*.39 : Math.min(layout.width*.23,310);
+      const spine = mobile ? layout.width*.56 : Math.min(layout.width*.36,480);
+      const pitch = mobile ? 33 : 46;
+      let x, scale, angle, depth, spineOpacity, opacity;
+      if(a <= 1) {
+        const p = smooth(a);
+        x = mix(0,neighbour,p); scale = mix(1,mobile?.78:.83,p);
+        angle = mix(0,mobile?58:28,p); depth = mix(65,-30,p);
+        spineOpacity = 0; opacity = mix(1,.82,p);
+      } else {
+        const p = smooth(a-1);
+        x = a<2 ? mix(neighbour,spine,p) : spine+(a-2)*pitch;
+        scale = mix(mobile?.78:.83,.75,p); angle = mix(mobile?58:28,88,p);
+        depth = mix(-30,-65,p); spineOpacity = smooth((a-1.25)/.7);
+        opacity = mix(.82,.65,p)*(1-smooth((x-layout.width/2+35)/85));
       }
+      return { x:x*side, scale, angle:-angle*side, depth, spineOpacity, opacity, distance:a };
+    }
+    function render() {
+      bookElements.forEach((element,index) => {
+        const g = geometry(index-position);
+        const lift = Math.sin(Math.min(g.distance,1)*Math.PI)*7;
+        const props = {'--shelf-x':g.x+'px','--shelf-y':((1-g.scale)*layout.height/2-lift)+'px','--shelf-z':g.depth+'px','--shelf-rotate':g.angle+'deg','--shelf-scale':g.scale,'--shelf-opacity':g.opacity,'--shelf-spine-opacity':g.spineOpacity,'--shelf-brightness':mix(1,.8,Math.min(g.distance/2,1))};
+        for(const [key,value] of Object.entries(props)) element.style.setProperty(key,String(value));
+        element.dataset.shelfView = g.spineOpacity>.8?'spine':g.distance<.5?'front':'cover';
+        element.style.zIndex = String(Math.round(100-g.distance*10));
+        element.style.pointerEvents = g.opacity>.12?'auto':'none';
+        element.setAttribute('aria-hidden',String(g.opacity<=.12 && index!==activeIndex));
+      });
+      shelf.dataset.motionState = frame || drag?.horizontal ? 'moving' : 'rest';
+    }
+    function stop() {
+      cancelAnimationFrame(frame); frame = 0; previousTime = null;
+      shelf.classList.remove('is-animating');
+    }
+    function settle() {
+      if(reducedMotion.matches) { stop(); position = activeIndex; velocity = 0; render(); return; }
+      if(frame || document.hidden) return;
+      shelf.classList.add('is-animating');
+      const tick = now => {
+        const dt = previousTime===null ? 1/60 : Math.min((now-previousTime)/1000,.032);
+        previousTime = now;
+        // Exact critically damped spring: stable at every refresh rate, and
+        // retargetable from the current position and velocity without jumps.
+        const offset = position-activeIndex, omega = 14;
+        const c = velocity+omega*offset, decay = Math.exp(-omega*dt);
+        position = activeIndex+(offset+c*dt)*decay;
+        velocity = (velocity-omega*c*dt)*decay;
+        if(Math.abs(position-activeIndex)<.0005 && Math.abs(velocity)<.008) {
+          position = activeIndex; velocity = 0; stop(); render();
+        } else { render(); frame = requestAnimationFrame(tick); }
+      };
+      frame = requestAnimationFrame(tick);
+    }
+    function prefetch(book) {
+      if(prefetched.has(book.id)) return;
+      prefetched.add(book.id);
+      const link = document.createElement('link'); link.rel='prefetch'; link.href=book.url; document.head.append(link);
+    }
+    async function showWorld(book) {
+      if(!worlds || !book.preview) return;
+      const version = ++sceneVersion;
+      const image = new Image(); image.alt=''; image.decoding='async'; image.src=book.preview;
+      try { await image.decode(); } catch (_) { return; }
+      if(version!==sceneVersion) return;
+      clearTimeout(sceneTimer);
+      [...worlds.children].slice(0,-1).forEach(el=>el.remove());
+      worlds.append(image);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        if(version!==sceneVersion) return;
+        [...worlds.children].forEach(el=>el.classList.toggle('is-visible',el===image));
+      }));
+      sceneTimer = setTimeout(()=>{ if(version===sceneVersion) [...worlds.children].filter(el=>el!==image).forEach(el=>el.remove()); },750);
+    }
+    function update(announce=false, animateCopy=false) {
+      const book=books[activeIndex], visual=bookVisuals[book.id] || visualDefaults;
+      currentLabel.textContent=twoDigits(activeIndex+1); totalLabel.textContent=twoDigits(books.length);
+      title.textContent=book.shortTitle || book.title;
+      description.textContent=book.description; audience.textContent=book.audience;
+      format.textContent=book.shelfFormat || book.format;
+      exploreLink.href=book.url+'#inside'; exploreLink.setAttribute('aria-label','See inside '+book.title);
+      amazonLink.href=book.amazon; amazonLink.hidden=!book.amazon;
+      amazonLink.setAttribute('aria-label','View '+book.title+' on Amazon (opens in a new tab)');
+      collectionTags.innerHTML=book.collections.map(id=>collections[id]?`<a href="${collections[id].url}">${collections[id].name}</a>`:'').join('');
+      shelf.style.setProperty('--shelf-accent',visual.accent);
+      shelf.style.setProperty('--shelf-glow',visual.glow);
+      shelf.dataset.activeBook=book.id;
+      bookElements.forEach((element,index)=>{
+        element.classList.toggle('is-active',index===activeIndex); element.tabIndex=index===activeIndex?0:-1;
+        if(index===activeIndex) element.setAttribute('aria-hidden','false');
+        element.setAttribute('aria-label',index===activeIndex?'Explore '+books[index].title:'Bring '+books[index].title+' to the centre');
+      });
+      pageButtons.forEach((button,index)=>{
+        button.setAttribute('aria-pressed',String(index===activeIndex));
+        if(index===activeIndex) button.setAttribute('aria-current','true'); else button.removeAttribute('aria-current');
+      });
+      previous.disabled=activeIndex===0; next.disabled=activeIndex===books.length-1;
+      if(announce) live.textContent=book.title+'. '+book.audience+'. Book '+(activeIndex+1)+' of '+books.length+'.';
+      // Links are updated synchronously, so a fast click always buys the title
+      // currently selected. Copy animation never delays or hides the actions.
+      if(animateCopy&&!reducedMotion.matches) copy.forEach(el=>{
+        el.getAnimations?.().forEach(animation=>animation.cancel());
+        el.animate([{opacity:.45,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:320,easing:'cubic-bezier(.2,.7,.2,1)'});
+      });
+      try { sessionStorage.setItem(storageKey,book.id); } catch (_) {}
+      prefetch(book); showWorld(book);
+    }
+    function goTo(requested, focus=false) {
+      const index=clamp(Math.round(requested),0,books.length-1), changed=index!==activeIndex;
+      activeIndex=index; if(changed) update(true,true);
+      settle(); if(focus) pageButtons[index].focus({preventScroll:true});
+      if(focus || layout.mobile) {
+        const rail= pagination.getBoundingClientRect(), chosen=pageButtons[index].getBoundingClientRect();
+        if(chosen.left<rail.left || chosen.right>rail.right) pagination.scrollTo({left:pageButtons[index].offsetLeft-(pagination.clientWidth-pageButtons[index].offsetWidth)/2,behavior:reducedMotion.matches?'instant':'smooth'});
+      }
+    }
+    function finishDrag(event,cancelled=false) {
+      if(!drag || (event && event.pointerId!==drag.id)) return;
+      const snapshot=drag; drag=null;
+      if(stage.hasPointerCapture?.(snapshot.id)) stage.releasePointerCapture(snapshot.id);
+      shelf.classList.remove('is-dragging');
+      if(snapshot.horizontal) {
+        suppressClick=Date.now()+350;
+        const fresh=performance.now()-snapshot.time<100?snapshot.velocity:0;
+        const projected=position-fresh*.18;
+        const target=cancelled?activeIndex:clamp(Math.round(projected),snapshot.startIndex-2,snapshot.startIndex+2);
+        velocity=cancelled?0:-fresh;
+        goTo(target);
+      } else settle();
+    }
+    stage.addEventListener('pointerdown',event=>{
+      if(event.button!==0 || event.target.closest('button')) return;
+      stop(); velocity=0;
+      drag={id:event.pointerId,startX:event.clientX,startY:event.clientY,x:event.clientX,time:performance.now(),startPosition:position,startIndex:activeIndex,velocity:0,horizontal:false};
     });
-
-    updateInteractionCopy();
-    renderPosition(activeIndex);
-    updateActiveState(false, true);
-    prefetchBook(books[activeIndex]);
+    stage.addEventListener('pointermove',event=>{
+      if(!drag || event.pointerId!==drag.id) return;
+      const dx=event.clientX-drag.startX, dy=event.clientY-drag.startY;
+      if(!drag.horizontal) {
+        if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>9) { finishDrag(event,true); return; }
+        if(Math.abs(dx)<8) return;
+        drag.horizontal=true; stage.setPointerCapture(event.pointerId); shelf.classList.add('is-dragging');
+      }
+      event.preventDefault();
+      const step=clamp(layout.width*(layout.mobile?.52:.25),155,340), now=performance.now();
+      const sample=((event.clientX-drag.x)/step)/Math.max((now-drag.time)/1000,.008);
+      drag.velocity=mix(drag.velocity,sample,.55); drag.x=event.clientX; drag.time=now;
+      const requested=drag.startPosition-dx/step;
+      position=requested<0?requested*.18:requested>books.length-1?books.length-1+(requested-books.length+1)*.18:requested;
+      render();
+    },{passive:false});
+    stage.addEventListener('pointerup',event=>finishDrag(event));
+    stage.addEventListener('pointercancel',event=>finishDrag(event,true));
+    stage.addEventListener('lostpointercapture',()=>finishDrag(null,true));
+    stage.addEventListener('pointerleave',event=>{if(drag&&!stage.hasPointerCapture?.(drag.id))finishDrag(event,true);});
+    stage.addEventListener('dragstart',event=>event.preventDefault());
+    stage.addEventListener('wheel',event=>{
+      if(Math.abs(event.deltaX)<=Math.abs(event.deltaY)*1.2) return;
+      event.preventDefault(); wheelTotal+=event.deltaX; clearTimeout(wheelTimer);
+      if(Math.abs(wheelTotal)>55){goTo(activeIndex+Math.sign(wheelTotal));wheelTotal=0;}
+      wheelTimer=setTimeout(()=>wheelTotal=0,160);
+    },{passive:false});
+    track.addEventListener('click',event=>{
+      const el=event.target.closest('[data-shelf-index]'); if(!el) return;
+      const index=Number(el.dataset.shelfIndex);
+      if(Date.now()<suppressClick){event.preventDefault();return;}
+      if(index!==activeIndex){event.preventDefault();goTo(index);}
+    });
+    previous.addEventListener('click',()=>goTo(activeIndex-1));
+    next.addEventListener('click',()=>goTo(activeIndex+1));
+    pageButtons.forEach((button,index)=>button.addEventListener('click',()=>goTo(index)));
+    shelf.addEventListener('keydown',event=>{
+      if(!event.target.closest('.living-shelf-camera,.shelf-navigation')) return;
+      const keys={ArrowLeft:activeIndex-1,ArrowRight:activeIndex+1,Home:0,End:books.length-1};
+      if(Object.hasOwn(keys,event.key)) {
+        event.preventDefault(); goTo(keys[event.key],Boolean(event.target.closest('[data-shelf-page]')));
+        if(event.target.matches('.shelf-book')) bookElements[activeIndex].focus({preventScroll:true});
+      }
+      if(event.key==='Enter'&&event.target===camera) location.href=books[activeIndex].url+'#inside';
+    });
+    reducedMotion.addEventListener('change',()=>{stop();position=activeIndex;velocity=0;render();});
+    window.addEventListener('resize',()=>{finishDrag(null,true);stop();measure();position=activeIndex;velocity=0;render();});
+    window.addEventListener('blur',()=>finishDrag(null,true));
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){finishDrag(null,true);stop();position=activeIndex;velocity=0;render();}
+    });
+    window.addEventListener('hashchange',()=>{const index=books.findIndex(book=>book.id===new URLSearchParams(location.hash.slice(1)).get('book'));if(index>=0)goTo(index);});
+    hint.innerHTML='<span class="shelf-hint-icon" aria-hidden="true">↔</span> '+(finePointer.matches?'Drag or use the arrows · select any cover below':'Swipe to explore · tap a cover below');
+    measure(); render(); update();
   };
 
   document.querySelectorAll("[data-catalog-grid]").forEach((grid) => {

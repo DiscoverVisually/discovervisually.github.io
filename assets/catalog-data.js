@@ -1,6 +1,10 @@
 window.DV_BOOKS = [
   {
     id: "romantasy-yearbook",
+    amazon: "https://www.amazon.com/dp/B0H517L61P",
+    preview: "/assets/romantasy-interior-contents.webp",
+    shelfFormat: "100 illustrated pages",
+    coverRatio: 0.750000,
     title: "The Ultimate Romantasy Yearbook",
     shortTitle: "Romantasy Yearbook",
     url: "/books/the-ultimate-romantasy-yearbook.html",
@@ -16,6 +20,10 @@ window.DV_BOOKS = [
   },
   {
     id: "cut-open",
+    amazon: "https://www.amazon.com/dp/B0HK7VBDH2",
+    preview: "/assets/cut-open-jet-engine.webp",
+    shelfFormat: "82 pages · 40 cutaways",
+    coverRatio: 0.666667,
     title: "CUT OPEN!: 40 Machines, Buildings & Engineering Systems Sliced Open",
     shortTitle: "CUT OPEN!",
     url: "/books/cut-open.html",
@@ -31,6 +39,10 @@ window.DV_BOOKS = [
   },
   {
     id: "new-york-city",
+    amazon: "https://www.amazon.com/dp/B0HL97WJ5C",
+    preview: "/assets/nyc-hudson.webp",
+    shelfFormat: "72 pages · 1600–2030",
+    coverRatio: 0.666667,
     title: "New York City Through Time: An Illustrated History from 1600 to 2030",
     shortTitle: "New York City Through Time",
     url: "/books/new-york-city-through-time.html",
@@ -46,6 +58,10 @@ window.DV_BOOKS = [
   },
   {
     id: "abraham-lincoln",
+    amazon: "https://www.amazon.com/dp/B0HHJYQD5P",
+    preview: "/assets/lincoln-interior-first-day.webp",
+    shelfFormat: "82 full-color pages",
+    coverRatio: 0.750000,
     title: "I Worked for Abraham Lincoln",
     shortTitle: "Abraham Lincoln",
     url: "/books/i-worked-for-abraham-lincoln.html",
@@ -61,6 +77,10 @@ window.DV_BOOKS = [
   },
   {
     id: "hindenburg",
+    amazon: "https://www.amazon.com/dp/B0HH7K5L5L",
+    preview: "/assets/hindenburg-interior-airships.webp",
+    shelfFormat: "80 full-color pages",
+    coverRatio: 0.750000,
     title: "Hindenburg: The Final Flight",
     shortTitle: "Hindenburg",
     url: "/books/hindenburg-the-final-flight.html",
@@ -76,6 +96,10 @@ window.DV_BOOKS = [
   },
   {
     id: "pompeii",
+    amazon: "https://www.amazon.com/dp/B0H6NMNL53",
+    preview: "/assets/pompeii-interior-street.webp",
+    shelfFormat: "72 full-color pages",
+    coverRatio: 0.750000,
     title: "Pompeii: The Last Day",
     shortTitle: "Pompeii",
     url: "/books/pompeii-the-last-day.html",
@@ -91,6 +115,10 @@ window.DV_BOOKS = [
   },
   {
     id: "alcatraz",
+    amazon: "https://www.amazon.com/dp/B0HJ6VYTRK",
+    preview: "/assets/alcatraz-interior-map.webp",
+    shelfFormat: "Full-color investigation",
+    coverRatio: 0.750000,
     title: "I Worked at Alcatraz",
     shortTitle: "Alcatraz",
     url: "/books/i-worked-at-alcatraz.html",
