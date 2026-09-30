@@ -153,6 +153,8 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&previewBook&&ready){cancelTurn();sample(spread);desired=spread;controls();}});
   function restore(){
     const params=new URLSearchParams(location.hash.slice(1)),id=params.get('book');
+    // Ordinary section anchors retain the current shelf and native navigation.
+    if(location.hash&&!['book','topic','age','gift','view'].some(key=>params.has(key))){syncing=true;reflect();syncing=false;return;}
     let prefs={topic:params.get('topic'),age:params.get('age'),gift:params.get('gift')};
     if(!location.hash){try{prefs=JSON.parse(sessionStorage.getItem('dv-shelf-preferences'))||{};}catch(_){}}
     const gift=Object.hasOwn(giftFilters,prefs.gift)?prefs.gift:'';

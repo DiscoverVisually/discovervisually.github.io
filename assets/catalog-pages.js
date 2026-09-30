@@ -202,6 +202,7 @@
       const empty=!visible.length;shelf.classList.toggle('is-empty',empty);
       shelf.querySelector('[data-shelf-empty]').hidden=!empty;
       shelf.querySelector('.living-shelf-console').hidden=empty;
+      shelf.querySelector('.shelf-utility').hidden=empty;
       currentLabel.textContent=twoDigits(empty?0:slot()+1);totalLabel.textContent=twoDigits(visible.length);
       title.textContent=book.shortTitle||book.title;
       description.textContent=story?.hook||book.description;audience.textContent=book.audience;format.textContent=book.shelfFormat||book.format;
