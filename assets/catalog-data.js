@@ -15,6 +15,21 @@ window.DV_BOOKS = [
     series: "Visual Yearbook"
   },
   {
+    id: "cut-open",
+    title: "CUT OPEN!: 40 Machines, Buildings & Engineering Systems Sliced Open",
+    shortTitle: "CUT OPEN!",
+    url: "/books/cut-open.html",
+    cover: "/books/cut-open-cover.webp",
+    status: "Available now",
+    format: "84-page large-format full-color visual STEM encyclopedia",
+    audience: "Ages 8+",
+    description: "Cut open 40 real machines, buildings and hidden systems to see where the parts are, what they do and how they work together.",
+    primaryCollection: "visual-learning",
+    collections: ["visual-learning", "children"],
+    topic: "Engineering, Machines & Hidden Systems",
+    series: "Visual Learning"
+  },
+  {
     id: "abraham-lincoln",
     title: "I Worked for Abraham Lincoln",
     shortTitle: "Abraham Lincoln",
@@ -81,5 +96,5 @@ window.DV_COLLECTIONS = {
   children: { name: "For Children", url: "/collections/children/", label: "Curiosity without limits" },
   history: { name: "History Hunters", url: "/collections/history/", label: "The past made immediate" },
   romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "Fantasy romance, beautifully mapped" },
-  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible", status: "Coming soon", isComingSoon: true }
+  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible" }
 };
