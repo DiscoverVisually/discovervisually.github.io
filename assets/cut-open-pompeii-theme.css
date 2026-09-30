@@ -5,9 +5,9 @@
 .cut-open-page .pm-wrap-front{background-image:url("/books/cut-open-cover.webp")!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important}
 .cut-open-page .pm-wrap-back{background-image:linear-gradient(145deg,rgba(18,59,88,.96),rgba(4,18,30,.98))!important;background-size:100% 100%!important;background-position:center!important}
 .cut-open-page .pm-book-back{background:#092238}.cut-open-page .pm-book-spine{background:#0b3556}.cut-open-page .pm-stage-ring{border-color:rgba(104,188,231,.18)}.cut-open-page .pm-stage-ash{opacity:.12;filter:hue-rotate(150deg) saturate(.55)}
-.cut-open-page .pm-proof{background:#e9eef0}.cut-open-page .pm-proof-author{color:#335c71}.cut-open-page .pm-inside{background:linear-gradient(180deg,#f4f7f7,#e7ecee)}.cut-open-page .pm-why{background:#f5f7f6}.cut-open-page .pm-reactions{background:#0c2233}.cut-open-page .pm-combined{background:#edf2f3}
+.cut-open-page .pm-proof{background:#e9eef0}.cut-open-page .pm-proof-author{color:#335c71}.cut-open-page .pm-inside{background:linear-gradient(180deg,#f4f7f7,#e7ecee)}.cut-open-page .pm-reactions{background:#0c2233}.cut-open-page .pm-combined{background:#edf2f3}
 .cut-open-page .pm-final{background:radial-gradient(circle at 27% 43%,rgba(44,137,188,.24),transparent 29%),linear-gradient(125deg,#07131f,#0d2b40 58%,#07121b)}
-.cut-open-page .pm-amazon-dark{background:#bb742d}.cut-open-page .pm-amazon-dark:hover{background:#ce883f}.cut-open-page .pm-final-plaque b{color:#b9dbea}.cut-open-page .pm-book-page img,.cut-open-page .pm-turn-face img,.cut-open-page .pm-modal-pan img{background:#dbe4e7}
+.cut-open-page .pm-final-plaque b{color:#b9dbea}.cut-open-page .pm-book-page img,.cut-open-page .pm-turn-face img,.cut-open-page .pm-modal-pan img{background:#dbe4e7}
 
 /* Contrast audit — CUT OPEN! product page */
 .cut-open-page .pm-proof,
@@ -69,4 +69,383 @@
 .cut-open-page .pm-reactions,
 .cut-open-page .pm-final {
   color: #fff;
+}
+
+
+/* 2026-09-30: full CUT OPEN! readability, CTA and spacing audit */
+
+/* Keep all light panels explicitly dark-on-light. */
+.cut-open-page .pm-proof,
+.cut-open-page .pm-proof blockquote,
+.cut-open-page .pm-proof-facts,
+.cut-open-page .pm-proof-quote a {
+  color: #132333;
+}
+
+.cut-open-page .pm-proof .pm-review-source,
+.cut-open-page .pm-proof-author {
+  color: #335c71;
+}
+
+.cut-open-page .pm-proof-quote > span {
+  color: #8b5319;
+}
+
+.cut-open-page .pm-proof-quote a {
+  border-bottom-color: rgba(19, 35, 51, .42);
+}
+
+.cut-open-page .pm-combined,
+.cut-open-page .pm-combined h2,
+.cut-open-page .pm-combined summary,
+.cut-open-page .pm-craft-details,
+.cut-open-page .pm-craft-details h2,
+.cut-open-page .pm-craft-details td,
+.cut-open-page .pm-spec-toggle {
+  color: #132333;
+}
+
+.cut-open-page .pm-combined details p,
+.cut-open-page .pm-craft-details > p:not(.pm-eyebrow) {
+  color: #4f5f69;
+}
+
+.cut-open-page .pm-craft-details {
+  background: #e2e9ec;
+}
+
+.cut-open-page .pm-craft-details th {
+  color: #53636e;
+}
+
+.cut-open-page .pm-combined .pm-eyebrow,
+.cut-open-page .pm-craft-details .pm-eyebrow {
+  color: #315f75;
+}
+
+.cut-open-page .pm-combined summary span,
+.cut-open-page .pm-spec-toggle i {
+  color: #8b5319;
+}
+
+/* Shared Pompeii benefit typography is intentionally white.
+   CUT OPEN! therefore needs the same dark section treatment, not a pale panel. */
+.cut-open-page .pm-why {
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(53, 133, 176, .18), transparent 28%),
+    radial-gradient(circle at 18% 88%, rgba(224, 173, 66, .10), transparent 30%),
+    linear-gradient(145deg, #0d2b40, #07131f 66%);
+}
+
+.cut-open-page .pm-why-lead {
+  border-color: rgba(224, 173, 66, .20);
+  background: rgba(3, 12, 20, .44);
+}
+
+.cut-open-page .pm-why-lead h2 {
+  color: #fff;
+}
+
+.cut-open-page .pm-why-lead h2 em {
+  color: #e8c56f;
+}
+
+.cut-open-page .pm-why-lead > p:last-child {
+  color: rgba(255, 255, 255, .72);
+  border-left-color: rgba(232, 197, 111, .34);
+}
+
+.cut-open-page .pm-benefits {
+  border-color: rgba(255, 255, 255, .18);
+}
+
+.cut-open-page .pm-benefits article {
+  border-color: rgba(255, 255, 255, .15);
+}
+
+.cut-open-page .pm-benefits article:hover {
+  background: rgba(255, 255, 255, .045);
+}
+
+.cut-open-page .pm-benefits article > span,
+.cut-open-page .pm-benefit-punchline {
+  color: #e8c56f !important;
+}
+
+.cut-open-page .pm-benefits h3 {
+  color: #fff;
+}
+
+.cut-open-page .pm-benefits .pm-benefit-copy > p:last-child {
+  color: rgba(255, 255, 255, .70);
+}
+
+.cut-open-page .pm-why-payoff strong {
+  color: #fff;
+}
+
+.cut-open-page .pm-why-payoff span {
+  color: rgba(255, 255, 255, .58);
+}
+
+/* Inside is a dark viewing room. Keep controls legible against every image. */
+.cut-open-page .pm-inside .pm-spread-count,
+.cut-open-page .pm-inside .pm-spread-count small,
+.cut-open-page .pm-inside .pm-spread-controls > p {
+  color: rgba(255, 255, 255, .84);
+}
+
+.cut-open-page .pm-spread-controls .pm-chapter-nav button {
+  color: rgba(255, 255, 255, .70);
+  border-bottom-color: rgba(255, 255, 255, .22);
+}
+
+.cut-open-page .pm-spread-controls .pm-chapter-nav button:hover,
+.cut-open-page .pm-spread-controls .pm-chapter-nav button:focus-visible,
+.cut-open-page .pm-spread-controls .pm-chapter-nav button[aria-current="true"] {
+  color: #e8c56f;
+  border-color: #e8c56f;
+}
+
+.cut-open-page .pm-expand-spread,
+.cut-open-page .pm-gallery-end button {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .34);
+  background: rgba(5, 18, 29, .90);
+}
+
+.cut-open-page .pm-gallery-end a {
+  color: #101b26;
+  border-color: #e2bd6f;
+  background: #e2bd6f;
+}
+
+/* Amazon CTA parity with Pompeii. No title-specific orange/red treatment. */
+.cut-open-page .dv-amazon-hero {
+  width: min(100%, 340px);
+  min-height: 64px;
+  padding: 6px 12px 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #18212a !important;
+  background: #f3c765;
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .25);
+  transition: transform .25s, background .25s, box-shadow .25s;
+}
+
+.cut-open-page .dv-amazon-hero:hover {
+  background: #ffd67d;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .32);
+}
+
+.cut-open-page .dv-amazon-hero .pm-amazon-badge {
+  width: 94px;
+  height: 47px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.cut-open-page .dv-amazon-hero .pm-amazon-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.cut-open-page .dv-amazon-hero .pm-amazon-copy small {
+  opacity: .62;
+  margin: 0;
+  color: inherit;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.cut-open-page .dv-amazon-hero .pm-amazon-copy strong {
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.cut-open-page .dv-amazon-hero > b {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(24, 33, 42, .28);
+  color: inherit;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.cut-open-page .pm-amazon.pm-amazon-dark.pm-amazon-official {
+  width: min(100%, 430px);
+  min-height: 88px;
+  gap: 17px;
+  padding: 10px 18px 10px 12px;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid #e5bb62;
+  border-radius: 3px;
+  color: #18212a !important;
+  background:
+    linear-gradient(105deg, rgba(238, 191, 94, .18), transparent 34%),
+    linear-gradient(180deg, #fffdf8, #f7efe1);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, .26),
+    inset 0 1px rgba(255, 255, 255, .94);
+}
+
+.cut-open-page .pm-amazon.pm-amazon-dark.pm-amazon-official:hover,
+.cut-open-page .pm-amazon.pm-amazon-dark.pm-amazon-official:focus-visible {
+  background:
+    linear-gradient(105deg, rgba(238, 191, 94, .18), transparent 34%),
+    linear-gradient(180deg, #fffdf8, #f7efe1);
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, .30),
+    0 0 24px rgba(229, 181, 79, .22),
+    inset 0 1px rgba(255, 255, 255, .94);
+}
+
+.cut-open-page .pm-amazon.pm-amazon-dark.pm-amazon-official::before {
+  content: "";
+  width: 4px;
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(#f0c568, #b87824);
+}
+
+.cut-open-page .pm-amazon-official .pm-amazon-badge {
+  width: 142px;
+  height: 66px;
+}
+
+.cut-open-page .pm-amazon-official .pm-amazon-copy small {
+  color: #8b6a38;
+  font-size: 9px;
+  letter-spacing: .13em;
+}
+
+.cut-open-page .pm-amazon-official .pm-amazon-copy strong {
+  color: #101b2a;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.cut-open-page .pm-amazon-official > b {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #bd893b66;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #8a581d;
+  background: #edca7d2e;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.cut-open-page .pm-header-amazon span {
+  color: #d7a84f;
+}
+
+.cut-open-page .pm-sticky-buy {
+  color: #101b26;
+  background: #e2bd6f;
+}
+
+.cut-open-page .pm-sticky-buy:hover,
+.cut-open-page .pm-sticky-buy:focus-visible {
+  background: #efd18d;
+}
+
+/* Vertical rhythm audit: preserve the Pompeii cadence, remove oversized dead zones. */
+@media (width >= 1021px) {
+  .cut-open-page .pm-hero-actions {
+    gap: 22px;
+    margin-top: 26px;
+  }
+
+  .cut-open-page .pm-why {
+    padding-block: 62px 58px;
+  }
+
+  .cut-open-page .pm-reactions {
+    padding-block: 70px 80px;
+  }
+
+  .cut-open-page .pm-combined {
+    padding-block: 88px 92px;
+  }
+
+  .cut-open-page .pm-combined-inner {
+    gap: clamp(52px, 5.5vw, 78px);
+  }
+
+  .cut-open-page .pm-final {
+    min-height: 700px;
+    padding-block: 88px 94px;
+  }
+
+  .cut-open-page .pm-final-value {
+    margin: 24px 0 26px;
+  }
+
+  .cut-open-page .pm-look-again {
+    display: inline-block;
+    margin-top: 18px;
+  }
+}
+
+@media (width <= 720px) {
+  .cut-open-page .dv-amazon-hero {
+    width: 100%;
+    min-height: 58px;
+  }
+
+  .cut-open-page .pm-spread-controls .pm-chapter-nav button {
+    color: rgba(255, 255, 255, .82);
+    border-color: rgba(255, 255, 255, .26);
+    background: rgba(7, 27, 42, .88);
+  }
+
+  .cut-open-page .pm-spread-controls .pm-chapter-nav button[aria-current="true"] {
+    color: #101b26;
+    border-color: #e2bd6f;
+    background: #e2bd6f;
+  }
+
+  .cut-open-page .pm-combined {
+    padding-block: 64px 70px;
+  }
+
+  .cut-open-page .pm-final {
+    padding-block: 68px 84px;
+  }
+
+  .cut-open-page .pm-final .pm-amazon.pm-amazon-official {
+    width: 100%;
+    min-height: 60px;
+  }
+
+  .cut-open-page .pm-amazon-official .pm-amazon-badge {
+    width: 118px;
+    height: 58px;
+  }
+
+  .cut-open-page .pm-look-again {
+    display: inline-block;
+    margin-top: 16px;
+  }
 }
