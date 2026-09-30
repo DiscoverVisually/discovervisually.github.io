@@ -17,6 +17,7 @@
   });
 
   const bookTitles = {
+    "/books/cut-open.html": { title:"CUT OPEN!", collection:"Visual Learning", url:"/collections/visual-learning/" },
     "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History Hunters", url: "/collections/history/" },
     "/books/hindenburg-the-final-flight.html": { title: "Hindenburg", collection: "History Hunters", url: "/collections/history/" },
     "/books/i-worked-for-abraham-lincoln.html": { title: "Abraham Lincoln", collection: "History Hunters", url: "/collections/history/" },
