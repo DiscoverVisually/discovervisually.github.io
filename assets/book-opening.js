@@ -56,7 +56,11 @@
       if (elapsed >= duration) finish();
       else frame = requestAnimationFrame(tick);
     };
-    const resume = () => { if (!document.hidden && !finished) { previous = null; frame = requestAnimationFrame(tick); } };
+    const resume = () => {
+      cancelAnimationFrame(frame);
+      previous = null;
+      if (!document.hidden && !finished) frame = requestAnimationFrame(tick);
+    };
     const motionChange = () => { if (reducedMotion.matches) finish(); };
     running.set(root, finish);
     root.dataset.openingState = 'opening';
@@ -101,8 +105,13 @@
     let opened = false;
     const open = () => { if (!opened) { opened = true; start(stage); } };
     observe(stage, book, open);
-    stage.addEventListener('pointerdown', () => { if (!opened) open(); running.get(stage)?.(); }, { capture: true });
-    stage.closest('[data-az-viewer], [data-spread-viewer]')?.addEventListener('keydown', event => {
+    const viewer = stage.closest('[data-az-viewer], [data-spread-viewer]');
+    viewer?.addEventListener('pointerdown', event => {
+      if (!event.target.closest('.dv-flat-opening, button')) return;
+      if (!opened) open();
+      running.get(stage)?.();
+    }, { capture: true });
+    viewer?.addEventListener('keydown', event => {
       if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { if (!opened) open(); running.get(stage)?.(); }
     }, { capture: true });
   }
