@@ -101,7 +101,6 @@ window.DV_BOOKS = [
     description: "Step inside America’s most famous prison, reconstruct the 1962 escape and examine the clues behind its unsolved mystery.",
     primaryCollection: "history",
     collections: ["history", "children"],
-    carouselOnly: true,
     topic: "Alcatraz & Unsolved History",
     series: "History Hunters"
   }

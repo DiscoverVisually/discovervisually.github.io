@@ -793,14 +793,14 @@
     const collection = grid.dataset.catalogGrid;
     const shown = collection === "all"
       ? books
-      : books.filter(book => !book.carouselOnly && book.collections.includes(collection));
+      : books.filter(book => book.collections.includes(collection));
     const collectionCopy = {
-      history: "Walk through Pompeii before Vesuvius erupts, cross the Atlantic aboard Hindenburg and enter Abraham Lincoln’s wartime White House. These subject-led titles also appear in For Children when their audience overlaps.",
+      history: "Walk through Pompeii before Vesuvius erupts, cross the Atlantic aboard Hindenburg, enter Abraham Lincoln’s wartime White House and investigate the Alcatraz escape. These subject-led titles also appear in For Children when their audience overlaps.",
       children: "Full-color visual books for curious young readers—from immersive history to engineering and city stories built around maps, scenes, timelines and discovery.",
       "cities-through-time": "Travel through a great city across centuries of change, using maps, timelines, illustrated scenes and infographics to connect the past to places readers can still see today."
     }[collection];
     const collectionDescription = {
-      history: "Explore immersive visual history books about Pompeii, Hindenburg and Abraham Lincoln from the History Hunters series.",
+      history: "Explore immersive visual history books about Pompeii, Hindenburg, Abraham Lincoln and Alcatraz from the History Hunters series.",
       children: "Full-color visual nonfiction for curious young readers, spanning immersive history, engineering and richly illustrated city stories.",
       "cities-through-time": "Illustrated city histories that show how streets, skylines, people and infrastructure change over time."
     }[collection];

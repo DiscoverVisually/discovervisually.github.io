@@ -2869,3 +2869,10 @@ footer nav a.footer-coming-soon small { color: var(--gold-light); font-size: 8px
 @media (prefers-reduced-motion: reduce) {
   .homepage-section-rail a, .homepage-section-rail a span { transition: none; }
 }
+
+/* Explore is a native disclosure: keep collapsed links out of keyboard and accessibility navigation. */
+.nav-explore:not([open]) > .nav-explore-panel { display:none; }
+.site-header nav > a, .nav-explore summary { font-size:14px; min-height:44px; display:flex; align-items:center; }
+.nav-explore-panel a { min-height:44px; }
+.nav-explore-panel small { font-size:12px; color:#bdc6cc; }
+.site-header a:focus-visible, .nav-explore summary:focus-visible { outline:2px solid #d4b06c; outline-offset:4px; }

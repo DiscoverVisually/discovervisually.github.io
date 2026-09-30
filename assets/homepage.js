@@ -379,3 +379,8 @@ if (spotlightTabs[0]) selectSpotlight(spotlightTabs[0]);
     observer.observe(hero);
   }
 })();
+
+document.addEventListener("keydown", (event) => {
+ const explore = document.querySelector(".nav-explore");
+ if (event.key === "Escape" && explore?.open) { explore.open = false; explore.querySelector("summary")?.focus(); }
+});

@@ -54,3 +54,8 @@
   const path = location.pathname.replace(/index\.html$/, "");
   header.querySelectorAll("a").forEach((link) => { const target = new URL(link.href, location.origin).pathname.replace(/index\.html$/, ""); if (target === path) link.setAttribute("aria-current", "page"); else if (link.getAttribute("aria-current") === "page") link.removeAttribute("aria-current"); });
 })();
+
+document.addEventListener("keydown", (event) => {
+ const explore = document.querySelector(".dv-explore");
+ if (event.key === "Escape" && explore?.open) { explore.open = false; explore.querySelector("summary")?.focus(); }
+});
