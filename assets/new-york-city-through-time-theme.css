@@ -25,3 +25,138 @@
 .nyc-time-page .pm-combined .pm-atmosphere i{background-image:url("/assets/nyc-tea-party.webp");opacity:.035;mix-blend-mode:multiply}
 .nyc-time-page .pm-final .pm-atmosphere i{background-image:url("/assets/nyc-modern.webp");opacity:.055}
 @media(max-width:720px){.nyc-time-page .pm-hero h1>span{font-size:clamp(45px,15vw,72px)}.nyc-time-page .pm-hero h1 em{font-size:clamp(31px,9vw,46px)}}
+
+/* 2026-09-30: contrast pass + Manhattan hero art */
+.nyc-time-page .pm-hero {
+  background:
+    linear-gradient(90deg,
+      rgba(3, 15, 29, .98) 0%,
+      rgba(3, 15, 29, .94) 34%,
+      rgba(3, 15, 29, .73) 52%,
+      rgba(3, 15, 29, .34) 72%,
+      rgba(3, 15, 29, .18) 100%),
+    linear-gradient(180deg,
+      rgba(3, 15, 29, .10) 0%,
+      rgba(3, 15, 29, .06) 55%,
+      rgba(3, 15, 29, .76) 100%),
+    url("/books/new-york-city-through-time-cover.webp") center 77% / cover no-repeat;
+}
+
+.nyc-time-page .pm-hero::before {
+  opacity: 1;
+  background:
+    radial-gradient(circle at 76% 42%, rgba(237, 181, 66, .12), transparent 28%),
+    linear-gradient(90deg, rgba(3, 15, 29, .36), transparent 62%);
+}
+
+.nyc-time-page .pm-hero::after {
+  opacity: 1;
+  clip-path: none;
+  background: linear-gradient(180deg, transparent 52%, rgba(3, 12, 23, .72) 100%);
+}
+
+.nyc-time-page .pm-hero .pm-atmosphere i {
+  background-image: none;
+  opacity: 0;
+}
+
+.nyc-time-page .pm-hero-copy {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .28);
+}
+
+.nyc-time-page .pm-deck {
+  color: rgba(255, 255, 255, .88);
+}
+
+.nyc-time-page .pm-look-link {
+  background: rgba(4, 20, 37, .24);
+  backdrop-filter: blur(3px);
+}
+
+/* The Pompeii template intentionally uses light type in this section.
+   Keep the background dark so every inherited label remains readable. */
+.nyc-time-page .pm-why {
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(226, 50, 43, .16), transparent 28%),
+    radial-gradient(circle at 18% 86%, rgba(47, 126, 177, .13), transparent 30%),
+    linear-gradient(145deg, #0c2943, #06182d 66%);
+}
+
+.nyc-time-page .pm-why-lead h2 {
+  color: #fff;
+}
+
+.nyc-time-page .pm-why-lead h2 em {
+  color: #f0c35f;
+}
+
+.nyc-time-page .pm-why-lead > p:last-child {
+  color: rgba(255, 255, 255, .72);
+  border-left-color: rgba(240, 195, 95, .34);
+}
+
+.nyc-time-page .pm-benefits {
+  border-color: rgba(255, 255, 255, .18);
+}
+
+.nyc-time-page .pm-benefits article {
+  border-color: rgba(255, 255, 255, .16);
+}
+
+.nyc-time-page .pm-benefits article:hover {
+  background: rgba(255, 255, 255, .045);
+}
+
+.nyc-time-page .pm-benefits article > span,
+.nyc-time-page .pm-benefit-punchline {
+  color: #f0c35f !important;
+}
+
+.nyc-time-page .pm-benefits h3 {
+  color: #fff;
+}
+
+.nyc-time-page .pm-benefits .pm-benefit-copy > p:last-child {
+  color: rgba(255, 255, 255, .70);
+}
+
+.nyc-time-page .pm-why-payoff strong {
+  color: #fff;
+}
+
+.nyc-time-page .pm-why-payoff span {
+  color: rgba(255, 255, 255, .56);
+}
+
+/* Explicit light-section text colors prevent inherited white type. */
+.nyc-time-page .pm-proof,
+.nyc-time-page .pm-proof blockquote,
+.nyc-time-page .pm-proof-facts,
+.nyc-time-page .pm-combined,
+.nyc-time-page .pm-combined h2,
+.nyc-time-page .pm-combined summary,
+.nyc-time-page .pm-craft-details,
+.nyc-time-page .pm-craft-details h2,
+.nyc-time-page .pm-craft-details td {
+  color: #08284b;
+}
+
+.nyc-time-page .pm-combined details p,
+.nyc-time-page .pm-craft-details > p:not(.pm-eyebrow) {
+  color: #4b5e6d;
+}
+
+.nyc-time-page .pm-craft-details th {
+  color: #536675;
+}
+
+@media (width <= 720px) {
+  .nyc-time-page .pm-hero {
+    background-position: 61% 82%;
+  }
+  .nyc-time-page .pm-hero::before {
+    background:
+      linear-gradient(180deg, rgba(3, 15, 29, .90) 0%, rgba(3, 15, 29, .72) 52%, rgba(3, 15, 29, .50) 100%);
+  }
+}
