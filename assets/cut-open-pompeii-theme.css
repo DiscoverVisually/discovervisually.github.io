@@ -8,3 +8,65 @@
 .cut-open-page .pm-proof{background:#e9eef0}.cut-open-page .pm-proof-author{color:#335c71}.cut-open-page .pm-inside{background:linear-gradient(180deg,#f4f7f7,#e7ecee)}.cut-open-page .pm-why{background:#f5f7f6}.cut-open-page .pm-reactions{background:#0c2233}.cut-open-page .pm-combined{background:#edf2f3}
 .cut-open-page .pm-final{background:radial-gradient(circle at 27% 43%,rgba(44,137,188,.24),transparent 29%),linear-gradient(125deg,#07131f,#0d2b40 58%,#07121b)}
 .cut-open-page .pm-amazon-dark{background:#bb742d}.cut-open-page .pm-amazon-dark:hover{background:#ce883f}.cut-open-page .pm-final-plaque b{color:#b9dbea}.cut-open-page .pm-book-page img,.cut-open-page .pm-turn-face img,.cut-open-page .pm-modal-pan img{background:#dbe4e7}
+
+/* Contrast audit — CUT OPEN! product page */
+.cut-open-page .pm-proof,
+.cut-open-page .pm-why,
+.cut-open-page .pm-combined {
+  color: #132333;
+}
+
+.cut-open-page .pm-inside {
+  color: #fff;
+  background:
+    radial-gradient(circle at 50% 46%, #294b61 0%, #102d42 46%, #07131f 82%);
+}
+
+.cut-open-page .pm-inside::before {
+  background:
+    linear-gradient(180deg, rgba(3, 12, 20, .72) 0%, rgba(3, 12, 20, .28) 22%, rgba(3, 12, 20, .10) 50%, rgba(3, 12, 20, .30) 78%, rgba(3, 12, 20, .78) 100%),
+    radial-gradient(circle at 50% 42%, rgba(57, 121, 156, .22), transparent 58%);
+}
+
+.cut-open-page .pm-inside .pm-section-head > p,
+.cut-open-page .pm-inside .pm-spread-controls p {
+  color: rgba(255, 255, 255, .86);
+}
+
+.cut-open-page .pm-inside .pm-section-head h2 {
+  color: #fff;
+}
+
+.cut-open-page .pm-inside .pm-eyebrow {
+  color: #e3bd6d;
+}
+
+.cut-open-page .pm-proof .pm-review-source {
+  color: #335c71;
+}
+
+.cut-open-page .pm-why-lead h2 em,
+.cut-open-page .pm-craft-details h2 em {
+  color: #9a541f;
+}
+
+.cut-open-page .pm-why-lead > p:last-child,
+.cut-open-page .pm-combined details p,
+.cut-open-page .pm-craft-details > p:not(.pm-eyebrow) {
+  color: #4f5f69;
+}
+
+.cut-open-page .pm-craft-details th {
+  color: #53636e;
+}
+
+.cut-open-page .pm-craft-details,
+.cut-open-page .pm-craft-details td,
+.cut-open-page .pm-combined summary {
+  color: #132333;
+}
+
+.cut-open-page .pm-reactions,
+.cut-open-page .pm-final {
+  color: #fff;
+}
