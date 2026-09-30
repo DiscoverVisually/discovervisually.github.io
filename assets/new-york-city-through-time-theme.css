@@ -16,7 +16,7 @@
 .nyc-time-page .pm-reactions{color:#fff;background:#081d34}.nyc-time-page .pm-reaction-grid article:first-child{background:linear-gradient(145deg,#123d60,#742d31)}
 .nyc-time-page .pm-combined{color:#08284b;background:#f0eee7}.nyc-time-page .pm-combined details p,.nyc-time-page .pm-craft-details>p:not(.pm-eyebrow){color:#536371}.nyc-time-page .pm-craft-details{color:#08284b;background:#e6edf1}.nyc-time-page .pm-craft-details h2 em{color:#c9342e}.nyc-time-page .pm-craft-details th{color:#536675}
 .nyc-time-page .pm-final{color:#fff;background:radial-gradient(circle at 26% 45%,rgba(61,143,195,.25),transparent 30%),linear-gradient(125deg,#06172a,#0c3557 58%,#051321)}
-.nyc-time-page .pm-amazon-dark{background:#d8342f}.nyc-time-page .pm-amazon-dark:hover{background:#e14943}.nyc-time-page .pm-final-plaque b{color:#b9ddf3}
+.nyc-time-page .pm-final-plaque b{color:#b9ddf3}
 .nyc-time-page .pm-book-page img,.nyc-time-page .pm-turn-face img,.nyc-time-page .pm-modal-pan img{background:#e7eef2}
 .nyc-time-page .pm-hero .pm-atmosphere i{background-image:url("/assets/nyc-modern.webp");opacity:.045}
 .nyc-time-page .pm-inside .pm-atmosphere i{background-image:url("/assets/nyc-connects.webp");opacity:.05}
@@ -158,5 +158,196 @@
   .nyc-time-page .pm-hero::before {
     background:
       linear-gradient(180deg, rgba(3, 15, 29, .90) 0%, rgba(3, 15, 29, .72) 52%, rgba(3, 15, 29, .50) 100%);
+  }
+}
+
+
+/* 2026-09-30: Amazon CTA parity with the Pompeii product page.
+   Keep buying UI identical across titles; only the destination/book copy changes. */
+.nyc-time-page .dv-amazon-hero {
+  width: min(100%, 340px);
+  min-height: 64px;
+  padding: 6px 12px 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #18212a !important;
+  background: #f3c765;
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .25);
+  transition: transform .25s, background .25s, box-shadow .25s;
+}
+
+.nyc-time-page .dv-amazon-hero:hover {
+  background: #ffd67d;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .32);
+}
+
+.nyc-time-page .dv-amazon-hero:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+
+.nyc-time-page .dv-amazon-hero .pm-amazon-badge {
+  width: 94px;
+  height: 47px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.nyc-time-page .dv-amazon-hero .pm-amazon-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.nyc-time-page .dv-amazon-hero .pm-amazon-copy small {
+  opacity: .62;
+  margin: 0;
+  color: inherit;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.nyc-time-page .dv-amazon-hero .pm-amazon-copy strong {
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.nyc-time-page .dv-amazon-hero > b {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(24, 33, 42, .28);
+  color: inherit;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Final purchase CTA: exact ivory + gold Pompeii treatment. */
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official {
+  width: min(100%, 430px);
+  min-height: 88px;
+  gap: 17px;
+  padding: 10px 18px 10px 12px;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid #e5bb62;
+  border-radius: 3px;
+  color: #18212a !important;
+  background:
+    linear-gradient(105deg, rgba(238, 191, 94, .18), transparent 34%),
+    linear-gradient(180deg, #fffdf8, #f7efe1);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, .26),
+    inset 0 1px rgba(255, 255, 255, .94);
+  transition:
+    transform .28s ease,
+    box-shadow .35s ease,
+    background .28s ease;
+}
+
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official:hover,
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official:focus-visible {
+  background:
+    linear-gradient(105deg, rgba(238, 191, 94, .18), transparent 34%),
+    linear-gradient(180deg, #fffdf8, #f7efe1);
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, .30),
+    0 0 24px rgba(229, 181, 79, .22),
+    inset 0 1px rgba(255, 255, 255, .94);
+}
+
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official::before {
+  content: "";
+  width: 4px;
+  background: linear-gradient(#f0c568, #b87824);
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official::after {
+  content: "";
+  pointer-events: none;
+  width: 72px;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .78), transparent);
+  position: absolute;
+  inset: -40% auto -40% -95px;
+  transform: skewX(-14deg);
+  transition: transform .65s ease;
+  animation: pm-amazon-auto-sheen 7.6s 2.4s ease-in-out infinite;
+}
+
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official:hover::after,
+.nyc-time-page .pm-amazon.pm-amazon-dark.pm-amazon-official:focus-visible::after {
+  transform: translateX(540px) skewX(-14deg);
+  animation-play-state: paused;
+}
+
+.nyc-time-page .pm-amazon-official .pm-amazon-badge {
+  width: 142px;
+  height: 66px;
+}
+
+.nyc-time-page .pm-amazon-official .pm-amazon-copy small {
+  color: #8b6a38;
+  font-size: 9px;
+  letter-spacing: .13em;
+}
+
+.nyc-time-page .pm-amazon-official .pm-amazon-copy strong {
+  color: #101b2a;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.nyc-time-page .pm-amazon-official > b {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #bd893b66;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #8a581d;
+  background: #edca7d2e;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+/* Header / sticky Amazon actions use Pompeii's exact gold, not the NYC red accent. */
+.nyc-time-page .pm-header-amazon span {
+  color: #d7a84f;
+}
+
+.nyc-time-page .pm-sticky-buy {
+  color: #101b26;
+  background: #e2bd6f;
+}
+
+.nyc-time-page .pm-sticky-buy:hover,
+.nyc-time-page .pm-sticky-buy:focus-visible {
+  background: #efd18d;
+}
+
+@media (max-width: 720px) {
+  .nyc-time-page .dv-amazon-hero {
+    width: 100%;
+    min-height: 58px;
+  }
+  .nyc-time-page .pm-amazon-official .pm-amazon-badge {
+    width: 118px;
+    height: 58px;
   }
 }
