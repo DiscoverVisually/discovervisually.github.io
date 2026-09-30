@@ -63,6 +63,7 @@
     };
     const bookVisuals = {
       "cut-open": { accent:"#e5b94f", spine:"#0c3157", spineInk:"#fff4c7", spineRail:"rgba(2,12,24,.72)", spineFoil:"rgba(111,220,255,.9)", glow:"rgba(44,149,214,.34)", spotlight:{hue:205,saturation:82,lightness:55,alpha:.3} },
+      "new-york-city": { accent:"#e63b32", spine:"#082e51", spineInk:"#f7f4e8", spineRail:"rgba(2,13,24,.72)", spineFoil:"rgba(167,218,246,.92)", glow:"rgba(45,123,174,.38)", spotlight:{hue:204,saturation:76,lightness:54,alpha:.31} },
       "romantasy-yearbook": { accent:"#f0b2d8", spine:"#5a1d55", spineInk:"#fff7fb", spineRail:"rgba(24,5,26,.64)", spineFoil:"rgba(255,214,247,.92)", glow:"rgba(198,82,155,.34)", spotlight:{hue:318,saturation:76,lightness:58,alpha:.3} },
       "abraham-lincoln": { accent:"#e2bd70", spine:"#10345d", spineInk:"#fff0bc", spineRail:"rgba(2,14,31,.66)", spineFoil:"rgba(255,228,155,.88)", glow:"rgba(194,148,71,.34)", spotlight:{hue:212,saturation:76,lightness:56,alpha:.29} },
       "hindenburg": { accent:"#e7b35e", spine:"#1c5268", spineInk:"#fff1c1", spineRail:"rgba(2,19,29,.64)", spineFoil:"rgba(188,244,255,.9)", glow:"rgba(206,111,45,.34)", spotlight:{hue:190,saturation:78,lightness:54,alpha:.3} },
@@ -795,11 +796,13 @@
       : books.filter(book => !book.carouselOnly && book.collections.includes(collection));
     const collectionCopy = {
       history: "Walk through Pompeii before Vesuvius erupts, cross the Atlantic aboard Hindenburg and enter Abraham Lincoln’s wartime White House. These subject-led titles also appear in For Children when their audience overlaps.",
-      children: "Full-color books that respect young readers’ intelligence—from immersive history to visual STEM guides that make complex ideas easier to see, explore and understand."
+      children: "Full-color visual books for curious young readers—from immersive history to engineering and city stories built around maps, scenes, timelines and discovery.",
+      "cities-through-time": "Travel through a great city across centuries of change, using maps, timelines, illustrated scenes and infographics to connect the past to places readers can still see today."
     }[collection];
     const collectionDescription = {
       history: "Explore immersive visual history books about Pompeii, Hindenburg and Abraham Lincoln from the History Hunters series.",
-      children: "Full-color visual books for curious young readers, from immersive history to engineering and STEM."
+      children: "Full-color visual nonfiction for curious young readers, spanning immersive history, engineering and richly illustrated city stories.",
+      "cities-through-time": "Illustrated city histories that show how streets, skylines, people and infrastructure change over time."
     }[collection];
     const heroCopy = document.querySelector(".catalog-hero-copy");
     if (collectionCopy && heroCopy) heroCopy.textContent = collectionCopy;
