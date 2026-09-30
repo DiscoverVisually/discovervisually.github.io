@@ -50,7 +50,7 @@
     };
     const tick = now => {
       if (document.hidden) { previous = null; return; }
-      if (previous !== null) elapsed += Math.min(now - previous, 64);
+      if (previous !== null) elapsed += Math.max(0, now - previous);
       previous = now;
       pose(root, elapsed / duration);
       if (elapsed >= duration) finish();
