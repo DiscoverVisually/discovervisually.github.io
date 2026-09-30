@@ -1,0 +1,27 @@
+.nyc-time-page{--pm-night:#06182d;--pm-deep:#0b2d4b;--pm-ink:#08284b;--pm-paper:#f4f1e8;--pm-cream:#fbf8ef;--pm-sand:#e8ddc6;--pm-gold:#edb542;--pm-orange:#e2322b;--pm-rust:#c72f2a;--pm-blue:#0b4e82;--pm-line:#0b355026}
+.nyc-time-page .pm-hero{background:radial-gradient(circle at 79% 38%,rgba(87,173,230,.30),transparent 24%),radial-gradient(circle at 72% 50%,#2e6c95 0,#103b60 37%,#06172a 74%)}
+.nyc-time-page .pm-hero:before{opacity:.28;background:linear-gradient(90deg,rgba(2,12,24,.93),rgba(3,21,39,.18) 64%),repeating-linear-gradient(90deg,transparent 0 61px,rgba(255,255,255,.045) 62px,transparent 63px)}
+.nyc-time-page .pm-hero:after{opacity:.21;clip-path:polygon(0 100%,0 78%,12% 78%,12% 62%,23% 62%,23% 72%,34% 72%,34% 54%,42% 54%,42% 68%,50% 68%,50% 42%,59% 42%,59% 60%,69% 60%,69% 34%,78% 34%,78% 54%,88% 54%,88% 26%,100% 26%,100% 100%);background:linear-gradient(180deg,rgba(117,193,235,.18),#020b14 82%)}
+.nyc-time-page .pm-hero h1>span{font-size:clamp(50px,5.5vw,86px);letter-spacing:-.07em}
+.nyc-time-page .pm-hero h1 em{color:#f14535}
+.nyc-time-page .pm-wrap-front{background-image:url("/books/new-york-city-through-time-cover.webp")!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important}
+.nyc-time-page .pm-wrap-back{background-image:linear-gradient(160deg,#103d65,#06182d)!important;background-size:100% 100%!important;background-position:center!important}
+.nyc-time-page .pm-book-back{background:#082b4a}.nyc-time-page .pm-book-spine{background:#082e51}.nyc-time-page .pm-stage-ring{border-color:rgba(155,214,248,.20)}.nyc-time-page .pm-stage-ash{opacity:.11;filter:hue-rotate(165deg) saturate(.45)}
+.nyc-time-page .pm-proof{color:#08284b;background:#edf5fa}.nyc-time-page .pm-proof-quote>span{color:#d8322b}.nyc-time-page .pm-proof-author{color:#47647a}.nyc-time-page .pm-proof .pm-review-source{color:#365f7c}
+.nyc-time-page .pm-inside{color:#fff;background:radial-gradient(circle at 50% 46%,#244f6d 0%,#0b304f 47%,#06182d 82%)}
+.nyc-time-page .pm-inside::before{background:linear-gradient(180deg,rgba(2,12,24,.76) 0%,rgba(2,12,24,.30) 22%,rgba(2,12,24,.08) 51%,rgba(2,12,24,.30) 78%,rgba(2,12,24,.82) 100%),radial-gradient(circle at 50% 42%,rgba(82,158,205,.18),transparent 58%)}
+.nyc-time-page .pm-inside .pm-section-head>p,.nyc-time-page .pm-inside .pm-spread-controls p{color:rgba(255,255,255,.87)}
+.nyc-time-page .pm-inside .pm-section-head h2{color:#fff}.nyc-time-page .pm-inside .pm-section-head h2 em,.nyc-time-page .pm-inside .pm-eyebrow{color:#f0c35f}
+.nyc-time-page .pm-why{color:#08284b;background:#fbf8ef}.nyc-time-page .pm-why-lead h2 em{color:#d9312b}.nyc-time-page .pm-why-lead>p:last-child{color:#526579}.nyc-time-page .pm-benefits article>span{color:#b92f2b}
+.nyc-time-page .pm-reactions{color:#fff;background:#081d34}.nyc-time-page .pm-reaction-grid article:first-child{background:linear-gradient(145deg,#123d60,#742d31)}
+.nyc-time-page .pm-combined{color:#08284b;background:#f0eee7}.nyc-time-page .pm-combined details p,.nyc-time-page .pm-craft-details>p:not(.pm-eyebrow){color:#536371}.nyc-time-page .pm-craft-details{color:#08284b;background:#e6edf1}.nyc-time-page .pm-craft-details h2 em{color:#c9342e}.nyc-time-page .pm-craft-details th{color:#536675}
+.nyc-time-page .pm-final{color:#fff;background:radial-gradient(circle at 26% 45%,rgba(61,143,195,.25),transparent 30%),linear-gradient(125deg,#06172a,#0c3557 58%,#051321)}
+.nyc-time-page .pm-amazon-dark{background:#d8342f}.nyc-time-page .pm-amazon-dark:hover{background:#e14943}.nyc-time-page .pm-final-plaque b{color:#b9ddf3}
+.nyc-time-page .pm-book-page img,.nyc-time-page .pm-turn-face img,.nyc-time-page .pm-modal-pan img{background:#e7eef2}
+.nyc-time-page .pm-hero .pm-atmosphere i{background-image:url("/assets/nyc-modern.webp");opacity:.045}
+.nyc-time-page .pm-inside .pm-atmosphere i{background-image:url("/assets/nyc-connects.webp");opacity:.05}
+.nyc-time-page .pm-why .pm-atmosphere i{background-image:url("/assets/nyc-hudson.webp");opacity:.032;mix-blend-mode:multiply}
+.nyc-time-page .pm-reactions .pm-atmosphere i{background-image:url("/assets/nyc-subway.webp");opacity:.052}
+.nyc-time-page .pm-combined .pm-atmosphere i{background-image:url("/assets/nyc-tea-party.webp");opacity:.035;mix-blend-mode:multiply}
+.nyc-time-page .pm-final .pm-atmosphere i{background-image:url("/assets/nyc-modern.webp");opacity:.055}
+@media(max-width:720px){.nyc-time-page .pm-hero h1>span{font-size:clamp(45px,15vw,72px)}.nyc-time-page .pm-hero h1 em{font-size:clamp(31px,9vw,46px)}}

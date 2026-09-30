@@ -30,6 +30,21 @@ window.DV_BOOKS = [
     series: "Visual Learning"
   },
   {
+    id: "new-york-city",
+    title: "New York City Through Time: An Illustrated History from 1600 to 2030",
+    shortTitle: "New York City Through Time",
+    url: "/books/new-york-city-through-time.html",
+    cover: "/books/new-york-city-through-time-cover.webp",
+    status: "Available now",
+    format: "72-page full-color visual city history",
+    audience: "Ages 10+",
+    description: "Travel from Manahatta and New Amsterdam to skyscrapers, subways, crises and the city of tomorrow through maps, timelines and richly illustrated scenes.",
+    primaryCollection: "cities-through-time",
+    collections: ["cities-through-time", "visual-learning", "children"],
+    topic: "New York City, Urban History & Architecture",
+    series: "Cities Through Time"
+  },
+  {
     id: "abraham-lincoln",
     title: "I Worked for Abraham Lincoln",
     shortTitle: "Abraham Lincoln",
@@ -96,5 +111,6 @@ window.DV_COLLECTIONS = {
   children: { name: "For Children", url: "/collections/children/", label: "Curiosity without limits" },
   history: { name: "History Hunters", url: "/collections/history/", label: "The past made immediate" },
   romantasy: { name: "Romantasy", url: "/collections/romantasy/", label: "Fantasy romance, beautifully mapped" },
-  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible" }
+  "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible" },
+  "cities-through-time": { name: "Cities Through Time", url: "/collections/cities-through-time/", label: "One city. Centuries of change." }
 };

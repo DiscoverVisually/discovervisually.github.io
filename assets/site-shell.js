@@ -17,6 +17,7 @@
   });
 
   const bookTitles = {
+    "/books/new-york-city-through-time.html": { title:"New York City", collection:"Cities Through Time", url:"/collections/cities-through-time/" },
     "/books/cut-open.html": { title:"CUT OPEN!", collection:"Visual Learning", url:"/collections/visual-learning/" },
     "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History Hunters", url: "/collections/history/" },
     "/books/hindenburg-the-final-flight.html": { title: "Hindenburg", collection: "History Hunters", url: "/collections/history/" },
@@ -33,12 +34,12 @@
   const header = document.querySelector("[data-dv-header]");
   if (header) {
     const panel = header.querySelector(".dv-explore-panel");
-    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/history/">History Hunters</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a class="dv-coming-link" href="/collections/visual-learning/"><span>Visual Learning</span><small>Coming soon</small></a><a href="/books/">All books</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
+    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/history/">History Hunters</a><a href="/collections/cities-through-time/">Cities Through Time</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/books/">All books</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/new-york-city-through-time.html">New York City Through Time</a><a href="/books/cut-open.html">CUT OPEN!</a><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
   }
 
   document.querySelectorAll(".dv-footer-group").forEach((group) => {
     const label = group.querySelector("small")?.textContent.trim().toLowerCase();
-    if (label === "explore") group.innerHTML = `<small>Explore</small><a href="/books/">All books</a><a href="/collections/history/">History Hunters</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning <em class="dv-footer-status">Coming soon</em></a>`;
+    if (label === "explore") group.innerHTML = `<small>Explore</small><a href="/books/">All books</a><a href="/collections/history/">History Hunters</a><a href="/collections/cities-through-time/">Cities Through Time</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning</a>`;
   });
 
   if (!header) return;
