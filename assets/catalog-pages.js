@@ -171,7 +171,7 @@
       if(frame) return;
       shelf.classList.add('is-animating');
       const tick=now=>{
-        const dt=previousTime===null?1/60:Math.min((now-previousTime)/1000,.032);previousTime=now;
+        const dt=previousTime===null?1/60:Math.max(0,(now-previousTime)/1000);previousTime=now;
         const offset=position-slot(),omega=14,c=velocity+omega*offset,decay=Math.exp(-omega*dt);
         position=slot()+(offset+c*dt)*decay;velocity=(velocity-omega*c*dt)*decay;
         render(now);
@@ -228,7 +228,7 @@
       if(announce)live.textContent=empty?'No books match these filters. Try all ages or reset the filters.':book.title+'. '+book.audience+'. Book '+(slot()+1)+' of '+visible.length+'.';
       if(animateCopy&&!reducedMotion.matches)copy.forEach(el=>{
         el.getAnimations?.().forEach(animation=>animation.cancel());
-        el.animate([{opacity:.65,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:340,delay:140,easing:'cubic-bezier(.2,.7,.2,1)'});
+        el.animate([{opacity:.65,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:340,delay:140,fill:'backwards',easing:'cubic-bezier(.2,.7,.2,1)'});
       });
       if(!empty){
         try{sessionStorage.setItem(storageKey,book.id);}catch(_){}
