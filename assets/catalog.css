@@ -1583,3 +1583,7 @@ a { color:inherit; text-decoration:none; }
 .catalog-page .catalog-main { padding:0; }
 #book-grid { scroll-margin-top:24px; }
 @media(max-width:700px) { .catalog-hero { min-height:0; padding:32px 20px; gap:24px; grid-template-columns:1fr; } .catalog-hero h1 { font-size:44px; } .catalog-grid-heading { padding:28px 20px; } .catalog-grid-heading h2 { font-size:30px; } }
+
+body:not(.books-catalog-page) .dv-catalog-grid { padding-top:32px; }
+body:not(.books-catalog-page) .dv-catalog-cover { height:260px; aspect-ratio:auto; object-fit:contain; display:block; }
+body:not(.books-catalog-page) .dv-catalog-image { background:transparent; }

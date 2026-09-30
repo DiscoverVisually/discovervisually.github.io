@@ -59,3 +59,5 @@ document.addEventListener("keydown", (event) => {
  const explore = document.querySelector(".dv-explore");
  if (event.key === "Escape" && explore?.open) { explore.open = false; explore.querySelector("summary")?.focus(); }
 });
+
+document.querySelectorAll(".dv-explore-panel a").forEach(link => link.setAttribute("aria-label", link.textContent.trim()));
