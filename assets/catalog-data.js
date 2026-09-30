@@ -21,7 +21,7 @@ window.DV_BOOKS = [
     url: "/books/cut-open.html",
     cover: "/books/cut-open-cover.webp",
     status: "Available now",
-    format: "84-page large-format full-color visual STEM encyclopedia",
+    format: "82-page large-format full-color visual STEM encyclopedia",
     audience: "Ages 8+",
     description: "Cut open 40 real machines, buildings and hidden systems to see where the parts are, what they do and how they work together.",
     primaryCollection: "visual-learning",
