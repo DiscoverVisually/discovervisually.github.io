@@ -193,16 +193,8 @@
 
   const setProgress = (value) => {
     openProgress = Math.min(1, Math.max(0, value));
-    if (reducedMotion.matches && openProgress > 0.01) openProgress = 1;
-    const coverProgress = Math.min(1, Math.max(0, (openProgress - 0.025) / 0.88));
-    const rearReveal = Math.min(1, Math.max(0, (openProgress - 0.075) / 0.5));
-    const leftReveal = Math.min(1, Math.max(0, (openProgress - 0.18) / 0.58));
-    inside.style.setProperty("--pm-open-progress", openProgress.toFixed(4));
-    inside.style.setProperty("--pm-cover-progress", coverProgress.toFixed(4));
-    inside.style.setProperty("--pm-rear-reveal", rearReveal.toFixed(4));
-    inside.style.setProperty("--pm-left-reveal", leftReveal.toFixed(4));
-    inside.classList.toggle("has-visible-pages", openProgress > 0.08);
-    inside.classList.toggle("is-cover-behind", coverProgress > 0.535);
+    inside.classList.add("dv-book-opening");
+    window.DVBookOpening.pose(inside, openProgress);
   };
 
   const revealSwipeHint = () => {
@@ -219,31 +211,7 @@
   const openBook = () => {
     if (hasOpened) return;
     hasOpened = true;
-    inside.classList.add("is-opening");
-
-    if (reducedMotion.matches) {
-      setProgress(1);
-      inside.classList.remove("is-opening");
-      inside.classList.add("is-open");
-      revealSwipeHint();
-      return;
-    }
-
-    const startedAt = performance.now();
-    const duration = window.innerWidth <= 720 ? 950 : 2200;
-    const animate = (now) => {
-      const elapsed = Math.min(1, (now - startedAt) / duration);
-      const eased = elapsed * elapsed * (3 - 2 * elapsed);
-      setProgress(eased);
-      if (elapsed < 1) requestAnimationFrame(animate);
-      else {
-        setProgress(1);
-        inside.classList.remove("is-opening");
-        inside.classList.add("is-open");
-        revealSwipeHint();
-      }
-    };
-    requestAnimationFrame(animate);
+    window.DVBookOpening.start(inside, { onComplete: revealSwipeHint });
   };
 
   prevButtons.forEach((button) =>
@@ -299,18 +267,18 @@
   );
   preloadObserver.observe(inside);
 
-  const mobileOpening = window.matchMedia("(max-width: 720px)").matches;
-  const openingThreshold = mobileOpening ? 0.6 : 0.82;
-  const openingObserver = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting && entry.intersectionRatio >= openingThreshold) {
-        openBook();
-        openingObserver.disconnect();
-      }
-    },
-    { threshold: mobileOpening ? [0, 0.35, 0.6, 0.8, 1] : [0, 0.5, 0.7, 0.82, 0.9, 1] },
-  );
-  openingObserver.observe(shell);
+  window.DVBookOpening.observe(inside, book, openBook);
+  inside.addEventListener("pointerdown", event => {
+    if (!event.target.closest("button, .pm-open-book-shell")) return;
+    if (!hasOpened) openBook();
+    window.DVBookOpening.finish(inside);
+  }, { capture: true });
+  inside.addEventListener("keydown", event => {
+    if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      if (!hasOpened) openBook();
+      window.DVBookOpening.finish(inside);
+    }
+  }, { capture: true });
 
   const modal = document.querySelector(".pm-spread-modal");
   const modalPan = modal?.querySelector(".pm-modal-pan");

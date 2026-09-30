@@ -1,0 +1,130 @@
+/* Physical cover, delayed paper movement, and quiet settling. The final pose
+   retains each title's existing dimensions, imagery and reading controls. */
+.dv-book-opening {
+  --dv-open-lift: 0;
+  --dv-open-page-angle: 168;
+  --dv-open-shade: 0;
+  --dv-open-page-shade: 0;
+}
+.pm-inside.dv-book-opening .pm-open-book {
+  transform-origin: 50% 75%;
+  transform: translate3d(calc((1 - var(--pm-open-progress)) * -25%), calc((1 - var(--pm-open-progress)) * 2% - var(--dv-open-lift) * 1.6%), 0)
+    rotateX(calc(12deg - var(--pm-open-progress) * 6deg))
+    rotateZ(calc((1 - var(--pm-open-progress)) * -1deg))
+    scale(calc(.86 + var(--pm-open-progress) * .14));
+  will-change: auto;
+}
+.pm-inside.dv-book-opening.is-opening .pm-open-book,
+.pm-inside.dv-book-opening.is-opening .pm-turning-cover { will-change: transform; }
+.pm-inside.dv-book-opening .pm-turning-cover {
+  opacity: 1;
+  transform: translateZ(calc(14px - var(--pm-cover-progress) * 28px)) rotateY(calc(var(--pm-cover-progress) * -179.5deg));
+  will-change: auto;
+}
+.pm-inside.dv-book-opening .pm-cover-face { backface-visibility: hidden; }
+.pm-inside.dv-book-opening .pm-rear-cover {
+  opacity: 1;
+  transform: translateZ(-15px);
+  clip-path: inset(0 0 0 calc((1 - var(--pm-rear-reveal)) * 50%));
+}
+.pm-inside.dv-book-opening .pm-book-page-left,
+.pm-inside.dv-book-opening .pm-paper-block-left {
+  opacity: 1;
+  transform: translateZ(2px) rotateY(calc(var(--dv-open-page-angle) * 1deg));
+  backface-visibility: hidden;
+}
+.pm-inside.dv-book-opening .pm-book-page-right,
+.pm-inside.dv-book-opening .pm-paper-block-right { opacity: 1; }
+.pm-inside.dv-book-opening .pm-book-page-right { transform: translateZ(2px); }
+.pm-inside.dv-book-opening .pm-book-page-left::after,
+.pm-inside.dv-book-opening .pm-book-page-right::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: linear-gradient(90deg, #07101899, #07101818 75%, transparent);
+  opacity: var(--dv-open-shade);
+}
+.pm-inside.dv-book-opening .pm-book-page-left::after {
+  background: linear-gradient(90deg, transparent, #07101899);
+  opacity: var(--dv-open-page-shade);
+}
+.pm-inside.dv-book-opening .pm-book-shadow-ambient {
+  opacity: calc(.55 + var(--pm-open-progress) * .18 - var(--dv-open-lift) * .1);
+  transform: translate(-50%, -50%) scaleX(calc(.48 + var(--pm-open-progress) * .52)) scaleY(calc(1 + var(--dv-open-lift) * .25));
+}
+.pm-inside.dv-book-opening .pm-book-shadow-contact {
+  opacity: calc(.42 + var(--pm-open-progress) * .26 - var(--dv-open-lift) * .16);
+  transform: translate(-50%, -50%) scaleX(calc(.43 + var(--pm-open-progress) * .57));
+}
+/* A gallery's initial reveal uses the same hinged cover; its existing image
+   remains the authoritative spread for accessibility and fullscreen. */
+.dv-flat-opening {
+  perspective: 2200px;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  isolation: isolate;
+  aspect-ratio: 3 / 2;
+  --dv-cover-ink: #173445;
+}
+.ry-viewer-stage.dv-flat-opening { --dv-cover-ink: #173c30; }
+.dv-flat-opening::before, .dv-flat-opening::after { display: none; }
+.dv-opening-book {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  transform-origin: 50% 75%;
+  transform: translate3d(calc((1 - var(--pm-open-progress)) * -25%), calc(var(--dv-open-lift) * -1.6%), 0)
+    rotateX(calc(12deg - var(--pm-open-progress) * 6deg)) rotateZ(calc((1 - var(--pm-open-progress)) * -1deg))
+    scale(calc(.86 + var(--pm-open-progress) * .14));
+}
+.dv-opening-rear {
+  position: absolute; inset: -1% -.6% -1.5%; background: var(--dv-cover-ink); border-radius: 4px 9px 9px 4px;
+  transform: translateZ(-10px); box-shadow: 0 20px 40px #06121d44;
+  clip-path: inset(0 0 0 calc((1 - var(--pm-rear-reveal)) * 50%));
+}
+.dv-opening-left, .dv-opening-right {
+  position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden;
+  background: #f5efdf; backface-visibility: hidden;
+  border-bottom: 4px solid #d5c6ad; box-shadow: 0 4px 0 #eee4d3;
+}
+.dv-opening-left { left: 0; transform-origin: 100% 50%; transform: translateZ(1px) rotateY(calc(var(--dv-open-page-angle) * 1deg)); }
+.dv-opening-right { right: 0; transform: translateZ(1px); }
+.dv-opening-left > img, .dv-opening-right > img {
+  position: absolute; top: 0; width: 200%; max-width: none; height: 100%; object-fit: contain;
+  transition: opacity .24s ease; pointer-events: none;
+}
+.dv-opening-left > img { left: 0; }
+.dv-opening-right > img { right: 0; }
+.dv-opening-left::after, .dv-opening-right::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, #07101899, transparent); opacity: var(--dv-open-shade);
+}
+.dv-opening-left::after { background: linear-gradient(90deg, transparent, #07101899); opacity: var(--dv-open-page-shade); }
+.dv-opening-gutter {
+  position: absolute; top: 0; bottom: 0; left: calc(50% - 9px); width: 18px;
+  background: linear-gradient(90deg, transparent, #10090644, transparent);
+  transform: translateZ(3px); opacity: var(--pm-left-reveal); pointer-events: none;
+}
+.dv-opening-cover {
+  position: absolute; top: -1%; bottom: -1%; left: 50%; width: 50.6%;
+  transform-origin: 0 50%; transform-style: preserve-3d;
+  transform: translateZ(calc(12px - var(--pm-cover-progress) * 24px)) rotateY(calc(var(--pm-cover-progress) * -179.5deg));
+}
+.dv-opening-cover-front, .dv-opening-cover-back {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 2px 8px 8px 2px;
+  background: var(--dv-cover-ink); backface-visibility: hidden; box-shadow: inset 0 0 0 1px #f2d4a233;
+}
+.dv-opening-cover-front img { display: block; width: 100%; height: 100%; object-fit: fill; }
+.dv-opening-cover-back { transform: rotateY(180deg); background: linear-gradient(115deg, #0004, transparent 45%), var(--dv-cover-ink); }
+.dv-flat-opening.is-opening .dv-opening-book,
+.dv-flat-opening.is-opening .dv-opening-cover { will-change: transform; }
+.dv-flat-opening .az-viewer-arrow, .dv-flat-opening .ry-viewer-arrow,
+.dv-flat-opening .az-viewer-expand, .dv-flat-opening .ry-viewer-expand { z-index: 10; }
+.dv-flat-opening .az-viewer-shine, .dv-flat-opening .ry-viewer-shine { display: none; }
+.dv-flat-opening.is-changing .dv-opening-left img,
+.dv-flat-opening.is-changing .dv-opening-right img { opacity: .28; }
+@media (max-width: 720px) {
+  .dv-flat-opening { min-height: 0; height: auto; aspect-ratio: 3 / 2; }
+  .pm-inside.dv-book-opening .pm-open-book { transform: translate3d(calc((1 - var(--pm-open-progress)) * -25%), calc(var(--dv-open-lift) * -1%), 0) rotateX(calc(8deg - var(--pm-open-progress) * 2deg)) scale(calc(.9 + var(--pm-open-progress) * .1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dv-book-opening *, .dv-book-opening *::before, .dv-book-opening *::after { animation: none !important; transition: none !important; }
+}
