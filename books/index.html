@@ -8,8 +8,9 @@
     <link rel="canonical" href="https://discovervisually.github.io/books/">
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/assets/site-shell.css?v=20260930ui2">
-    <link rel="stylesheet" href="/assets/catalog.css?v=20260930shelf1">
-    <link rel="stylesheet" href="/assets/amazon-cta.css?v=20260930shelf1">
+    <link rel="stylesheet" href="/assets/book-opening.css?v=20260930motion1">
+    <link rel="stylesheet" href="/assets/catalog.css?v=20260930shelf2">
+    <link rel="stylesheet" href="/assets/amazon-cta.css?v=20260930shelf2">
   </head>
   <body class="books-catalog-page">
     <a class="dv-skip" href="#living-shelf">Skip to the book carousel</a>
@@ -45,17 +46,32 @@
           </div>
           <div class="living-shelf-intro">
             <p>Find the book that sparks their curiosity—or yours. Explore real pages, then make it part of your shelf.</p>
-            <nav class="living-shelf-collections" aria-label="Browse by collection">
-              <a aria-current="page" href="/books/">All books</a>
-              <a href="/collections/children/">For Children</a>
-              <a href="/collections/history/">History Hunters</a>
-              <a href="/collections/cities-through-time/">Cities Through Time</a>
-              <a href="/collections/romantasy/">Romantasy</a>
-              <a href="/collections/visual-learning/">Visual Learning</a>
-            </nav>
+            <a class="shelf-gift-jump" href="#shelf-gift">Choosing a gift? Find their kind of book</a>
           </div>
         </header>
 
+        <div class="shelf-discovery">
+          <div class="shelf-filters" role="group" aria-label="Filter books by interest">
+            <button type="button" data-shelf-topic="all" aria-pressed="true">All books</button>
+            <button type="button" data-shelf-topic="history" aria-pressed="false">History</button>
+            <button type="button" data-shelf-topic="machines" aria-pressed="false">Machines</button>
+            <button type="button" data-shelf-topic="cities" aria-pressed="false">Cities</button>
+            <button type="button" data-shelf-topic="romantasy" aria-pressed="false">Romantasy</button>
+          </div>
+          <label class="shelf-age">Reader age <select data-shelf-age><option value="all">Any reader</option><option value="8-9">Ages 8–9</option><option value="10-12">Ages 10–12</option></select></label>
+          <button type="button" class="shelf-reset" data-shelf-reset hidden>Reset filters</button>
+        </div>
+        <details class="shelf-gift" id="shelf-gift">
+          <summary>Find a book for someone <span>Choose what makes them curious</span></summary>
+          <div class="shelf-gift-options" role="group" aria-label="Choose a gift recipient">
+            <button type="button" data-shelf-gift="curious" aria-pressed="false">A curious child <small>Visual discoveries · ages 8+</small></button>
+            <button type="button" data-shelf-gift="history" aria-pressed="false">A history lover <small>Real places · extraordinary stories</small></button>
+            <button type="button" data-shelf-gift="romantasy" aria-pressed="false">A romantasy reader <small>Favorite tropes · new reading paths</small></button>
+            <button type="button" data-shelf-gift="machines" aria-pressed="false">A machine lover <small>Cutaways · how things work</small></button>
+            <button type="button" data-shelf-gift="cities" aria-pressed="false">A city explorer <small>Maps · skylines · change over time</small></button>
+          </div>
+        </details>
+        <p class="shelf-gift-fit" data-shelf-fit hidden></p>
         <div class="living-shelf-stage" data-shelf-stage>
           <div class="shelf-stage-light" aria-hidden="true"></div>
           <div class="shelf-stage-color-wash" aria-hidden="true"></div>
@@ -83,6 +99,7 @@
               </div>
             </noscript>
           </div>
+          <div class="shelf-empty" data-shelf-empty hidden><h2>No books match just yet.</h2><p>Try another interest or choose “Any reader”.</p><button type="button" data-shelf-reset>Show all books</button></div>
           <p class="living-shelf-hint" id="shelf-interaction-hint" data-shelf-hint><span class="shelf-hint-icon" aria-hidden="true">↔</span> Drag to explore the shelf</p>
         </div>
 
@@ -99,15 +116,36 @@
           </div>
           <div class="shelf-book-summary">
             <p data-shelf-description data-shelf-copy>Map the books, tropes and reader obsessions behind fantasy romance.</p>
+            <ul class="shelf-benefits" data-shelf-benefits data-shelf-copy></ul>
             <div class="shelf-book-meta"><span data-shelf-audience>Romantasy readers</span><i></i><span data-shelf-format>100 illustrated pages</span></div>
           </div>
           <div class="shelf-actions">
             <a class="dv-amazon-hero" data-shelf-amazon href="https://www.amazon.com/dp/B0H517L61P" target="_blank" rel="noopener noreferrer"><img class="pm-amazon-badge" src="https://images-na.ssl-images-amazon.com/images/G/01/rainier/available_at_amazon_1200x600_Nvz5h2M.png" alt="Available at Amazon"><span class="pm-amazon-copy"><small>Full-color paperback</small><strong>View on Amazon</strong></span><b aria-hidden="true">↗</b></a>
-            <a class="shelf-explore-book" data-shelf-link href="/books/the-ultimate-romantasy-yearbook.html#inside">See inside <span aria-hidden="true">→</span></a>
+            <button type="button" class="shelf-explore-book" data-shelf-link>See inside <span aria-hidden="true">→</span></button>
           </div>
         </div>
+        <div class="shelf-utility"><a data-shelf-detail href="/books/the-ultimate-romantasy-yearbook.html">About this book</a><button type="button" data-shelf-share>Copy book link</button><span data-shelf-share-status role="status"></span><input data-shelf-share-url aria-label="Book link to copy" readonly hidden></div>
         <p class="dv-sr-only" data-shelf-live aria-live="polite"></p>
       </section>
+
+      <dialog class="shelf-preview" data-shelf-preview aria-labelledby="shelf-preview-title">
+        <header class="shelf-preview-head"><div><p>Discover Visually · real pages from the book</p><h2 id="shelf-preview-title" data-preview-title></h2></div><button type="button" data-preview-close aria-label="Close book preview" autofocus>×</button></header>
+        <div class="shelf-preview-stage" data-preview-stage>
+          <div class="shelf-preview-book dv-flat-opening dv-book-opening" data-preview-book>
+            <div class="dv-opening-book">
+              <div class="dv-opening-rear" aria-hidden="true"></div>
+              <div class="dv-opening-left" aria-hidden="true"><img data-preview-left alt="" decoding="async"></div>
+              <div class="dv-opening-right"><img data-preview-right alt="" decoding="async"></div>
+              <div class="dv-opening-gutter" aria-hidden="true"></div>
+              <div class="dv-opening-cover" aria-hidden="true"><div class="dv-opening-cover-front"><img data-preview-cover alt=""></div><div class="dv-opening-cover-back"></div></div>
+              <div class="shelf-turn-leaf" data-preview-leaf aria-hidden="true"><div class="shelf-turn-front"><img alt=""></div><div class="shelf-turn-back"><img alt=""></div></div>
+            </div>
+          </div>
+          <p class="shelf-preview-loading" data-preview-loading role="status">Opening your book…</p>
+        </div>
+        <div class="shelf-preview-controls"><button type="button" data-preview-previous aria-label="Previous sample spread">←</button><div><p data-preview-caption aria-live="polite"></p><div class="shelf-preview-tabs" data-preview-tabs role="group" aria-label="Choose a sample spread"></div></div><button type="button" data-preview-next aria-label="Next sample spread">→</button></div>
+        <footer class="shelf-preview-footer"><div><span data-preview-count></span><a data-preview-detail href="/books/">More about this book</a></div><a class="dv-amazon-hero" data-preview-amazon href="https://www.amazon.com/dp/B0H517L61P" target="_blank" rel="noopener noreferrer"><span class="pm-amazon-copy"><small>Full-color paperback</small><strong>View on Amazon</strong></span><b aria-hidden="true">↗</b></a></footer>
+      </dialog>
 
       <section class="catalog-classic-view" aria-labelledby="catalog-grid-title">
         <header class="catalog-grid-heading"><div><p class="catalog-kicker">All books</p><h2 id="catalog-grid-title">Browse every title</h2></div><span data-catalog-count>7 titles</span></header>
@@ -124,8 +162,11 @@
       <div class="dv-footer-bottom"><span>© 2026 Discover Visually</span><span>Research · Storytelling · Visual craft</span></div>
     </footer>
 
-    <script src="/assets/catalog-data.js?v=20260930shelf1"></script>
-    <script src="/assets/catalog-pages.js?v=20260930shelf1"></script>
+    <script src="/assets/catalog-data.js?v=20260930shelf2"></script>
+    <script src="/assets/shelf-stories.js?v=20260930shelf2"></script>
+    <script src="/assets/catalog-pages.js?v=20260930shelf2"></script>
+    <script src="/assets/book-opening.js?v=20260930motion1"></script>
+    <script src="/assets/shelf-experience.js?v=20260930shelf2"></script>
     <script src="/assets/site-shell.js?v=20260930ui2"></script>
   </body>
 </html>
