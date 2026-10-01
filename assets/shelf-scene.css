@@ -1,18 +1,19 @@
 /* The physical shelf and its lightweight fallback share one quiet stage. */
 .living-shelf.shelf-photographic {
-  --shelf-book-height:clamp(240px,32vw,330px);
+  --shelf-book-height:clamp(215px,21.5vw,295px);
   --shelf-book-depth:5px;
+  --shelf-book-half-depth:2.5px;
   background:#131718;
   min-height:0;
 }
 .shelf-photographic::before { display:none; }
 .shelf-photographic .living-shelf-stage {
   width:100%;left:0;margin:12px 0 0;
-  height:clamp(380px,38vw,510px);min-height:0;
+  height:clamp(380px,35vw,460px);min-height:0;
   overflow:hidden;background:#131718;
 }
 .shelf-photographic .living-shelf-camera {
-  perspective:1800px;perspective-origin:50% 46%;
+  perspective:1800px;perspective-origin:50% calc(100% - 83px);
   touch-action:pan-y;outline-offset:-3px;
 }
 .shelf-scene { position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab; }
@@ -20,7 +21,7 @@
 .shelf-photographic .living-shelf-track { pointer-events:none; }
 .shelf-photographic .shelf-book {
   top:auto;bottom:83px;left:50%;
-  transform:translateX(-50%) translate3d(var(--shelf-x),0,0);
+  transform:translateX(-50%) translate3d(var(--shelf-x),0,var(--shelf-z));
   opacity:var(--shelf-opacity);filter:none;
   pointer-events:auto;
 }
@@ -41,6 +42,7 @@
 .shelf-photographic .shelf-book-edge-right { width:5px; }
 .shelf-photographic .shelf-book-paper-block { background:#e4ddce; }
 .shelf-photographic .shelf-book-edge span { display:none; }
+.shelf-photographic .shelf-book-interaction { transform:none; }
 .shelf-fallback-plank {
   position:absolute;left:0;right:0;bottom:64px;height:19px;
   background:linear-gradient(#55402d,#302218);

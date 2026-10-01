@@ -122,7 +122,8 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
     function resize() {
       const width=stage.clientWidth,height=stage.clientHeight;if(!width||!height)return;
       renderer.setSize(width,height,false);camera.aspect=width/height;
-      camera.position.set(0,1.18,camera.aspect<1.3?3.25:3.1);
+      const desktopDistance=Math.max(3.25,4.6/(2*Math.tan(27*Math.PI/360)*camera.aspect));
+      camera.position.set(0,1.18,camera.aspect<1.3?3.25:desktopDistance);
       camera.lookAt(0,.53,0);camera.updateProjectionMatrix();draw(snapshot());
     }
     function draw(state) {
