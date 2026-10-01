@@ -85,9 +85,6 @@
       const front = book.cover
         ? `<img src="${escapeHTML(book.cover)}" alt="" draggable="false" loading="eager" decoding="async">`
         : `<span class="dv-catalog-cover-fallback"><small>Discover Visually</small><strong>${name}</strong></span>`;
-      const reflection = book.cover
-        ? `<span class="shelf-book-reflection" aria-hidden="true"><img src="${escapeHTML(book.cover)}" alt="" draggable="false"></span>`
-        : "";
       return `
         <a class="shelf-book" href="${escapeHTML(book.url)}" data-shelf-index="${index}"
           aria-label="Explore ${escapeHTML(book.title)}, book ${index + 1} of ${books.length}"
@@ -98,11 +95,7 @@
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-left"><span>${name}</span></span>
             <span class="shelf-book-face shelf-book-edge shelf-book-edge-right"><span>${name}</span></span>
           </span>
-          </span><span class="shelf-book-spine-card" aria-hidden="true"><span>${name}</span></span>
-          <span class="shelf-book-spine-label" aria-hidden="true">${name}<b aria-hidden="true">↗</b></span>
-          <span class="shelf-book-light-pool" aria-hidden="true"></span>
-          ${reflection}
-          <span class="shelf-book-quick" aria-hidden="true"><span>Explore ${name}</span><b>↗</b></span>
+          </span>
         </a>`;
     };
 
@@ -117,6 +110,7 @@
     let visible = books.map((_, index) => index);
     let topic = 'all', age = 'all', gift = '';
     let position = activeIndex, velocity = 0, frame = 0, previousTime = null;
+    let sceneRenderer = null;
     let layout = {}, drag = null, suppressClick = 0, wheelTotal = 0, wheelTimer = 0;
     let sceneVersion = 0, sceneTimer = 0, filterTransition = null;
     let distances = books.map((_, index) => index-position), alphas = books.map(() => 1);
@@ -128,24 +122,13 @@
       layout = {width:stage.clientWidth, height:parseFloat(getComputedStyle(bookElements[0]).height)||300, mobile:narrowScreen.matches};
     }
     function geometry(distance) {
-      const a = Math.abs(distance), side = Math.sign(distance), mobile = layout.mobile;
-      const neighbour = mobile ? layout.width*.39 : Math.min(layout.width*.23,310);
-      const spine = mobile ? layout.width*.56 : Math.min(layout.width*.36,480);
-      let x, scale, angle, depth, spineOpacity, opacity;
-      if(a <= 1) {
-        const p = smooth(a);
-        x = mix(0,neighbour,p); scale = mix(1,mobile?.77:.81,p);
-        angle = mix(0,mobile?58:30,p); depth = mix(95,-35,p);
-        spineOpacity = 0; opacity = mix(1,.76,p);
-      } else {
-        const p = smooth(a-1);
-        x = a<2 ? mix(neighbour,spine,p) : spine+(a-2)*(mobile?33:46);
-        scale = mix(mobile?.77:.81,.73,p); angle = mix(mobile?58:30,88,p);
-        depth = mix(-35,-70,p); spineOpacity = smooth((a-1.25)/.7);
-        opacity = mix(.76,.57,p)*(1-smooth((x-layout.width/2+35)/85));
-      }
-      return {x:x*side, scale, angle:-angle*side, depth, spineOpacity, opacity, distance:a};
+      const count=visible.length;
+      const wrapped=count>1?((distance+count/2)%count+count)%count-count/2:0;
+      const a=Math.abs(wrapped),side=Math.sign(wrapped);
+      const edge=count>1?1-smooth((a-(count/2-.25))/.25):1;
+      return {x:side*(.57*a+.1*smooth(a))*layout.height,scale:1,angle:-21*side*smooth(a/.48),depth:0,spineOpacity:0,opacity:edge,distance:a};
     }
+    const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible]});
     function render(now=performance.now()) {
       const progress = filterTransition ? smooth((now-filterTransition.time)/620) : 1;
       bookElements.forEach((element,index) => {
@@ -154,14 +137,15 @@
         const distance = filterTransition ? mix(filterTransition.distances[index],target,progress) : target;
         const alpha = filterTransition ? mix(filterTransition.alphas[index],included?1:0,progress) : included?1:0;
         distances[index]=distance; alphas[index]=alpha;
-        const g=geometry(distance), lift=9*(1-smooth(Math.min(g.distance,1)))+Math.sin(Math.min(g.distance,1)*Math.PI)*7;
-        const props={'--shelf-x':g.x+'px','--shelf-y':((1-g.scale)*layout.height/2-lift)+'px','--shelf-z':g.depth+'px','--shelf-rotate':g.angle+'deg','--shelf-scale':g.scale,'--shelf-opacity':g.opacity*alpha,'--shelf-spine-opacity':g.spineOpacity,'--shelf-brightness':mix(1,.72,Math.min(g.distance/2,1))};
+        const g=geometry(distance), lift=0;
+        const props={'--shelf-x':g.x+'px','--shelf-y':((1-g.scale)*layout.height/2-lift)+'px','--shelf-z':g.depth+'px','--shelf-rotate':g.angle+'deg','--shelf-scale':g.scale,'--shelf-opacity':g.opacity*alpha,'--shelf-spine-opacity':g.spineOpacity,'--shelf-brightness':1};
         for(const [key,value] of Object.entries(props)) element.style.setProperty(key,String(value));
         element.dataset.shelfView=g.spineOpacity>.8?'spine':g.distance<.5?'front':'cover';
         element.style.zIndex=String(Math.round(100-g.distance*10));
         element.style.pointerEvents=included&&g.opacity*alpha>.12?'auto':'none';
         element.setAttribute('aria-hidden',String(!included || (g.opacity*alpha<=.12 && index!==activeIndex)));
       });
+      sceneRenderer?.render(sceneSnapshot());
       if(progress>=1) filterTransition=null;
       shelf.dataset.motionState=frame||drag?.horizontal?'moving':'rest';
     }
@@ -340,6 +324,17 @@
     hint.innerHTML='<span class="shelf-hint-icon" aria-hidden="true">↔</span> '+(finePointer.matches?'Drag to browse · click the centre book to open':'Swipe to browse · tap the centre book to open');
     window.DVShelf={getState:state,select:goTo,filter};
     measure();render();update();
+    // The shelf remains fully usable if WebGL, textures or the module fail.
+    // Save-data readers get the lightweight renderer without downloading 3D.
+    if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
+      import('./shelf-scene.js?v=20261001scene1').then(({createShelfScene})=>createShelfScene({
+        shelf,stage,books,snapshot:sceneSnapshot,
+        choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)exploreLink.click();else goTo(index);},
+        failed:()=>{sceneRenderer=null;measure();render();}
+      })).then(renderer=>{sceneRenderer=renderer;renderer.render(sceneSnapshot());}).catch(error=>{
+        shelf.dataset.shelfRenderer='fallback';console.warn('Living Shelf uses its lightweight renderer:',error.message);
+      });
+    } else shelf.dataset.shelfRenderer='fallback';
 
   };
 

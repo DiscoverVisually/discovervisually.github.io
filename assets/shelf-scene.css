@@ -1,0 +1,84 @@
+/* The physical shelf and its lightweight fallback share one quiet stage. */
+.living-shelf.shelf-photographic {
+  --shelf-book-height:clamp(240px,32vw,330px);
+  --shelf-book-depth:5px;
+  background:#131718;
+  min-height:0;
+}
+.shelf-photographic::before { display:none; }
+.shelf-photographic .living-shelf-stage {
+  width:100%;left:0;margin:12px 0 0;
+  height:clamp(380px,38vw,510px);min-height:0;
+  overflow:hidden;background:#131718;
+}
+.shelf-photographic .living-shelf-camera {
+  perspective:1800px;perspective-origin:50% 46%;
+  touch-action:pan-y;outline-offset:-3px;
+}
+.shelf-scene { position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab; }
+.shelf-photographic.is-dragging .shelf-scene { cursor:grabbing; }
+.shelf-photographic .living-shelf-track { pointer-events:none; }
+.shelf-photographic .shelf-book {
+  top:auto;bottom:83px;left:50%;
+  transform:translateX(-50%) translate3d(var(--shelf-x),0,0);
+  opacity:var(--shelf-opacity);filter:none;
+  pointer-events:auto;
+}
+.shelf-photographic .shelf-book::before,
+.shelf-photographic .shelf-book::after,
+.shelf-photographic .shelf-book-front::before,
+.shelf-photographic .shelf-book-front::after { display:none; }
+.shelf-photographic .shelf-book-object {
+  transform:translateX(-50%) rotateY(var(--shelf-rotate));
+  filter:drop-shadow(8px 6px 8px rgba(0,0,0,.35));
+}
+.shelf-photographic .shelf-book:not([data-shelf-view="spine"]):is(:hover,:focus-visible) .shelf-book-object {
+  transform:translateX(-50%) rotateY(var(--shelf-rotate));
+  filter:drop-shadow(8px 6px 8px rgba(0,0,0,.35));
+}
+.shelf-photographic .shelf-book-front { border-radius:1px;box-shadow:none; }
+.shelf-photographic .shelf-book-edge-left { width:5px; }
+.shelf-photographic .shelf-book-edge-right { width:5px; }
+.shelf-photographic .shelf-book-paper-block { background:#e4ddce; }
+.shelf-photographic .shelf-book-edge span { display:none; }
+.shelf-fallback-plank {
+  position:absolute;left:0;right:0;bottom:64px;height:19px;
+  background:linear-gradient(#55402d,#302218);
+  border-top:1px solid #72563c;
+  box-shadow:0 18px 22px rgba(0,0,0,.38);
+}
+.shelf-photographic.has-shelf-scene .shelf-fallback-plank { display:none; }
+/* Keep the selected DOM link keyboard-accessible alongside the canvas. */
+.shelf-photographic.has-shelf-scene .shelf-book {
+  width:1px;height:1px;padding:0;overflow:hidden;
+  clip-path:inset(50%);opacity:0;pointer-events:none;
+}
+.shelf-photographic.has-shelf-scene .shelf-book:focus-visible {
+  width:auto;height:auto;overflow:visible;clip-path:none;opacity:1;
+  bottom:44px;transform:translateX(-50%);background:#171e23;padding:8px 14px;
+}
+.shelf-photographic.has-shelf-scene .shelf-book:focus-visible::after {
+  content:attr(aria-label);display:block;position:static;color:#fff;font-size:12px;
+  background:none;opacity:1;transform:none;white-space:nowrap;
+}
+.shelf-photographic.has-shelf-scene .shelf-book:focus-visible .shelf-book-interaction { display:none; }
+.shelf-photographic .living-shelf-hint {
+  bottom:8px;font-size:9px;color:#9faaa9;letter-spacing:.08em;white-space:nowrap;
+}
+.shelf-photographic .shelf-navigation { margin-top:12px;margin-bottom:20px; }
+.shelf-photographic .shelf-pagination button { background:transparent;box-shadow:none; }
+.shelf-photographic .shelf-pagination button img { display:none; }
+.shelf-photographic .shelf-pagination button span { display:block;font-size:10px;line-height:1.35; }
+.shelf-photographic .shelf-pagination button {
+  min-height:48px;max-width:130px;flex:1 0 90px;height:auto;padding:8px 6px;
+  border:1px solid transparent;border-radius:2px;
+}
+.shelf-photographic .shelf-pagination button[aria-pressed="true"] {
+  border-color:rgba(211,181,126,.65);background:rgba(211,181,126,.06);
+}
+.shelf-photographic .living-shelf-console { margin-top:0; }
+@media(max-width:700px) {
+  .shelf-photographic .living-shelf-stage { height:390px; }
+  .shelf-photographic .shelf-pagination button { flex-basis:92px; }
+  .shelf-photographic .living-shelf-hint { font-size:8px;letter-spacing:.03em; }
+}
