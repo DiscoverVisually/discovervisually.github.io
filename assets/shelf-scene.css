@@ -27,8 +27,11 @@
 .shelf-photographic .shelf-book {
   top:auto;bottom:94px;left:50%;
   transform:translateX(-50%) translate3d(var(--shelf-x),0,var(--shelf-z));
-  opacity:var(--shelf-opacity);filter:none;pointer-events:auto;
+  opacity:var(--shelf-opacity);filter:none;pointer-events:auto;transition:opacity .28s;
 }
+.shelf-photographic:not(.shelf-covers-ready) .shelf-book { opacity:0;pointer-events:none !important; }
+.shelf-scene-loading { position:absolute;inset:45% 0 auto;z-index:4;text-align:center;color:#d9cbb4;font:400 14px var(--catalog-sans);pointer-events:none; }
+.shelf-covers-ready .shelf-scene-loading { display:none; }
 .shelf-photographic .shelf-book::before,
 .shelf-photographic .shelf-book::after,
 .shelf-photographic .shelf-book-front::before,

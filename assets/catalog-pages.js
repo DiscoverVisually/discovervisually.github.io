@@ -104,6 +104,11 @@
     track.innerHTML = books.map(bookMarkup).join('');
     pagination.innerHTML = books.map((book, index) => `<button type="button" data-shelf-page="${index}" aria-label="Show ${escapeHTML(book.title)}" aria-pressed="false"><img src="${escapeHTML(book.cover)}" alt="" draggable="false" decoding="async"><span>${escapeHTML(book.shortTitle || book.title)}</span></button>`).join('');
     const bookElements = [...track.querySelectorAll('[data-shelf-index]')];
+    stage.setAttribute('aria-busy','true');
+    const coverImages=[...track.querySelectorAll('.shelf-book-front img')].filter(img=>img.tagName==='IMG');
+    Promise.all(coverImages.map(img=>img.decode().catch(()=>{}))).then(()=>{
+      shelf.classList.add('shelf-covers-ready');stage.setAttribute('aria-busy','false');
+    });
     const pageButtons = [...pagination.querySelectorAll('[data-shelf-page]')];
     const copy = [...shelf.querySelectorAll('[data-shelf-copy]')];
     const stories = window.DV_SHELF_STORIES || {};
