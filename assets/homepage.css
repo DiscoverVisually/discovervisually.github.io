@@ -1,8 +1,8 @@
 /* Single homepage entrypoint; the shelf and reader share their production styles. */
-@import url('./catalog.css?v=20260930shelf4');
-@import url('./amazon-cta.css?v=20260930shelf4');
-@import url('./book-opening.css?v=20260930motion1');
-@import url('./shelf-scene.css?v=20261001cinema2');
+@import url('./catalog.css?v=20261001mobile1');
+@import url('./amazon-cta.css?v=20261001mobile1');
+@import url('./book-opening.css?v=20261001mobile1');
+@import url('./shelf-scene.css?v=20261001mobile1');
 
 :root { --home-bg:#111716;--home-paper:#f4ead8;--home-muted:#b9c0b6;--home-gold:#d9bd88;--home-line:#d9bd882b;--home-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--home-sans:Arial,Helvetica,sans-serif; }
 html { background:var(--home-bg);scroll-padding-top:90px; }
@@ -40,7 +40,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .home-intro .home-eyebrow { margin-bottom:12px;font-size:9px; }
 .home-intro h1 { font:400 clamp(36px,4.05vw,60px)/1.12 var(--home-serif);letter-spacing:-.045em;margin:0; }
 .home-intro h1 em { color:var(--home-gold);font-weight:400; }
-.home-intro>p:last-child { margin:14px 0 0;font-size:14px;line-height:1.6;color:#c6ccbf; }
+.home-intro>p:not(.home-eyebrow) { margin:14px 0 0;font-size:14px;line-height:1.6;color:#c6ccbf; }
 .home-shelf-page .living-shelf.shelf-photographic { --shelf-scene-height:clamp(340px,29.5vw,410px);--shelf-book-height:clamp(195px,17.4vw,240px);padding:0 32px 0;display:flex;flex-direction:column;gap:5px;overflow:hidden; }
 .home-shelf-page .shelf-photographic .living-shelf-stage { margin:0;flex-shrink:0; }
 .home-shelf-page .shelf-photographic .shelf-navigation { margin:0 0 7px; }
@@ -60,8 +60,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .home-book-cta:hover { background:#efd9b4;box-shadow:0 9px 25px #0003; }
 .home-shelf-page .shelf-explore-book { order:2;min-height:54px;padding:14px 12px;font-size:12px;background:#ffffff02;border:1px solid #d9bd884d;color:var(--home-paper);justify-content:center;gap:12px; }
 .home-shelf-page .shelf-explore-book:hover { background:#ffffff09;border-color:var(--home-gold); }
-.home-amazon-link { order:3;grid-column:1/-1;justify-self:end;padding:4px 0;color:#bdc4b8;font-size:11px;line-height:1.5; }
-.home-amazon-link:hover { color:var(--home-gold); }
+.home-detail-link { order:3;grid-column:1/-1;justify-self:end;padding:4px 0;color:#bdc4b8;font-size:11px;line-height:1.5; }
+.home-detail-link:hover { color:var(--home-gold); }
 .home-shelf-page .shelf-photographic .shelf-utility { margin-top:-8px;min-height:25px;font-size:10px;gap:16px;justify-content:flex-start; }
 .home-shelf-page .shelf-utility a,.home-shelf-page .shelf-utility button { min-height:28px;padding:3px 0; }
 .home-shelf-page .shelf-utility [data-shelf-share-status]:empty { display:none; }
@@ -171,7 +171,7 @@ body>footer>span { font-size:10px;color:#a4afa0; }
  .site-header { padding:0 25px;gap:18px; }.site-header nav { gap:18px; }.site-header nav>a,.nav-explore>summary { font-size:10px; }
  .home-shelf-page .shelf-photographic .living-shelf-console { grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:15px 30px; }
  .home-shelf-page .shelf-photographic .shelf-actions { grid-column:1/-1;grid-template-columns:1fr 1fr;max-width:none; }
- .home-amazon-link { grid-column:auto; }.home-shelf-page .shelf-photographic .shelf-actions .home-amazon-link { order:3;grid-column:1/-1; }
+ .home-detail-link { grid-column:auto; }.home-shelf-page .shelf-photographic .shelf-actions .home-detail-link { order:3;grid-column:1/-1; }
  .home-shelf-page .shelf-photographic .shelf-utility { margin-top:2px; }
  .home-section { padding:70px 32px; }.home-feature { gap:35px; }.home-approach { gap:40px; }
 }
@@ -186,17 +186,59 @@ body>footer>span { font-size:10px;color:#a4afa0; }
 }
 @media(max-width:700px) {
  html { scroll-padding-top:20px; }.site-header { padding:0 20px; }
- .home-intro { padding:25px 22px 0; }.home-intro .home-eyebrow { font-size:8px;letter-spacing:.13em;margin-bottom:13px; }.home-intro h1 { font-size:36px;line-height:1.05;max-width:440px;margin:auto; }.home-intro h1 em { display:block;margin-top:5px; }.home-intro>p:last-child { max-width:300px;margin:14px auto 0;font-size:12px;line-height:1.6; }
- .home-shelf-page .living-shelf.shelf-photographic { --shelf-scene-height:355px;--shelf-book-height:210px;padding:0 20px;gap:4px; }
+ .home-intro { padding:18px 22px 0; }.home-intro .home-eyebrow { font-size:11px;letter-spacing:.13em;margin-bottom:13px; }.home-intro h1 { font-size:32px;line-height:1.06;max-width:440px;margin:auto; }.home-intro h1 em { display:block;margin-top:5px; }.home-intro>p:not(.home-eyebrow) { max-width:300px;margin:12px auto 0;font-size:14px;line-height:1.6; }
+ .home-shelf-page .living-shelf.shelf-photographic { --shelf-scene-height:260px;--shelf-book-height:160px;padding:0 20px;gap:4px; }
  .home-shelf-page .shelf-photographic .living-shelf-stage { width:calc(100% + 40px);margin:0 -20px; }
  .home-shelf-page .shelf-photographic .shelf-navigation { margin:0; }.home-shelf-page .shelf-photographic .shelf-pagination { padding:1px 0 9px; }.home-shelf-page .shelf-photographic .shelf-pagination button { min-height:42px;flex-basis:120px; }.home-shelf-page .shelf-photographic .shelf-pagination button span { font-size:11px; }
  .home-shelf-page .shelf-photographic .living-shelf-console { display:grid;grid-template-columns:1fr;gap:8px;padding:14px 0 0; }.home-shelf-page .shelf-photographic .shelf-active-book h2 { font-size:29px; }.home-shelf-page .shelf-counter { margin-bottom:7px; }.home-shelf-page .shelf-counter small { font-size:9px; }.home-shelf-page .shelf-photographic .shelf-book-summary { margin:0; }.home-shelf-page .shelf-photographic .shelf-book-summary>p { font-size:13px;line-height:1.5; }.home-shelf-page .shelf-photographic .shelf-book-meta { font-size:10px;margin:7px 0 0; }
- .home-shelf-page .shelf-photographic .shelf-actions { grid-column:auto;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:7px;margin-top:6px; }.home-book-cta { font-size:12px;padding:14px 13px;min-height:50px; }.home-shelf-page .shelf-explore-book { min-height:50px; }.home-amazon-link { font-size:10px; }.home-shelf-page .shelf-utility { gap:12px; }.home-shelf-page .shelf-utility a,.home-shelf-page .shelf-utility button { font-size:9px;min-height:30px; }
- .home-trust { margin:12px 20px 0;gap:9px;flex-wrap:wrap;justify-content:center;font-size:8px; }.home-trust>a { flex-basis:100%;justify-content:center;margin:5px 0 0;font-size:10px; }
+ .home-shelf-page .shelf-photographic .shelf-actions { grid-column:auto;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:7px;margin-top:6px; }.home-book-cta { font-size:12px;padding:14px 13px;min-height:50px; }.home-shelf-page .shelf-explore-book { min-height:50px; }.home-detail-link { font-size:13px; }.home-shelf-page .shelf-utility { gap:12px; }.home-shelf-page .shelf-utility a,.home-shelf-page .shelf-utility button { font-size:9px;min-height:30px; }
+ .home-trust { margin:12px 20px 0;gap:9px;flex-wrap:wrap;justify-content:center;font-size:12px; }.home-trust>a { flex-basis:100%;justify-content:center;margin:5px 0 0;font-size:14px;min-height:44px; }
  .home-section { padding:60px 22px; }.home-section h2 { font-size:40px; }.home-eyebrow { font-size:9px;margin-bottom:14px; }.home-section-head { display:block;margin-bottom:26px; }.home-section-head>p,.home-section-head>div:last-child:not(:first-child) { margin-top:20px; }.home-section-head>p,.home-section-head>div>p:not(.home-eyebrow) { font-size:13px;line-height:1.7; }
  .home-preview-tabs { gap:12px; }.home-preview-tabs strong { font-size:19px; }.home-preview-tabs small { font-size:8px;letter-spacing:.02em; }.home-preview-caption { align-items:flex-start;flex-direction:column;gap:10px;padding-top:18px; }.home-preview-caption h3 { font-size:23px; }.home-spread-link span { font-size:8px;padding:7px 9px;bottom:10px;left:10px; }
- .home-collections { padding-top:44px;padding-bottom:34px; }.home-collections .home-section-head { margin-bottom:24px; }.home-collections h2 { font-size:35px; }.home-collection-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }.home-collection-card:last-child { grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr); }.home-collection-card:last-child .home-collection-image { height:100%;min-height:205px; }.home-collection-card:last-child .home-collection-copy { padding:20px 15px; }.home-collection-image { height:116px; }.home-collection-copy { padding:0 13px 16px; }.home-collection-copy h3 { font-size:22px;min-height:2.24em; }.home-collection-copy p { font-size:11px;line-height:1.7;margin-bottom:14px; }.home-collection-action { font-size:9px; }.home-gift-heading { align-items:flex-start;gap:12px;font-size:10px; }.home-gift-heading .home-text-link { font-size:10px;padding:0 0 5px; }.home-collections .shelf-gift summary { line-height:1.7;font-size:12px; }.home-collections .shelf-gift summary span { display:block;margin:4px 0 0; }.home-collections .shelf-gift-options { grid-template-columns:1fr 1fr; }.home-collections .shelf-gift-options button:last-child { grid-column:1/-1; }.home-discovery-result { align-items:flex-start;flex-direction:column;gap:10px; }.home-discovery-result p { font-size:18px; }
+ .home-collections { padding-top:44px;padding-bottom:34px; }.home-collections .home-section-head { margin-bottom:24px; }.home-collections h2 { font-size:35px; }.home-collection-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }.home-collection-card:last-child { grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr); }.home-collection-card:last-child .home-collection-image { height:100%;min-height:205px; }.home-collection-card:last-child .home-collection-copy { padding:20px 15px; }.home-collection-image { height:116px; }.home-collection-copy { padding:0 13px 16px; }.home-collection-copy h3 { font-size:22px;min-height:2.24em; }.home-collection-copy p { font-size:14px;line-height:1.6;margin-bottom:14px; }.home-collection-action { font-size:12px; }.home-gift-heading { align-items:flex-start;gap:12px;font-size:10px; }.home-gift-heading .home-text-link { font-size:10px;padding:0 0 5px; }.home-collections .shelf-gift summary { line-height:1.7;font-size:12px; }.home-collections .shelf-gift summary span { display:block;margin:4px 0 0; }.home-collections .shelf-gift-options { grid-template-columns:1fr 1fr; }.home-collections .shelf-gift-options button:last-child { grid-column:1/-1; }.home-discovery-result { align-items:flex-start;flex-direction:column;gap:10px; }.home-discovery-result p { font-size:18px; }
  .home-feature,.home-approach,.reader-list { grid-template-columns:1fr;gap:30px; }.home-feature-copy h2 { font-size:47px; }.home-feature-copy>p:not(.home-eyebrow),.home-approach>div>p:not(.home-eyebrow) { font-size:14px; }.home-feature-art { aspect-ratio:1.15; }.home-approach h3 { font-size:24px; }.home-approach li p { font-size:13px; }
  .reader-list h2 { font-size:35px; }.reader-list-row button { white-space:nowrap;padding-right:0; }.reader-list-row button span { margin-left:10px; }body>footer { padding:30px 22px;grid-template-columns:1fr;gap:20px; }body>footer>nav { font-size:10px;gap:8px 18px; }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; }*,*::before,*::after { animation:none !important;transition:none !important; } }
+
+/* Purchase decisions stay visible while the photographic shelf does the storytelling. */
+.home-browse-interests { display:inline-flex;align-items:center;gap:14px;min-height:44px;margin-top:10px;color:var(--home-gold);font:500 14px var(--home-sans); }
+.home-shelf-page .home-amazon-cta { background:#f3c765;color:#14202b;border-color:#f8d890;font-size:15px; }
+.home-shelf-page .home-amazon-cta:hover { background:#ffd67d; }
+.home-shelf-page .shelf-active-book h2 a { display:inline-flex;align-items:center;min-height:44px; }
+.home-shelf-page .home-shelf-benefits { display:grid;gap:6px;list-style:none;margin:10px 0 0;padding:0;font:400 13px/1.5 var(--home-sans);color:#d4dfce; }
+.home-shelf-benefits li { position:relative;padding-left:17px; }
+.home-shelf-benefits li::before { content:"✓";position:absolute;left:0;color:var(--home-gold); }
+.home-preview-caption { display:grid;grid-template-columns:1fr auto;gap:12px 20px; }
+.home-preview-caption>div { grid-column:1/-1; }
+.home-preview-caption>.home-preview-amazon { display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;color:#14202b;background:#f3c765;border:1px solid #f8d890; }
+@media(max-width:700px) {
+ .home-shelf-page .shelf-counter { display:none; }
+ .home-shelf-page .shelf-active-book h2 { min-height:64px;display:flex;align-items:center;font-size:27px; }
+ .home-shelf-page .shelf-book-summary>p { font-size:15px;min-height:3em; }
+ .home-shelf-page .home-shelf-benefits { font-size:14px;min-height:3em;margin-top:4px; }
+ .home-shelf-page .home-shelf-benefits li:not(:first-child) { display:none; }
+ .home-shelf-page .shelf-book-meta { font-size:13px !important;min-height:24px; }
+ .home-shelf-page .shelf-photographic .living-shelf-console { padding-top:6px;gap:6px; }
+ .home-shelf-page .shelf-photographic .shelf-actions { margin-top:2px; }
+ .home-shelf-page .home-book-cta,.home-shelf-page .shelf-explore-book { min-height:54px;font-size:14px; }
+ .home-shelf-page .shelf-pagination button span { font-size:13px !important; }
+ .home-shelf-page .shelf-utility { flex-wrap:wrap;gap:6px 16px;margin-top:8px !important; }
+ .home-shelf-page .shelf-utility a,.home-shelf-page .shelf-utility button { min-height:44px;font-size:13px; }
+ .home-trust { gap:8px 13px; }
+ .home-collection-copy h3 { font-size:23px; }
+ .home-collection-copy p { min-height:4.8em; }
+ .home-preview-tabs small { font-size:11px; }
+ .home-preview-tabs strong { font-size:18px; }
+ .home-section-head>p { font-size:15px; }
+ .home-gift-heading,.home-gift-heading .home-text-link { font-size:13px; }
+ .home-collections .shelf-gift summary { font-size:15px; }
+ .home-preview-caption { display:grid;grid-template-columns:1fr; }
+ .home-preview-caption>div { grid-column:auto; }
+ .home-spread-link span { font-size:12px; }
+ .home-eyebrow { font-size:11px; }
+ body>footer>nav { font-size:14px; }
+ body>footer>nav a { min-height:44px;display:inline-flex;align-items:center; }
+}
+
+@media(max-width:700px){.reader-list-row input{font-size:16px;}.home-shelf-page .shelf-explore-book{min-width:0;}.home-browse-interests{margin-top:4px;}}

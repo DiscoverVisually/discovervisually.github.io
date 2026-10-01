@@ -3,18 +3,20 @@
   const collections = window.DV_COLLECTIONS || {};
 
   const cover = (book, className = "dv-catalog-cover") => book.cover
-    ? `<img class="${className}" src="${book.cover}" alt="${book.title} book cover" loading="lazy">`
+    ? `<img class="${className}" src="${book.cover}" alt="${book.title} book cover" loading="lazy" decoding="async" width="320" height="480" srcset="${book.cover.replace(/\.webp$/,'.320.webp')} 320w, ${book.cover.replace(/\.webp$/,'.640.webp')} 640w, ${book.cover} ${book.coverWidth || 965}w" sizes="(max-width: 720px) 104px, 380px">`
     : `<span class="${className} dv-catalog-cover-fallback"><small>An illustrated sacred infographic</small><strong>The<br><em>Visual</em><br>Bible</strong></span>`;
 
   const card = (book) => `
-    <article class="dv-catalog-card" data-status="${book.status.toLowerCase().replaceAll(" ", "-")}">
+    <article class="dv-catalog-card" data-book-id="${book.id}" data-status="${book.status.toLowerCase().replaceAll(" ", "-")}">
       <a class="dv-catalog-image" href="${book.url}" aria-label="Explore ${book.title}">${cover(book)}<span>Explore the book <b>↗</b></span></a>
       <div class="dv-catalog-copy">
         <p>${book.audience} · ${book.status}</p>
-        <h2><a href="${book.url}">${book.title}</a></h2>
-        <span>${book.description}</span>
+        <h2><a href="${book.url}">${book.shortTitle || book.title}</a></h2>
+        <span>${window.DV_SHELF_STORIES?.[book.id]?.benefits[0] || book.description}</span>
+        <small class="dv-catalog-format">${book.shelfFormat || book.format} · English paperback</small>
         <div class="dv-catalog-tags" aria-label="Collections">${book.collections.map(id => collections[id] ? `<a href="${collections[id].url}">${collections[id].name}</a>` : "").join("")}</div>
       </div>
+      <div class="dv-catalog-actions"><a href="${book.amazon}" target="_blank" rel="noopener noreferrer" data-commerce-placement="collection">View on Amazon <b aria-hidden="true">↗</b></a><a href="${book.url}#inside">See inside <b aria-hidden="true">↗</b></a></div>
     </article>`;
 
   const initLivingShelf = () => {
@@ -106,7 +108,7 @@
     const bookElements = [...track.querySelectorAll('[data-shelf-index]')];
     stage.setAttribute('aria-busy','true');
     const coverImages=[...track.querySelectorAll('.shelf-book-front img')].filter(img=>img.tagName==='IMG');
-    Promise.all(coverImages.map(img=>img.decode().catch(()=>{}))).then(()=>{
+    (coverImages[activeIndex]?.decode().catch(()=>{}) || Promise.resolve()).then(()=>{
       shelf.classList.add('shelf-covers-ready');stage.setAttribute('aria-busy','false');
     });
     const pageButtons = [...pagination.querySelectorAll('[data-shelf-page]')];
@@ -199,6 +201,8 @@
       description.textContent=story?.hook||book.description;audience.textContent=book.audience;format.textContent=book.shelfFormat||book.format;
       shelf.querySelector('[data-shelf-benefits]').innerHTML=(story?.benefits||[]).map(text=>`<li>${escapeHTML(text)}</li>`).join('');
       shelf.querySelector('[data-shelf-detail]').href=book.url;
+      const titleLink=shelf.querySelector('[data-shelf-title-link]');
+      if(titleLink)titleLink.href=book.url;
       const primaryLabel=shelf.querySelector('[data-shelf-primary-label]');
       if(primaryLabel)primaryLabel.textContent='Explore '+(book.id==='new-york-city'?'New York City':book.shortTitle||book.title);
       exploreLink.setAttribute('aria-label','See inside '+book.title);
@@ -340,13 +344,15 @@
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      import('./shelf-scene.js?v=20261001cinema1').then(({createShelfScene})=>createShelfScene({
+      const enhance = () => import('./shelf-scene.js?v=20261001mobile1').then(({createShelfScene})=>createShelfScene({
         shelf,stage,books,openLink,snapshot:sceneSnapshot,
         choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)bookElements[index].click();else goTo(index);},
         failed:()=>{sceneRenderer=null;openLink.hidden=true;bookElements.forEach((el,i)=>el.tabIndex=i===activeIndex?0:-1);measure();render();}
       })).then(renderer=>{sceneRenderer=renderer;renderer.render(sceneSnapshot());}).catch(error=>{
         shelf.dataset.shelfRenderer='fallback';console.warn('Living Shelf uses its lightweight renderer:',error.message);
       });
+      if ('requestIdleCallback' in window) window.requestIdleCallback(enhance,{timeout:1800});
+      else setTimeout(enhance,600);
     } else shelf.dataset.shelfRenderer='fallback';
 
   };

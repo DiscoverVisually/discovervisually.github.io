@@ -135,7 +135,7 @@
     const direction = nextIndex > active ? "forward" : "reverse";
     const current = spreads[active];
     const next = spreads[nextIndex];
-    const duration = reducedMotion.matches ? 1 : 920;
+    const duration = reducedMotion.matches ? 1 : (innerWidth <= 720 ? 480 : 920);
     isTurning = true;
     shell.classList.add("is-turning");
 
@@ -229,7 +229,7 @@
   const preloadObserver = new IntersectionObserver(
     ([entry]) => {
       if (!entry.isIntersecting) return;
-      spreads.forEach((_, index) => preloadSpread(index));
+      if (!navigator.connection?.saveData) preloadSpread(Math.min(1, spreads.length - 1));
       preloadObserver.disconnect();
     },
     { rootMargin: "25% 0px", threshold: 0.01 },

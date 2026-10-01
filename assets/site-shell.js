@@ -50,6 +50,7 @@
   button?.addEventListener("click", () => { const open = button.getAttribute("aria-expanded") !== "true"; button.setAttribute("aria-expanded", String(open)); nav.toggleAttribute("data-open", open); document.documentElement.style.overflow = open ? "hidden" : ""; });
   nav?.addEventListener("click", (event) => { if (event.target.closest("a")) closeMenu(false); });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape" && nav?.hasAttribute("data-open")) closeMenu(true); });
+  window.addEventListener('resize',()=>{if(innerWidth>800&&nav?.hasAttribute('data-open'))closeMenu();});
   document.addEventListener("click", (event) => { if (explore?.open && !explore.contains(event.target)) explore.open = false; });
   const path = location.pathname.replace(/index\.html$/, "");
   header.querySelectorAll("a").forEach((link) => { const target = new URL(link.href, location.origin).pathname.replace(/index\.html$/, ""); if (target === path) link.setAttribute("aria-current", "page"); else if (link.getAttribute("aria-current") === "page") link.removeAttribute("aria-current"); });
@@ -64,3 +65,8 @@ document.querySelectorAll(".dv-explore-panel a").forEach(link => link.setAttribu
 
 // Shared motion keeps the existing page entrypoint and static navigation.
 import("/assets/editorial-motion.js?v=20261001motion2").catch(() => {});
+
+// Keep shared buying behavior outside the individual book scripts.
+Promise.resolve(window.DV_SHELF_STORIES || import('/assets/shelf-stories.js?v=20261001mobile1'))
+  .then(() => Promise.all([import('/assets/commerce-metrics.js?v=20261001mobile1'),import('/assets/book-commerce.js?v=20261001mobile1')]))
+  .catch(error => console.warn('Book commerce enhancement unavailable:',error.message));

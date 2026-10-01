@@ -14,7 +14,8 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
   try {
     renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:'low-power'});
   } catch (error) { throw error; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  const mobileQuality=stage.clientWidth <= 720;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobileQuality ? 1.5 : 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.03;
@@ -33,7 +34,7 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
   scene.add(new THREE.HemisphereLight('#f4ede4', '#262320', .75));
   const key = new THREE.DirectionalLight('#fff1df', 2.1);
   key.position.set(-3, 4, 5);key.target.position.set(0, .45, 0);
-  key.castShadow = true;key.shadow.mapSize.set(2048, 2048);
+  key.castShadow = true;key.shadow.mapSize.set(mobileQuality ? 1024 : 2048, mobileQuality ? 1024 : 2048);
   Object.assign(key.shadow.camera, {left:-3, right:3, top:2.5, bottom:-2, near:.1, far:12});
   key.shadow.bias = -.00015;key.shadow.normalBias = .001;key.shadow.radius = 3;
   scene.add(key, key.target);

@@ -50,3 +50,24 @@ npm run dev
 
 The preview server also requires Node.js only and serves the static site on
 port 4173 by default.
+
+## Mobile commerce
+
+The active seven book pages use factual content evidence and real interior illustrations.
+Do not publish star ratings, reader quotes, review totals or bestseller claims without a verifiable source.
+`assets/book-commerce.js` owns the mobile purchase bar and shelf sample enlargement.
+The bar follows the actual Amazon CTA visibility, respects safe areas, and hides for dialogs,
+mobile menus, keyboards and the visible final purchase CTA.
+
+After changing a shared book style, run `npm run build:book-styles` to regenerate
+`assets/book-detail.css`. This bundles the active template styles in their original order.
+Run `npm run check:commerce` and `npm run validate` before deployment.
+Original spreads stay available for full-size viewing; the responsive variants are listed
+in `assets/mobile-images.json`.
+
+`assets/commerce-metrics.js` records anonymous counters within the current browser session:
+`book_view`, `book_select`, `sample_open`, `sample_browse`, and `amazon_click`, with book and
+placement. It creates no cookies, visitor identifiers or network requests. Inspect counters
+with `DVCommerceMetrics.snapshot()` in a normal developer console, or subscribe via
+`DVCommerceMetrics.subscribe(handler)`. Central reporting requires an explicitly configured
+analytics collector; no collector or sales attribution is configured by this change.

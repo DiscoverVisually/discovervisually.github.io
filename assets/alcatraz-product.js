@@ -169,6 +169,6 @@
   }, { passive: true });
 
   update(0);
-  slides.forEach((_, index) => preload(index));
+  if (!navigator.connection?.saveData) preload(0);
   updateProgress();
 })();

@@ -1837,3 +1837,38 @@ body:not(.books-catalog-page) .dv-catalog-image { background:transparent; }
   .shelf-cinematic .shelf-book-interaction { transform:none; }
   .shelf-preview::backdrop { backdrop-filter:none; }
 }
+
+/* Compact mobile catalogue: one book, one benefit and a direct buying choice. */
+.dv-catalog-format { display:block;margin-top:12px;color:#52626b;font:400 13px/1.6 Arial,sans-serif; }
+@media(max-width:720px) {
+ .catalog-hero { min-height:0;padding:32px 22px 28px;gap:18px; }
+ .catalog-hero h1 { font-size:38px;line-height:1.1; }
+ .catalog-kicker { font-size:12px; }
+ .catalog-hero-copy { font-size:15px;line-height:1.65; }
+ .catalog-toolbar { padding:18px 22px;gap:14px; }
+ .catalog-toolbar p { font-size:14px; }
+ .catalog-filter-links { display:flex;flex-wrap:nowrap;overflow-x:auto;width:100%;padding:2px 2px 8px;scroll-snap-type:x proximity; }
+ .catalog-filter-links a { flex:0 0 auto;min-height:44px;padding:8px 14px;font-size:12px;letter-spacing:.025em;scroll-snap-align:start; }
+ .dv-catalog-grid { padding:28px 22px 50px;grid-template-columns:1fr;gap:28px; }
+ .dv-catalog-card { display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px 18px;align-items:start;padding-bottom:28px;border-bottom:1px solid #13223122; }
+ .dv-catalog-image { min-height:0;height:160px; }
+ .dv-catalog-image>span:last-child { display:none; }
+ .dv-catalog-image img { height:100%;width:100%;object-fit:contain; }
+ .dv-catalog-copy { padding:0; }
+ .dv-catalog-copy>p { font-size:12px;line-height:1.5;letter-spacing:.015em;margin-top:0; }
+ .dv-catalog-copy h2 { font-size:24px;line-height:1.15;margin:8px 0; }
+ .dv-catalog-copy h2 a { display:inline-flex;align-items:center;min-height:44px; }
+ .dv-catalog-copy>span { font-size:14px;line-height:1.6; }
+ .dv-catalog-format { font-size:12px;margin-top:10px; }
+ .dv-catalog-tags { display:none; }
+ .dv-catalog-actions { grid-column:1/-1;margin-top:0; }
+ body .living-shelf.shelf-photographic { --shelf-scene-height:285px;--shelf-book-height:175px; }
+ .shelf-photographic .shelf-book-meta { font-size:13px; }
+ .shelf-photographic .shelf-pagination button span { font-size:13px; }
+ .shelf-photographic .living-shelf-hint { font-size:12px; }
+ .shelf-photographic .shelf-gift summary,.shelf-photographic .shelf-age { font-size:14px; }
+ .shelf-photographic .shelf-gift-options button { font-size:14px; }
+ .shelf-photographic .shelf-gift-options small { font-size:12px; }
+ .shelf-photographic .shelf-preview-head h2 { font-size:23px; }
+ .shelf-photographic .shelf-preview-footer { font-size:14px; }
+}

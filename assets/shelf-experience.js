@@ -125,8 +125,8 @@
     if(token!==version||!dialog.open)return;
     sample(spread);ready=true;controls();loading.hidden=true;
     window.DVBookOpening.start(root);
-    // Decode neighbors only after the requested spread is ready.
-    stories[book.id].samples.forEach(item=>decode(asset(item)).catch(()=>{}));
+    // Only the next spread is speculative; never fetch the entire sample book.
+    if(!navigator.connection?.saveData && stories[book.id].samples[spread+1])decode(asset(stories[book.id].samples[spread+1])).catch(()=>{});
   }
   $('[data-shelf-link]').addEventListener('click',()=>openPreview());
   $('[data-preview-close]').addEventListener('click',()=>dialog.close());

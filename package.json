@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/preview.mjs",
-    "validate": "node scripts/validate-site.mjs"
+    "validate": "node scripts/validate-site.mjs",
+    "build:book-styles": "node scripts/build-book-styles.mjs",
+    "check:commerce": "node scripts/check-commerce.mjs"
   }
 }

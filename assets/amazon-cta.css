@@ -40,15 +40,125 @@
 }
 
 .dv-amazon-hero .pm-amazon-copy small {
-  opacity: .62;
+  opacity: .85;
   margin: 0;
   color: inherit;
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: .14em;
+  letter-spacing: .03em;
   line-height: 1.2;
   text-transform: uppercase;
 }
+
+/* Shared commerce surfaces: evidence, early benefits, catalogue and mobile purchase. */
+.dv-buy-meta { margin:10px 0 0; color:inherit; opacity:.85; font:400 12px/1.5 Arial,sans-serif; }
+.dv-hero-benefits { padding:0; margin:18px 0; display:grid; gap:8px; list-style:none; max-width:480px; color:#f4ede0; font:400 14px/1.55 Arial,sans-serif; }
+.dv-hero-benefits li { position:relative; padding-left:19px; }
+.dv-hero-benefits li::before { content:"✓"; position:absolute; left:0; color:#e2bd6f; }
+.dv-proof-message { padding:25px 0; max-width:480px; }
+.dv-proof-message small { display:block; margin-bottom:10px; color:#735629; font:600 12px/1.5 Arial,sans-serif; }
+.dv-proof-message h3 { margin:0 0 12px; color:#132231; font:400 28px/1.2 Georgia,serif; }
+.dv-proof-message p { margin:0 0 12px; color:#465662; font:400 15px/1.65 Arial,sans-serif; }
+.dv-proof-message a { display:inline-flex; min-height:44px; align-items:center; gap:12px; color:#735629; font:600 13px Arial,sans-serif; }
+.dv-evidence { padding:72px max(22px,calc((100vw - 1240px)/2)); color:#132231; background:#f4efe5; }
+.dv-evidence header>p { margin:0 0 12px; font:600 12px/1.5 Arial,sans-serif; letter-spacing:.06em; color:#735629; }
+.dv-evidence h2 { margin:0; max-width:720px; font:400 clamp(34px,4.2vw,56px)/1.12 Georgia,serif; letter-spacing:-.035em; }
+.dv-evidence header>div { margin:18px 0 0; max-width:650px; font:400 16px/1.7 Arial,sans-serif; color:#465662; }
+.dv-evidence-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin:32px 0; }
+.dv-evidence-card { min-width:0; margin:0; background:#fff9ee; border:1px solid #13223120; }
+.dv-evidence-card>a { display:block; }
+.dv-evidence-card img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; background:#e9e2d5; }
+.dv-evidence-card figcaption { padding:20px; }
+.dv-evidence-card small { color:#735629; font:600 12px/1.5 Arial,sans-serif; }
+.dv-evidence-card h3 { color:#132231; margin:10px 0; font:400 24px/1.25 Georgia,serif; }
+.dv-evidence-card p { color:#465662; margin:0; font:400 14px/1.65 Arial,sans-serif; }
+.dv-evidence-actions { display:flex; align-items:center; flex-wrap:wrap; gap:18px; }
+.dv-evidence-actions>a { min-height:48px; display:inline-flex; align-items:center; padding:12px 18px; gap:20px; color:#132231; background:#e7c483; font:600 14px Arial,sans-serif; text-decoration:none; }
+.dv-evidence-actions>a:last-child { background:transparent; border:1px solid #13223140; }
+.dv-catalog-actions { display:grid; grid-template-columns:1.15fr 1fr; gap:9px; margin-top:20px; }
+.dv-catalog-actions>a { min-height:48px; padding:10px 13px; display:flex; align-items:center; justify-content:center; gap:9px; color:#132231; background:#e7c483; border:1px solid #13223122; font:600 13px/1.4 Arial,sans-serif; text-decoration:none; }
+.dv-catalog-actions>a:last-child { background:transparent; }
+.dv-catalog-actions a:focus-visible,.dv-evidence a:focus-visible { outline:2px solid #132231; outline-offset:4px; }
+.dv-mobile-purchase { display:none; }
+.dv-mobile-purchase[hidden] { display:none !important; }
+.dv-sample-enlarge { min-height:44px; padding:9px 12px; color:#f2e8d2; background:transparent; border:1px solid #d4b06c66; font:500 13px Arial,sans-serif; }
+.dv-sample-dialog { width:min(1200px,100vw - 24px); max-width:none; padding:0; color:#f4efe5; background:#07131f; border:1px solid #d4b06c66; }
+.dv-sample-dialog::backdrop { background:#02070de8; }
+.dv-sample-toolbar { position:sticky; top:0; z-index:1; padding:12px; display:flex; align-items:center; gap:10px; background:#07131f; font:500 13px Arial,sans-serif; }
+.dv-sample-toolbar strong { margin-right:auto; }
+.dv-sample-toolbar button { min-height:44px; padding:8px 12px; border:1px solid #d4b06c66; color:#f4efe5; background:transparent; font:500 13px Arial,sans-serif; }
+.dv-sample-scroll { max-height:calc(90dvh - 70px); overflow:auto; overscroll-behavior:contain; }
+.dv-sample-scroll img { display:block; width:100%; max-width:none; height:auto; }
+.dv-sample-dialog.is-zoomed img { width:200%; }
+
+@media(max-width:720px) {
+ body[data-book-id] .pm-header,body.dv-commerce-ready .pm-sticky-nav,body.dv-commerce-ready .pm-mobile-buy,body.dv-commerce-ready .pm-float-buy { display:none !important; }
+ body[data-book-id] .pm-hero { padding:24px 22px 28px; grid-template-areas:"kicker" "title" "hook" "cover" "benefits" "actions" "deck"; }
+ body[data-book-id] .pm-kicker { font-size:11px; letter-spacing:.045em; margin-bottom:12px; }
+ body[data-book-id] .pm-hero h1 { font-size:clamp(38px,11vw,49px); line-height:1; letter-spacing:-.04em; }
+ body[data-book-id] .pm-hero h1>span,body[data-book-id] .pm-hero h1>em { font-size:inherit; }
+ body[data-book-id="abraham-lincoln"] .pm-hero h1>span { font-size:.3em; letter-spacing:.06em; margin-bottom:8px; }
+ body[data-book-id="new-york-city"] .pm-hero h1>em { font-size:.73em; }
+ body[data-book-id] .pm-hook { font-size:16px; line-height:1.5; margin:15px 0 0; }
+ body[data-book-id] .pm-hero-stage { height:180px; margin:10px 0; }
+ body[data-book-id] .pm-hero-book { height:165px; }
+ body[data-book-id] .pm-stage-ring { width:190px; height:190px; }
+ body[data-book-id] .dv-hero-benefits { grid-area:benefits; font-size:14px; gap:5px; margin:0 0 15px; }
+ body[data-book-id] .pm-deck { font-size:15px; color:#c7cdd3; margin-top:16px; }
+ body[data-book-id] .pm-hero-actions { gap:4px; }
+ body[data-book-id] .pm-look-link { font-size:14px; letter-spacing:.02em; }
+ body[data-book-id] .dv-amazon-hero { min-height:56px; }
+ body[data-book-id] .dv-amazon-hero .pm-amazon-copy small { font-size:11px; opacity:.85; letter-spacing:.02em; }
+ body[data-book-id] .dv-amazon-hero .pm-amazon-copy strong { font-size:15px; }
+ body[data-book-id] .pm-proof { padding:0 22px 30px; }
+ body[data-book-id] .pm-proof-facts span { font-size:12px; line-height:1.5; }
+ body[data-book-id] .pm-proof-facts b { font-size:21px; }
+ .dv-proof-message { padding:18px 0 0; }
+ .dv-proof-message h3 { font-size:25px; }
+ .dv-proof-message p { font-size:15px; }
+ body[data-book-id] .pm-why,body[data-book-id] .pm-inside,body[data-book-id] .pm-combined { padding-top:46px; padding-bottom:46px; }
+ body[data-book-id] .pm-why h2,body[data-book-id] .pm-section-head h2,body[data-book-id] .pm-combined h2 { font-size:34px; line-height:1.1; }
+ body[data-book-id] .pm-why-card { padding:20px; }
+ body[data-book-id] .pm-why-card p,body[data-book-id] .pm-section-head>p { font-size:15px; }
+ body[data-book-id] .az-book-nav,body[data-book-id] .ry-book-nav { position:relative; min-height:50px; }
+ body[data-book-id] .az-book-nav-buy,body[data-book-id] .ry-book-nav-buy { font-size:12px; min-height:44px; }
+ body[data-book-id] .az-hero-grid,body[data-book-id] .ry-hero-grid { padding-top:24px; padding-bottom:30px; gap:20px; }
+ body[data-book-id] .az-hero-copy,body[data-book-id] .ry-hero-copy { text-align:left; }
+ body[data-book-id] .az-hero h1,body[data-book-id] .ry-hero h1 { font-size:clamp(38px,11vw,49px); line-height:1.05; }
+ body[data-book-id] .az-hook,body[data-book-id] .ry-hook { font-size:21px; line-height:1.4; margin-top:16px; }
+ body[data-book-id] .az-deck,body[data-book-id] .ry-deck { font-size:15px; line-height:1.6; }
+ body[data-book-id] .az-hero-actions,body[data-book-id] .ry-actions { display:grid; justify-content:stretch; }
+ body[data-book-id] .az-hero-stage,body[data-book-id] .ry-cover-stage { min-height:230px; }
+ body[data-book-id] .az-cover-stage { max-width:155px; }
+ body[data-book-id] .az-cover-stamp,body[data-book-id] .az-cover-caption,body[data-book-id] .ry-cover-stage>p { display:none; }
+ body[data-book-id] .az-hero-note { display:none; }
+ .dv-evidence { padding-top:46px; padding-bottom:46px; }
+ .dv-evidence h2 { font-size:34px; }
+ .dv-evidence-grid { grid-template-columns:1fr; gap:18px; margin-top:26px; }
+ .dv-evidence-card { display:grid; grid-template-columns: minmax(0,.8fr) minmax(0,1fr); align-items:center; }
+ .dv-evidence-card figcaption { padding:16px; }
+ .dv-evidence-card h3 { font-size:21px; }
+ .dv-evidence-card img { aspect-ratio:3/2; object-fit:contain; }
+ .dv-evidence-card p { font-size:14px; }
+ .dv-evidence-actions { display:grid; grid-template-columns:1fr; gap:10px; }
+ .dv-evidence-actions>a { justify-content:center; }
+ .dv-mobile-purchase { position:fixed; z-index:140; bottom:0; left:0; right:0; display:grid; grid-template-columns:32px minmax(0,1fr) auto; align-items:center; gap:10px; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); border-top:1px solid #d4b06c4d; color:#f4efe5; background:#0a1825f5; box-shadow:0 -8px 28px #0003; backdrop-filter:blur(16px); font-family:Arial,sans-serif; }
+ .dv-mobile-purchase>* { min-width:0; }
+ .dv-mobile-purchase img { width:32px; height:44px; object-fit:cover; border-radius:2px; }
+ .dv-mobile-purchase strong { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:13px; line-height:1.5; font-weight:500; }
+ .dv-mobile-purchase small { display:block; color:#c2cbd0; font-size:12px; line-height:1.6; }
+ .dv-mobile-purchase a { min-height:48px; padding:10px 14px; display:flex; align-items:center; gap:10px; color:#14202b; background:#f3c765; border:1px solid #f8d890; border-radius:3px; font-size:13px; font-weight:600; text-decoration:none; }
+ .dv-mobile-purchase a:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+ body.dv-commerce-ready { padding-bottom:calc(80px + env(safe-area-inset-bottom)); }
+ .dv-sample-dialog { width:100vw; height:100dvh; max-height:100dvh; margin:0; border:0; padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom); }
+ .dv-sample-toolbar { flex-wrap:wrap; padding:10px; }
+ .dv-sample-toolbar strong { flex-basis:100%; }
+ .dv-sample-toolbar button:last-child { margin-left:auto; }
+ .dv-sample-scroll { max-height:calc(100dvh - 112px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
+ .shelf-preview-footer { flex-wrap:wrap; gap:10px; }
+ .shelf-preview-footer a,.shelf-preview-footer button { min-height:44px; font-size:13px; }
+}
+@media(max-width:360px) { .dv-mobile-purchase { padding-left:10px; padding-right:10px; gap:8px; }.dv-mobile-purchase a { padding:10px; font-size:12px; }.dv-mobile-purchase a b { display:none; } }
 
 .dv-amazon-hero .pm-amazon-copy strong {
   color: inherit;
@@ -75,3 +185,22 @@
     min-height: 58px;
   }
 }
+
+@media(max-width:720px){body[data-book-id] .ry-cover-art{width:155px;}body[data-book-id] .ry-cover-stage{min-height:230px;}body[data-book-id] .ry-cover-stage>small{display:none;}}
+
+@media(max-width:720px){body[data-book-id] .ry-cover-stage{order:2;width:155px;}body[data-book-id] .pm-why p{font-size:15px;line-height:1.65;}body[data-book-id] .pm-proof{color:#132231;background:#f4efe5;}body[data-book-id] .pm-proof-facts span{color:#465662;}body[data-book-id] .pm-proof-facts b{color:#132231;}}
+
+@media(max-width:720px){
+ body[data-book-id] .az-book-nav,body[data-book-id] .ry-book-nav { display:none; }
+ body[data-book-id] .az-viewer-arrow,body[data-book-id] .ry-viewer-arrow,body[data-book-id] .az-viewer-expand,body[data-book-id] .ry-viewer-expand { min-width:44px;min-height:44px; }
+ body[data-book-id] .az-spread-dialog,body[data-book-id] .ry-spread-dialog { width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;padding:calc(68px + env(safe-area-inset-top)) 12px calc(72px + env(safe-area-inset-bottom));border:0;box-sizing:border-box; }
+ body[data-book-id] .az-spread-dialog>button,body[data-book-id] .ry-spread-dialog>button { top:max(12px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px; }
+ body[data-book-id] .az-spread-dialog>img,body[data-book-id] .ry-spread-dialog>img { width:100%;height:100%;max-height:calc(100dvh - 140px - env(safe-area-inset-top) - env(safe-area-inset-bottom));object-fit:contain; }
+ .dv-dialog-amazon { position:absolute;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom)); }
+}
+.dv-dialog-amazon { display:flex;align-items:center;justify-content:center;min-height:48px;gap:14px;color:#14202b !important;background:#f3c765;font:600 14px Arial,sans-serif;text-decoration:none; }
+
+@media(max-width:720px){body.dv-commerce-ready .pm-desktop-buy{display:none !important;} .dv-mobile-purchase:not([hidden]){animation:dv-purchase-enter .18s ease-out;} }
+@keyframes dv-purchase-enter { from { opacity:0;transform:translateY(8px); } to { opacity:1;transform:none; } }
+@media(hover:none){.dv-amazon-hero:hover{transform:none;} }
+@media(prefers-reduced-motion:reduce){.dv-mobile-purchase{animation:none !important;}.dv-amazon-hero{transition:none;} }

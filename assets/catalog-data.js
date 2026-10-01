@@ -141,3 +141,5 @@ window.DV_COLLECTIONS = {
   "visual-learning": { name: "Visual Learning", url: "/collections/visual-learning/", label: "Ideas made visible" },
   "cities-through-time": { name: "Cities Through Time", url: "/collections/cities-through-time/", label: "One city. Centuries of change." }
 };
+
+window.DV_BOOKS.forEach(book => { book.coverWidth = {"romantasy-yearbook": 767, "cut-open": 1024, "new-york-city": 1024, "abraham-lincoln": 768, "hindenburg": 998, "pompeii": 720, "alcatraz": 965}[book.id]; });
