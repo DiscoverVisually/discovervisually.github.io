@@ -50,8 +50,11 @@
     tab.addEventListener('click',()=>selectPreview(tab));
     tab.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;selectPreview(tabs[next],true);});
   });
-  function matchCopy(){const state=window.DVShelf?.getState();if(!state)return;document.querySelector('[data-home-match]').textContent=state.visible.length?(state.visible.length===1?'One book fits':'These '+state.visible.length+' books fit')+' your curiosity. Explore '+state.book.shortTitle+' on the shelf.':'No match yet. Try another interest or reader age.';}
+  function matchCopy(){
+    const state=window.DVShelf?.getState();if(!state)return;
+    document.querySelector('[data-home-match]').textContent=state.gift||state.age!=='all'
+      ? state.visible.length?(state.visible.length===1?'One book fits':'These '+state.visible.length+' books fit')+' your reader. Explore '+state.book.shortTitle+' on the shelf.':'No match yet. Try another reader age or show all books.'
+      : 'Choose who you’re shopping for. We’ll help you find their book.';
+  }
   shelf.addEventListener('shelfchange',matchCopy);matchCopy();
-  // User-initiated matching points back to the hero, without moving the page automatically.
-  document.querySelector('[data-shelf-discovery]').addEventListener('click',event=>{if(event.target.closest('[data-shelf-topic],[data-shelf-gift]'))matchCopy();});
 })();
