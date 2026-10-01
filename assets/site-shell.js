@@ -61,3 +61,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.querySelectorAll(".dv-explore-panel a").forEach(link => link.setAttribute("aria-label", link.textContent.trim()));
+
+// Shared motion keeps the existing page entrypoint and static navigation.
+import("/assets/editorial-motion.js?v=20261001motion1").catch(() => {});

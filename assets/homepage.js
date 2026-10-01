@@ -384,3 +384,6 @@ document.addEventListener("keydown", (event) => {
  const explore = document.querySelector(".nav-explore");
  if (event.key === "Escape" && explore?.open) { explore.open = false; explore.querySelector("summary")?.focus(); }
 });
+
+// Shared motion keeps the existing page entrypoint and static navigation.
+import("/assets/editorial-motion.js?v=20261001motion1").catch(() => {});
