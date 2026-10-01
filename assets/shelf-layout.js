@@ -6,12 +6,14 @@ export const smooth = n => { const x = clamp(n, 0, 1); return x*x*x*(x*(x*6-15)+
 export function shelfPose(distance, count) {
   // Distribute the entire collection on both sides of the selected book.
   // The seam passes behind the backdrop, never through the centre book.
-  const wrapped = count > 1 ? ((distance + count/2) % count + count) % count - count/2 : 0;
+  const boundary = Math.floor(count/2)+.5;
+  const offset = count-boundary;
+  const wrapped = count > 1 ? ((distance + offset) % count + count) % count - offset : 0;
   const a = Math.abs(wrapped), side = Math.sign(wrapped);
   const focus = 1 - smooth(a);
   const extraction = 1 - smooth(a/.85);
   const turn = 1 - smooth(a/.48);
-  const seam = count > 1 ? 1 - smooth((a-(count/2-.25))/.25) : 1;
+  const seam = count > 1 ? smooth(Math.min(boundary-wrapped,wrapped+offset)/.25) : 1;
   return {
     x: side * (.57*a + .1*smooth(a)),
     y: .5,

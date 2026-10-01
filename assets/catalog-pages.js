@@ -123,9 +123,10 @@
     }
     function geometry(distance) {
       const count=visible.length;
-      const wrapped=count>1?((distance+count/2)%count+count)%count-count/2:0;
+      const boundary=Math.floor(count/2)+.5,offset=count-boundary;
+      const wrapped=count>1?((distance+offset)%count+count)%count-offset:0;
       const a=Math.abs(wrapped),side=Math.sign(wrapped);
-      const edge=count>1?1-smooth((a-(count/2-.25))/.25):1;
+      const edge=count>1?smooth(Math.min(boundary-wrapped,wrapped+offset)/.25):1;
       return {x:side*(.57*a+.1*smooth(a))*layout.height,scale:1,angle:-21*side*smooth(a/.48),depth:-40+120*(1-smooth(a/.85)),spineOpacity:0,opacity:edge,distance:a};
     }
     const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible]});
@@ -327,7 +328,7 @@
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      import('./shelf-scene.js?v=20261001scene2').then(({createShelfScene})=>createShelfScene({
+      import('./shelf-scene.js?v=20261001scene4').then(({createShelfScene})=>createShelfScene({
         shelf,stage,books,snapshot:sceneSnapshot,
         choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)exploreLink.click();else goTo(index);},
         failed:()=>{sceneRenderer=null;measure();render();}

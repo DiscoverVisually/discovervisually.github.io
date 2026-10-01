@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three-r186.js';
-import {clamp, shelfPose} from './shelf-layout.js';
+import {clamp, shelfPose} from './shelf-layout.js?v=20261001scene4';
 
 // A single camera and light rig owns the books, timber and their shadows.
 // This module is loaded only on the catalogue page, after the usable DOM shelf.
