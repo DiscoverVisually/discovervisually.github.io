@@ -58,9 +58,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .home-book-cta { display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:54px;padding:15px 18px;background:#dfc394;color:#142019;border:1px solid #e5cba2;font:600 13px/1.25 var(--home-sans);transition:background .25s,box-shadow .25s; }
 .home-book-cta b { font-size:20px;font-weight:400; }
 .home-book-cta:hover { background:#efd9b4;box-shadow:0 9px 25px #0003; }
-.home-shelf-page .shelf-explore-book { min-height:54px;padding:14px 12px;font-size:12px;background:#ffffff02;border:1px solid #d9bd884d;color:var(--home-paper);justify-content:center;gap:12px; }
+.home-shelf-page .shelf-explore-book { order:2;min-height:54px;padding:14px 12px;font-size:12px;background:#ffffff02;border:1px solid #d9bd884d;color:var(--home-paper);justify-content:center;gap:12px; }
 .home-shelf-page .shelf-explore-book:hover { background:#ffffff09;border-color:var(--home-gold); }
-.home-amazon-link { grid-column:1/-1;justify-self:end;padding:4px 0;color:#bdc4b8;font-size:11px;line-height:1.5; }
+.home-amazon-link { order:3;grid-column:1/-1;justify-self:end;padding:4px 0;color:#bdc4b8;font-size:11px;line-height:1.5; }
 .home-amazon-link:hover { color:var(--home-gold); }
 .home-shelf-page .shelf-photographic .shelf-utility { margin-top:-8px;min-height:25px;font-size:10px;gap:16px;justify-content:flex-start; }
 .home-shelf-page .shelf-utility a,.home-shelf-page .shelf-utility button { min-height:28px;padding:3px 0; }
@@ -152,7 +152,7 @@ body>footer>span { font-size:10px;color:#a4afa0; }
  .site-header { padding:0 25px;gap:18px; }.site-header nav { gap:18px; }.site-header nav>a,.nav-explore>summary { font-size:10px; }
  .home-shelf-page .shelf-photographic .living-shelf-console { grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:15px 30px; }
  .home-shelf-page .shelf-photographic .shelf-actions { grid-column:1/-1;grid-template-columns:1fr 1fr;max-width:none; }
- .home-amazon-link { grid-column:auto; }.home-shelf-page .shelf-photographic .shelf-actions .home-amazon-link { grid-column:1/-1; }
+ .home-amazon-link { grid-column:auto; }.home-shelf-page .shelf-photographic .shelf-actions .home-amazon-link { order:3;grid-column:1/-1; }
  .home-shelf-page .shelf-photographic .shelf-utility { margin-top:2px; }
  .home-section { padding:70px 32px; }.home-feature { gap:35px; }.home-approach { gap:40px; }
 }
