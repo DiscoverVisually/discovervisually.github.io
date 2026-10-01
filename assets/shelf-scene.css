@@ -38,6 +38,8 @@
   filter:drop-shadow(8px 6px 8px rgba(0,0,0,.35));
 }
 .shelf-photographic .shelf-book-front { border-radius:1px;box-shadow:none; }
+.shelf-photographic .shelf-book.is-active .shelf-book-front { box-shadow:none; }
+.shelf-photographic .shelf-book.is-active:is(:hover,:focus-visible) .shelf-book-front::before { display:none; }
 .shelf-photographic .shelf-book-edge-left { width:5px; }
 .shelf-photographic .shelf-book-edge-right { width:5px; }
 .shelf-photographic .shelf-book-paper-block { background:#e4ddce; }
