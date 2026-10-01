@@ -4753,6 +4753,12 @@ body .pm-sticky-nav { flex-wrap:wrap; }
 }
 
 /* Shared commerce surfaces: evidence, early benefits, catalogue and mobile purchase. */
+body[data-book-id] .pm-hero { height:auto; max-height:none; }
+body[data-book-id] .pm-proof,body[data-book-id] .pm-proof-inner { height:auto; }
+body[data-book-id] .pm-hero-actions { flex-wrap:wrap; }
+body[data-book-id] .pm-hero-actions>.dv-amazon-hero { flex:0 0 auto; min-width:min(300px,100%); max-width:100%; }
+body[data-book-id] .pm-hero-actions>.dv-buy-meta { flex-basis:100%; margin-top:0; }
+body[data-book-id] .dv-proof-message { padding-inline:22px; }
 .dv-buy-meta { margin:10px 0 0; color:inherit; opacity:.85; font:400 12px/1.5 Arial,sans-serif; }
 .dv-hero-benefits { padding:0; margin:18px 0; display:grid; gap:8px; list-style:none; max-width:480px; color:#f4ede0; font:400 14px/1.55 Arial,sans-serif; }
 .dv-hero-benefits li { position:relative; padding-left:19px; }
