@@ -24,6 +24,7 @@
     const stage = shelf.querySelector("[data-shelf-stage]");
     const camera = shelf.querySelector("[data-shelf-camera]");
     const track = shelf.querySelector("[data-shelf-track]");
+    const openLink = shelf.querySelector('[data-shelf-open]');
     const previous = shelf.querySelector("[data-shelf-previous]");
     const next = shelf.querySelector("[data-shelf-next]");
     const pagination = shelf.querySelector("[data-shelf-pagination]");
@@ -70,7 +71,6 @@
     };
 
     const amazonLink = shelf.querySelector('[data-shelf-amazon]');
-    const worlds = shelf.querySelector('[data-shelf-worlds]');
     let activeIndex = 0;
     const hashId = new URLSearchParams(location.hash.slice(1)).get('book');
     try {
@@ -111,8 +111,9 @@
     let topic = 'all', age = 'all', gift = '';
     let position = activeIndex, velocity = 0, frame = 0, previousTime = null;
     let sceneRenderer = null;
+    let focusWeights = books.map((_,index)=>index===activeIndex?1:0), focusTransition = null;
     let layout = {}, drag = null, suppressClick = 0, wheelTotal = 0, wheelTimer = 0;
-    let sceneVersion = 0, sceneTimer = 0, filterTransition = null;
+    let filterTransition = null;
     let distances = books.map((_, index) => index-position), alphas = books.map(() => 1);
     const prefetched = new Set();
     const smooth = value => { const x = clamp(value, 0, 1); return x*x*x*(x*(x*6-15)+10); };
@@ -121,16 +122,31 @@
     function measure() {
       layout = {width:stage.clientWidth, height:parseFloat(getComputedStyle(bookElements[0]).height)||300, mobile:narrowScreen.matches};
     }
-    function geometry(distance) {
+    function focusSelection(now=performance.now()) {
+      if(!focusTransition)return;
+      const elapsed=now-focusTransition.time;
+      focusWeights=focusWeights.map((_,index)=>{
+        const from=focusTransition.from[index];
+        return index===activeIndex&&visible.length?mix(from,1,smooth((elapsed-100)/650)):mix(from,0,smooth(elapsed/240));
+      });
+      if(elapsed>=750)focusTransition=null;
+    }
+    function focusBook() {
+      if(reducedMotion.matches||document.hidden){focusTransition=null;focusWeights=books.map((_,i)=>visible.length&&i===activeIndex?1:0);}
+      else focusTransition={from:[...focusWeights],time:performance.now()};
+    }
+    function geometry(distance,selection=1) {
       const count=visible.length;
       const boundary=Math.floor(count/2)+.5,offset=count-boundary;
       const wrapped=count>1?((distance+offset)%count+count)%count-offset:0;
       const a=Math.abs(wrapped),side=Math.sign(wrapped);
       const edge=count>1?smooth(Math.min(boundary-wrapped,wrapped+offset)/.25):1;
-      return {x:side*(.57*a+.1*smooth(a))*layout.height,scale:1,angle:-21*side*smooth(a/.48),depth:-40+120*(1-smooth(a/.85)),spineOpacity:0,opacity:edge,distance:a};
+      const focus=selection*(1-smooth(a)),turn=smooth((focus-.35)/.65);
+      return {x:side*(.55*a+.19*smooth(a))*layout.height,scale:1,angle:-18.3*side*(1-turn)+6.3*turn,depth:-60+350*smooth(focus),spineOpacity:0,opacity:edge,distance:a};
     }
-    const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible]});
+    const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible],activeIndex,focus:[...focusWeights]});
     function render(now=performance.now()) {
+      focusSelection(now);
       const progress = filterTransition ? smooth((now-filterTransition.time)/620) : 1;
       bookElements.forEach((element,index) => {
         const local = visible.indexOf(index), included = local>=0;
@@ -138,7 +154,7 @@
         const distance = filterTransition ? mix(filterTransition.distances[index],target,progress) : target;
         const alpha = filterTransition ? mix(filterTransition.alphas[index],included?1:0,progress) : included?1:0;
         distances[index]=distance; alphas[index]=alpha;
-        const g=geometry(distance), lift=0;
+        const g=geometry(distance,focusWeights[index]), lift=0;
         const props={'--shelf-x':g.x+'px','--shelf-y':((1-g.scale)*layout.height/2-lift)+'px','--shelf-z':g.depth+'px','--shelf-rotate':g.angle+'deg','--shelf-scale':g.scale,'--shelf-opacity':g.opacity*alpha,'--shelf-spine-opacity':g.spineOpacity,'--shelf-brightness':1};
         for(const [key,value] of Object.entries(props)) element.style.setProperty(key,String(value));
         element.dataset.shelfView=g.spineOpacity>.8?'spine':g.distance<.5?'front':'cover';
@@ -152,7 +168,7 @@
     }
     function stop() {cancelAnimationFrame(frame);frame=0;previousTime=null;shelf.classList.remove('is-animating');}
     function settle() {
-      if(reducedMotion.matches || document.hidden) {stop();filterTransition=null;position=slot();velocity=0;render();return;}
+      if(reducedMotion.matches || document.hidden) {stop();filterTransition=null;focusTransition=null;focusWeights=books.map((_,i)=>visible.length&&i===activeIndex?1:0);position=slot();velocity=0;render();return;}
       if(frame) return;
       shelf.classList.add('is-animating');
       const tick=now=>{
@@ -160,31 +176,16 @@
         const offset=position-slot(),omega=14,c=velocity+omega*offset,decay=Math.exp(-omega*dt);
         position=slot()+(offset+c*dt)*decay;velocity=(velocity-omega*c*dt)*decay;
         render(now);
-        if(Math.abs(position-slot())<.0005&&Math.abs(velocity)<.008&&!filterTransition) {
+        if(Math.abs(position-slot())<.0005&&Math.abs(velocity)<.008&&!filterTransition&&!focusTransition) {
           position=slot();velocity=0;stop();render(now);
         } else frame=requestAnimationFrame(tick);
       };
       frame=requestAnimationFrame(tick);
     }
-    async function showWorld(book) {
-      if(!worlds || !book.preview) return;
-      const version=++sceneVersion,image=new Image();image.alt='';image.decoding='async';image.src=book.preview;
-      try {await image.decode();}catch(_){return;}
-      if(version!==sceneVersion)return;
-      clearTimeout(sceneTimer);
-      sceneTimer=setTimeout(()=>{
-        if(version!==sceneVersion)return;
-        [...worlds.children].slice(0,-1).forEach(el=>el.remove());worlds.append(image);
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          if(version!==sceneVersion)return;
-          [...worlds.children].forEach(el=>el.classList.toggle('is-visible',el===image));
-        }));
-        sceneTimer=setTimeout(()=>{if(version===sceneVersion)[...worlds.children].filter(el=>el!==image).forEach(el=>el.remove());},750);
-      },reducedMotion.matches?0:140);
-    }
     function update(announce=false,animateCopy=false) {
       const book=books[activeIndex],story=stories[book.id],visual=bookVisuals[book.id]||visualDefaults;
       const empty=!visible.length;shelf.classList.toggle('is-empty',empty);
+      openLink.href=book.url;openLink.setAttribute('aria-label','Explore '+book.title);openLink.hidden=empty||!shelf.classList.contains('has-shelf-scene');
       shelf.querySelector('[data-shelf-empty]').hidden=!empty;
       shelf.querySelector('.living-shelf-console').hidden=empty;
       shelf.querySelector('.shelf-utility').hidden=empty;
@@ -201,7 +202,7 @@
       shelf.dataset.activeBook=empty?'':book.id;
       bookElements.forEach((el,index)=>{
         el.classList.toggle('is-active',!empty&&index===activeIndex);el.tabIndex=!empty&&index===activeIndex?0:-1;
-        el.setAttribute('aria-label',index===activeIndex?'See inside '+books[index].title:'Bring '+books[index].title+' to the centre');
+        el.setAttribute('aria-label',index===activeIndex?'Explore '+books[index].title:'Bring '+books[index].title+' to the centre');
         el.style.setProperty('--shelf-tilt-x','0deg');el.style.setProperty('--shelf-tilt-y','0deg');
       });
       pageButtons.forEach((button,index)=>{
@@ -218,7 +219,7 @@
       if(!empty){
         try{sessionStorage.setItem(storageKey,book.id);}catch(_){}
         if(!prefetched.has(book.id)){prefetched.add(book.id);const link=document.createElement('link');link.rel='prefetch';link.href=book.url;document.head.append(link);}
-        showWorld(book);
+
       }
       shelf.dispatchEvent(new CustomEvent('shelfchange',{detail:state()}));
     }
@@ -226,7 +227,7 @@
       if(!visible.length)return;
       const index=clamp(Math.round(requested),0,books.length-1);
       if(!visible.includes(index))return;
-      const changed=index!==activeIndex;activeIndex=index;if(changed)update(true,true);
+      const changed=index!==activeIndex;activeIndex=index;if(changed){focusBook();update(true,true);}
       settle();if(focus)pageButtons[index].focus({preventScroll:true});
       if(focus||layout.mobile){
         const rail=pagination.getBoundingClientRect(),chosen=pageButtons[index].getBoundingClientRect();
@@ -245,7 +246,7 @@
       });
       if(!visible.includes(activeIndex)&&visible.length)activeIndex=visible[0];
       position=slot();velocity=0;filterTransition=reducedMotion.matches?null:from;
-      update(true,true);render();settle();
+      focusBook();update(true,true);render();settle();
     }
     function finishDrag(event,cancelled=false) {
       if(!drag||(event&&event.pointerId!==drag.id))return;
@@ -288,11 +289,15 @@
       if(Math.abs(wheelTotal)>55){goSlot(slot()+Math.sign(wheelTotal));wheelTotal=0;}
       wheelTimer=setTimeout(()=>wheelTotal=0,160);
     },{passive:false});
+    openLink.addEventListener('click',event=>{
+      if(Date.now()<suppressClick||drag?.horizontal||!visible.length)event.preventDefault();
+    });
     track.addEventListener('click',event=>{
       const el=event.target.closest('[data-shelf-index]');if(!el)return;
-      event.preventDefault();if(Date.now()<suppressClick)return;
+      if(Date.now()<suppressClick||drag?.horizontal){event.preventDefault();return;}
       const index=Number(el.dataset.shelfIndex);
-      if(index!==activeIndex)goTo(index);else exploreLink.click();
+      if(index!==activeIndex){event.preventDefault();goTo(index);}
+      // A selected cover is a native link, including modifier and middle clicks.
     });
     previous.addEventListener('click',()=>goSlot(slot()-1));next.addEventListener('click',()=>goSlot(slot()+1));
     pageButtons.forEach((button,index)=>button.addEventListener('click',()=>goTo(index)));
@@ -303,7 +308,7 @@
         event.preventDefault();goSlot(keys[event.key],Boolean(event.target.closest('[data-shelf-page]')));
         if(event.target.matches('.shelf-book'))bookElements[activeIndex].focus({preventScroll:true});
       }
-      if(event.key==='Enter'&&event.target===camera){event.preventDefault();exploreLink.click();}
+      if(event.key==='Enter'&&event.target===camera){event.preventDefault();bookElements[activeIndex].click();}
     });
     bookElements.forEach((el,index)=>{
       el.addEventListener('pointermove',event=>{
@@ -316,22 +321,22 @@
       el.addEventListener('pointerdown',event=>{if(index===activeIndex&&event.pointerType==='touch'&&!reducedMotion.matches)el.classList.add('is-pressed');});
     });
     reducedMotion.addEventListener('change',()=>{
-      stop();filterTransition=null;position=slot();velocity=0;
+      stop();filterTransition=null;focusTransition=null;focusWeights=books.map((_,i)=>visible.length&&i===activeIndex?1:0);position=slot();velocity=0;
       copy.forEach(el=>el.getAnimations?.().forEach(animation=>animation.cancel()));render();
     });
-    window.addEventListener('resize',()=>{finishDrag(null,true);stop();filterTransition=null;measure();position=slot();velocity=0;render();});
+    window.addEventListener('resize',()=>{finishDrag(null,true);stop();filterTransition=null;focusTransition=null;focusWeights=books.map((_,i)=>visible.length&&i===activeIndex?1:0);measure();position=slot();velocity=0;render();});
     window.addEventListener('blur',()=>finishDrag(null,true));
-    document.addEventListener('visibilitychange',()=>{if(document.hidden){finishDrag(null,true);stop();filterTransition=null;position=slot();velocity=0;render();}});
-    hint.innerHTML='<span class="shelf-hint-icon" aria-hidden="true">↔</span> '+(finePointer.matches?'Drag to browse · click the centre book to open':'Swipe to browse · tap the centre book to open');
+    document.addEventListener('visibilitychange',()=>{if(document.hidden){finishDrag(null,true);stop();filterTransition=null;focusTransition=null;focusWeights=books.map((_,i)=>visible.length&&i===activeIndex?1:0);position=slot();velocity=0;render();}});
+    hint.innerHTML='<span class="shelf-hint-icon" aria-hidden="true">↔</span> '+(finePointer.matches?'Drag to browse · select a book to explore':'Swipe to browse · tap the centre book to explore');
     window.DVShelf={getState:state,select:goTo,filter};
     measure();render();update();
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      import('./shelf-scene.js?v=20261001scene4').then(({createShelfScene})=>createShelfScene({
-        shelf,stage,books,snapshot:sceneSnapshot,
-        choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)exploreLink.click();else goTo(index);},
-        failed:()=>{sceneRenderer=null;measure();render();}
+      import('./shelf-scene.js?v=20261001cinema1').then(({createShelfScene})=>createShelfScene({
+        shelf,stage,books,openLink,snapshot:sceneSnapshot,
+        choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)bookElements[index].click();else goTo(index);},
+        failed:()=>{sceneRenderer=null;openLink.hidden=true;bookElements.forEach((el,i)=>el.tabIndex=i===activeIndex?0:-1);measure();render();}
       })).then(renderer=>{sceneRenderer=renderer;renderer.render(sceneSnapshot());}).catch(error=>{
         shelf.dataset.shelfRenderer='fallback';console.warn('Living Shelf uses its lightweight renderer:',error.message);
       });

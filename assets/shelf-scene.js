@@ -1,9 +1,9 @@
 import * as THREE from './vendor/three-r186.js';
-import {clamp, shelfPose} from './shelf-layout.js?v=20261001scene4';
+import {clamp, shelfPose} from './shelf-layout.js?v=20261001cinema1';
 
 // A single camera and light rig owns the books, timber and their shadows.
 // This module is loaded only on the catalogue page, after the usable DOM shelf.
-export async function createShelfScene({shelf, stage, books, snapshot, choose, failed}) {
+export async function createShelfScene({shelf, stage, books, openLink, snapshot, choose, failed}) {
   let renderer;
   const resources = new Set();
   const own = resource => (resources.add(resource), resource);
@@ -12,16 +12,16 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
   canvas.setAttribute('aria-hidden', 'true');
   canvas.addEventListener('webglcontextlost', event => {event.preventDefault();dispose();failed();});
   try {
-    renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'low-power'});
+    renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:'low-power'});
   } catch (error) { throw error; }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 1.03;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#131718');
+  scene.background = null;
   const camera = new THREE.PerspectiveCamera(27, 1, .1, 30);
   const pmrem = new THREE.PMREMGenerator(renderer);
   const room = new THREE.RoomEnvironment();
@@ -30,14 +30,14 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
   scene.environmentIntensity = .28;
   room.dispose();pmrem.dispose();
 
-  scene.add(new THREE.HemisphereLight('#f7eddd', '#2b2420', 1.1));
-  const key = new THREE.DirectionalLight('#fff1df', 3.1);
-  key.position.set(-3, 4.5, 5);key.target.position.set(0, .45, 0);
+  scene.add(new THREE.HemisphereLight('#f4ede4', '#262320', .75));
+  const key = new THREE.DirectionalLight('#fff1df', 2.1);
+  key.position.set(-3, 4, 5);key.target.position.set(0, .45, 0);
   key.castShadow = true;key.shadow.mapSize.set(2048, 2048);
   Object.assign(key.shadow.camera, {left:-3, right:3, top:2.5, bottom:-2, near:.1, far:12});
-  key.shadow.bias = -.00015;key.shadow.normalBias = .005;key.shadow.radius = 3;
+  key.shadow.bias = -.00015;key.shadow.normalBias = .001;key.shadow.radius = 3;
   scene.add(key, key.target);
-  const fill = new THREE.DirectionalLight('#d8e4ed', .7);fill.position.set(4, 1.5, 2);scene.add(fill);
+  const fill = new THREE.DirectionalLight('#d8e4ed', .5);fill.position.set(4, 1.5, 2);scene.add(fill);
 
   function textureCanvas(width, height, paint) {
     const c = document.createElement('canvas');c.width=width;c.height=height;
@@ -46,61 +46,62 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
     texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
     return texture;
   }
-  const wood = textureCanvas(2048, 256, (ctx,w,h) => {
-    // Deterministic long grain, with restrained variation rather than stripes.
-    const pixels=ctx.createImageData(w,h);
-    for(let y=0;y<h;y++) for(let x=0;x<w;x++) {
-      const bend=Math.sin(x*.0026)*8+Math.sin(x*.008)*2;
-      const grain=Math.sin((y+bend)*.46)+.45*Math.sin((y+bend)*1.76);
-      const fine=Math.sin(x*12.9898+y*78.233)*43758.5453;
-      const n=(fine-Math.floor(fine)-.5)*3;
-      const i=(y*w+x)*4;
-      pixels.data[i]=65+grain*4+n;pixels.data[i+1]=43+grain*3+n;pixels.data[i+2]=29+grain*2+n;pixels.data[i+3]=255;
-    }
-    ctx.putImageData(pixels,0,0);
-  });
-  wood.wrapS=wood.wrapT=THREE.RepeatWrapping;
-  const timber = own(new THREE.MeshStandardMaterial({map:wood, color:'#c4ab91', roughness:.68, metalness:0, envMapIntensity:.45}));
-  const plank = new THREE.Mesh(own(new THREE.RoundedBoxGeometry(5.8,.07,1.28,3,.008)),timber);
-  plank.position.set(0,-.035,.04);plank.receiveShadow=true;plank.castShadow=true;scene.add(plank);
-  const backdrop = new THREE.Mesh(own(new THREE.PlaneGeometry(16,8)), own(new THREE.MeshStandardMaterial({color:'#242a2b',roughness:.98})));
-  backdrop.position.set(0,2,-.87);backdrop.receiveShadow=true;scene.add(backdrop);
-
-  const paper = textureCanvas(64,512,(ctx,w,h)=>{
-    ctx.fillStyle='#e7e1d4';ctx.fillRect(0,0,w,h);
-    for(let y=0;y<h;y+=5){ctx.fillStyle=y%10?'#cec7b9':'#d9d1c3';ctx.fillRect(0,y,w,1);}
-  });
-  const paperMaterial=own(new THREE.MeshStandardMaterial({map:paper,roughness:.96,envMapIntensity:.15}));
+  let disposed=false, observer, visibilityObserver, wake, inView=true;
   const loader = new THREE.TextureLoader();
   const timeout = (promise,ms) => {
     let timer;
-    return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Cover texture timeout')),ms);})]).finally(()=>clearTimeout(timer));
+    return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Shelf texture timeout')),ms);})]).finally(()=>clearTimeout(timer));
   };
-  let disposed=false, observer, visibilityObserver, wake, inView=true;
+  const loadTexture=async url=>{
+    const texture=own(await loader.loadAsync(url));
+    if(disposed){texture.dispose();throw new Error('Scene disposed');}
+    texture.colorSpace=THREE.SRGBColorSpace;
+    texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return texture;
+  };
   const groups=[];
-  function spineTexture(color) {
-    return textureCanvas(64,1024,(ctx,w,h)=>{
-      ctx.fillStyle=color;ctx.fillRect(0,0,w,h);
-      // No invented spine copy. Available front artwork supplies a subtle edge.
-      ctx.fillStyle='rgba(255,255,255,.06)';ctx.fillRect(w-6,0,3,h);
-    });
-  }
-  const colors=['#512342','#123454','#10334d','#18354e','#315565','#243747','#203849'];
   try {
-    const covers=await timeout(Promise.all(books.map(book=>loader.loadAsync(book.cover).then(texture=>{
-      own(texture);if(disposed){texture.dispose();throw new Error('Scene disposed');}
-      texture.colorSpace=THREE.SRGBColorSpace;
-      texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return texture;
-    }))),12000);
+    const [wood,background]=await timeout(Promise.all([
+      loadTexture('/assets/living-shelf-walnut-material.webp'),
+      loadTexture('/assets/living-shelf-library.webp')
+    ]),12000);
+    wood.wrapS=wood.wrapT=THREE.RepeatWrapping;
+    const timber=own(new THREE.MeshStandardMaterial({map:wood,bumpMap:wood,bumpScale:.0012,color:'#b8ada2',roughness:.61,metalness:0,envMapIntensity:.4}));
+    const plank=new THREE.Mesh(own(new THREE.RoundedBoxGeometry(5.8,.14,1.45,4,.014)),timber);
+    plank.position.set(0,-.07,.10);plank.receiveShadow=true;plank.castShadow=true;scene.add(plank);
+    const backdrop=new THREE.Mesh(own(new THREE.PlaneGeometry(8,8/(background.image.width/background.image.height))),own(new THREE.MeshBasicMaterial({map:background,toneMapped:false})));
+    backdrop.position.set(0,1.5,-1.2);scene.add(backdrop);
+    // Broad ambient occlusion under the wall-mounted board; book shadows are real.
+    const shadow=textureCanvas(512,128,(ctx,w,h)=>{
+      ctx.scale(1,h/w);const grad=ctx.createRadialGradient(w/2,w/2,0,w/2,w/2,w/2);
+      grad.addColorStop(0,'rgba(0,0,0,.7)');grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grad;ctx.fillRect(0,0,w,w);
+    });
+    const wallShadow=new THREE.Mesh(own(new THREE.PlaneGeometry(6.2,.5)),own(new THREE.MeshBasicMaterial({map:shadow,transparent:true,depthWrite:false,toneMapped:false})));
+    wallShadow.position.set(0,-.19,-1.19);scene.add(wallShadow);
+    const paper = textureCanvas(64,512,(ctx,w,h)=>{
+      ctx.fillStyle='#e7e1d4';ctx.fillRect(0,0,w,h);
+      for(let y=0;y<h;y+=5){ctx.fillStyle=y%10?'#cec7b9':'#d9d1c3';ctx.fillRect(0,y,w,1);}
+    });
+    const paperMaterial=own(new THREE.MeshStandardMaterial({map:paper,roughness:.96,envMapIntensity:.15}));
+    function spineTexture(color) {
+      return textureCanvas(64,1024,(ctx,w,h)=>{
+        ctx.fillStyle=color;ctx.fillRect(0,0,w,h);
+        // No invented spine copy. Available front artwork supplies a subtle edge.
+        ctx.fillStyle='rgba(255,255,255,.06)';ctx.fillRect(w-6,0,3,h);
+      });
+    }
+    const colors=['#512342','#123454','#10334d','#18354e','#315565','#243747','#203849'];
+    const covers=await timeout(Promise.all(books.map(book=>loadTexture(book.cover))),12000);
     books.forEach((book,index)=>{
       const width=book.coverRatio || .75;
       const pages=Number((book.shelfFormat || book.format || '').match(/\d+/)?.[0])||80;
       const depth=clamp(pages*.00019+.003,.016,.023);
-      const group=new THREE.Group();group.userData.index=index;
+      const group=new THREE.Group();group.userData.index=index;group.userData.width=width;
       const sheet=new THREE.Mesh(own(new THREE.RoundedBoxGeometry(width-.005,.995,depth,2,.001)),paperMaterial);
       sheet.castShadow=true;sheet.receiveShadow=true;group.add(sheet);
-      const coating=own(new THREE.MeshPhysicalMaterial({map:covers[index],roughness:.64,metalness:0,clearcoat:.13,clearcoatRoughness:.48,envMapIntensity:.35}));
+      const coating=own(new THREE.MeshPhysicalMaterial({map:covers[index],roughness:.64,metalness:0,clearcoat:.18,clearcoatRoughness:.5,envMapIntensity:.4}));
       const front=new THREE.Mesh(own(new THREE.PlaneGeometry(width,1)),coating);
+      group.userData.coating=coating;
       front.position.z=depth/2+.0006;front.castShadow=true;front.receiveShadow=true;group.add(front);
       // Unseen backs use a neutral binding material until authentic wrap assets exist.
       const binding=own(new THREE.MeshStandardMaterial({color:colors[index],roughness:.7}));
@@ -119,27 +120,46 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
       const hit=raycaster.intersectObjects(groups,true).find(hit=>groups[hit.object.userData.index].visible);
       if(hit)choose(hit.object.userData.index);
     });
+    const corners=[new THREE.Vector3(),new THREE.Vector3(),new THREE.Vector3(),new THREE.Vector3()];
+    function projectLink(group,pose) {
+      const width=group.userData.width;
+      const points=[[-width/2,-.5],[width/2,-.5],[width/2,.5],[-width/2,.5]].map(([x,y],i)=>{
+        const v=corners[i].set(x,y,.014).applyMatrix4(group.matrixWorld).project(camera);
+        return {x:(v.x+1)*stage.clientWidth/2,y:(1-v.y)*stage.clientHeight/2};
+      });
+      const left=Math.min(...points.map(p=>p.x)),top=Math.min(...points.map(p=>p.y));
+      const w=Math.max(...points.map(p=>p.x))-left,h=Math.max(...points.map(p=>p.y))-top;
+      openLink.style.left=left+'px';openLink.style.top=top+'px';openLink.style.width=w+'px';openLink.style.height=h+'px';
+      openLink.style.clipPath='polygon('+points.map(p=>`${(p.x-left)/w*100}% ${(p.y-top)/h*100}%`).join(',')+')';
+      openLink.hidden=pose.focus<.82;
+    }
     function resize() {
       const width=stage.clientWidth,height=stage.clientHeight;if(!width||!height)return;
       renderer.setSize(width,height,false);camera.aspect=width/height;
-      const desktopDistance=Math.max(3.25,4.6/(2*Math.tan(27*Math.PI/360)*camera.aspect));
-      camera.position.set(0,1.18,camera.aspect<1.3?3.25:desktopDistance);
-      camera.lookAt(0,.53,0);camera.updateProjectionMatrix();draw(snapshot());
+      const desktopDistance=Math.max(3.5,4.75/(2*Math.tan(27*Math.PI/360)*camera.aspect));
+      camera.position.set(0,1.03,camera.aspect<1.3?3.05:desktopDistance);
+      camera.lookAt(0,.49,0);camera.updateProjectionMatrix();camera.updateMatrixWorld();draw(snapshot());
     }
     function draw(state) {
       if(disposed)return;
+      openLink.hidden=true;
       groups.forEach((group,index)=>{
         if(!state.visible.includes(index)) {
           group.position.y=.5-1.15*(1-state.alphas[index]);
           group.visible=state.alphas[index]>.02 && state.visible.length>0;
           return;
         }
-        const pose=shelfPose(state.distances[index],state.visible.length);
+        const pose=shelfPose(state.distances[index],state.visible.length,state.focus[index]);
         group.position.set(pose.x,pose.y,pose.z);group.rotation.y=pose.rotation;
         group.visible=state.alphas[index]>.02 && pose.seam>.02 && state.visible.length>0;
         // Filter departures sink behind the shelf instead of dissolving paper.
         group.position.y-=1.15*(1-state.alphas[index]);
+        group.userData.coating.color.setScalar(.86+.14*pose.focus);
+        group.updateMatrixWorld();
+        if(index===state.activeIndex&&group.visible){projectLink(group,pose);}
+
       });
+      shelf.querySelectorAll('[data-shelf-index]').forEach(el=>el.tabIndex=-1);
       if(inView&&!document.hidden)renderer.render(scene,camera);
     }
     observer=new ResizeObserver(resize);observer.observe(stage);
@@ -154,6 +174,6 @@ export async function createShelfScene({shelf, stage, books, snapshot, choose, f
     if(wake)document.removeEventListener('visibilitychange',wake);
     key.shadow.map?.dispose();
     resources.forEach(resource=>resource.dispose());renderer?.dispose();canvas.remove();
-    shelf.classList.remove('has-shelf-scene');shelf.dataset.shelfRenderer='fallback';
+    shelf.classList.remove('has-shelf-scene');shelf.dataset.shelfRenderer='fallback';openLink.hidden=true;
   }
 }

@@ -1,88 +1,146 @@
-/* The physical shelf and its lightweight fallback share one quiet stage. */
+/* One physical display, with a photographic fallback for devices without WebGL. */
 .living-shelf.shelf-photographic {
-  --shelf-book-height:clamp(215px,21.5vw,295px);
+  --shelf-book-height:clamp(215px,20.5vw,280px);
   --shelf-book-depth:5px;
   --shelf-book-half-depth:2.5px;
-  background:#131718;
-  min-height:0;
+  --shelf-scene-height:clamp(410px,38vw,510px);
+  background:#111716;min-height:0;gap:12px;
 }
 .shelf-photographic::before { display:none; }
 .shelf-photographic .living-shelf-stage {
-  width:100%;left:0;margin:12px 0 0;
-  height:clamp(380px,35vw,460px);min-height:0;
-  overflow:hidden;background:#131718;
+  width:100%;left:0;margin:4px 0 0;
+  height:var(--shelf-scene-height);min-height:0;
+  overflow:hidden;isolation:isolate;
+  background:#111716 url('/assets/living-shelf-library.webp') center 45%/cover no-repeat;
+}
+.shelf-photographic .living-shelf-stage::after {
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(90deg,#111716,transparent 6%,transparent 94%,#111716),linear-gradient(#111716,transparent 17%,transparent 80%,#111716);
 }
 .shelf-photographic .living-shelf-camera {
-  perspective:1800px;perspective-origin:50% calc(100% - 83px);
+  perspective:1800px;perspective-origin:50% calc(100% - 94px);
   touch-action:pan-y;outline-offset:-3px;
 }
 .shelf-scene { position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab; }
 .shelf-photographic.is-dragging .shelf-scene { cursor:grabbing; }
 .shelf-photographic .living-shelf-track { pointer-events:none; }
 .shelf-photographic .shelf-book {
-  top:auto;bottom:83px;left:50%;
+  top:auto;bottom:94px;left:50%;
   transform:translateX(-50%) translate3d(var(--shelf-x),0,var(--shelf-z));
-  opacity:var(--shelf-opacity);filter:none;
-  pointer-events:auto;
+  opacity:var(--shelf-opacity);filter:none;pointer-events:auto;
 }
 .shelf-photographic .shelf-book::before,
 .shelf-photographic .shelf-book::after,
 .shelf-photographic .shelf-book-front::before,
 .shelf-photographic .shelf-book-front::after { display:none; }
-.shelf-photographic .shelf-book-object {
-  transform:translateX(-50%) rotateY(var(--shelf-rotate));
-  filter:drop-shadow(8px 6px 8px rgba(0,0,0,.35));
-}
+.shelf-photographic .shelf-book-object,
 .shelf-photographic .shelf-book:not([data-shelf-view="spine"]):is(:hover,:focus-visible) .shelf-book-object {
   transform:translateX(-50%) rotateY(var(--shelf-rotate));
-  filter:drop-shadow(8px 6px 8px rgba(0,0,0,.35));
+  filter:drop-shadow(8px 4px 7px rgba(0,0,0,.42));
 }
-.shelf-photographic .shelf-book-front { border-radius:1px;box-shadow:none; }
-.shelf-photographic .shelf-book.is-active .shelf-book-front { box-shadow:none; }
+.shelf-photographic .shelf-book-front,
+.shelf-photographic .shelf-book.is-active .shelf-book-front { border-radius:1px;box-shadow:none; }
 .shelf-photographic .shelf-book.is-active:is(:hover,:focus-visible) .shelf-book-front::before { display:none; }
-.shelf-photographic .shelf-book-edge-left { width:5px; }
+.shelf-photographic .shelf-book-edge-left,
 .shelf-photographic .shelf-book-edge-right { width:5px; }
 .shelf-photographic .shelf-book-paper-block { background:#e4ddce; }
 .shelf-photographic .shelf-book-edge span { display:none; }
 .shelf-photographic .shelf-book-interaction { transform:none; }
 .shelf-fallback-plank {
-  position:absolute;left:0;right:0;bottom:64px;height:19px;
-  background:linear-gradient(#55402d,#302218);
-  border-top:1px solid #72563c;
-  box-shadow:0 18px 22px rgba(0,0,0,.38);
+  position:absolute;z-index:0;left:0;right:0;bottom:72px;height:22px;
+  border-radius:2px 2px 4px 4px;border-top:1px solid #ad805844;
+  background:linear-gradient(#ffffff09,#00000060),url('/assets/living-shelf-walnut-material.webp') center/cover;
+  box-shadow:0 20px 24px #0009,0 4px 7px #0008;
+}
+.shelf-fallback-plank::before {
+  content:"";position:absolute;left:0;right:0;bottom:100%;height:68px;
+  transform:perspective(600px) rotateX(64deg);transform-origin:50% 100%;
+  background:linear-gradient(#0006,#0001),url('/assets/living-shelf-walnut-material.webp') center/cover;
+  border-radius:3px 3px 0 0;
 }
 .shelf-photographic.has-shelf-scene .shelf-fallback-plank { display:none; }
-/* Keep the selected DOM link keyboard-accessible alongside the canvas. */
 .shelf-photographic.has-shelf-scene .shelf-book {
   width:1px;height:1px;padding:0;overflow:hidden;
   clip-path:inset(50%);opacity:0;pointer-events:none;
 }
-.shelf-photographic.has-shelf-scene .shelf-book:focus-visible {
-  width:auto;height:auto;overflow:visible;clip-path:none;opacity:1;
-  bottom:44px;transform:translateX(-50%);background:#171e23;padding:8px 14px;
+.shelf-active-hit {
+  position:absolute;z-index:4;display:block;cursor:pointer;background:transparent;
+  -webkit-tap-highlight-color:transparent;
 }
-.shelf-photographic.has-shelf-scene .shelf-book:focus-visible::after {
-  content:attr(aria-label);display:block;position:static;color:#fff;font-size:12px;
-  background:none;opacity:1;transform:none;white-space:nowrap;
+.shelf-active-hit span,
+.shelf-photographic .shelf-book.is-active::after {
+  position:absolute;bottom:14px;left:50%;width:max-content;
+  padding:9px 13px;border:1px solid #d8c19b70;border-radius:3px;
+  background:#101815ed;color:#f4e6cd;font:500 12px var(--catalog-sans);
+  transform:translate(-50%,6px);opacity:0;transition:opacity .2s,transform .3s;
+  box-shadow:0 4px 16px #0005;pointer-events:none;letter-spacing:.01em;
 }
-.shelf-photographic.has-shelf-scene .shelf-book:focus-visible .shelf-book-interaction { display:none; }
+.shelf-active-hit:is(:hover,:focus-visible) span { opacity:1;transform:translate(-50%,0); }
+.shelf-active-hit:focus-visible { outline:3px solid #d4b06c;outline-offset:-4px; }
+.shelf-photographic .shelf-book.is-active::after {
+  content:"Explore this book ↗";display:block;bottom:12px;z-index:10;
+  filter:none;inset:auto auto 12px 50%;
+}
+.shelf-photographic .shelf-book.is-active:is(:hover,:focus-visible)::after { opacity:1;transform:translate(-50%,0); }
+.shelf-photographic.has-shelf-scene .shelf-book::after { display:none; }
 .shelf-photographic .living-shelf-hint {
-  bottom:8px;font-size:9px;color:#9faaa9;letter-spacing:.08em;white-space:nowrap;
+  bottom:15px;z-index:4;font-size:11px;color:#c2c8c0;letter-spacing:.03em;white-space:nowrap;
 }
-.shelf-photographic .shelf-navigation { margin-top:12px;margin-bottom:20px; }
-.shelf-photographic .shelf-pagination button { background:transparent;box-shadow:none; }
-.shelf-photographic .shelf-pagination button img { display:none; }
-.shelf-photographic .shelf-pagination button span { display:block;font-size:10px;line-height:1.35; }
+.shelf-photographic .shelf-navigation {
+  display:block;position:relative;max-width:none;margin:0 0 10px;padding:0;z-index:15;
+}
+.shelf-photographic .shelf-arrow {
+  position:absolute;top:calc(var(--shelf-scene-height)*-.5 - 34px);
+  width:46px;height:46px;border:1px solid #dcc29955;background:#111916db;
+  backdrop-filter:blur(6px);color:#eedac0;border-radius:50%;
+  box-shadow:0 5px 18px #0004;transition:background .2s,border-color .2s;
+}
+.shelf-photographic .shelf-arrow-previous { left:4px; }
+.shelf-photographic .shelf-arrow-next { right:4px; }
+.shelf-photographic .shelf-arrow:not(:disabled):hover { background:#29312a;border-color:#dac399; }
+.shelf-photographic .shelf-arrow:disabled { opacity:.25; }
+.shelf-photographic .shelf-pagination {
+  max-width:1120px;margin:auto;justify-content:center;gap:7px;padding:4px 1px;
+}
 .shelf-photographic .shelf-pagination button {
-  min-height:48px;max-width:130px;flex:1 0 90px;height:auto;padding:8px 6px;
-  border:1px solid transparent;border-radius:2px;
+  background:transparent;box-shadow:none;min-height:52px;
+  max-width:160px;flex:1 0 115px;height:auto;padding:9px 10px;
+  border:1px solid transparent;border-radius:4px;color:#bcc4bf;
 }
-.shelf-photographic .shelf-pagination button[aria-pressed="true"] {
-  border-color:rgba(211,181,126,.65);background:rgba(211,181,126,.06);
+.shelf-photographic .shelf-pagination button img { display:none; }
+.shelf-photographic .shelf-pagination button span { display:block;font-size:12px;line-height:1.4;font-weight:500; }
+.shelf-photographic .shelf-pagination button[aria-pressed="true"] { border-color:#c4a26e99;background:#c4a26e0c;color:#f4e6cd; }
+.shelf-photographic .shelf-pagination button:hover { background:#ffffff09;color:#fff; }
+.shelf-photographic .living-shelf-console {
+  margin-top:0;padding:24px 0 8px;min-height:120px;align-items:center;
+  grid-template-columns:minmax(220px,.85fr) minmax(250px,1.15fr) 310px;gap:28px;
+  border-top:1px solid #dcc2992b;
 }
-.shelf-photographic .living-shelf-console { margin-top:0; }
+.shelf-photographic .shelf-active-book h2 { font-size:clamp(27px,2.5vw,36px);min-height:0;line-height:1.12; }
+.shelf-photographic .shelf-book-summary>p { font-size:15px;line-height:1.65;min-height:0;color:#e0e4dd; }
+.shelf-photographic .shelf-collection-tags { display:none; }
+.shelf-photographic .shelf-book-meta { font-size:12px;color:#abb9ae;margin-top:12px; }
+.shelf-photographic .shelf-actions { gap:9px; }
+.shelf-photographic .shelf-utility { margin-top:0; }
+@media(max-width:1020px) {
+  .shelf-photographic .living-shelf-console { grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px; }
+  .shelf-photographic .shelf-actions { grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;max-width:600px; }
+  .shelf-photographic .shelf-pagination { justify-content:flex-start; }
+}
 @media(max-width:700px) {
-  .shelf-photographic .living-shelf-stage { height:390px; }
-  .shelf-photographic .shelf-pagination button { flex-basis:92px; }
-  .shelf-photographic .living-shelf-hint { font-size:8px;letter-spacing:.03em; }
+  .living-shelf.shelf-photographic { --shelf-scene-height:400px;--shelf-book-height:235px; }
+  .shelf-photographic .living-shelf-stage { width:calc(100% + 40px);margin-left:-20px; }
+  .shelf-photographic .shelf-navigation { margin-bottom:6px; }
+  .shelf-photographic .shelf-arrow-previous { left:-12px; }
+  .shelf-photographic .shelf-arrow-next { right:-12px; }
+  .shelf-photographic .shelf-pagination button { flex:0 0 126px;max-width:150px;min-height:50px; }
+  .shelf-photographic .living-shelf-hint { font-size:9px;letter-spacing:0; }
+  .shelf-photographic .living-shelf-console { display:block;padding-top:18px; }
+  .shelf-photographic .shelf-book-summary { margin-top:12px; }
+  .shelf-photographic .shelf-book-summary>p { font-size:14px; }
+  .shelf-photographic .shelf-actions { display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);margin-top:18px; }
+  .shelf-active-hit span,.shelf-photographic .shelf-book.is-active::after { font-size:11px;padding:7px 10px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .shelf-active-hit span,.shelf-photographic .shelf-book.is-active::after { transition:none; }
 }
