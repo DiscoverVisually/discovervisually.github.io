@@ -41,7 +41,7 @@
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const narrowScreen = window.matchMedia("(max-width: 700px)");
-    const storageKey = "dv-living-shelf-book";
+    const storageKey = shelf.dataset.shelfMemory || "dv-living-shelf-book";
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
     const mix = (start, end, progress) => start + (end - start) * progress;
     const escapeHTML = (value) => String(value)
@@ -71,7 +71,7 @@
     };
 
     const amazonLink = shelf.querySelector('[data-shelf-amazon]');
-    let activeIndex = 0;
+    let activeIndex = Math.max(0,books.findIndex(book=>book.id===shelf.dataset.shelfDefault));
     const hashId = new URLSearchParams(location.hash.slice(1)).get('book');
     try {
       const id = hashId || sessionStorage.getItem(storageKey);
@@ -199,6 +199,8 @@
       description.textContent=story?.hook||book.description;audience.textContent=book.audience;format.textContent=book.shelfFormat||book.format;
       shelf.querySelector('[data-shelf-benefits]').innerHTML=(story?.benefits||[]).map(text=>`<li>${escapeHTML(text)}</li>`).join('');
       shelf.querySelector('[data-shelf-detail]').href=book.url;
+      const primaryLabel=shelf.querySelector('[data-shelf-primary-label]');
+      if(primaryLabel)primaryLabel.textContent='Explore '+(book.id==='new-york-city'?'New York City':book.shortTitle||book.title);
       exploreLink.setAttribute('aria-label','See inside '+book.title);
       amazonLink.href=book.amazon;amazonLink.hidden=empty||!book.amazon;
       amazonLink.setAttribute('aria-label','View '+book.title+' on Amazon (opens in a new tab)');

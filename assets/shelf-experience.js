@@ -3,8 +3,10 @@
   const shelf=document.querySelector('[data-living-shelf]'),engine=window.DVShelf;
   if(!shelf||!engine)return;
   const books=window.DV_BOOKS,stories=window.DV_SHELF_STORIES;
+  const discovery=document.querySelector('[data-shelf-discovery]')||shelf;
+  const preferencesKey=shelf.dataset.shelfMemory?'dv-home-shelf-preferences':'dv-shelf-preferences';
   const $=selector=>document.querySelector(selector);
-  const topics=[...shelf.querySelectorAll('[data-shelf-topic]')],gifts=[...shelf.querySelectorAll('[data-shelf-gift]')];
+  const topics=[...discovery.querySelectorAll('[data-shelf-topic]')],gifts=[...discovery.querySelectorAll('[data-shelf-gift]')];
   const age=$('[data-shelf-age]'),fit=$('[data-shelf-fit]'),dialog=$('[data-shelf-preview]');
   const root=$('[data-preview-book]'),left=$('[data-preview-left]'),right=$('[data-preview-right]');
   const leaf=$('[data-preview-leaf]'),loading=$('[data-preview-loading]');
@@ -31,14 +33,14 @@
     if(state.gift)params.set('gift',state.gift);
     if(dialog.open&&previewBook){params.set('view','inside');if(spread)params.set('spread',String(spread+1));}
     history.replaceState(null,'',location.pathname+location.search+(params.size?'#'+params:''));
-    try{sessionStorage.setItem('dv-shelf-preferences',JSON.stringify({topic:state.topic,age:state.age,gift:state.gift}));}catch(_){}
+    try{sessionStorage.setItem(preferencesKey,JSON.stringify({topic:state.topic,age:state.age,gift:state.gift}));}catch(_){}
   }
   function reflect(){
     const state=engine.getState();
     topics.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.shelfTopic===state.topic)));
     age.value=state.age;
     gifts.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.shelfGift===state.gift)));
-    shelf.querySelector('.shelf-reset').hidden=state.topic==='all'&&state.age==='all'&&!state.gift;
+    discovery.querySelector('.shelf-reset').hidden=state.topic==='all'&&state.age==='all'&&!state.gift;
     fit.hidden=!state.gift||!state.book;fit.textContent=state.book?'Why it fits: '+stories[state.book.id].fit:'';
     $('[data-shelf-share]').disabled=!state.book;
     $('[data-shelf-share-status]').textContent='';$('[data-shelf-share-url]').hidden=true;
@@ -47,7 +49,7 @@
   shelf.addEventListener('shelfchange',reflect);
   topics.forEach(button=>button.addEventListener('click',()=>engine.filter({topic:button.dataset.shelfTopic,age:engine.getState().age})));
   age.addEventListener('change',()=>engine.filter({topic:engine.getState().topic,age:age.value}));
-  shelf.querySelectorAll('[data-shelf-reset]').forEach(button=>button.addEventListener('click',()=>engine.filter()));
+  [...new Set([...shelf.querySelectorAll('[data-shelf-reset]'),...discovery.querySelectorAll('[data-shelf-reset]')])].forEach(button=>button.addEventListener('click',()=>engine.filter()));
   gifts.forEach(button=>button.addEventListener('click',()=>{
     const gift=button.dataset.shelfGift;engine.filter({...giftFilters[gift],gift});
   }));
@@ -156,7 +158,7 @@
     // Ordinary section anchors retain the current shelf and native navigation.
     if(location.hash&&!['book','topic','age','gift','view'].some(key=>params.has(key))){syncing=true;reflect();syncing=false;return;}
     let prefs={topic:params.get('topic'),age:params.get('age'),gift:params.get('gift')};
-    if(!location.hash){try{prefs=JSON.parse(sessionStorage.getItem('dv-shelf-preferences'))||{};}catch(_){}}
+    if(!location.hash){try{prefs=JSON.parse(sessionStorage.getItem(preferencesKey))||{};}catch(_){}}
     const gift=Object.hasOwn(giftFilters,prefs.gift)?prefs.gift:'';
     syncing=true;
     engine.filter({...prefs,gift});
