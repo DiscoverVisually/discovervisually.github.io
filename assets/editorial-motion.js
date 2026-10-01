@@ -106,7 +106,12 @@
   let source=null,navigating=false;
   const clearTransition=()=>{source?.style.removeProperty('view-transition-name');heroCover?.style.removeProperty('view-transition-name');source=null;navigating=false;document.documentElement.classList.remove('dv-navigating');};
   window.addEventListener('pageshow',clearTransition);
-  window.addEventListener('pageswap',event=>{if(reduced.matches)event.viewTransition?.skipTransition();});
+  window.addEventListener('pageswap',event=>{
+    if(!event.viewTransition)return;
+    // Outgoing readiness rejects after its snapshot has been handed off.
+    event.viewTransition.ready.catch(()=>{});event.viewTransition.finished.then(clearTransition,clearTransition);
+    if(reduced.matches)event.viewTransition.skipTransition();
+  });
   document.addEventListener('click',event=>{
     if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||reduced.matches)return;
     const link=event.target.closest('a[href]');if(!link||link.target||link.hasAttribute('download')||link.closest(excluded))return;
@@ -199,11 +204,11 @@
     const instruction=section.querySelector('.dv-feature-instruction'),instructionText=instruction.textContent;
     const pins=[...section.querySelectorAll('[data-dv-pin]')];let active=0,requested=0,token=0,cleanTimer=0;
     function describe(index,animateCopy=false){
-      active=index;instruction.textContent=instructionText;const scene=scenes[index];buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));pins.forEach((pin,i)=>pin.setAttribute('aria-pressed',String(i===index)));
+      active=index;instruction.textContent=instructionText;const scene=scenes[index];stage.querySelector('.is-current').alt=scene.title+' — illustration from the book';buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));pins.forEach((pin,i)=>pin.setAttribute('aria-pressed',String(i===index)));
       copy.querySelector('h3').textContent=scene.title;copy.querySelector('p').textContent=scene.body;
       section.style.setProperty('--dv-story-progress',scenes.length>1?index/(scenes.length-1):0);stage.dataset.dvFocusX=String(scene.x);stage.dataset.dvFocusY=String(scene.y);
       focus.hidden=section.dataset.dvMode!=='pins';focus.style.left=scene.x+'%';focus.style.top=scene.y+'%';focus.style.width=focus.style.height=scene.r+'%';
-      route.hidden=!scene.route;
+      route.toggleAttribute('hidden',!scene.route);
       if(scene.route){const path=route.querySelector('path');path.setAttribute('d',scene.route);animate(path,[{strokeDashoffset:1},{strokeDashoffset:0}],{duration:1000,easing:'cubic-bezier(.2,.7,.2,1)'});}
       if(animateCopy)animate(copy,[{opacity:.65,translate:'0 5px'},{opacity:1,translate:'0 0'}],{duration:300,easing:'ease-out'});
       stage.removeAttribute('aria-busy');section.dataset.dvActiveScene=String(index);
