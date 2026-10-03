@@ -12,7 +12,7 @@
   const shelf=document.querySelector('[data-living-shelf]');
   try {
     await Promise.all([import('./catalog-data.js?v=20261001mobile1'),import('./shelf-stories.js?v=20261001mobile1'),import('./book-opening.js?v=20260930motion3')]);
-    await import('./catalog-pages.js?v=20261001mobile1');
+    await import('./catalog-pages.js?v=20261003shelf5');
     await Promise.all([import('./shelf-experience.js?v=20261001mobile1'),import('./commerce-metrics.js?v=20261001mobile1'),import('./book-commerce.js?v=20261001mobile1')]);
   } catch(error) {
     shelf.classList.add('shelf-init-failed');

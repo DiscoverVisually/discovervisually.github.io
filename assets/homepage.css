@@ -2,7 +2,7 @@
 @import url('./catalog.css?v=20261001mobile1');
 @import url('./amazon-cta.css?v=20261001mobile1');
 @import url('./book-opening.css?v=20261001mobile1');
-@import url('./shelf-scene.css?v=20261001mobile1');
+@import url('./shelf-scene.css?v=20261003shelf5');
 
 :root { --home-bg:#111716;--home-paper:#f4ead8;--home-muted:#b9c0b6;--home-gold:#d9bd88;--home-line:#d9bd882b;--home-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--home-sans:Arial,Helvetica,sans-serif; }
 html { background:var(--home-bg);scroll-padding-top:90px; }
@@ -187,7 +187,7 @@ body>footer>span { font-size:10px;color:#a4afa0; }
 @media(max-width:700px) {
  html { scroll-padding-top:20px; }.site-header { padding:0 20px; }
  .home-intro { padding:18px 22px 0; }.home-intro .home-eyebrow { font-size:11px;letter-spacing:.13em;margin-bottom:13px; }.home-intro h1 { font-size:32px;line-height:1.06;max-width:440px;margin:auto; }.home-intro h1 em { display:block;margin-top:5px; }.home-intro>p:not(.home-eyebrow) { max-width:300px;margin:12px auto 0;font-size:14px;line-height:1.6; }
- .home-shelf-page .living-shelf.shelf-photographic { --shelf-scene-height:260px;--shelf-book-height:160px;padding:0 20px;gap:4px; }
+ .home-shelf-page .living-shelf.shelf-photographic { --shelf-book-height:clamp(320px,82vw,360px);--shelf-scene-height:calc(var(--shelf-book-height) + 105px);padding:0 20px;gap:4px; }
  .home-shelf-page .shelf-photographic .living-shelf-stage { width:calc(100% + 40px);margin:0 -20px; }
  .home-shelf-page .shelf-photographic .shelf-navigation { margin:0; }.home-shelf-page .shelf-photographic .shelf-pagination { padding:1px 0 9px; }.home-shelf-page .shelf-photographic .shelf-pagination button { min-height:42px;flex-basis:120px; }.home-shelf-page .shelf-photographic .shelf-pagination button span { font-size:11px; }
  .home-shelf-page .shelf-photographic .living-shelf-console { display:grid;grid-template-columns:1fr;gap:8px;padding:14px 0 0; }.home-shelf-page .shelf-photographic .shelf-active-book h2 { font-size:29px; }.home-shelf-page .shelf-counter { margin-bottom:7px; }.home-shelf-page .shelf-counter small { font-size:9px; }.home-shelf-page .shelf-photographic .shelf-book-summary { margin:0; }.home-shelf-page .shelf-photographic .shelf-book-summary>p { font-size:13px;line-height:1.5; }.home-shelf-page .shelf-photographic .shelf-book-meta { font-size:10px;margin:7px 0 0; }

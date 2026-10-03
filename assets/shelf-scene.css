@@ -26,7 +26,8 @@
 .shelf-photographic .living-shelf-track { pointer-events:none; }
 .shelf-photographic .shelf-book {
   top:auto;bottom:94px;left:50%;
-  transform:translateX(-50%) translate3d(var(--shelf-x),0,var(--shelf-z));
+  transform:translateX(-50%) translate3d(var(--shelf-x),0,var(--shelf-z)) scale(var(--shelf-scale));
+  transform-origin:50% 100%;
   opacity:var(--shelf-opacity);filter:none;pointer-events:auto;transition:opacity .28s;
 }
 .shelf-photographic:not(.shelf-covers-ready) .shelf-book { opacity:0;pointer-events:none !important; }
@@ -131,7 +132,10 @@
   .shelf-photographic .shelf-pagination { justify-content:flex-start; }
 }
 @media(max-width:700px) {
-  .living-shelf.shelf-photographic { --shelf-scene-height:400px;--shelf-book-height:235px; }
+  body .living-shelf.shelf-photographic { --shelf-book-height:clamp(320px,82vw,360px);--shelf-scene-height:calc(var(--shelf-book-height) + 105px); }
+  /* Opacity follows the animation frame's window seam; a second CSS fade
+     would leave a sixth outgoing cover visible behind the incoming one. */
+  .shelf-photographic .shelf-book { transition:none; }
   .shelf-photographic .living-shelf-stage { width:calc(100% + 40px);margin-left:-20px; }
   .shelf-photographic .shelf-navigation { margin-bottom:6px; }
   .shelf-photographic .shelf-arrow-previous { left:-12px; }

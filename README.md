@@ -53,6 +53,14 @@ port 4173 by default.
 
 ## Mobile commerce
 
+The mobile Living Shelf shows at most five covers while keeping all seven titles
+available through swipe, arrows and title navigation. At widths up to 700px the
+centre cover uses `clamp(320px, 82vw, 360px)`, with 68% and 46% book heights for
+its two receding neighbours on each side. CSS and WebGL use the same arrangement;
+WebGL frames the selected cover independently of viewport aspect ratio.
+Run `npm run check:mobile-shelf` for CPU camera, visibility and interaction bounds
+checks. Real GPU rendering and physical mobile browser QA remain separate checks.
+
 The active seven book pages use factual content evidence and real interior illustrations.
 Do not publish star ratings, reader quotes, review totals or bestseller claims without a verifiable source.
 `assets/book-commerce.js` owns the mobile purchase bar and shelf sample enlargement.

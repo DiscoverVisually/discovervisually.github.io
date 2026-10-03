@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three-r186.js';
-import {clamp, shelfPose} from './shelf-layout.js?v=20261001cinema1';
+import {clamp, shelfPose} from './shelf-layout.js?v=20261003shelf5';
 
 // A single camera and light rig owns the books, timber and their shadows.
 // This module is loaded only on the catalogue page, after the usable DOM shelf.
@@ -138,21 +138,31 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
       const width=stage.clientWidth,height=stage.clientHeight;if(!width||!height)return;
       renderer.setSize(width,height,false);camera.aspect=width/height;
       const desktopDistance=Math.max(3.5,4.75/(2*Math.tan(27*Math.PI/360)*camera.aspect));
-      camera.position.set(0,1.03,camera.aspect<1.3?3.05:desktopDistance);
-      camera.lookAt(0,.49,0);camera.updateProjectionMatrix();camera.updateMatrixWorld();draw(snapshot());
+      const state=snapshot();
+      // Frame the actual cover height, independent of a short viewport's aspect
+      // ratio. The old desktop fit made phone covers unexpectedly tiny.
+      const mobile=state.mobile ?? width<=700;
+      const targetHeight=clamp(width*.82,320,360);
+      const mobileDistance=height/(2*Math.tan(27*Math.PI/360)*targetHeight)+.28;
+      camera.position.set(0,mobile ? .79 : 1.03,mobile?mobileDistance:camera.aspect<1.3?3.05:desktopDistance);
+      camera.lookAt(0,mobile ? .48 : .49,0);camera.updateProjectionMatrix();camera.updateMatrixWorld();draw(state);
     }
     function draw(state) {
       if(disposed)return;
       openLink.hidden=true;
+      const mobile=state.mobile ?? stage.clientWidth<=700;
+      const poses=groups.map((_,index)=>shelfPose(state.distances[index],state.visible.length,state.focus[index],mobile));
+      const mobileWindow=mobile?new Set(state.visible.filter(index=>poses[index].seam>.02).sort((a,b)=>Math.abs(poses[a].x)-Math.abs(poses[b].x)).slice(0,5)):null;
       groups.forEach((group,index)=>{
         if(!state.visible.includes(index)) {
           group.position.y=.5-1.15*(1-state.alphas[index]);
-          group.visible=state.alphas[index]>.02 && state.visible.length>0;
+          group.visible=!mobile && state.alphas[index]>.02 && state.visible.length>0;
           return;
         }
-        const pose=shelfPose(state.distances[index],state.visible.length,state.focus[index]);
+        const pose=poses[index];
         group.position.set(pose.x,pose.y,pose.z);group.rotation.y=pose.rotation;
-        group.visible=state.alphas[index]>.02 && pose.seam>.02 && state.visible.length>0;
+        group.scale.setScalar(pose.scale);
+        group.visible=state.alphas[index]>.02 && pose.seam>.02 && state.visible.length>0 && (!mobileWindow||mobileWindow.has(index));
         // Filter departures sink behind the shelf instead of dissolving paper.
         group.position.y-=1.15*(1-state.alphas[index]);
         group.userData.coating.color.setScalar(.86+.14*pose.focus);

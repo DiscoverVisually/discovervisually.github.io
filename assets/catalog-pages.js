@@ -127,7 +127,8 @@
     const slot = () => Math.max(0, visible.indexOf(activeIndex));
     const state = () => ({book:visible.length ? books[activeIndex] : null, activeIndex, visible:[...visible], topic, age, gift});
     function measure() {
-      layout = {width:stage.clientWidth, height:parseFloat(getComputedStyle(bookElements[0]).height)||300, mobile:narrowScreen.matches};
+      const width=stage.clientWidth,mobile=narrowScreen.matches;
+      layout = {width, height:mobile?clamp(width*.82,320,360):parseFloat(getComputedStyle(bookElements[0]).height)||300, mobile};
     }
     function focusSelection(now=performance.now()) {
       if(!focusTransition)return;
@@ -149,12 +150,23 @@
       const a=Math.abs(wrapped),side=Math.sign(wrapped);
       const edge=count>1?smooth(Math.min(boundary-wrapped,wrapped+offset)/.25):1;
       const focus=selection*(1-smooth(a)),turn=smooth((focus-.35)/.65);
+      if(layout.mobile) {
+        const inner=smooth(a),outer=smooth(a-1),scale=1-.32*inner-.22*outer;
+        return {x:side*(.39*Math.min(a,1)+.18*Math.max(0,a-1))*layout.height,scale,angle:(side*(-.96*inner-.18*outer)+.06*turn)*180/Math.PI,depth:-60+140*smooth(focus),spineOpacity:0,opacity:edge*smooth((2.5-a)/.25),distance:a};
+      }
       return {x:side*(.55*a+.19*smooth(a))*layout.height,scale:1,angle:-18.3*side*(1-turn)+6.3*turn,depth:-60+350*smooth(focus),spineOpacity:0,opacity:edge,distance:a};
     }
-    const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible],activeIndex,focus:[...focusWeights]});
+    const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible],activeIndex,focus:[...focusWeights],mobile:layout.mobile});
     function render(now=performance.now()) {
       focusSelection(now);
       const progress = filterTransition ? smooth((now-filterTransition.time)/620) : 1;
+      // Filtering can move several independent books across the seam at once.
+      // Limit that transition too, not only the settled carousel positions.
+      const mobileWindow=layout.mobile?new Set(visible.map(index=>{
+        const target=visible.indexOf(index)-position;
+        const distance=filterTransition?mix(filterTransition.distances[index],target,progress):target;
+        return {index,distance:geometry(distance,focusWeights[index]).distance};
+      }).sort((a,b)=>a.distance-b.distance).slice(0,5).map(item=>item.index)):null;
       bookElements.forEach((element,index) => {
         const local = visible.indexOf(index), included = local>=0;
         const target = included ? local-position : (Math.sign(filterTransition?.distances[index] || distances[index])||1)*(books.length+2);
@@ -162,6 +174,7 @@
         const alpha = filterTransition ? mix(filterTransition.alphas[index],included?1:0,progress) : included?1:0;
         distances[index]=distance; alphas[index]=alpha;
         const g=geometry(distance,focusWeights[index]), lift=0;
+        if(mobileWindow&&!mobileWindow.has(index))g.opacity=0;
         const props={'--shelf-x':g.x+'px','--shelf-y':((1-g.scale)*layout.height/2-lift)+'px','--shelf-z':g.depth+'px','--shelf-rotate':g.angle+'deg','--shelf-scale':g.scale,'--shelf-opacity':g.opacity*alpha,'--shelf-spine-opacity':g.spineOpacity,'--shelf-brightness':1};
         for(const [key,value] of Object.entries(props)) element.style.setProperty(key,String(value));
         element.dataset.shelfView=g.spineOpacity>.8?'spine':g.distance<.5?'front':'cover';
@@ -344,7 +357,7 @@
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      const enhance = () => import('./shelf-scene.js?v=20261001mobile1').then(({createShelfScene})=>createShelfScene({
+      const enhance = () => import('./shelf-scene.js?v=20261003shelf5').then(({createShelfScene})=>createShelfScene({
         shelf,stage,books,openLink,snapshot:sceneSnapshot,
         choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)bookElements[index].click();else goTo(index);},
         failed:()=>{sceneRenderer=null;openLink.hidden=true;bookElements.forEach((el,i)=>el.tabIndex=i===activeIndex?0:-1);measure();render();}
