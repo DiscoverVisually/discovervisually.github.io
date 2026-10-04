@@ -154,7 +154,8 @@
         const inner=smooth(a),outer=smooth(a-1),scale=1-.32*inner-.22*outer;
         return {x:side*(.39*Math.min(a,1)+.18*Math.max(0,a-1))*layout.height,scale,angle:(side*(-.96*inner-.18*outer)+.06*turn)*180/Math.PI,depth:-60+140*smooth(focus),spineOpacity:0,opacity:edge*smooth((2.5-a)/.25),distance:a};
       }
-      return {x:side*(.55*a+.19*smooth(a))*layout.height,scale:1,angle:-18.3*side*(1-turn)+6.3*turn,depth:-60+350*smooth(focus),spineOpacity:0,opacity:edge,distance:a};
+      const editorial=shelf.classList.contains('home-editorial-shelf')&&layout.width>1050;
+      return {x:side*((editorial ? .61 : .55)*a+.19*smooth(a))*layout.height,scale:1+(editorial ? .08 : 0)*smooth(focus),angle:-18.3*side*(1-turn)+6.3*turn,depth:-60+(editorial?440:350)*smooth(focus),spineOpacity:0,opacity:edge,distance:a};
     }
     const sceneSnapshot=()=>({distances:[...distances],alphas:[...alphas],visible:[...visible],activeIndex,focus:[...focusWeights],mobile:layout.mobile});
     function render(now=performance.now()) {
@@ -357,7 +358,7 @@
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      const enhance = () => import('./shelf-scene.js?v=20261003shelf5').then(({createShelfScene})=>createShelfScene({
+      const enhance = () => import('./shelf-scene.js?v=20261004desktop').then(({createShelfScene})=>createShelfScene({
         shelf,stage,books,openLink,snapshot:sceneSnapshot,
         choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)bookElements[index].click();else goTo(index);},
         failed:()=>{sceneRenderer=null;openLink.hidden=true;bookElements.forEach((el,i)=>el.tabIndex=i===activeIndex?0:-1);measure();render();}

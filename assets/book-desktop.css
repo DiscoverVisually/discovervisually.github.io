@@ -1,0 +1,45 @@
+@import url('/assets/typography.css?v=20261004desktop');
+/* One desktop navigation layer, from studio header to book navigation. */
+.dv-book-header-links,.dv-book-introduction{display:none;}
+@media(min-width:1051px){
+ body[data-book-id]{--dv-serif:"DV Fraunces",Georgia,serif;--dv-sans:"DV Manrope",Arial,sans-serif;--pm-serif:"DV Fraunces",Georgia,serif;--pm-sans:"DV Manrope",Arial,sans-serif;--az-serif:"DV Fraunces",Georgia,serif;--az-sans:"DV Manrope",Arial,sans-serif;--ry-serif:"DV Fraunces",Georgia,serif;--ry-sans:"DV Manrope",Arial,sans-serif;}
+ body.dv-book-desktop .dv-site-header{position:fixed;inset:0 0 auto;height:82px;max-width:none;padding:0 4vw;background:linear-gradient(#07131fc9,#07131f00);border:0;transition:background .45s var(--dv-motion-ease),height .45s var(--dv-motion-ease);}
+ body.dv-book-desktop.dv-book-scrolled .dv-site-header{height:72px;background:#07131ff5;border-bottom:1px solid #d4b06c33;backdrop-filter:blur(16px);}
+ body.dv-book-desktop .dv-brand{font-size:24px;letter-spacing:-.045em;}
+ body.dv-book-desktop .dv-primary-nav{font-size:14px;text-transform:none;letter-spacing:.01em;font-weight:500;}
+ body.dv-book-desktop .dv-reader-link{background:transparent;color:var(--dv-gold) !important;padding:12px 0;}
+ body.dv-book-desktop .dv-breadcrumb,body.dv-book-desktop .pm-header,body.dv-book-desktop .pm-sticky-nav,body.dv-book-desktop .pm-desktop-buy,body.dv-book-desktop .az-book-nav,body.dv-book-desktop .ry-book-nav{display:none !important;}
+ body.dv-book-desktop.dv-book-scrolled .dv-primary-nav{display:none;}
+ body.dv-book-desktop.dv-book-scrolled .dv-book-header-links{display:flex;align-items:center;gap:28px;font:500 14px "DV Manrope",Arial,sans-serif;}
+ .dv-book-header-links .dv-book-header-title{color:#dfc394;font:400 19px "DV Fraunces",Georgia,serif;margin-right:12px;max-width:210px;}
+ .dv-book-header-links a{min-height:44px;display:flex;align-items:center;white-space:nowrap;}
+ .dv-book-header-links .dv-book-header-buy{background:#f3c765;color:#14202b;padding:12px 18px;font-weight:600;gap:10px;}
+ body.dv-book-desktop :is(.pompeii-page,.pm-page,.az-page,.ry-page){--pm-serif:"DV Fraunces",Georgia,serif;--sans:"DV Manrope",Arial,sans-serif;--az-serif:"DV Fraunces",Georgia,serif;--ry-serif:"DV Fraunces",Georgia,serif;}
+ body.dv-book-desktop :is(.pm-page,.pompeii-page,.az-page,.ry-page) h2{font-family:"DV Fraunces",Georgia,serif;}
+ body.dv-book-desktop .pm-hero{height:auto;min-height:min(950px,100svh);padding:150px 6vw 90px;gap:6vw;align-items:center;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);}
+ body.dv-book-desktop .pm-hero-copy{padding:0;max-width:760px;}
+ body.dv-book-desktop .pm-hero h1{font-family:"DV Fraunces",Georgia,serif;font-size:clamp(76px,7.7vw,124px);letter-spacing:-.06em;line-height:1.02;overflow:visible;}
+ body.dv-book-desktop[data-book-id="new-york-city"] .pm-hero h1{font-size:clamp(70px,6.6vw,106px);}
+ body.dv-book-desktop .pm-hook{font-size:clamp(23px,2.15vw,34px);line-height:1.45;max-width:640px;margin-top:30px;}
+ body.dv-book-desktop .pm-kicker,body.dv-book-desktop .az-eyebrow,body.dv-book-desktop .ry-kicker{font-size:12px;letter-spacing:.12em;line-height:1.8;}
+ body.dv-book-desktop .pm-hero-actions{margin-top:36px;gap:24px;}
+ body.dv-book-desktop .pm-hero-stage{min-height:480px;height:min(66vh,640px);}
+ body.dv-book-desktop .pm-hero-stage>p,body.dv-book-desktop .dv-buy-meta,body.dv-book-desktop .az-hero-note{display:none;}
+ body.dv-book-desktop .pm-look-link,body.dv-book-desktop .az-text-link,body.dv-book-desktop .ry-text-link{font:500 14px "DV Manrope",Arial,sans-serif;letter-spacing:0;text-transform:none;border:0;background:transparent;}
+ body.dv-book-desktop .dv-amazon-hero{min-height:58px;background:#f3c765;color:#14202b;box-shadow:none;}
+ body.dv-book-desktop .dv-amazon-hero .pm-amazon-badge{display:none;}
+ body.dv-book-desktop .dv-amazon-hero .pm-amazon-copy small{display:none;}
+ body.dv-book-desktop .dv-amazon-hero .pm-amazon-copy strong{font:600 15px "DV Manrope",Arial,sans-serif;}
+ body.dv-book-desktop .az-hero,body.dv-book-desktop .ry-hero{min-height:min(950px,100svh);}
+ body.dv-book-desktop .az-hero-grid,body.dv-book-desktop .ry-hero-grid{padding-top:150px;padding-bottom:90px;align-items:center;}
+ body.dv-book-desktop .az-hero h1,body.dv-book-desktop .ry-hero h1{font-family:"DV Fraunces",Georgia,serif;letter-spacing:-.055em;line-height:1.02;}
+ body.dv-book-desktop .az-hook,body.dv-book-desktop .ry-hook{font-size:28px;line-height:1.5;}
+ .dv-book-introduction{display:grid;grid-template-columns:1fr 1fr;gap:8vw;padding:64px 6vw;max-width:1540px;margin:0 auto;background:#f4efe5;color:#132231;}
+ .dv-book-introduction>p{font:400 23px/1.65 "DV Fraunces",Georgia,serif;margin:0;max-width:640px;}
+ .dv-book-introduction .dv-hero-benefits{display:grid;margin:0;align-content:center;gap:16px;font:400 16px/1.7 "DV Manrope",Arial,sans-serif;color:#25394a;}
+ .dv-book-introduction .dv-hero-benefits li{color:inherit;}
+ body.dv-book-desktop :is(.pm-eyebrow,.az-eyebrow,.ry-eyebrow){font-size:12px;letter-spacing:.12em;}
+ body.dv-book-desktop :is(.pm-hero-book,.az-cover-stage,.ry-cover-art){transition-timing-function:var(--dv-motion-ease);transition-duration:var(--dv-motion-settle);}
+}
+@media(min-width:1051px) and (max-width:1250px){.dv-book-header-links .dv-book-header-title{display:none;}body.dv-book-desktop.dv-book-scrolled .dv-book-header-links{gap:20px;}.dv-book-introduction{gap:40px;}}
+@media(prefers-reduced-motion:reduce){body.dv-book-desktop .dv-site-header{transition:none;}}

@@ -53,7 +53,8 @@
   gifts.forEach(button=>button.addEventListener('click',()=>{
     const gift=button.dataset.shelfGift;engine.filter({...giftFilters[gift],gift});
   }));
-  $('.shelf-gift-jump').addEventListener('click',()=>{$('#shelf-gift').open=true;});
+  const giftJump=$('.shelf-gift-jump');
+  if(giftJump&&!giftJump.hasAttribute('data-gift-open'))giftJump.addEventListener('click',()=>{$('#shelf-gift').open=true;});
   $('[data-shelf-share]').addEventListener('click',async()=>{
     writeURL();const url=location.href,status=$('[data-shelf-share-status]');
     try{await navigator.clipboard.writeText(url);status.textContent='Book link copied';}

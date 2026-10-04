@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three-r186.js';
-import {clamp, shelfPose} from './shelf-layout.js?v=20261003shelf5';
+import {clamp, shelfPose} from './shelf-layout.js?v=20261004desktop';
 
 // A single camera and light rig owns the books, timber and their shadows.
 // This module is loaded only on the catalogue page, after the usable DOM shelf.
@@ -151,7 +151,8 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
       if(disposed)return;
       openLink.hidden=true;
       const mobile=state.mobile ?? stage.clientWidth<=700;
-      const poses=groups.map((_,index)=>shelfPose(state.distances[index],state.visible.length,state.focus[index],mobile));
+      const editorial=!mobile&&stage.clientWidth>1050&&shelf.classList.contains('home-editorial-shelf');
+      const poses=groups.map((_,index)=>shelfPose(state.distances[index],state.visible.length,state.focus[index],mobile,editorial));
       const mobileWindow=mobile?new Set(state.visible.filter(index=>poses[index].seam>.02).sort((a,b)=>Math.abs(poses[a].x)-Math.abs(poses[b].x)).slice(0,5)):null;
       groups.forEach((group,index)=>{
         if(!state.visible.includes(index)) {

@@ -70,3 +70,37 @@ import("/assets/editorial-motion.js?v=20261001motion2").catch(() => {});
 Promise.resolve(window.DV_SHELF_STORIES || import('/assets/shelf-stories.js?v=20261001mobile1'))
   .then(() => Promise.all([import('/assets/commerce-metrics.js?v=20261001mobile1'),import('/assets/book-commerce.js?v=20261001mobile1')]))
   .catch(error => console.warn('Book commerce enhancement unavailable:',error.message));
+
+// A single header changes from the publishing house to the current book.
+(() => {
+  const header=document.querySelector('[data-dv-header]');
+  if(!header)return;
+  const nav=header.querySelector('[data-dv-nav]');
+  const approach=nav?.querySelector('a[href="/about/#approach"]');approach?.remove();
+  const studio=nav?.querySelector('a[href="/about/"]');if(studio)studio.textContent='Studio';
+  const summary=nav?.querySelector('.dv-explore>summary');if(summary)summary.textContent='Collections';
+  const finder=nav?.querySelector('.dv-reader-link');if(finder){finder.textContent='Find your book';finder.href='/#shelf-gift';}
+  const hero=document.querySelector('.pm-hero,.az-hero,.ry-hero');
+  if(!hero||!document.body.dataset.bookId)return;
+  const desktop=matchMedia('(min-width:1051px)');
+  const oldNav=document.querySelector('.pm-sticky-nav,.az-book-nav,.ry-book-nav');
+  if(!oldNav)return;
+  const book=window.DV_BOOKS?.find(item=>item.id===document.body.dataset.bookId);
+  const links=document.createElement('nav');links.className='dv-book-header-links';links.setAttribute('aria-label','Current book navigation');
+  const title=document.createElement('a');title.className='dv-book-header-title';title.href='#top';title.textContent=book?.shortTitle||book?.title||'Back to book';links.append(title);
+  for(const [hash,label] of [['#explore-the-story','Story'],['#inside','Inside'],['#details','Details']]){
+    if(!document.querySelector(hash))continue;
+    const link=document.createElement('a');link.href=hash;link.textContent=label;links.append(link);
+  }
+  const amazon=oldNav.querySelector('a[href*="amazon."]');if(amazon){const buy=amazon.cloneNode(true);buy.className='dv-book-header-buy';buy.dataset.commercePlacement='desktop_header';links.append(buy);}
+  header.append(links);
+  const intro=document.createElement('section');intro.className='dv-book-introduction';intro.setAttribute('aria-label','About the book');hero.after(intro);
+  const items=[...hero.querySelectorAll('.pm-deck,.az-deck,.ry-deck,.dv-hero-benefits')].map(element=>{const marker=document.createComment('Hero supporting copy');element.before(marker);return {element,marker};});
+  function update(){
+    document.body.classList.toggle('dv-book-desktop',desktop.matches);
+    items.forEach(({element,marker})=>{if(desktop.matches){if(element.parentNode!==intro)intro.append(element);}else if(element.previousSibling!==marker)marker.after(element);});
+    document.body.classList.toggle('dv-book-scrolled',desktop.matches&&hero.getBoundingClientRect().bottom<90);
+  }
+  let scheduled=false;const schedule=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(()=>{scheduled=false;update();});}};
+  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);desktop.addEventListener('change',update);update();
+})();

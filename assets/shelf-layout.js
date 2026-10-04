@@ -3,7 +3,7 @@
 export const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 export const smooth = n => { const x = clamp(n, 0, 1); return x*x*x*(x*(x*6-15)+10); };
 
-export function shelfPose(distance, count, selection, mobile = false) {
+export function shelfPose(distance, count, selection, mobile = false, editorial = false) {
   // Distribute the entire collection on both sides of the selected book.
   // The seam passes behind the backdrop, never through the centre book.
   const boundary = Math.floor(count/2)+.5;
@@ -29,11 +29,11 @@ export function shelfPose(distance, count, selection, mobile = false) {
     };
   }
   return {
-    x: side * (.55*a + .19*smooth(a)),
-    y: .5,
-    z: -.24 + .86*extraction,
+    x: side * ((editorial ? .61 : .55)*a + .19*smooth(a)),
+    y: .5 + (editorial ? .04*extraction : 0),
+    z: -.24 + (editorial ? 1.06 : .86)*extraction,
     rotation: -.32*side*(1-turn) + .11*turn,
-    scale: 1,
+    scale: 1 + (editorial ? .08*extraction : 0),
     focus,
     seam
   };
