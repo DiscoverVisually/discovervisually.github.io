@@ -1,0 +1,39 @@
+/* Distinct Pacific War art direction. Layout, gallery and commerce are inherited from Pompeii. */
+body[data-book-id="battleships"]{background:#f0eee8}
+.battleships-page{--pm-gold:#e5b962;--pm-paper:#f2eee6;--pm-ink:#11283a;--pm-line:#14344a27}
+.battleships-page .pm-hero{background:radial-gradient(ellipse at 77% 43%,#3274b37d 0%,transparent 37%),linear-gradient(120deg,#061524 2%,#0a2948 55%,#0b3a62 78%,#061628 100%);color:#fff}
+.battleships-page .pm-hero:before{background:linear-gradient(90deg,#020d1cbb,transparent 72%),repeating-linear-gradient(0deg,transparent 0 40px,#a1d4ef14 41px 42px),repeating-linear-gradient(90deg,transparent 0 40px,#a1d4ef14 41px 42px);opacity:.72}
+.battleships-page .pm-hero:after{clip-path:none;background:radial-gradient(circle at 72% 46%,transparent 0 21%,#c3ebff1d 21.05% 21.15%,transparent 21.3% 36%,#c3ebff1e 36.1% 36.2%,transparent 36.4%);opacity:1;pointer-events:none}
+.battleships-page .pm-stage-ring{border-color:#63bee263;box-shadow:0 0 0 42px #7bb2d606,0 0 0 110px #80b9df08,inset 0 0 32px #0a456e51}
+.battleships-page .pm-stage-ash{opacity:.23;filter:hue-rotate(160deg) saturate(.75)}
+.battleships-page .pm-hero-copy{max-width:660px}
+.battleships-page .pm-hero h1 span{font-size:clamp(48px,5.1vw,84px);letter-spacing:-.06em}
+.battleships-page .pm-hero h1 em{font-size:clamp(34px,3.7vw,66px);line-height:1.08;white-space:normal}
+.battleships-page .pm-kicker{color:#efd28d}
+.battleships-page .pm-hook strong{color:#f6d686}
+.battleships-page .pm-wrap-art.pm-wrap-front{background-image:url('/books/battleships-cover.webp');background-size:cover;background-position:center;background-repeat:no-repeat}
+.battleships-page .pm-wrap-art.pm-wrap-back{background:linear-gradient(135deg,#061c34cd,#174a6caa),url('/assets/battleships-interior-checkpoint.webp') center/cover no-repeat}
+.battleships-page .pm-book-spine{background:linear-gradient(90deg,#07182b,#19517b 39%,#051f37 95%);color:#e9c578}
+.battleships-page .pm-proof{background:#eee9df;color:#153043}
+.battleships-page .pm-proof-facts span,.battleships-page .dv-proof-message{color:#173348}
+.battleships-page .pm-why{background:linear-gradient(143deg,#061725,#0b2d47 65%,#071726);color:#fff}
+.battleships-page .pm-why .pm-benefit-punchline{color:#e9ba66}
+.battleships-page .pm-inside{background:radial-gradient(ellipse at 54% 35%,#2c5268 0%,#132f44 44%,#061523 89%);color:#fff}
+.battleships-page .pm-inside .pm-section-head p,.battleships-page .pm-spread-controls>p{color:#d7e7ef}
+.battleships-page .pm-combined{background:#f3eee6;color:#132c40}
+.battleships-page .pm-combined .pm-craft-details p,.battleships-page .pm-combined details p{color:#2a4253}
+.battleships-page .pm-combined .pm-faq-list summary,.battleships-page .pm-combined .pm-spec-toggle,.battleships-page .pm-combined table{color:#0c2437}
+.battleships-page .pm-final{background:radial-gradient(circle at 30% 50%,#245f8070,transparent 49%),linear-gradient(135deg,#061625,#123854 75%,#071625);color:#fff}
+.battleships-page .pm-final-plaque b,.battleships-page .pm-final .pm-eyebrow{color:#eac36e}
+.battleships-page .pm-final-copy p{color:#ecf2f7e0}
+.battleships-page .dv-evidence{background:#f6f1e7;color:#12273b}
+.battleships-page .dv-evidence-card{background:#fffefa}
+.battleships-page .dv-evidence-card img{aspect-ratio:4/3;object-fit:cover}
+.battleships-page .dv-feature{background:linear-gradient(145deg,#06192c,#10436b);color:#fff}
+.battleships-page .dv-feature-stage img{aspect-ratio:4/3;object-fit:cover}
+.battleships-page .dv-feature .dv-feature-copy,.battleships-page .dv-feature .dv-feature-copy h3{color:#fff}
+.battleships-page .dv-feature .dv-feature-copy p{color:#d9e6ef}
+.battleships-page a:focus-visible,.battleships-page button:focus-visible{outline:3px solid #f2c66e;outline-offset:3px}
+@media(max-width:1050px){.battleships-page .pm-hero h1 span{font-size:clamp(45px,8vw,73px)}.battleships-page .pm-hero h1 em{font-size:clamp(31px,5.3vw,58px)}}
+@media(max-width:720px){.battleships-page .pm-hero h1 span{font-size:clamp(43px,11vw,61px)}.battleships-page .pm-hero h1 em{font-size:clamp(30px,7.7vw,42px)}.battleships-page .pm-hero-copy{max-width:100%}.battleships-page .pm-hero:before{background:linear-gradient(180deg,#06182d55,#051321ae),repeating-linear-gradient(0deg,transparent 0 30px,#a1d4ef12 31px 32px),repeating-linear-gradient(90deg,transparent 0 30px,#a1d4ef12 31px 32px)}.battleships-page .pm-final-copy p{color:#eef3f9}}
+@media(prefers-reduced-motion:reduce){.battleships-page .pm-stage-ring{animation:none}}
