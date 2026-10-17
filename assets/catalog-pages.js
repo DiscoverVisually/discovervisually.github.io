@@ -68,6 +68,7 @@
       "romantasy-yearbook": { accent:"#f0b2d8", spine:"#5a1d55", spineInk:"#fff7fb", spineRail:"rgba(24,5,26,.64)", spineFoil:"rgba(255,214,247,.92)", glow:"rgba(198,82,155,.34)", spotlight:{hue:318,saturation:76,lightness:58,alpha:.3} },
       "abraham-lincoln": { accent:"#e2bd70", spine:"#10345d", spineInk:"#fff0bc", spineRail:"rgba(2,14,31,.66)", spineFoil:"rgba(255,228,155,.88)", glow:"rgba(194,148,71,.34)", spotlight:{hue:212,saturation:76,lightness:56,alpha:.29} },
       "hindenburg": { accent:"#e7b35e", spine:"#1c5268", spineInk:"#fff1c1", spineRail:"rgba(2,19,29,.64)", spineFoil:"rgba(188,244,255,.9)", glow:"rgba(206,111,45,.34)", spotlight:{hue:190,saturation:78,lightness:54,alpha:.3} },
+      "battleships": { accent:"#e6b75c", spine:"#082a4a", spineInk:"#fdf0c1", spineRail:"rgba(1,13,28,.76)", spineFoil:"rgba(246,207,108,.9)", glow:"rgba(44,117,179,.4)", spotlight:{hue:205,saturation:78,lightness:52,alpha:.34} },
       "pompeii": { accent:"#ef8c67", spine:"#67251f", spineInk:"#fff6e3", spineRail:"rgba(29,5,5,.66)", spineFoil:"rgba(255,218,175,.9)", glow:"rgba(206,76,43,.36)", spotlight:{hue:18,saturation:82,lightness:55,alpha:.32} },
       "alcatraz": { accent:"#ef604d", spine:"#17384f", spineInk:"#fff1cf", spineRail:"rgba(2,13,24,.7)", spineFoil:"rgba(240,210,140,.9)", glow:"rgba(210,63,52,.38)", spotlight:{hue:8,saturation:78,lightness:55,alpha:.32} }
     };
