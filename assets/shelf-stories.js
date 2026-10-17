@@ -26,6 +26,19 @@ window.DV_SHELF_STORIES = {
       ['cut-open-euv', 'The machine that makes microchips']
     ]
   },
+  'battleships': {
+    topic: 'history', minAge: 8,
+    hook: 'Admiral Nimitz needs you to find the hidden fleet. Start with a pencil.',
+    benefits: ['Solve 26 Pacific War logic missions', 'Find every ship by deduction, not guessing', 'Explore real history through illustrated briefings'],
+    fit: 'For children who love logic, ships or history: a screen-free puzzle adventure with real historical settings.',
+    samples: [
+      ['battleships-interior-training', 'Training Room · Learn the rules'],
+      ['battleships-interior-pearl-harbor', 'Pearl Harbor · Attack at Dawn'],
+      ['battleships-interior-midway', 'Midway · Code Name AF'],
+      ['battleships-interior-tokyo-express', 'Guadalcanal · Tokyo Express'],
+      ['battleships-interior-yamato', 'Yamato’s Final Mission']
+    ]
+  },
   'new-york-city': {
     topic: 'cities', minAge: 10,
     hook: 'Watch one island become a city that keeps reinventing itself.',
