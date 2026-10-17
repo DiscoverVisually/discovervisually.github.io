@@ -38,6 +38,25 @@ window.DV_BOOKS = [
     series: "Visual Learning"
   },
   {
+    id: "battleships",
+    amazon: "https://www.amazon.com/dp/B0HN7GZY3Z",
+    preview: "/assets/battleships-interior-midway.webp",
+    shelfFormat: "26 full-color WWII missions",
+    coverRatio: 0.668945,
+    title: "Battleships Puzzle Missions: Pacific War",
+    shortTitle: "Battleships: Pacific War",
+    url: "/books/battleships-puzzle-missions-pacific-war.html",
+    cover: "/books/battleships-cover.webp",
+    status: "Available now",
+    format: "Full-color illustrated logic activity book",
+    audience: "Ages 8–12",
+    description: "Become a Pacific Fleet intelligence officer, solve 26 fleet puzzles and discover real WWII history from Pearl Harbor to Tokyo Bay.",
+    primaryCollection: "children",
+    collections: ["children"],
+    topic: "Battleships Logic Puzzles & Pacific War History",
+    series: "Puzzle Missions"
+  },
+  {
     id: "new-york-city",
     amazon: "https://www.amazon.com/dp/B0HL97WJ5C",
     preview: "/assets/nyc-hudson.webp",
@@ -142,4 +161,4 @@ window.DV_COLLECTIONS = {
   "cities-through-time": { name: "Cities Through Time", url: "/collections/cities-through-time/", label: "One city. Centuries of change." }
 };
 
-window.DV_BOOKS.forEach(book => { book.coverWidth = {"romantasy-yearbook": 767, "cut-open": 1024, "new-york-city": 1024, "abraham-lincoln": 768, "hindenburg": 998, "pompeii": 720, "alcatraz": 965}[book.id]; });
+window.DV_BOOKS.forEach(book => { book.coverWidth = {"romantasy-yearbook": 767, "battleships": 1370, "cut-open": 1024, "new-york-city": 1024, "abraham-lincoln": 768, "hindenburg": 998, "pompeii": 720, "alcatraz": 965}[book.id]; });
