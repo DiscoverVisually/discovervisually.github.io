@@ -70,4 +70,4 @@ assert.equal((home.match(/<script[^>]+src=/g)||[]).length,1);
 assert(home.includes('data-shelf-amazon data-shelf-primary'));
 const variants=JSON.parse(fs.readFileSync('assets/mobile-images.json','utf8'));
 for(const item of Object.values(variants))for(const image of item.variants)assert(fs.statSync('.'+image.src).size>0,'Nonempty responsive image: '+image.src);
-console.log('Commerce checks passed: all seven books, honest evidence, ASIN destinations, stable shelf selection, short viewports, inline/final CTA visibility, modal/menu/keyboard hiding, desktop behavior and published responsive assets.');
+console.log('Commerce checks passed: all catalogue books, honest evidence, ASIN destinations, stable shelf selection, short viewports, inline/final CTA visibility, modal/menu/keyboard hiding, desktop behavior and published responsive assets.');

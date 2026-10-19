@@ -91,7 +91,7 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
         ctx.fillStyle='rgba(255,255,255,.06)';ctx.fillRect(w-6,0,3,h);
       });
     }
-    const colors=['#512342','#123454','#10334d','#18354e','#315565','#243747','#203849'];
+    const colors={'battleships-pacific-war':'#083a65','romantasy-yearbook':'#512342','cut-open':'#123454','new-york-city':'#10334d','abraham-lincoln':'#18354e','hindenburg':'#315565','pompeii':'#243747','alcatraz':'#203849'};
     const covers=await timeout(Promise.all(books.map(book=>loadTexture(book.cover))),12000);
     books.forEach((book,index)=>{
       const width=book.coverRatio || .75;
@@ -105,9 +105,9 @@ export async function createShelfScene({shelf, stage, books, openLink, snapshot,
       group.userData.coating=coating;
       front.position.z=depth/2+.0006;front.castShadow=true;front.receiveShadow=true;group.add(front);
       // Unseen backs use a neutral binding material until authentic wrap assets exist.
-      const binding=own(new THREE.MeshStandardMaterial({color:colors[index],roughness:.7}));
+      const binding=own(new THREE.MeshStandardMaterial({color:(colors[book.id] || '#18354e'),roughness:.7}));
       const back=new THREE.Mesh(own(new THREE.PlaneGeometry(width,1)),binding);back.rotation.y=Math.PI;back.position.z=-depth/2-.0006;group.add(back);
-      const spine=new THREE.Mesh(own(new THREE.PlaneGeometry(depth+.001,1)),own(new THREE.MeshStandardMaterial({map:spineTexture(colors[index]),roughness:.65})));
+      const spine=new THREE.Mesh(own(new THREE.PlaneGeometry(depth+.001,1)),own(new THREE.MeshStandardMaterial({map:spineTexture((colors[book.id] || '#18354e')),roughness:.65})));
       spine.rotation.y=-Math.PI/2;spine.position.x=-width/2;group.add(spine);
       group.traverse(obj=>{if(obj.isMesh)obj.userData.index=index;});
       groups.push(group);scene.add(group);

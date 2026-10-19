@@ -17,6 +17,7 @@
   });
 
   const bookTitles = {
+    "/books/battleships-puzzle-missions-pacific-war.html": {title:"Battleships",collection:"History Hunters",url:"/collections/history/"},
     "/books/new-york-city-through-time.html": { title:"New York City", collection:"Cities Through Time", url:"/collections/cities-through-time/" },
     "/books/cut-open.html": { title:"CUT OPEN!", collection:"Visual Learning", url:"/collections/visual-learning/" },
     "/books/pompeii-the-last-day.html": { title: "Pompeii", collection: "History Hunters", url: "/collections/history/" },
@@ -34,7 +35,7 @@
   const header = document.querySelector("[data-dv-header]");
   if (header) {
     const panel = header.querySelector(".dv-explore-panel");
-    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/history/">History Hunters</a><a href="/collections/cities-through-time/">Cities Through Time</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/books/">All books</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/new-york-city-through-time.html">New York City Through Time</a><a href="/books/cut-open.html">CUT OPEN!</a><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
+    if (panel) panel.innerHTML = `<div class="dv-explore-group"><small>Browse</small><a href="/collections/history/">History Hunters</a><a href="/collections/cities-through-time/">Cities Through Time</a><a href="/collections/children/">For Children</a><a href="/collections/romantasy/">Romantasy</a><a href="/collections/visual-learning/">Visual Learning</a><a href="/books/">All books</a></div><div class="dv-explore-group"><small>Featured books</small><a href="/books/battleships-puzzle-missions-pacific-war.html" aria-label="Battleships: Pacific War">Battleships: Pacific War</a><a href="/books/new-york-city-through-time.html">New York City Through Time</a><a href="/books/cut-open.html">CUT OPEN!</a><a href="/books/the-ultimate-romantasy-yearbook.html">Romantasy Yearbook</a><a href="/books/pompeii-the-last-day.html">Pompeii</a><a href="/books/hindenburg-the-final-flight.html">Hindenburg</a><a href="/books/i-worked-for-abraham-lincoln.html">Abraham Lincoln</a></div>`;
   }
 
   document.querySelectorAll(".dv-footer-group").forEach((group) => {
@@ -67,7 +68,7 @@ document.querySelectorAll(".dv-explore-panel a").forEach(link => link.setAttribu
 import("/assets/editorial-motion.js?v=20261001motion2").catch(() => {});
 
 // Keep shared buying behavior outside the individual book scripts.
-Promise.resolve(window.DV_SHELF_STORIES || import('/assets/shelf-stories.js?v=20261001mobile1'))
+Promise.resolve(window.DV_SHELF_STORIES || import('/assets/shelf-stories.js?v=20261019battleships'))
   .then(() => Promise.all([import('/assets/commerce-metrics.js?v=20261001mobile1'),import('/assets/book-commerce.js?v=20261001mobile1')]))
   .catch(error => console.warn('Book commerce enhancement unavailable:',error.message));
 
@@ -104,3 +105,10 @@ Promise.resolve(window.DV_SHELF_STORIES || import('/assets/shelf-stories.js?v=20
   let scheduled=false;const schedule=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(()=>{scheduled=false;update();});}};
   window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);desktop.addEventListener('change',update);update();
 })();
+
+// A blocked third-party badge must never leave a broken-image box in a CTA.
+document.querySelectorAll('.pm-amazon-badge').forEach(badge => {
+  const hideUnavailableBadge = () => { badge.style.display = 'none'; };
+  badge.addEventListener('error', hideUnavailableBadge, {once:true});
+  if (badge.complete && !badge.naturalWidth) hideUnavailableBadge();
+});

@@ -1,0 +1,106 @@
+/* Navy art direction on the unchanged Pompeii page architecture and commerce. */
+body[data-book-id="battleships-pacific-war"] { --pm-gold:#dfbe78; --pm-copper:#83c4e2; background:#071522; }
+.battleships-page { --pm-ink:#071522; --pm-gold:#dfbe78; color:#f6f0e4; }
+.battleships-page .pm-hero {
+  background:radial-gradient(ellipse at 78% 44%,#14608b55,transparent 47%),linear-gradient(120deg,#06131f,#0b2d46 68%,#071a2a);
+}
+.battleships-page .pm-hero::before {
+  opacity:.5;background-image:linear-gradient(#80b8d51a 1px,transparent 1px),linear-gradient(90deg,#80b8d51a 1px,transparent 1px);
+  background-size:64px 64px;mask-image:linear-gradient(90deg,transparent,#000);
+}
+.battleships-page .pm-atmosphere i { background-image:none; }
+.battleships-page .pm-stage-ash { display:none; }
+.battleships-page .pm-stage-ring {
+  border-color:#85b7d52a;box-shadow:0 0 0 55px #89bfd40c,0 0 0 110px #89bfd409;
+  background:radial-gradient(circle,transparent 68%,#8bbfd512 69%,transparent 70%);
+}
+.battleships-page .pm-hero h1 { font-size:clamp(48px,6.7vw,100px);line-height:1.04;letter-spacing:-.045em; }
+.battleships-page .pm-hero h1 .bp-missions {
+  font:600 clamp(16px,2.25vw,31px)/1.6 var(--pm-sans,Arial,sans-serif);letter-spacing:.14em;text-transform:uppercase;color:#c5d9e7;margin:.5em 0 .1em;
+}
+.battleships-page .pm-hero h1 em { color:#e4c58a; }
+.battleships-page .pm-kicker {color:#b9d9e9;}
+.battleships-page .pm-hook strong {color:#e4c58a;}
+.battleships-page .pm-deck,.battleships-page .dv-hero-benefits {color:#c7d9e6;}
+.battleships-page .pm-hero-book { aspect-ratio:1370 / 2048; }
+.battleships-page .pm-wrap-art {
+  background-image:url('/books/battleships-pacific-war-cover.webp');background-size:100% 100%;background-position:center;
+}
+.battleships-page .pm-wrap-back {background-image:none;background-color:#0b3554;}
+.battleships-page .pm-book-spine,.battleships-page .pm-final-spine {background:linear-gradient(90deg,#051a30,#0b4772,#0a2945);color:#f3d395;}
+.battleships-page .pm-proof {background:#f0ecdf;color:#142c3d;}
+.battleships-page .pm-why,.battleships-page .pm-combined {background:#f5f1e7;color:#162c3b;}
+.battleships-page .pm-why :is(.pm-eyebrow,.pm-benefits>article>span) {color:#315e77;}
+.battleships-page .pm-why :is(h2,h3,.pm-benefit-punchline,.pm-why-payoff strong) {color:#142d40;}
+.battleships-page .pm-why h2 em,.battleships-page .pm-combined h2 em {color:#34637c;}
+.battleships-page .pm-benefit-copy>p:not(.pm-benefit-punchline),.battleships-page .pm-why-lead>p:last-child {color:#435b69;}
+.battleships-page .pm-inside {background:radial-gradient(ellipse at 50% 45%,#153b54,#071a2b 75%);}
+.battleships-page .pm-section-head h2 em {color:#e4c58a;}
+.battleships-page .pm-inside .pm-open-book {
+  --book-height:min(60svh,650px,61vw);width:calc(var(--book-height) * 2048 / 1546);height:var(--book-height);aspect-ratio:2048 / 1546;max-width:91vw;
+}
+.battleships-page .pm-book-page img,.battleships-page .pm-turn-face img {object-fit:contain;}
+.battleships-page .pm-final {background:radial-gradient(ellipse at 25% 50%,#15496766,transparent 55%),#071522;}
+.battleships-page .pm-final h2 em {color:#e4c58a;}
+.battleships-page .pm-final-volume {aspect-ratio:1370 / 2048;}
+.battleships-page .pm-final-plaque {color:#d9be89;}
+.battleships-page .dv-evidence-card img {aspect-ratio:2048 / 1546;object-fit:contain;}
+.battleships-page .dv-feature-stage {background:#0a1e2d;}
+.battleships-page .dv-feature-image {object-fit:contain;}
+.battleships-page .pm-combined :is(.pm-eyebrow,th) {color:#3e5e71;}
+.battleships-page .pm-combined :is(p,td,summary) {color:#233f50;}
+.battleships-page .pm-craft-details td {overflow-wrap:anywhere;}
+@media(min-width:1051px) {
+  body.dv-book-desktop[data-book-id="battleships-pacific-war"] .pm-hero h1 {font-size:clamp(65px,6.4vw,105px);}
+  body.dv-book-desktop[data-book-id="battleships-pacific-war"] .pm-hook {font-size:clamp(23px,2vw,32px);}
+  body.dv-book-desktop[data-book-id="battleships-pacific-war"] .pm-hero-stage {top:0;}
+  body.dv-book-desktop[data-book-id="battleships-pacific-war"] .pm-hero-book {height:min(64vh,640px);max-width:100%;}
+}
+@media(max-width:720px) {
+  .battleships-page .pm-hero h1 {font-size:clamp(40px,10.8vw,66px);}
+  .battleships-page .pm-hero h1 .bp-missions {font-size:clamp(14px,4.2vw,20px);letter-spacing:.12em;}
+  .battleships-page .pm-inside .pm-open-book {--book-height:min(69vw,390px);width:calc(var(--book-height) * 2048 / 1546);max-width:94vw;height:var(--book-height);}
+  .battleships-page .pm-inside .pm-open-book-shell {height:min(74vw,420px);min-height:240px;}
+  .battleships-page .pm-chapter-nav {gap:7px;}
+  .battleships-page .pm-chapter-nav button {font-size:10px;padding-inline:8px;min-height:44px;}
+  .battleships-page .pm-final-volume {width:min(53%,215px);}
+}
+/* Keep supporting copy legible when the desktop shell moves it to cream paper. */
+.battleships-page .dv-book-introduction :is(.pm-deck,.dv-hero-benefits) {color:#253f50;}
+.battleships-page .pm-hero::after {display:none;}
+.battleships-page .pm-why-lead {background:transparent;box-shadow:none;}
+.battleships-page .pm-benefits .pm-benefit-punchline {color:#315e77;}
+@media(min-width:1051px) {
+  body.dv-book-desktop[data-book-id="battleships-pacific-war"] .pm-hero-stage {top:150px;height:640px;max-height:calc(100% - 200px);}
+}
+@media(max-width:720px) {
+  .battleships-page .pm-inside {height:auto;min-height:0;padding:54px 16px 44px;display:block;overflow:clip;}
+  .battleships-page .pm-section-head {margin:0 8px 25px;}
+  .battleships-page .pm-section-head>p {display:block;margin-top:20px;color:#bdd0dd;font:400 14px/1.6 var(--pm-sans,Arial,sans-serif);}
+  .battleships-page .pm-inside .pm-open-book-shell {width:100%;margin:25px auto 68px;}
+  .battleships-page .pm-inside .pm-expand-spread {top:auto;right:50%;bottom:-54px;transform:translateX(50%);width:max-content;height:44px;min-height:44px;font-size:11px;padding:10px 14px;background:#0b263b;color:#f5e6c9;}
+  .battleships-page .pm-spread-controls {height:auto;min-height:0;padding:12px 0 0;}
+  .battleships-page .pm-kicker {font-size:10px;letter-spacing:.065em;}
+  .battleships-page .pm-hero-stage {height:245px;}
+  .battleships-page .pm-hero-book {height:228px;}
+}
+@media(max-width:720px) {
+  body[data-book-id="battleships-pacific-war"] .pm-hero-stage {height:245px;}
+  body[data-book-id="battleships-pacific-war"] .pm-hero-book {height:228px;}
+  .battleships-page .pm-inside .pm-section-head>p {display:block;}
+}
+@media(max-width:720px) {
+  body[data-book-id="battleships-pacific-war"] .pm-inside {max-height:none;}
+  body[data-book-id="battleships-pacific-war"] .pm-inside > .pm-spread-controls {position:relative;inset:auto;transform:none;width:100%;margin:0;}
+  body[data-book-id="battleships-pacific-war"] .pm-inside .pm-open-book-shell {position:relative;inset:auto;transform:none;}
+}
+@media(max-width:720px) {
+  .battleships-page .pm-inside .pm-spread-controls {grid-template-columns:minmax(0,1fr);gap:12px;background:none;}
+  .battleships-page .pm-inside .pm-spread-count {grid-column:1;justify-self:start;display:flex;align-items:center;gap:12px;}
+  .battleships-page .pm-inside .pm-chapter-nav {grid-column:1;grid-row:auto;justify-self:stretch;width:100%;max-width:100%;margin:0;padding:0 0 6px;flex-wrap:nowrap;overflow-x:auto;}
+  .battleships-page .pm-inside .pm-chapter-nav button {min-height:44px;padding:10px 12px;border:1px solid #7195ac;border-radius:3px;background:transparent;color:#cddfea;font-size:9px;letter-spacing:.05em;}
+  .battleships-page .pm-inside .pm-chapter-nav button[aria-current="true"] {background:#dfbe78;border-color:#dfbe78;color:#142c3d;}
+  .battleships-page .pm-inside .pm-spread-controls>p {grid-column:1;color:#bfd3e2;font:400 13px/1.55 var(--pm-sans,Arial,sans-serif);text-align:left;}
+  .battleships-page .pm-inside .pm-gallery-end {justify-self:start;font-size:12px;letter-spacing:0;}
+  .battleships-page .pm-inside .pm-gallery-restart {width:auto;height:auto;min-height:44px;padding:8px 12px;}
+}

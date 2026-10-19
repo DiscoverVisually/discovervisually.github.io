@@ -1,5 +1,38 @@
 /* Shelf merchandising and real editorial samples, shared by selection and preview. */
 window.DV_SHELF_STORIES = {
+  "battleships-pacific-war": {
+  "topic": "history",
+  "minAge": 8,
+  "hook": "Your orders: find the fleet. History is your next mission.",
+  "benefits": [
+    "Solve 26 missions from real WWII history",
+    "Train your logic with briefings, clues and fleet charts",
+    "Follow the Pacific campaign from Pearl Harbor to Tokyo Bay"
+  ],
+  "fit": "For a young puzzle fan or history explorer: a screen-free mission turns careful thinking into an adventure.",
+  "samples": [
+    [
+      "battleships-welcome",
+      "Welcome Aboard"
+    ],
+    [
+      "battleships-training",
+      "Training Room"
+    ],
+    [
+      "battleships-code-name-af",
+      "Code Name AF"
+    ],
+    [
+      "battleships-tokyo-express",
+      "Tokyo Express"
+    ],
+    [
+      "battleships-yamato",
+      "Yamato’s Final Mission"
+    ]
+  ]
+},
   'romantasy-yearbook': {
     topic: 'romantasy', minAge: null,
     hook: 'Your next obsession starts with a map of the worlds you already love.',

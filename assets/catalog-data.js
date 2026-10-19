@@ -1,5 +1,27 @@
 window.DV_BOOKS = [
   {
+  "id": "battleships-pacific-war",
+  "amazon": "https://www.amazon.com/dp/B0HN7GZY3Z",
+  "preview": "/assets/battleships-welcome.webp",
+  "shelfFormat": "26 missions · Full color",
+  "coverRatio": 0.669106116048092,
+  "title": "Battleships Puzzle Missions: Pacific War",
+  "shortTitle": "Battleships: Pacific War",
+  "url": "/books/battleships-puzzle-missions-pacific-war.html",
+  "cover": "/books/battleships-pacific-war-cover.webp",
+  "status": "Available now",
+  "format": "Full-color WWII history and logic puzzle adventure",
+  "audience": "Ages 8–12",
+  "description": "Follow 26 historical Pacific War missions from Pearl Harbor to Tokyo Bay. Read the briefing, follow the clues and find the fleet.",
+  "primaryCollection": "history",
+  "collections": [
+    "history",
+    "children",
+    "visual-learning"
+  ],
+  "topic": "WWII Pacific War & Logic Puzzles"
+},
+  {
     id: "romantasy-yearbook",
     amazon: "https://www.amazon.com/dp/B0H517L61P",
     preview: "/assets/romantasy-interior-contents.webp",
@@ -142,4 +164,4 @@ window.DV_COLLECTIONS = {
   "cities-through-time": { name: "Cities Through Time", url: "/collections/cities-through-time/", label: "One city. Centuries of change." }
 };
 
-window.DV_BOOKS.forEach(book => { book.coverWidth = {"romantasy-yearbook": 767, "cut-open": 1024, "new-york-city": 1024, "abraham-lincoln": 768, "hindenburg": 998, "pompeii": 720, "alcatraz": 965}[book.id]; });
+window.DV_BOOKS.forEach(book => { book.coverWidth = {"battleships-pacific-war": 1370, "romantasy-yearbook": 767, "cut-open": 1024, "new-york-city": 1024, "abraham-lincoln": 768, "hindenburg": 998, "pompeii": 720, "alcatraz": 965}[book.id]; });

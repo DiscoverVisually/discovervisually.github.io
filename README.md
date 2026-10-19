@@ -53,7 +53,7 @@ port 4173 by default.
 
 ## Mobile commerce
 
-The mobile Living Shelf shows at most five covers while keeping all seven titles
+The mobile Living Shelf shows at most five covers while keeping all catalogue titles
 available through swipe, arrows and title navigation. At widths up to 700px the
 centre cover uses `clamp(320px, 82vw, 360px)`, with 68% and 46% book heights for
 its two receding neighbours on each side. CSS and WebGL use the same arrangement;
@@ -61,7 +61,7 @@ WebGL frames the selected cover independently of viewport aspect ratio.
 Run `npm run check:mobile-shelf` for CPU camera, visibility and interaction bounds
 checks. Real GPU rendering and physical mobile browser QA remain separate checks.
 
-The active seven book pages use factual content evidence and real interior illustrations.
+The active book pages use factual content evidence and real interior illustrations.
 Do not publish star ratings, reader quotes, review totals or bestseller claims without a verifiable source.
 `assets/book-commerce.js` owns the mobile purchase bar and shelf sample enlargement.
 The bar follows the actual Amazon CTA visibility, respects safe areas, and hides for dialogs,
@@ -79,3 +79,12 @@ placement. It creates no cookies, visitor identifiers or network requests. Inspe
 with `DVCommerceMetrics.snapshot()` in a normal developer console, or subscribe via
 `DVCommerceMetrics.subscribe(handler)`. Central reporting requires an explicitly configured
 analytics collector; no collector or sales attribution is configured by this change.
+
+## Battleships: Pacific War
+
+The page mirrors the Pompeii template, using `battleships-product.js` to supply
+real spreads to the shared viewer and `battleships-pacific-war.css` for its Navy palette.
+Unedited supplied images are preserved in `assets/battleships/originals/`; the
+full-size WebP images retain the complete source canvas. Responsive widths are
+registered in `assets/mobile-images.json`. The supplied set contains five distinct
+spreads; no Pearl Harbor or Checkpoint 3 sample was supplied.

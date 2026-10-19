@@ -15,7 +15,7 @@ class PMREM {fromScene(){return {texture:{},dispose(){}};}dispose(){}}
 class Loader {async loadAsync(){return {image:{width:1536,height:1024},dispose(){}};}}
 const stage={clientWidth:390,clientHeight:425,querySelector:()=>({prepend(){}})};
 const link={hidden:true,style:{}};
-const shelf={dataset:{},classList:{add(){},remove(){}},querySelectorAll:()=>[]};
+const shelf={dataset:{},classList:{add(){},remove(){},contains(){return false;}},querySelectorAll:()=>[]};
 const document={hidden:false,addEventListener(){},removeEventListener(){},createElement:()=>({
   setAttribute(){},remove(){},addEventListener(type,fn){if(type==='webglcontextlost')lost=fn;},
   getContext:()=>({scale(){},fillRect(){},createRadialGradient:()=>({addColorStop(){}})})
@@ -28,7 +28,7 @@ function select(count,active,position=active){
   state={mobile:true,visible:Array.from({length:count},(_,i)=>i),activeIndex:active,
     distances:books.map((_,i)=>i-position),alphas:books.map((_,i)=>i<count?1:0),focus:books.map((_,i)=>i===active?1:0)};
 }
-select(7,0);
+select(books.length,0);
 const context=vm.createContext({document,window:{devicePixelRatio:2},setTimeout,clearTimeout,
   ResizeObserver:class{constructor(fn){resize=fn;}observe(){}disconnect(){}},
   IntersectionObserver:class{observe(){}disconnect(){}}});
@@ -40,11 +40,11 @@ await module.link(async spec=>{
 await module.evaluate();
 const renderer=await module.namespace.createShelfScene({shelf,stage,books,openLink:link,snapshot:()=>state,choose(){},failed(){}});
 const models=scene.children.filter(item=>item.isGroup);
-assert.equal(models.length,7,'All seven titles remain in the carousel');
+assert.equal(models.length,books.length,'All catalogue titles remain in the carousel');
 for(const width of [320,360,390,430,700]){
   const target=layout.clamp(width*.82,320,360);
   stage.clientWidth=width;stage.clientHeight=target+105;resize();
-  for(let count=1;count<=7;count++)for(let active=0;active<count;active++){
+  for(let count=1;count<=books.length;count++)for(let active=0;active<count;active++){
     select(count,active);renderer.render(state);
     assert(!link.hidden,'Selected cover keeps its native link');
     const x=parseFloat(link.style.left),y=parseFloat(link.style.top),w=parseFloat(link.style.width),h=parseFloat(link.style.height);
@@ -54,7 +54,7 @@ for(const width of [320,360,390,430,700]){
     for(const book of models.filter(item=>item.visible))assert(Math.abs(book.position.y-book.scale.y/2)<1e-8,'Scaled books rest on the plank');
   }
   for(let step=0;step<=140;step++){
-    select(7,3,step/20);renderer.render(state);
+    select(books.length,3,step/20);renderer.render(state);
     assert(models.filter(item=>item.visible).length<=5,'At most five books while swiping');
   }
   // A filter transition with deliberately overlapping distances must obey
@@ -63,8 +63,8 @@ for(const width of [320,360,390,430,700]){
   assert(models.filter(item=>item.visible).length<=5);
   assert(!models[6].visible,'Filtered-out title stays off the mobile stage');
 }
-select(7,3);state.mobile=false;stage.clientWidth=1340;stage.clientHeight=410;resize();renderer.render(state);
-assert.equal(models.filter(item=>item.visible).length,7,'Desktop retains the full collection');
+select(books.length,3);state.mobile=false;stage.clientWidth=1340;stage.clientHeight=410;resize();renderer.render(state);
+assert.equal(models.filter(item=>item.visible).length,books.length,'Desktop retains the full collection');
 assert(models.every(item=>item.scale.x===1),'Desktop book sizes are unchanged');
 lost({preventDefault(){}});assert.equal(shelf.dataset.shelfRenderer,'fallback');assert(link.hidden);
 console.log('Mobile shelf checks passed: 320–700px, every title and filter count, large readable cover, five-book cap during motion/filtering, native hit bounds, shelf contact, desktop preservation and context-loss recovery.');

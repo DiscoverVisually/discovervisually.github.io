@@ -49,7 +49,7 @@
     !turnBack
   ) return;
 
-  const spreads = [
+  const spreads = window.DV_BOOK_SPREADS || [
     {
       src: "../assets/pompeii-interior-street.webp",
       alt: "A Day in Pompeii — an immersive street-level view of the living Roman city",
@@ -82,6 +82,17 @@
     },
   ];
 
+  const setSpreadImage = (image, spread) => {
+    image.src = spread.src;
+    // Original images remain the fullscreen source; the book uses responsive pages.
+    if (spread.srcset) {
+      image.srcset = spread.srcset;
+      image.sizes = "(max-width: 720px) 94vw, 78vw";
+      image.width = spread.width;
+      image.height = spread.height;
+    }
+  };
+
   const counter = document.querySelector(".pm-spread-count > span");
   const description = document.querySelector(".pm-spread-controls > p");
   const status = document.querySelector(".pm-spread-status");
@@ -108,7 +119,7 @@
     loadedSpreads.add(index);
     const image = new Image();
     image.decoding = "async";
-    image.src = spreads[index].src;
+    setSpreadImage(image, spreads[index]);
   };
 
   const nudgeAmazon = () => {
@@ -145,9 +156,9 @@
 
   const setBaseSpread = (index) => {
     const spread = spreads[index];
-    leftImage.src = spread.src;
+    setSpreadImage(leftImage, spread);
     leftImage.alt = spread.alt;
-    rightImage.src = spread.src;
+    setSpreadImage(rightImage, spread);
     rightImage.alt = "";
     active = index;
   };
@@ -165,14 +176,14 @@
     shell.classList.add("is-turning");
 
     if (direction === "forward") {
-      turnFront.src = current.src;
-      turnBack.src = next.src;
-      rightImage.src = next.src;
+      setSpreadImage(turnFront, current);
+      setSpreadImage(turnBack, next);
+      setSpreadImage(rightImage, next);
       turnSheet.classList.add("is-forward");
     } else {
-      turnFront.src = current.src;
-      turnBack.src = next.src;
-      leftImage.src = next.src;
+      setSpreadImage(turnFront, current);
+      setSpreadImage(turnBack, next);
+      setSpreadImage(leftImage, next);
       turnSheet.classList.add("is-reverse");
     }
 

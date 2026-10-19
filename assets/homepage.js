@@ -27,8 +27,8 @@
   shelf.addEventListener('shelfchange',()=>{if(document.activeElement?.closest('[data-living-shelf]')||giftDialog.open)shelf.classList.add('shelf-engaged');});
 
   try {
-    await Promise.all([import('./catalog-data.js?v=20261001mobile1'),import('./shelf-stories.js?v=20261001mobile1'),import('./book-opening.js?v=20260930motion3')]);
-    await import('./catalog-pages.js?v=20261004desktop');
+    await Promise.all([import('./catalog-data.js?v=20261019battleships'),import('./shelf-stories.js?v=20261019battleships'),import('./book-opening.js?v=20260930motion3')]);
+    await import('./catalog-pages.js?v=20261019battleships');
     await Promise.all([import('./shelf-experience.js?v=20261004desktop'),import('./commerce-metrics.js?v=20261001mobile1'),import('./book-commerce.js?v=20261001mobile1')]);
   } catch(error) {
     shelf.classList.add('shelf-init-failed');
@@ -40,6 +40,7 @@
   const books=window.DV_BOOKS||[];
   const tabs=[...document.querySelectorAll('[data-home-preview]')];
   const previews={
+    "battleships-pacific-war":{image:"/assets/battleships-code-name-af.webp",width:2048,height:1546,alt:"Code Name AF — historical briefing and Battleships puzzle",kicker:"WWII Pacific · Ages 8–12",title:"A secret code. A hidden fleet. Your next mission."},
     'cut-open':{image:'/assets/cut-open-jet-engine.webp',width:1800,height:1173,alt:'Illustrated cutaway of a jet engine from CUT OPEN!',kicker:'Engineering · Ages 8+',title:'A jet engine, explained from the inside.'},
     'new-york-city':{image:'/assets/nyc-hudson.webp',width:2048,height:1335,alt:'Illustrated spread showing Hudson arriving in New York Harbor',kicker:'Cities through time · Ages 10+',title:'Before the skyscrapers, a world of possibility.'},
     'pompeii':{image:'/assets/pompeii-interior-street.webp',width:1400,height:933,alt:'Illustrated Roman street from Pompeii: The Last Day',kicker:'History Hunters · Ages 8–12',title:'Walk the streets of a living Roman city.'}

@@ -63,6 +63,7 @@
       spotlight:{hue:38,saturation:78,lightness:58,alpha:.32}
     };
     const bookVisuals = {
+      "battleships-pacific-war": {accent:"#dfbe78",spine:"#083a65",spineInk:"#f8ebc9",spineFoil:"rgba(130,208,235,.8)",glow:"rgba(40,127,180,.3)",spotlight:{hue:205,saturation:70,lightness:55,alpha:.3}},
       "cut-open": { accent:"#e5b94f", spine:"#0c3157", spineInk:"#fff4c7", spineRail:"rgba(2,12,24,.72)", spineFoil:"rgba(111,220,255,.9)", glow:"rgba(44,149,214,.34)", spotlight:{hue:205,saturation:82,lightness:55,alpha:.3} },
       "new-york-city": { accent:"#e63b32", spine:"#082e51", spineInk:"#f7f4e8", spineRail:"rgba(2,13,24,.72)", spineFoil:"rgba(167,218,246,.92)", glow:"rgba(45,123,174,.38)", spotlight:{hue:204,saturation:76,lightness:54,alpha:.31} },
       "romantasy-yearbook": { accent:"#f0b2d8", spine:"#5a1d55", spineInk:"#fff7fb", spineRail:"rgba(24,5,26,.64)", spineFoil:"rgba(255,214,247,.92)", glow:"rgba(198,82,155,.34)", spotlight:{hue:318,saturation:76,lightness:58,alpha:.3} },
@@ -358,7 +359,7 @@
     // The shelf remains fully usable if WebGL, textures or the module fail.
     // Save-data readers get the lightweight renderer without downloading 3D.
     if(!navigator.connection?.saveData && typeof WebGL2RenderingContext!=='undefined') {
-      const enhance = () => import('./shelf-scene.js?v=20261004desktop').then(({createShelfScene})=>createShelfScene({
+      const enhance = () => import('./shelf-scene.js?v=20261019battleships').then(({createShelfScene})=>createShelfScene({
         shelf,stage,books,openLink,snapshot:sceneSnapshot,
         choose:index=>{if(Date.now()<suppressClick||drag?.horizontal)return;if(index===activeIndex)bookElements[index].click();else goTo(index);},
         failed:()=>{sceneRenderer=null;openLink.hidden=true;bookElements.forEach((el,i)=>el.tabIndex=i===activeIndex?0:-1);measure();render();}
@@ -377,13 +378,13 @@
       ? books
       : books.filter(book => book.collections.includes(collection));
     const collectionCopy = {
-      history: "Walk through Pompeii before Vesuvius erupts, cross the Atlantic aboard Hindenburg, enter Abraham Lincoln’s wartime White House and investigate the Alcatraz escape. These subject-led titles also appear in For Children when their audience overlaps.",
-      children: "Full-color visual books for curious young readers—from immersive history to engineering and city stories built around maps, scenes, timelines and discovery.",
+      history: "Solve Pacific War missions, walk through Pompeii before Vesuvius erupts, cross the Atlantic aboard Hindenburg, enter Abraham Lincoln’s wartime White House and investigate the Alcatraz escape. These subject-led titles also appear in For Children when their audience overlaps.",
+      children: "Full-color visual books and logic adventures for curious young readers—from WWII puzzle missions to immersive history, engineering and city stories built around maps, scenes, timelines and discovery.",
       "cities-through-time": "Travel through a great city across centuries of change, using maps, timelines, illustrated scenes and infographics to connect the past to places readers can still see today."
     }[collection];
     const collectionDescription = {
-      history: "Explore immersive visual history books about Pompeii, Hindenburg, Abraham Lincoln and Alcatraz from the History Hunters series.",
-      children: "Full-color visual nonfiction for curious young readers, spanning immersive history, engineering and richly illustrated city stories.",
+      history: "Explore visual history and logic adventures about the WWII Pacific War, Pompeii, Hindenburg, Abraham Lincoln and Alcatraz.",
+      children: "Full-color visual nonfiction and screen-free logic puzzles for curious young readers, spanning WWII history, engineering and city stories.",
       "cities-through-time": "Illustrated city histories that show how streets, skylines, people and infrastructure change over time."
     }[collection];
     const heroCopy = document.querySelector(".catalog-hero-copy");
