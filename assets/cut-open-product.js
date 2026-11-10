@@ -50,11 +50,12 @@
   ) return;
 
   const spreads = [
-    {src:"../assets/cut-open-jet-engine.webp",alt:"Inside a Jet Engine — cutaway spread explaining airflow, fuel, fire and thrust",description:"Follow air, fuel, fire and thrust through a modern high-bypass turbofan."},
-    {src:"../assets/cut-open-steam-locomotive.webp",alt:"Inside a Steam Locomotive — cutaway spread showing coal, water, fire and steam becoming motion",description:"See boiler tubes, steam space, cylinders, pistons and connecting rods turn heat into motion."},
-    {src:"../assets/cut-open-combine.webp",alt:"Inside a Combine Harvester — cutaway spread showing cutting, threshing, separation and cleaning",description:"Trace a grain of wheat from the cutting header through threshing, separation, cleaning and storage."},
-    {src:"../assets/cut-open-colosseum.webp",alt:"Colosseum — cutaway spread revealing the arena, hypogeum, lifts, passages and crowd systems",description:"Open Rome’s arena to reveal its underground lifts, corridors, seating, shade system and crowd-moving design."},
-    {src:"../assets/cut-open-euv.webp",alt:"The Machine That Makes Microchips — inside an EUV lithography system",description:"Follow extreme-ultraviolet light through mirrors, projection optics and wafer stages inside a precision chip-making system."},
+    {src:"../assets/cut-open-jet-engine.webp",alt:"Inside a Jet Engine",description:"Follow air through the fan, the bypass duct and the hot core of a turbofan."},
+    {src:"../assets/cut-open-mining-truck.webp",alt:"Inside a Mining Haul Truck",description:"See the diesel engine, drivetrain and suspension that move a truck loaded with rock."},
+    {src:"../assets/cut-open-colosseum.webp",alt:"Inside the Colosseum",description:"Explore the arena floor, underground passages and lifts that brought the Roman spectacles to life."},
+    {src:"../assets/cut-open-subway.webp",alt:"Inside a Subway Station",description:"Look below the street to see how entrances, platforms and tunnels connect."},
+    {src:"../assets/cut-open-hoover-dam.webp",alt:"Inside Hoover Dam",description:"Trace water from the reservoir to the turbines that turn its energy into electricity."},
+    {src:"../assets/cut-open-mri.webp",alt:"Inside an MRI Scanner",description:"See the magnet and coils around the patient table, and how they help create images from inside the body."},
   ];
 
   const counter = document.querySelector(".pm-spread-count > span");
@@ -195,6 +196,17 @@
   document.querySelector(".pm-gallery-restart")?.addEventListener("click", () =>
     showSpread(0),
   );
+
+  document.querySelectorAll("[data-cut-open-spread]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const index = Number(link.dataset.cutOpenSpread);
+      if (isTurning || !spreads[index]) return;
+      setBaseSpread(index);
+      updateControls(index);
+      if (!hasOpened) openBook();
+      window.DVBookOpening.finish(inside);
+    });
+  });
 
   shell.addEventListener("pointerdown", (event) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;

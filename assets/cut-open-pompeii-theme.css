@@ -3,7 +3,7 @@
 .cut-open-page .pm-hero:before{opacity:.28;background:linear-gradient(90deg,rgba(3,10,16,.88),transparent 64%),repeating-linear-gradient(0deg,transparent 0 39px,rgba(105,191,236,.055) 40px,transparent 41px),repeating-linear-gradient(90deg,transparent 0 39px,rgba(105,191,236,.045) 40px,transparent 41px)}
 .cut-open-page .pm-hero:after{opacity:.16;clip-path:polygon(0 100%,0 68%,18% 68%,18% 54%,34% 54%,34% 72%,51% 72%,51% 35%,68% 35%,68% 58%,84% 58%,84% 45%,100% 45%,100% 100%);background:linear-gradient(180deg,rgba(99,180,224,.15),#030a10 74%)}
 .cut-open-page .pm-wrap-front{background-image:url("/books/cut-open-cover.webp")!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important}
-.cut-open-page .pm-wrap-back{background-image:linear-gradient(145deg,rgba(18,59,88,.96),rgba(4,18,30,.98))!important;background-size:100% 100%!important;background-position:center!important}
+.cut-open-page .pm-wrap-back{background-image:url("/books/cut-open-back-cover.webp")!important;background-size:100% 100%!important;background-position:center!important}
 .cut-open-page .pm-book-back{background:#092238}.cut-open-page .pm-book-spine{background:#0b3556}.cut-open-page .pm-stage-ring{border-color:rgba(104,188,231,.18)}.cut-open-page .pm-stage-ash{opacity:.12;filter:hue-rotate(150deg) saturate(.55)}
 .cut-open-page .pm-proof{background:#e9eef0}.cut-open-page .pm-proof-author{color:#335c71}.cut-open-page .pm-inside{background:linear-gradient(180deg,#f4f7f7,#e7ecee)}.cut-open-page .pm-reactions{background:#0c2233}.cut-open-page .pm-combined{background:#edf2f3}
 .cut-open-page .pm-final{background:radial-gradient(circle at 27% 43%,rgba(44,137,188,.24),transparent 29%),linear-gradient(125deg,#07131f,#0d2b40 58%,#07121b)}
@@ -448,4 +448,9 @@
     display: inline-block;
     margin-top: 16px;
   }
+}
+
+.cut-open-page .pm-hero-book,
+.cut-open-page .pm-final-volume {
+  aspect-ratio: 8.5 / 11;
 }

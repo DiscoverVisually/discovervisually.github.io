@@ -52,11 +52,12 @@ window.DV_SHELF_STORIES = {
     benefits: ['Explore 40 illustrated cutaways', 'Follow energy, motion and materials through real systems', 'Discover machines, buildings and engineering at work'],
     fit: 'For a curious child or a machine lover: cutaways turn big engineering questions into things they can see.',
     samples: [
-      ['cut-open-jet-engine', 'Inside a jet engine'],
-      ['cut-open-steam-locomotive', 'Inside a steam locomotive'],
-      ['cut-open-combine', 'Inside a combine harvester'],
+      ['cut-open-jet-engine', 'Inside a Jet Engine'],
+      ['cut-open-mining-truck', 'Inside a Mining Haul Truck'],
       ['cut-open-colosseum', 'Inside the Colosseum'],
-      ['cut-open-euv', 'The machine that makes microchips']
+      ['cut-open-subway', 'Inside a Subway Station'],
+      ['cut-open-hoover-dam', 'Inside Hoover Dam'],
+      ['cut-open-mri', 'Inside an MRI Scanner']
     ]
   },
   'new-york-city': {
